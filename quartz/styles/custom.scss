@@ -1,3 +1,456 @@
+
 @use "./base.scss";
 
-// put your custom CSS here!
+/* 
+###########################################################
+#                   GLOBAL VARIABLES                      #
+###########################################################
+*/
+
+:root {
+
+    background-color: #1A1721;
+
+    --accent-1: #C1FDFF;
+    --accent-2: #F3CBFF;
+    --accent-3: #00FFFF;
+    --accent-4: #FF0000;
+    --accent-5: #FF0000;
+    --accent-6: #BD93F9;
+    --accent-7: #FFBDAD; /* HEADING 4 COLOR ON MINIMAL THEME */
+
+    --color-1: #C1FDFF;
+    --color-2: #F3CBFF;
+    --color-3: #C1FDFF;
+    --color-4: #FFBDAD;
+    --color-5: #FF977D;
+    --color-6: #BD93F9;
+
+    --quartz-color-1:#ffb09d;
+
+    --cards-min-width: 180px;
+    --cards-max-width: 1fr;
+    --cards-mobile-width: 120px;
+    --cards-image-height: 400px;
+    --cards-padding: 1.2em;
+    --cards-image-fit: cover;
+    --cards-background: transparent;
+    --cards-border-width: 0.15em;
+    --cards-box-shadow: 0 0 0.7em var(--accent-4);
+    --cards-aspect-ratio: 3 / 4;
+    --cards-columns: repeat(auto-fit, minmax(var(--cards-min-width), var(--cards-max-width)));
+    --border-radius: 4px;
+}
+
+/* 
+###########################################################
+#               QUARTZ INTERFACE - GENERAL                #
+###########################################################
+*/
+
+.page-title a {
+    color: var(--quartz-color-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-4);
+}
+
+.page-title a:hover {
+    color: rgb(255, 61, 61) !important;
+}
+
+div.page-header h1.article-title {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+/* 
+###########################################################
+#               QUARTZ INTERFACE - POPOVER NOTES          #
+###########################################################
+*/
+
+div.popover-inner ul.tags > li {
+    border: 0.15em solid #F3CBFF !important;
+    border-radius: 2em;
+    padding: 2px;
+}
+
+div.popover-inner ul.tags > li > a {
+    color: var(--accent-1);
+}
+
+div.popover-inner ul.tags > li > a:hover {
+    color: var(--accent-1) !important;
+}
+
+div.popover-inner h1.article-title {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+/* 
+###########################################################
+#                 QUARTZ INTERFACE - TAGS                 #
+###########################################################
+*/
+
+div.page-header ul.tags > li {
+    border: 0.15em solid #F3CBFF !important;
+    border-radius: 2em;
+    padding: 2px;
+}
+
+div.page-header ul.tags > li > a {
+    color: var(--accent-1);
+}
+
+div.page-header ul.tags > li > a:hover {
+    color: var(--accent-1) !important;
+}
+
+/* 
+###########################################################
+#                 QUARTZ INTERFACE - BreadCrumb           #
+###########################################################
+*/
+
+nav.breadcrumb-container a {
+    color: var(--accent-2);
+}
+
+nav.breadcrumb-container a:hover {
+    color: var(--accent-2) !important;
+}
+
+/*
+###########################################################
+#             QUARTZ INTERFACE - Left Explorer            #
+###########################################################
+*/
+
+div.explorer.desktop-only button#explorer > h1 {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+div.explorer.desktop-only div.folder-container > svg.folder-icon {
+    color: var(--accent-1);
+}
+
+div.explorer.desktop-only button.folder-button > span.folder-title {
+    color: var(--accent-2) !important;
+}
+
+div.explorer.desktop-only ul.content > li > a:hover {
+    color: rgb(235, 235, 236) !important;
+}
+
+/* ICONS */
+
+button.folder-button > span.folder-title::before {
+    display: inline-block;
+    content: "";
+    margin-right: 5px;
+    vertical-align: text-bottom;
+    height: 17px;
+    width: 16px;
+    background-color: var(--accent-1);
+    -webkit-mask: url('https://api.iconify.design/mdi/folder-open.svg');
+}
+
+div.explorer.desktop-only ul.content > li > a::before {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+    height: 19px;
+    width: 16px;
+    content: url('https://api.iconify.design/bi/file-text.svg?color=%23C1FDFF');
+}
+
+/*
+###########################################################
+#      QUARTZ INTERFACE -    TOC & BACKLINKS & GRAPH      #
+###########################################################
+*/
+
+div.toc.desktop-only button#toc > h3 {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+div.toc.desktop-only a.in-view {
+    color: var(--accent-2) !important;
+}
+
+div.backlinks h3 {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+div.backlinks a {
+    color: var(--accent-2) !important;
+}
+
+div.graph h3 {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+/*
+###########################################################
+#                 QUARTZ INTERFACE - FOOTER               #
+###########################################################
+*/
+
+footer a {
+    color: var(--accent-2);
+}
+
+/* 
+###########################################################
+#                     BODY NOTE STYLES                    #
+###########################################################
+*/
+
+article > h6:first-child > a {
+    color: var(--accent-2) !important;
+    text-shadow: none;
+    font-weight: 600;
+}
+
+/* HEADERS */
+
+article > h1 {
+    color: var(--color-1) !important;
+    text-shadow: 0 0 0.5em var(--accent-1);
+    font-size: 2.25em;
+    font-weight: 700;
+}
+article > h2 {
+    color: var(--color-2) !important;
+    text-shadow: 0 0 0.5em var(--accent-2);
+    font-size: 2em;
+    font-weight: 700;
+}
+article > h3 {
+    color: var(--color-3) !important;
+    text-shadow: 0 0 0.5em var(--accent-3);
+    font-size: 1.75em;
+    font-weight: 700;
+}
+article > h4 {
+    color: var(--color-4) !important;
+    text-shadow: 0 0 0.75em var(--accent-4);
+    font-size: 1.50em;
+    font-weight: 700;
+}
+article > h5 {
+    color: var(--color-5) !important;
+    text-shadow: 0 0 0.75em var(--accent-5);
+    font-size: 1.25em;
+    font-weight: 700;
+}
+article > h6 {
+    color: var(--color-6) !important;
+    text-shadow: 0 0 0.75em var(--accent-6);
+    font-size: 1em;
+    font-weight: 700;
+}
+
+
+/* 
+###########################################################
+#                NOTE PREVIEW - SEARCH MODE               #
+###########################################################
+*/
+
+/* ARTICLE TITLE */
+
+div#preview-container h1.article-title {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+/* TAGS */
+
+div#preview-container ul.tags > li {
+    border: 0.15em solid #F3CBFF !important;
+    border-radius: 2em;
+    padding: 2px;
+}
+
+div#preview-container ul.tags > li > a {
+    color: var(--accent-1) !important;
+}
+
+div#preview-container ul.tags > li > a:hover {
+    color: var(--accent-1) !important;
+}
+
+/* HEADERS */
+
+div#preview-container > div.preview-inner > h1 {
+    color: var(--color-1) !important;
+    text-shadow: 0 0 0.5em var(--accent-1);
+    font-size: 2.25em;
+    font-weight: 700;
+}
+div#preview-container > div.preview-inner > h2 {
+    color: var(--color-2) !important;
+    text-shadow: 0 0 0.5em var(--accent-2);
+    font-size: 2em;
+    font-weight: 700;
+}
+div#preview-container > div.preview-inner > h3 {
+    color: var(--color-3) !important;
+    text-shadow: 0 0 0.5em var(--accent-3);
+    font-size: 1.75em;
+    font-weight: 700;
+}
+div#preview-container > div.preview-inner > h4 {
+    color: var(--color-4) !important;
+    text-shadow: 0 0 0.75em var(--accent-4);
+    font-size: 1.50em;
+    font-weight: 700;
+}
+div#preview-container > div.preview-inner > h5 {
+    color: var(--color-5) !important;
+    text-shadow: 0 0 0.75em var(--accent-5);
+    font-size: 1.25em;
+    font-weight: 700;
+}
+div#preview-container > div.preview-inner > h6 {
+    color: var(--color-6) !important;
+    text-shadow: 0 0 0.75em var(--accent-6);
+    font-size: 1em;
+    font-weight: 700;
+}
+
+/* PRIMARY CATEGORY H6 */
+
+div#preview-container > div.preview-inner > h6 > a {
+    color: var(--accent-2) !important;
+    text-shadow: none;
+    font-weight: 600;
+}
+
+/* CARD LIST -> LINK ( LI ) */
+
+div#preview-container > div.preview-inner > ul:not(.tags) > li > ul > li > a {
+    text-decoration: none !important;
+    color: var(--accent-2) !important;
+    font-weight: 900;
+    font-size: 15px;
+}
+
+/* 
+###########################################################
+#                       CARD-LIST                         #
+###########################################################
+*/
+
+article.card-list > ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-column-gap: 0rem;
+    grid-row-gap: 1.5rem; 
+    line-height: 1.3;
+    padding: 0rem;
+    width: 90%;
+    list-style-type: none;
+    box-sizing: border-box;
+    justify-items: center;
+    margin-top: 4%;
+} 
+
+article.card-list > ul > li {
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: var(--cards-box-shadow);
+    border: 2px solid var(--accent-7);
+    margin-inline-start: 0;
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    height: 100%;
+    width: 88%; 
+}
+
+article.card-list > ul > li > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+article.card-list > ul > li > ul > li {
+    text-align: center;
+    margin-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    box-sizing: border-box;
+    height: auto; 
+}
+
+article.card-list > ul > li > img {
+    width: 100%;
+    height: 87%;
+    object-fit: cover;
+    border-radius: 8px !important;
+    flex-shrink: 0;
+}
+
+article.card-list > ul > li > ul > li > a {
+    text-decoration: none !important;
+    color: var(--accent-2) !important;
+    font-weight: 900;
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .card-list div > ul {
+        grid-template-columns: repeat(auto-fit, minmax(var(--cards-mobile-width), 1fr));
+    }
+}
+
+@media (min-width: 400pt) {
+
+    .card-list div > ul {
+        --cards-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+article.blue-style.card-list > ul > li { /* cards border and shadow */
+    border-color: var(--accent-1);
+    border-width: 0.15em;
+    box-shadow: 0 0 0.7em var(--accent-1);
+}
+
+article.purple-style.card-list > ul > li { /* cards border and shadow */
+    border-color: var(--accent-2);
+    border-width: 0.15em;
+    box-shadow: 0 0 0.7em var(--accent-2);
+}
+
+/* 
+###########################################################
+# END -> CSS STYLE RELATED TO CARD-LIST                   #
+###########################################################
+*/
