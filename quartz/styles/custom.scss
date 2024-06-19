@@ -217,6 +217,18 @@ article > h6:first-child > a {
     font-weight: 600;
 }
 
+article.popover-hint p > a {
+    color: var(--accent-2);
+}
+
+article.popover-hint p > a:hover {
+    color: #e49bfa !important;
+}
+
+svg.external-icon {
+    display: none;
+}
+
 /* HEADERS */
 
 article > h1 {
