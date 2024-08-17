@@ -466,3 +466,20 @@ article.purple-style.card-list > ul > li { /* cards border and shadow */
 # END -> CSS STYLE RELATED TO CARD-LIST                   #
 ###########################################################
 */
+
+/* 
+###########################################################
+# BLOCK CODE AND LINE CODE SYNTAX                         #
+###########################################################
+*/
+
+p code {
+    color: var(--accent-6) !important;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+code > span {
+    font-weight: 600;
+    font-size: 13px;
+}
