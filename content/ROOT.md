@@ -12,5 +12,7 @@ cssclasses:
 
 #  🛈 INDEX CATEGORIES
 
-- ![|250](https://img.freepik.com/premium-photo/cartoon-girl-with-glasses-hoodie-with-word-broken-it_784625-10966.jpg)
+- ![](https://img.freepik.com/premium-photo/cartoon-girl-with-glasses-hoodie-with-word-broken-it_784625-10966.jpg)
 	- [[PENTESTING]]
+- ![|250](https://bashlogo.com/img/symbol/jpg/full_colored_light.jpg)
+	- [[SHELL SCRIPTING]]
