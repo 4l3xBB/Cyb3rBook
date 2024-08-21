@@ -19,9 +19,9 @@ cssclasses:
 |  **bar?**  | **Match bar followed by one or cero chars** |  **bart**  |
 | **[kz]sh** |     **Match sh beginning with k or z**      |  **ksh**   |
 
-**`*` → Matches cero or more chars**
-**`?` → Matches one specifically char**
-**`[...]` → Matches one char in a specified set**
+- **`*` → Matches cero or more chars**
+- **`?` → Matches one specifically char**
+- **`[...]` → Matches one char in a specified set**
 
 **Globbing, Globs, Filename Expansion** (All the same) happens after [[Word Splitting]], which means that any file expanded through **Globbing** corresponds to One Word for Bash and not undergoes any **word** or **field separation**.
 
@@ -63,6 +63,7 @@ Above code will cause `$_file` parameter to be expanded as `./filename`  instead
 > # As result -> cat -- ./filename
 > ```
 > >[!IMPORTANT]
+>>
 > > **Be aware `--` syntax should never replace `./` measure, cause not all commands have implemented `--` to indicate end of options, such as `echo` command**
 
 Be aware that, in previous example, if directory has no files, `*` glob pattern will return the pattern instead `./*`, then `rm` will receive as a non-option argument a non-existent file.
