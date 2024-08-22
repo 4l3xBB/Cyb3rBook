@@ -148,21 +148,115 @@ This **`Nullglob` Non-Standard Shell Expansion** results way more efficient than
 
 Note that **Globbing** should only be used on `for` loops. If used as non-option command argument, and expasion results on a too long Filename List, command may not handle correctly all arguments
 
-- `./.[!.]*` or `dotglob` add hidden files to glob expansion list
-- `[ -e file ]` or `nullglob` avoid to process non existent files
+- **`./`** → Prevents file processing, whose name starts with `-`, as a non-option cmd argument
+- **`--`** → Denotes the end of option argumentes. It should be used as a additional measure, not the only one
+- **`./.[!.]*` or `dotglob`** → Adds hidden files to glob expansion list
+- **`[ -e file ]` or `nullglob`** → Avoids to process non existent files
 
 But, with the above measures applied, the following case may arise →
 
 ```bash
-$ ( shopt command ./* ./.[!.]*
+$ ( shopt -s nullglob ; command -- ./* ./.[!.]* # Bad, it may cause cmd hang-up
 ```
 
-Above command does not 
+Above command expects, at least, one file matching the previous pattern. If not, it'll hang trying to read from the standard input (fd 0)
+
+In cases where globbing does not expand to none pathname and `nullglob` shell expansion is enabled, to prevent above case, just add `/dev/null` as final non-option argument
+
+```bash
+$ ( shopt -s nullglob ; command -- ./* ./.[!.]* /dev/null )
+```
+
+>[!HINT]- Important
+> Be aware of `( )` to group inner commands on a subshell (Bash's Child Process). This allows not to modify current shell's environment
+>
+> It's important to point out that any assignment or parameter modification inside `()` only affects child's environment
+>
+> ```bash
+> $ ( _foo=bar ; declare -p -- _foo ) # Child Env
+> declare -- _foo="bar"
+> ```
+>```bash
+> $ declare -p -- _foo # Shell Parent Process Environment
+> -bash: declare: _foo: not found
+>```
 
 #### Handle Correctly Pathname and Filename
 
 To handle correctly either files with control chars (`"\n", "\t"...`) or another processing-sensitive char, there are different approches to get to the same place ➡️
 
-- Filename Processing through 
+- `Globbing` → Does not undergoes word splitting cause happens after it. So there's no need to worry about pathnames which contains control chars or others
 
-##### 
+Note that **Globbing** is useful to get a list of unhidden files on a specific directory, but, it has some limitations to overcome like empty matches, symlinks, recursive search (`globstar`)
+
+To deal with above aspects, it'd be more feasible to make use of `find` binary
+
+- `Find` → It has several features to perform advanced and recursive searchs on a specific path
+
+##### Globbing
+
+###### POSIX Compliant (Portable) - Non-Hidden Files
+
+```bash
+for _file in ./* # ./* instead of *
+do
+        [ -e "$_file" ] || continue # POSIX → [ ] instead of [[ ]]
+        
+        cat -- "$_file" # -- → referring to end of cmd options
+done
+```
+
+###### POSIX Compliant (Portable) - Including Hidden Files
+
+```bash
+for _file in ./* ./.[!.]*
+do
+        [ -e "$_file" ] || continue
+
+        cat -- "$_file"
+done
+```
+
+>[!NOTE]- Info
+> All the following code snippets will include hidden files on globbing expansion. Otherwise, remove `./.[!.]*` from them
+
+###### Non Standard Bash Extension For Loop
+
+```bash
+foo()
+{
+        local -- _file= _ns= # Empty Parameters to avoid previous values
+
+        shopt -q nullglob ; _ns=$? # Shell Extension Checking
+        (( _ns )) && shopt -s nullglob # Enable if disabled
+
+        for _file in ./* # Use ./* instead of *
+        do
+                printf "File -> %s\n" "$_file"
+        done
+
+        (( _ns )) && shopt -u nullglob # Disable if enabled
+}
+```
+
+###### Non Standard Bash Extension Oneliner (One command)
+
+```bash
+# nullglob to avoid empty matches || -- as additional protective measure
+# /dev/null as non-option arg to avoid command hang-up on stdin
+
+$ ( shopt -s nullglob ; cat -- ./* ./.[!.]* /dev/null )
+```
+
+###### Non Standard Bash Extension - Recursive Directory Search
+
+By default, it omits dot files (hidden), prune dot dirs and sorts the file list
+
+```bash
+globstar **
+```
+
+> [!CAUTION]-
+> Recursive Directory Search through globstar extension may cause unwanted infinite loop due to wrong filename handling on filename's links
+>
+> Feature added on BASH 4.0 (2006). This does not include MACOS devices, whose latest bash version is 3.2.57, due to licensing issues.
