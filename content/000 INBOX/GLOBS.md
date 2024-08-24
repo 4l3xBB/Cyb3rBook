@@ -108,7 +108,9 @@ foo()
 >
 > By default, **globbing** does not expand to hidden files, this behaviour can be changed by the following glob patterns →
 > ```bash
-> for _file in ./* ./.[!.]* # Include hidden files || Exclude . ..
+> # Include files which starts with one or more .
+> # Exclude . and .. directories 
+> for _file in ./* ./.[!.]* ./..?*
 > do
 >         printf "File -> %s\n" "$_file"
 > done
@@ -130,7 +132,7 @@ foo()
 >         (( _dg )) && shopt -u dotglob
 > }
 >```
-> Both alternatives have similar performance. I'd go with the **Hidden Files Glob Pattern** for **readibility**
+> Both alternatives have similar performance. I'd go with the **Hidden Files Glob Pattern** for **readability** and **to not restore dotglob initial status**
 
 > [!NOTE]- Tip
 > On **Arithmetic Operators or Expansions** is not necessary to use following syntax →
@@ -150,13 +152,14 @@ Note that **Globbing** should only be used on `for` loops. If used as non-option
 
 - **`./`** → Prevents file processing, whose name starts with `-`, as a non-option cmd argument
 - **`--`** → Denotes the end of option argumentes. It should be used as a additional measure, not the only one
-- **`./.[!.]*` or `dotglob`** → Adds hidden files to glob expansion list
+- **`./.[!.]* ./..?*` or `dotglob`** → Adds hidden files to glob expansion list
 - **`[ -e file ]` or `nullglob`** → Avoids to process non existent files
 
 But, with the above measures applied, the following case may arise →
 
 ```bash
-$ ( shopt -s nullglob ; command -- ./* ./.[!.]* # Bad, it may cause cmd hang-up
+# Incorrect, It may cause command hang-up
+$ ( shopt -s nullglob ; command -- ./* ./.[!.]* ./..?* )
 ```
 
 Above command expects, at least, one file matching the previous pattern. If not, it'll hang trying to read from the standard input (fd 0)
@@ -187,11 +190,11 @@ To handle correctly either files with control chars (`"\n", "\t"...`) or another
 
 - `Globbing` → Does not undergoes word splitting cause happens after it. So there's no need to worry about pathnames which contains control chars or others
 
-Note that **Globbing** is useful to get a list of unhidden files on a specific directory, but, it has some limitations to overcome like empty matches, symlinks, recursive search (`globstar`)
+Note that **Globbing** is useful to get a list of unhidden files on a specific directory, but, it has some limitations to overcome like empty matches (`nullglob`), symlinks, non-recursive search  (`globstar`) and hidden files (`dotglob`)
 
 To deal with above aspects, it'd be more feasible to make use of `find` binary
 
-- `Find` → It has several features to perform advanced and recursive searchs on a specific path
+- `Find` → It has several features to perform advanced and recursive searchs on a specific path given certain criteria
 
 ##### Globbing
 
@@ -209,7 +212,7 @@ done
 ###### POSIX Compliant (Portable) - Including Hidden Files
 
 ```bash
-for _file in ./* ./.[!.]*
+for _file in ./* ./.[!.]* ./..?* # Non-POSIX Compliant → {*,.[!.]*,..?*} 
 do
         [ -e "$_file" ] || continue
 
@@ -218,7 +221,7 @@ done
 ```
 
 >[!NOTE]- Info
-> All the following code snippets will include hidden files on globbing expansion. Otherwise, remove `./.[!.]*` from them
+> All the following code snippets will include hidden files on globbing expansion. Otherwise, remove `./.[!.]* ./..?*` from them
 
 ###### Non Standard Bash Extension For Loop
 
@@ -230,7 +233,7 @@ foo()
         shopt -q nullglob ; _ns=$? # Shell Extension Checking
         (( _ns )) && shopt -s nullglob # Enable if disabled
 
-        for _file in ./* # Use ./* instead of *
+        for _file in ./* ./.[!.]* ./..?* # Use ./ before globs
         do
                 printf "File -> %s\n" "$_file"
         done
@@ -239,24 +242,95 @@ foo()
 }
 ```
 
-###### Non Standard Bash Extension Oneliner (One command)
+###### Non Standard Bash Extension Oneliner (Command Interface)
 
 ```bash
-# nullglob to avoid empty matches || -- as additional protective measure
+# nullglob to avoid errors on empty matches
+# -- as additional protective measure (End of command option arguments)
 # /dev/null as non-option arg to avoid command hang-up on stdin
 
-$ ( shopt -s nullglob ; cat -- ./* ./.[!.]* /dev/null )
+$ ( shopt -s nullglob ; cat -- ./* ./.[!.]* ./..?* /dev/null )
 ```
 
-###### Non Standard Bash Extension - Recursive Directory Search
+>[!CAUTION]-
+> Be aware that errors may arise if the list of matches is too long and shell command cannot handle that argument number →
+>```bash
+> command -- ./* ./.[!.]* ./..?* /dev/null # nullglob should be enabled
+>```
+>
+> Therefore, in robust scripts, globbing should only be used on **for loops**, unless the number of arguments that the command receives as filenames is known →
+> ```bash
+> for _file in ./* ./.[!.]* ./..?* # Enable nullglob or [ -e "$_file" ]
+> do
+>       command -- "$_file"
+> done
+> ```
 
-By default, it omits dot files (hidden), prune dot dirs and sorts the file list
+###### Non Standard Bash Extension > v4.0 - Recursive Directory Search
 
 ```bash
-globstar **
+foo()
+{
+        local -- _file= _gs=
+        shopt -q globstar ; _gs=$?
+
+        (( _gs )) && shopt -s globstar
+
+        for _file in ./** # ./** indicates recursively
+        do
+                printf "File -> %s\n" "$_file"
+        done
+
+        (( _gs )) && shopt -u globstar
+}
 ```
 
-> [!CAUTION]-
-> Recursive Directory Search through globstar extension may cause unwanted infinite loop due to wrong filename handling on filename's links
+>[!CAUTION]-
+> Note that `globstar` Bash extension was added on *BASH 4.0 (2006)*. This does not include MACOS devices, whose latest Bash version is 3.2.57, due to licensing issues.
 >
-> Feature added on BASH 4.0 (2006). This does not include MACOS devices, whose latest bash version is 3.2.57, due to licensing issues.
+> To prevent unintended errors, add some Bash version validation on `.bash` scripts →
+> ```bash
+> bar()
+> {
+>       (( BASH_VERSINFO[0] < 4 )) && {
+>               printf "Bash Version < v4.0. Exiting...\n" 1>&2
+>               return 1
+>       }
+>
+>       return 0
+> }
+> ```
+> 
+>
+> **[Check release date of Bash Features](https://mywiki.wooledge.org/BashFAQ/061)**
+
+By defaults, this recursive search way behaves this way →
+
+- **Omit hidden files**
+- **Prune dot dirs (does not descend into them)**
+- **Since Bash v.4.3, [does not follow symlinks](http://git.savannah.gnu.org/cgit/bash.git/tree/CHANGES?id=d2744e05f24d1116ae8dc012e4b07ff219d0d2c1#n16). This prevents infinite loops and duplicated entries**
+
+**Due to latest point, take into account the use of `globstar` on systems with < Bash v4.3**
+
+Therefore, It'd be feasible to perform a recursive search with `globstar`, **including hidden files and avoiding errors on empty matches,** using `dotglob` and `nullglob` Bash extensions, respectively →
+
+```bash
+foo()
+{
+        # globstar, {dot,null}glob Status Checking
+
+        for _file in ./** # With above Bash extensions enabled
+        do
+                # [ -e "$_file" ] if nullglob not enabled ( less efficient )
+                command -- "$_file"
+        done
+
+        # Return Bash extensions to their initial state
+}
+```
+
+However, `find` offers a more reliable way to do this, being able to deploy several advanced filters that globbing could not
+
+Not to mention that, as long as the number of files handled increase, is way more feasible to make use of `find` in terms of performance
+
+COMPARACIÓN
