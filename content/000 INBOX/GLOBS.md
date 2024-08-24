@@ -303,8 +303,29 @@ foo()
 > 
 >
 > **[Check release date of Bash Features](https://mywiki.wooledge.org/BashFAQ/061)**
+>
+> If Bash Version validation is implemented, you should add, prior to the above one, a Shell validation to check if `.bash` script is running in a Bash or not →
+> ```bash
+> case $( /bin/ps -p "$PPID" -o comm= ) in
+>
+>         *bash)  return 0
+>                 ;;
+>
+>         *)      printf "Current shell is not a Bash. Exiting...\n" 1>&2
+>                 return 1
+>                 ;;
+> esac
+> ```
+> It could be in the same function or in a different one, but it must be done prior to any other type of validation
+>
+> Be aware that `case` is used on prior shell checking instead of other for these reasons:
+> - `[[ ]]` → **Not POSIX-Compliant**. Restricted to Korn Shell, Bash and Zsh
+> - `[ ]` aka `test` → **POSIX-Compliant** but it does not allow **Pattern Matching** using **Globbing**
+>
+> > [!HINT]-
+> > Note that, in `case` statements, it's not necessary to use doble quotes `""` on Command Substitution or Parameter Expansion to prevent [[Word Splitting]] (according to `IFS` value) or Filename Expansion (Globbing)
 
-By defaults, this recursive search way behaves this way →
+By default, this recursive shell search behaves this way →
 
 - **Omit hidden files**
 - **Prune dot dirs (does not descend into them)**
@@ -329,8 +350,152 @@ foo()
 }
 ```
 
+> [!TIP]-
+> To avoid having to reset the bash extensions' values above, all commands can be executed on a subhell `( )` instead of grouping them `{ }` →
+>
+> ```bash
+> foo()
+> (
+>       shopt -s globstar dotglob nullglob
+>
+>       for _file in ./**
+>       do
+>               printf "File -> %s\n" "$_file"
+>       done
+> )
+> ```
+> Note that both assigments and parameter modifications will only be applied in the subshell's environment, not in Shell parent one
+
 However, `find` offers a more reliable way to do this, being able to deploy several advanced filters that globbing could not
+
+Remember that `globstar` recursive search way is **non-standard** and It offers **poor control over the recursion**
 
 Not to mention that, as long as the number of files handled increase, is way more feasible to make use of `find` in terms of performance
 
-COMPARACIÓN
+```bash
+# Note subshell use in foo to not modify Parent Shell Env attributes
+# Being foo function () →
+foo ()
+(
+    shopt -s globstar dotglob nullglob
+    for _file in ./**
+    do
+        printf "File -> %s\n" "$_file"
+    done
+)
+```
+
+```bash
+$ export -f -- foo # Bash's Child Process inherit foo func in its env
+```
+
+```ruby
+# Benchmark between foo and 'find .' command over 50k Files
+$ hyperfine --shell bash foo --warmup 3 --min-runs 500 -i 'find .'
+
+Benchmark 1: foo
+  Time (mean ± σ):     161.3 ms ±   2.1 ms    [User: 118.7 ms, System: 41.3 ms]
+  Range (min … max):   156.2 ms … 169.3 ms    500 runs
+
+Benchmark 2: find .
+  Time (mean ± σ):      30.6 ms ±   0.7 ms    [User: 8.3 ms, System: 21.1 ms]
+  Range (min … max):    29.4 ms …  35.7 ms    500 runs
+
+Summary
+  'find .' ran
+    5.28 ± 0.14 times faster than 'foo'
+```
+
+In the above benchmark, `find` shows a better performance over `globstar - nullglob - dotglob` recursive search on more than 50k files
+
+Note that performance breach between both will increase as long as the number of files increases, so it seems more feasible to make use of `find` for better yield and robustness
+
+`Find` is nearly in every UNIX system while `globstar` is Non-POSIX Compliant and > v4.0 (Infinite Loops) - v4.3
+
+##### FIND
+
+It's an external Binary, not a shell Builting
+
+```bash
+$ command -V find
+find is /usr/bin/find
+```
+
+Take into account that any binary's execution leads to the creation of a Shell's child process through system calls like `fork` or similar (`vfork`, `clone`)
+
+This child process's env is a clone of its parent's env. Then, the binary is executed inside that child process through `execve` syscall
+
+Prior scenario does not happen on `globstar` way due to none binary is required, only shell functionalities (builtins, keywords, expansions...) are used during it
+
+But since `find` is only executed once or a few times on nearly any context, this does not imply a perceptible yield reduction
+
+>[!IMPORTANT]-
+> Subshells or Child Process can be generated due to specific tasks:
+>  - **Binary's execution**
+>  - **Background Jobs** → `command &`
+>  - **Simple or Group command isolation** → `( command )`
+> 	 - **Command Substitution** → `$( command )`
+> 	 - **Process Substitution** → `<( command ) >( command )`
+>  - **Shells's `-c` option argument** → `{sh,bash,ksh} -c 'command'`
+> - **Pipes** → `command | command`
+> 
+> On `command | command`, every command executes on a different subshell
+> 
+> Any assignment or parameter modification inside above subshells does not take affect on shell parent's env
+> 
+> As mentioned earlier, as long as subshell generation is done correctly and not in abused way such as in loops, It will not negatively affect performance
+>
+> ```bash
+> foo()
+> {
+>         for i in {1..5000} # 5k iterations
+>         do
+>                 : # Shell builtin - Returns true and expand any arg
+>         done
+> }
+> ```
+>```bash
+> bar()
+> {
+>         for i in {1..5000}
+>         do
+>                 (:) # : builtin executed on subshell / iteration
+>         done
+> }
+>```
+>
+> ```bash
+> $ export -f -- foo bar
+> ``` 
+> ```ruby
+> $ hyperfine --shell bash foo bar --warmup 3 --min-runs 100 -i
+>```
+> >[!NOTE]- Output Command
+> > ```ruby
+> > Benchmark 1: foo
+> >   Time (mean ± σ):       2.9 ms ±   0.2 ms    [User: 2.2 ms, System: 0.2 ms]
+> >   Range (min … max):     2.6 ms …   6.2 ms    633 runs
+> >
+> > Benchmark 2: bar
+> >   Time (mean ± σ):     840.0 ms ± 111.4 ms    [User: 61.7 ms, System: 333.6 ms]
+> >   Range (min … max):   745.3 ms … 1453.7 ms    100 runs
+> >
+> > Summary
+> >   'foo' ran
+> >   285.40 ± 43.79 times faster than 'bar'
+> > ``` 
+> As can be seen above, performance is reduced very significantly when subshells are created inside any loop context
+>
+> It's important to know in which situations shell functionality can be used instead of depend on external binaries. This will allow to not decrease script's yield notoriously
+> ```bash
+> $ export -- _pathname="/etc/ssh/sshd_config"
+> ```
+>```ruby
+> # Command 1 → printf "%s\n" "${_pathname##*/}"
+> # Command 2 → basename "$_pathname"
+>
+> $ hyperfine --shell bash --warmup 3 --min-runs 5000 'printf "%s\n" "${_pathname##*/}"' 'basename "$_pathname"'
+>```
+
+Default behaviour →
+
