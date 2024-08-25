@@ -557,5 +557,63 @@ Hence, since filenames can contain special chars like newlines `\n`, reading fil
 > > - [[Word Splitting]] applies to the processed string according to `IFS`'s value
 > > - Resulting string is stored within `read`'s declared parameter
 
+Some alternatives such as the following will also fail due to above problem →
 
-	
+```bash
+for _file in $( find . -name '.' -o -print )
+do
+        printf "File -> %s\n" "$_file"
+done
+```
+
+>[!CAUTION]- Wrong
+> Note that if any pathname contains a space, `\n` or  `\t`, its name will be split into more than one words. Likewise, if pathname contains any globbing chars (`*`, `?`), shell will try to expand it to any matched file
+>
+> Furthermore, `$( )` expansion chop off any trailing newline
+> 
+> Previous situation can be improved to handle correctly filenames with embedded spaces and tabs. It can be also manage globbing expansion → 
+>
+> ```bash
+> (
+>         IFS=$'\n' # Word Splitting not applied on \t or spaces
+>         set -f # File name expansion disabled
+>
+>         for _file in $( find . -name '.' -o -print )
+>         do
+>                 printf "File -> %s\n" "$_file"
+>         done
+> )
+> ```
+> > [!INFO]-
+> > There're several standard ways to assign values to `IFS` parameter
+>> - [POSIX Compliant](http://austingroupbugs.net/view.php?id=249) and It seems the easiest way →
+>> ```bash
+>> $ IFS=$' \t\n' # ANSI-C Quoting
+>> ``` 
+>> - Another POSIX Compliant way through **command substitution**→
+>> ```bash
+>> $ IFS=$( printf '\nX') ; IFS=${IFS%X}
+>> ```
+>> To prevent that above expansion trims trailing newline, a character must be appended after `\n`
+>> 
+>> After that, the character is trimmed using `${var%string}` parameter expansion syntax
+>>
+>> Note that double quotes are not used on escalar assignments's right hand such as the prior ones and in the following situations →
+>> ```bash
+>> $ foo="$HOSTNAME"
+>> $ foo="$( hostname )"
+>> $ foo="${HOSTNAME:-$(hostname)}"
+>> ```
+>> ```bash
+> > case $foo in ... # Parameter in case statement
+>> ```
+>>```bash
+>> $ [[ -n $foo ]] && ... # [[ Shell Keyword
+>>```
+>> [More cases 😊](https://unix.stackexchange.com/questions/68694/when-is-double-quoting-necessary/68748#68748)
+>>
+>> Above situations do not undergoe [[Word Splitting]] and Globbing. They're like double quote contexts
+>
+> Be aware that above way will break up pathnames that contain newlines `\n`
+>
+> Alternatives to above code block like non-standard `local` builtin and POSIX-Compliant `[ -n "${IFS+set}" ] && saved_IFS=$IFS`
