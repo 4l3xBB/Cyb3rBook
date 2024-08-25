@@ -62,7 +62,7 @@ Above code will cause `$_file` parameter to be expanded as `./filename`  instead
 >
 > # As result -> cat -- ./filename
 > ```
-> >[!IMPORTANT]
+> >[!IMPORTANT]-
 >>
 > > **Be aware `--` syntax should never replace `./` measure, cause not all commands have implemented `--` to indicate end of options, such as `echo` command**
 
@@ -255,14 +255,15 @@ $ ( shopt -s nullglob ; cat -- ./* ./.[!.]* ./..?* /dev/null )
 >[!CAUTION]-
 > Be aware that errors may arise if the list of matches is too long and shell command cannot handle that argument number →
 >```bash
-> command -- ./* ./.[!.]* ./..?* /dev/null # nullglob should be enabled
+> $ cat -- ./* ./.[!.]* ./..?* /dev/null # nullglob should be enabled
+> -bash: /bin/cat: Argument list too long
 >```
 >
 > Therefore, in robust scripts, globbing should only be used on **for loops**, unless the number of arguments that the command receives as filenames is known →
 > ```bash
 > for _file in ./* ./.[!.]* ./..?* # Enable nullglob or [ -e "$_file" ]
 > do
->       command -- "$_file"
+>       cat -- "$_file"
 > done
 > ```
 
@@ -323,6 +324,7 @@ foo()
 > - `[ ]` aka `test` → **POSIX-Compliant** but it does not allow **Pattern Matching** using **Globbing**
 >
 > > [!HINT]-
+> > 
 > > Note that, in `case` statements, it's not necessary to use doble quotes `""` on Command Substitution or Parameter Expansion to prevent [[Word Splitting]] (according to `IFS` value) or Filename Expansion (Globbing)
 
 By default, this recursive shell search behaves this way →
@@ -389,28 +391,27 @@ foo ()
 $ export -f -- foo # Bash's Child Process inherit foo func in its env
 ```
 
-```ruby
+```bash
 # Benchmark between foo and 'find .' command over 50k Files
 $ hyperfine --shell bash foo --warmup 3 --min-runs 500 -i 'find .'
-
-Benchmark 1: foo
-  Time (mean ± σ):     161.3 ms ±   2.1 ms    [User: 118.7 ms, System: 41.3 ms]
-  Range (min … max):   156.2 ms … 169.3 ms    500 runs
-
-Benchmark 2: find .
-  Time (mean ± σ):      30.6 ms ±   0.7 ms    [User: 8.3 ms, System: 21.1 ms]
-  Range (min … max):    29.4 ms …  35.7 ms    500 runs
-
-Summary
-  'find .' ran
-    5.28 ± 0.14 times faster than 'foo'
 ```
+
+> [!NOTE]- Command Output
+> ```bash
+> Summary
+>   'find .' ran
+>     5.39 ± 0.69 times faster than 'foo'
+> ```
+> | Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
+> |:---|---:|---:|---:|---:|
+> | `foo` | 173.6 ± 21.8 | 156.6 | 329.1 | 5.39 ± 0.69 |
+> | `find .` | 32.2 ± 1.0 | 30.3 | 35.6 | 1.00 |
 
 In the above benchmark, `find` shows a better performance over `globstar - nullglob - dotglob` recursive search on more than 50k files
 
 Note that performance breach between both will increase as long as the number of files increases, so it seems more feasible to make use of `find` for better yield and robustness
 
-`Find` is nearly in every UNIX system while `globstar` is Non-POSIX Compliant and > v4.0 (Infinite Loops) - v4.3
+`Find` is nearly in every UNIX system while `globstar` is Non-POSIX Compliant and > Bash v4.0 (Infinite Loops) - v4.3
 
 ##### FIND
 
@@ -467,35 +468,94 @@ But since `find` is only executed once or a few times on nearly any context, thi
 > ```bash
 > $ export -f -- foo bar
 > ``` 
-> ```ruby
+> ```bash
 > $ hyperfine --shell bash foo bar --warmup 3 --min-runs 100 -i
 >```
-> >[!NOTE]- Output Command
-> > ```ruby
-> > Benchmark 1: foo
-> >   Time (mean ± σ):       2.9 ms ±   0.2 ms    [User: 2.2 ms, System: 0.2 ms]
-> >   Range (min … max):     2.6 ms …   6.2 ms    633 runs
-> >
-> > Benchmark 2: bar
-> >   Time (mean ± σ):     840.0 ms ± 111.4 ms    [User: 61.7 ms, System: 333.6 ms]
-> >   Range (min … max):   745.3 ms … 1453.7 ms    100 runs
-> >
+> >[!NOTE]- Command Output
+> > ```bash
 > > Summary
 > >   'foo' ran
-> >   285.40 ± 43.79 times faster than 'bar'
-> > ``` 
+> >   296.33 ± 26.24 times faster than 'bar'
+> > ```
+> > | Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
+> > |:---|---:|---:|---:|---:|
+> > | `foo` | 2.6 ± 0.2 | 2.4 | 5.6 | 1.00 |
+> > | `bar` | 781.7 ± 28.0 | 737.1 | 932.2 | 296.33 ± 26.24 |
 > As can be seen above, performance is reduced very significantly when subshells are created inside any loop context
 >
 > It's important to know in which situations shell functionality can be used instead of depend on external binaries. This will allow to not decrease script's yield notoriously
 > ```bash
 > $ export -- _pathname="/etc/ssh/sshd_config"
 > ```
->```ruby
+>```bash
 > # Command 1 → printf "%s\n" "${_pathname##*/}"
 > # Command 2 → basename "$_pathname"
 >
 > $ hyperfine --shell bash --warmup 3 --min-runs 5000 'printf "%s\n" "${_pathname##*/}"' 'basename "$_pathname"'
 >```
+> > [!NOTE]- Command Output
+> > ```bash
+> > Summary
+> >   'printf "%s\n" "${_pathname##*/}"' ran
+> >     5.84 ± 165.51 times faster than 'basename "$_pathname"'
+> > ```
+> > | Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
+> > |:---|---:|---:|---:|---:|
+> > | `printf "%s\n" "${_pathname##*/}"` | 0.0 ± 0.0 | 0.0 | 2.0 | 1.00 |
+> > | `basename "$_pathname"` | 0.0 ± 0.1 | 0.0 | 2.8 | 5.84 ± 165.51 |
 
 Default behaviour →
 
+- **Does not omit hidden files**. To omit them →
+
+```bash
+$ find . -name '.' -o -path '*/.*' -prune -o ... # Omit hidden Files and . dir
+```
+
+- **Applies a recursive search.** To limit it to current directory (Non-recursive) →
+
+```bash
+$ find . -maxdepth 1 -name '.' -o ... # Non-recursive and Omit . dir
+```
+
+- **Is passed a directory and all matches begins with that directory**. Therefore, errors probably don't arise when filename starts with a `-`, unlike globbing
+<br>
+- **`find -exec` option allows to directly run commands with any matched file**. Although, if the pathnames are needed back into the shell, several alternatives arise →
+
+Before proceed to show them, take into account the following stuff →
+
+- **Filenames can contain any char except *Zero Byte (aka Null Byte `\0`*  and *slash `/`*** 
+
+Hence, since filenames can contain special chars like newlines `\n`, reading files line-by-line will fail → `read`
+
+> [!IMPORTANT]- Why `read` fails if filename contains `\n`
+> ```bash
+> $ touch test$'\n'file # File created with embedded \n on empty dir
+> ```
+> ```bash
+> # Empty IFS to avoid trimming {lead,trail}ing blanks
+> while IFS= read -r _file
+> do
+>         printf "File -> %s\n" "$_file" # One file per file
+>
+> done < <( find . -name '.' -o -print ) # Proc substitution as loop stdin
+> ```
+> > [!NOTE]- Command Output
+>> ```bash
+> File -> ./test
+> File -> file
+>> ```
+>
+> One line is expected as output since only there's only one file in current directory
+>
+> But that embedded `\n` in its name causes that `read` splits input string into two words due to word splitting
+> > [!NOTE]- Info
+> > Note that `read` reads until a newline `\n` char. This default behaviour can be changed through `-d` option, which changes the delimiter
+> >
+> > `read` processes input string in the following way →
+> > - Process input string until `\n` character
+> > - [[Word Splitting]] applies to the processed string according to `IFS`'s value
+> > - Resulting string is stored within `read`'s declared parameter
+
+
+	
