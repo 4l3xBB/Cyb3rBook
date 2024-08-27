@@ -37,6 +37,7 @@ Above code will cause `$_file` parameter to be expanded as `./filename`  instead
 > **Globbing** is the latest Type of Expasion that happens during **Bash Parsing Process**, aka [[Bash Parser]]
 
 >[!CAUTION]-
+>
 > **Note that this is incorrect 🔴**
 > ```bash
 > for _file in * # Always use ./* instead of *
@@ -62,7 +63,7 @@ Above code will cause `$_file` parameter to be expanded as `./filename`  instead
 >
 > # As result -> cat -- ./filename
 > ```
-> >[!IMPORTANT]-
+> > [!IMPORTANT]
 >>
 > > **Be aware `--` syntax should never replace `./` measure, cause not all commands have implemented `--` to indicate end of options, such as `echo` command**
 
@@ -287,6 +288,7 @@ foo()
 ```
 
 >[!CAUTION]-
+>
 > Note that `globstar` Bash extension was added on *BASH 4.0 (2006)*. This does not include MACOS devices, whose latest Bash version is 3.2.57, due to licensing issues.
 >
 > To prevent unintended errors, add some Bash version validation on `.bash` scripts →
@@ -323,7 +325,7 @@ foo()
 > - `[[ ]]` → **Not POSIX-Compliant**. Restricted to Korn Shell, Bash and Zsh
 > - `[ ]` aka `test` → **POSIX-Compliant** but it does not allow **Pattern Matching** using **Globbing**
 >
-> > [!HINT]-
+> > [!HINT]
 > > 
 > > Note that, in `case` statements, it's not necessary to use doble quotes `""` on Command Substitution or Parameter Expansion to prevent [[Word Splitting]] (according to `IFS` value) or Filename Expansion (Globbing)
 
@@ -471,7 +473,7 @@ But since `find` is only executed once or a few times on nearly any context, thi
 > ```bash
 > $ hyperfine --shell bash foo bar --warmup 3 --min-runs 100 -i
 >```
-> >[!NOTE]- Command Output
+> >[!NOTE] Command Output
 > > ```bash
 > > Summary
 > >   'foo' ran
@@ -493,7 +495,7 @@ But since `find` is only executed once or a few times on nearly any context, thi
 >
 > $ hyperfine --shell bash --warmup 3 --min-runs 5000 'printf "%s\n" "${_pathname##*/}"' 'basename "$_pathname"'
 >```
-> > [!NOTE]- Command Output
+> > [!NOTE] Command Output
 > > ```bash
 > > Summary
 > >   'printf "%s\n" "${_pathname##*/}"' ran
@@ -528,7 +530,7 @@ Before proceed to show them, take into account the following stuff →
 
 Hence, since filenames can contain special chars like newlines `\n`, reading files line-by-line will fail → `read`
 
-> [!IMPORTANT]- Why `read` fails if filename contains `\n`
+> [!IMPORTANT]- Why read fails if filename contains newline
 > ```bash
 > $ touch test$'\n'file # File created with embedded \n on empty dir
 > ```
@@ -540,16 +542,17 @@ Hence, since filenames can contain special chars like newlines `\n`, reading fil
 >
 > done < <( find . -name '.' -o -print ) # Proc substitution as loop stdin
 > ```
-> > [!NOTE]- Command Output
->> ```bash
-> File -> ./test
-> File -> file
->> ```
+> > [!NOTE] Command Output
+> > ```bash
+> > File -> ./test
+> > File -> file
+> > ```
 >
 > One line is expected as output since only there's only one file in current directory
 >
 > But that embedded `\n` in its name causes that `read` splits input string into two words due to word splitting
-> > [!NOTE]- Info
+> > [!NOTE] Info
+>>
 > > Note that `read` reads until a newline `\n` char. This default behaviour can be changed through `-d` option, which changes the delimiter
 > >
 > > `read` processes input string in the following way →
@@ -584,7 +587,7 @@ done
 >         done
 > )
 > ```
-> > [!INFO]-
+> > [!INFO]
 > > There're several standard ways to assign values to `IFS` parameter
 >> - [POSIX Compliant](http://austingroupbugs.net/view.php?id=249) and It seems the easiest way →
 >> ```bash
@@ -605,7 +608,7 @@ done
 >> $ foo="${HOSTNAME:-$(hostname)}"
 >> ```
 >> ```bash
-> > case $foo in ... # Parameter in case statement
+>> case $foo in ... # Parameter in case statement
 >> ```
 >>```bash
 >> $ [[ -n $foo ]] && ... # [[ Shell Keyword
@@ -617,3 +620,4 @@ done
 > Be aware that above way will break up pathnames that contain newlines `\n`
 >
 > Alternatives to above code block like non-standard `local` builtin and POSIX-Compliant `[ -n "${IFS+set}" ] && saved_IFS=$IFS`
+> [Reference](https://unix.stackexchange.com/questions/640062/how-to-temporarily-save-and-restore-the-ifs-variable-properly)
