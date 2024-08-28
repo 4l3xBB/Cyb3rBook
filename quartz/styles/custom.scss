@@ -28,6 +28,8 @@
 
     --quartz-color-1:#ffb09d;
 
+    --obsidian-font: ui-monospace, SFMono-Regular, "Cascadia Mono", "Roboto Mono", "DejaVu Sans Mono", "Liberation Mono", Menlo, Monaco, "Consolas", "Source Code Pro", monospace;
+
     --cards-min-width: 180px;
     --cards-max-width: 1fr;
     --cards-mobile-width: 120px;
@@ -234,24 +236,24 @@ svg.external-icon {
 article > h1 {
     color: var(--color-1) !important;
     text-shadow: 0 0 0.5em var(--accent-1);
-    font-size: 2.25em;
+    font-size: 1.95em;
     font-weight: 700;
 }
 article > h2 {
     color: var(--color-2) !important;
     text-shadow: 0 0 0.5em var(--accent-2);
-    font-size: 2em;
+    font-size: 1.75em;
     font-weight: 700;
 }
 article > h3 {
     color: var(--color-3) !important;
     text-shadow: 0 0 0.5em var(--accent-3);
-    font-size: 1.75em;
+    font-size: 1.65em;
     font-weight: 700;
 }
 article > h4 {
-    color: var(--color-4) !important;
-    text-shadow: 0 0 0.75em var(--accent-4);
+    color: var(--color-2) !important;
+    text-shadow: 0 0 0.75em var(--accent-2);
     font-size: 1.50em;
     font-weight: 700;
 }
@@ -473,13 +475,61 @@ article.purple-style.card-list > ul > li { /* cards border and shadow */
 ###########################################################
 */
 
+pre {
+    border: none;
+}
+
+pre code {
+    overflow-x: auto;
+    background-color: #202225 !important;
+    font-family: var(--obsidian-font);
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+    color: var(--accent-6) !important;
+    font-family: var(--obsidian-font);
+    background-color:#2f2e2ee3;
+    text-shadow: none;
+}
+
+ul li code,
+table code,
 p code {
     color: var(--accent-6) !important;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
+    font-family: var(--obsidian-font);
+    background-color:#2f2e2ee3;
 }
 
 code span {
     font-weight: 600;
     font-size: 13px;
+}
+
+/* 
+###########################################################
+# MARKDOWN ALERTS (TIP,CAUTION,INFO,HINT,IMPORTANT...)    #
+###########################################################
+*/
+
+blockquote.callout {
+    border-width: 0.13em;
+}
+
+blockquote.callout > .callout-title > div.callout-icon {
+    padding: .1rem 0;
+}
+
+blockquote.callout > .callout-title > div.fold-callout-icon {
+    padding: .15rem 0;
+}
+
+blockquote.callout > .callout-title > .callout-title-inner p {
+    margin-top: -0.175rem;
 }

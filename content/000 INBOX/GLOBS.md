@@ -621,3 +621,15 @@ done
 >
 > Alternatives to above code block like non-standard `local` builtin and POSIX-Compliant `[ -n "${IFS+set}" ] && saved_IFS=$IFS`
 > [Reference](https://unix.stackexchange.com/questions/640062/how-to-temporarily-save-and-restore-the-ifs-variable-properly)
+
+# Prueba
+
+## Prueba
+
+### Prueba
+
+#### Prueba
+
+##### Prueba
+
+###### Prueba

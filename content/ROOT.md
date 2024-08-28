@@ -14,5 +14,5 @@ cssclasses:
 
 - ![](https://img.freepik.com/premium-photo/cartoon-girl-with-glasses-hoodie-with-word-broken-it_784625-10966.jpg)
 	- [[PENTESTING]]
-- ![|250](https://bashlogo.com/img/symbol/jpg/full_colored_light.jpg)
+- ![](https://img.freepik.com/premium-photo/robot-with-hood-that-says-i-am-robot_937795-695.jpg)
 	- [[SHELL SCRIPTING]]
