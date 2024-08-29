@@ -428,7 +428,7 @@ Take into account that any binary's execution leads to the creation of a Shell's
 
 This child process's env is a clone of its parent's env. Then, the binary is executed inside that child process through `execve` syscall
 
-Prior scenario does not happen on `globstar` way due to none binary is required, only shell functionalities (builtins, keywords, expansions...) are used during it
+That does not happen on `globstar` way due to none binary is required, only shell functionalities (builtins, keywords, expansions...) are used during it
 
 But since `find` is only executed once or a few times on nearly any context, this does not imply a perceptible yield reduction
 
@@ -486,12 +486,15 @@ But since `find` is only executed once or a few times on nearly any context, thi
 > As can be seen above, performance is reduced very significantly when subshells are created inside any loop context
 >
 > It's important to know in which situations shell functionality can be used instead of depend on external binaries. This will allow to not decrease script's yield notoriously
+>
+> Like the following one, users tend to use external binaries to implement functionalities that can be obtained through shell builtins →
+>
 > ```bash
 > $ export -- _pathname="/etc/ssh/sshd_config"
 > ```
 >```bash
-> # Command 1 → printf "%s\n" "${_pathname##*/}"
-> # Command 2 → basename "$_pathname"
+> # Command 1 → printf "%s\n" "${_pathname##*/}" → Shell Functionality
+> # Command 2 → basename "$_pathname" → External Binary
 >
 > $ hyperfine --shell bash --warmup 3 --min-runs 5000 'printf "%s\n" "${_pathname##*/}"' 'basename "$_pathname"'
 >```
@@ -520,13 +523,13 @@ $ find . -name '.' -o -path '*/.*' -prune -o ... # Omit hidden Files and . dir
 $ find . -maxdepth 1 -name '.' -o ... # Non-recursive and Omit . dir
 ```
 
-- **Is passed a directory and all matches begins with that directory**. Therefore, errors probably don't arise when filename starts with a `-`, unlike globbing
+- **Is passed a directory and all matches begins with that directory in the command's output**. Therefore, errors probably don't arise when filename starts with a `-`, unlike globbing
 <br>
 - **`find -exec` option allows to directly run commands with any matched file**. Although, if the pathnames are needed back into the shell, several alternatives arise →
 
 Before proceed to show them, take into account the following stuff →
 
-- **Filenames can contain any char except *Zero Byte (aka Null Byte `\0`*  and *slash `/`*** 
+- **Filenames can contain any char except *Zero Byte (aka Null Byte `\0`*)  and *slash `/`*** 
 
 Hence, since filenames can contain special chars like newlines `\n`, reading files line-by-line will fail → `read`
 
@@ -538,7 +541,7 @@ Hence, since filenames can contain special chars like newlines `\n`, reading fil
 > # Empty IFS to avoid trimming {lead,trail}ing blanks
 > while IFS= read -r _file
 > do
->         printf "File -> %s\n" "$_file" # One file per file
+>         printf "File -> %s\n" "$_file" # One file per line
 >
 > done < <( find . -name '.' -o -print ) # Proc substitution as loop stdin
 > ```
@@ -559,6 +562,49 @@ Hence, since filenames can contain special chars like newlines `\n`, reading fil
 > > - Process input string until `\n` character
 > > - [[Word Splitting]] applies to the processed string according to `IFS`'s value
 > > - Resulting string is stored within `read`'s declared parameter
+> >
+> > If `read`'s input string is divided into words due to Word Splitting, three cases may arise →
+> > - **`read -a` option** → Each *field/word* resulting from splitting is stored into an array as one element
+>> ```bash
+>> $ read -ra _names <<< "Alex John Albert" # Default IFS → $' \t\n'
+>> $ printf "|%s| " "${_names[@]}"
+>> |Alex| |John| |Albert|
+>> ```
+> > - **Multiple parameters** → If more than one parameter is declared as a `read` argument, each parameter receives as value one word of the input string
+>> ```bash
+>> $ read -r _A _B _C <<< "bash zsh ksh" # <<< → Herestring
+>> $ printf '|%s| ' "$_A" "$_B" "$_C"
+>> |bash| |zsh| |ksh|
+>> ```
+>>
+>> If input string's field number is greater than the number of parameters declared, `read`'s last argument receives the remainder of the string
+>> ```bash
+>> $ read -r _A _B <<< "Ubuntu Arch Debian Fedora" # Fields > Params
+>> $ printf "|%s| " "$_A" "$_B"
+>> |Ubuntu| |Arch Debian Fedora| # _A → 1 field ; _B → Remainings
+>> ```
+>> No Splitting or delimiter consolidation are performed on the remaining part
+>>
+>> - **One parameter and `IFS` with default value or unset** → Note that, due to [[Word Splitting]] again, **leading and trailing** blanks and `\t` in the input string **are trimmed** and the **internal ones are consolidated**
+>> ```bash
+>> $ read -r _var <<< $'    \t\t bar  ' # IFS → $' \t\n'
+>> $ printf "%q\n" "$_var" # %q → ANSI-C Formatted String
+>> bar # Leading and trailing IFS chars stripped out
+>> ```
+>> While if `IFS ` value is empty, input string does not undergoe word splitting. Thus, the above leading and trailing chars are not removed and the inner ones are not consolidated→
+>> ```bash
+>> $ IFS= read -r _var <<< $'    \t\t bar  '
+>> $ printf "%q\n" "$_var"
+>> $'    \t\t bar  '
+>> ```
+>> Prior behaviour does not happen if `IFS` contains non-whitespace chars in its value (`$' \t\n'`) 
+>>
+>> No initial or final trimming and no inner consolidation is performed on `IFS` chars →
+>> ```bash
+>> $ IFS=: read -r _A _B _C _D <<< ":test::foo::::bar::::"
+>> $ printf "=%s= " "$_A" "$_B" "$_C" "$_D"
+>> == =test= == =foo::::bar::::=
+>> ```
 
 Some alternatives such as the following will also fail due to above problem →
 
@@ -570,7 +616,7 @@ done
 ```
 
 >[!CAUTION]- Wrong
-> Note that if any pathname contains a space, `\n` or  `\t`, its name will be split into more than one words. Likewise, if pathname contains any globbing chars (`*`, `?`), shell will try to expand it to any matched file
+> Note that if any pathname contains a space, `\n` or  `\t`, its name will be split into more than one word. Likewise, if pathname contains any globbing chars (`*`, `?`), shell will try to expand it to any matched file
 >
 > Furthermore, `$( )` expansion chop off any trailing newline
 > 
@@ -578,8 +624,8 @@ done
 >
 > ```bash
 > (
->         IFS=$'\n' # Word Splitting not applied on \t or spaces
->         set -f # File name expansion disabled
+>         IFS=$'\n' # Word Splitting not applied on \t or blanks
+>         set -f # Filename|Globbing expansion disabled
 >
 >         for _file in $( find . -name '.' -o -print )
 >         do
@@ -589,23 +635,33 @@ done
 > ```
 > > [!INFO]
 > > There're several standard ways to assign values to `IFS` parameter
->> - [POSIX Compliant](http://austingroupbugs.net/view.php?id=249) and It seems the easiest way →
+>> - [_Non-POSIX Compliant_](http://austingroupbugs.net/view.php?id=249). It seems the easiest way →
 >> ```bash
 >> $ IFS=$' \t\n' # ANSI-C Quoting
 >> ``` 
->> - Another POSIX Compliant way through **command substitution**→
+>> - _POSIX Compliant_. Command substitution and Parameter Expansion →
 >> ```bash
->> $ IFS=$( printf '\nX') ; IFS=${IFS%X}
+>> $ IFS=$( printf '\nX' ) ; IFS=${IFS%X} # CORRECT
 >> ```
+>> - _POSIX Compliant_. Command Substitution →
+>>```bash
+>> $ eval "$( printf 'IFS="\n"' )" # CORRECT
+>>```
+>>
+>> Be aware that it cannot be done through the following way since **command substitution** trims trailing `\n` →
+>> ```bash
+>> $ IFS=$( printf '\n' ) # WRONG!!
+>> ```
+>>
 >> To prevent that above expansion trims trailing newline, a character must be appended after `\n`
 >> 
 >> After that, the character is trimmed using `${var%string}` parameter expansion syntax
 >>
 >> Note that double quotes are not used on escalar assignments's right hand such as the prior ones and in the following situations →
 >> ```bash
->> $ foo="$HOSTNAME"
->> $ foo="$( hostname )"
->> $ foo="${HOSTNAME:-$(hostname)}"
+>> $ foo=$HOSTNAME
+>> $ foo=$( hostname )
+>> $ foo=${HOSTNAME:-$(hostname)}
 >> ```
 >> ```bash
 >> case $foo in ... # Parameter in case statement
@@ -615,21 +671,77 @@ done
 >>```
 >> [More cases 😊](https://unix.stackexchange.com/questions/68694/when-is-double-quoting-necessary/68748#68748)
 >>
->> Above situations do not undergoe [[Word Splitting]] and Globbing. They're like double quote contexts
+>> Above situations do not undergoe [[Word Splitting]] and Globbing. They're like double quote contexts, therefore, It's not necessary to use double quotes
+>>
+>> However, remember that when in doubt, **always quote parameters references !!**
 >
-> Be aware that above way will break up pathnames that contain newlines `\n`
+> Be aware that above `for loop` will break up pathnames that contain newlines `\n` and all parameter creation and modification is not saved due to `( )` subshell
 >
-> Alternatives to above code block like non-standard `local` builtin and POSIX-Compliant `[ -n "${IFS+set}" ] && saved_IFS=$IFS`
-> [Reference](https://unix.stackexchange.com/questions/640062/how-to-temporarily-save-and-restore-the-ifs-variable-properly)
-
-# Prueba
-
-## Prueba
-
-### Prueba
-
-#### Prueba
-
-##### Prueba
-
-###### Prueba
+> To prevent subshell's above problem, `local` or `declare` shell builtins can be used to restrict to a local scope the shell parameters modification →
+> ```shell
+> foo()
+> {
+>         local -- IFS=$'\n' \ # IFS Local Scope modification
+> 		         _oldSetOptions=$( set +o ) # Save Shell options
+>         set -f # Disable Globbing
+>
+>         for _file in $( find . -name '.' -o -print )
+>         do
+>                 printf "File -> %s\n" "$_file"
+>         done
+>
+>         eval "$_oldSetOptions" # Restore Shell options
+> }
+> ```
+> > [!INFO]
+> > To restore shell options to their previous values, It cannot be like this →
+> > ```bash
+> > foo()
+> > {
+> >     set -f
+> >     : # Stuff here !
+> >     set +f
+> > }
+> > ```
+>> In the above function globbing is enabled once all stuff is done, but what if globbing was already disabled prior to `set -f `
+>>
+>> To prevent that misleading situation, store shell options in a parameter through **command substitution**
+>>
+>> With all required actions done, just restore shell options from prior parameter through `eval` →
+>> ```shell
+> > foo()
+> > {
+> >         local -- _oldSetOptions=$( set +o ) # Store Shell Opts
+> >
+> >         set -f
+> >         : # Stuff here !
+> >         eval "$_oldSetOptions" # Restore Shell Opts
+> >
+> > }
+>> ```
+>
+> Note that above way _Non-POSIX Compliant_ due to `local`, same applies with `declare` and `typeset`
+>
+> One _POSIX Compliant_ way to store `IFS`'s prior value →
+> ```bash
+> foo()
+> {
+>         _file= _savedIFS= _oldSetOpts=$( set +o ) # Store Shell Opts
+>
+>         [ -n "${IFS+set}" ] && _savedIFS=$IFS # Save IFS Initial value
+>
+>         set -f # Disable filename expansion
+>         eval "$( printf 'IFS="\n"' )" # Assign \n to IFS as value
+>
+>         for _file in $( find . -name '.' -o -print )
+>         do
+>                 printf "File -> %s\n" "$_file"
+>         done
+>
+>         eval "$_oldSetOpts" # Restore Shell Opts
+>         unset IFS 
+>
+>		# Restore IFS value if It was not unset
+>         [ -n "${_savedIFS+set}" ] && { IFS=$_savedIFS ; unset _savedIFS; }
+> }
+> ```
