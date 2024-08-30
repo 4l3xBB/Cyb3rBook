@@ -13,4 +13,6 @@ cssclasses:
 ###### PRIMARY CATEGORY → [[SHELL SCRIPTING]]
 
 - ![](https://i.pinimg.com/736x/6b/e7/f7/6be7f7b015f91caab4a092f6f11de5a1.jpg)
-	- [[GLOBS]]
+	- [[Globbing]]
+- ![](https://i.pinimg.com/736x/6b/e7/f7/6be7f7b015f91caab4a092f6f11de5a1.jpg)
+	- [[IFS]]

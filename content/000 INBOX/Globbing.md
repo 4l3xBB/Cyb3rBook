@@ -1,7 +1,6 @@
 ---
 Primary_category: "[[BASH]]"
-title:
-  - - GLOBS
+title: "[[Globbing]]"
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
@@ -615,7 +614,7 @@ do
 done
 ```
 
->[!CAUTION]- Wrong
+>[!CAUTION] Wrong
 > Note that if any pathname contains a space, `\n` or  `\t`, its name will be split into more than one word. Likewise, if pathname contains any globbing chars (`*`, `?`), shell will try to expand it to any matched file
 >
 > Furthermore, `$( )` expansion chop off any trailing newline
@@ -635,7 +634,7 @@ done
 > ```
 > > [!INFO]
 > > There're several standard ways to assign values to `IFS` parameter
->> - [_Non-POSIX Compliant_](http://austingroupbugs.net/view.php?id=249). It seems the easiest way →
+>> - [_Non-POSIX Compliant_](http://austingroupbugs.net/view.php?id=249). But It's quite expanded →
 >> ```bash
 >> $ IFS=$' \t\n' # ANSI-C Quoting
 >> ``` 
