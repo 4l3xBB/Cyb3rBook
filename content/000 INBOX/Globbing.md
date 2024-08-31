@@ -614,7 +614,8 @@ do
 done
 ```
 
->[!CAUTION] Wrong
+>[!CAUTION]- Wrong
+>
 > Note that if any pathname contains a space, `\n` or  `\t`, its name will be split into more than one word. Likewise, if pathname contains any globbing chars (`*`, `?`), shell will try to expand it to any matched file
 >
 > Furthermore, `$( )` expansion chop off any trailing newline
@@ -633,6 +634,7 @@ done
 > )
 > ```
 > > [!INFO]
+> >
 > > There're several standard ways to assign values to `IFS` parameter
 >> - [_Non-POSIX Compliant_](http://austingroupbugs.net/view.php?id=249). But It's quite expanded →
 >> ```bash
@@ -693,6 +695,7 @@ done
 > }
 > ```
 > > [!INFO]
+> >
 > > To restore shell options to their previous values, It cannot be like this →
 > > ```bash
 > > foo()
@@ -719,7 +722,7 @@ done
 > > }
 >> ```
 >
-> Note that above way _Non-POSIX Compliant_ due to `local`, same applies with `declare` and `typeset`
+> Note that above way is _Non-POSIX Compliant_ due to `local`, same applies with `declare` and `typeset`
 >
 > One _POSIX Compliant_ way to store `IFS`'s prior value →
 > ```bash
