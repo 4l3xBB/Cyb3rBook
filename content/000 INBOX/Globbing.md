@@ -534,7 +534,7 @@ Hence, since filenames can contain special chars like newlines `\n`, reading fil
 
 > [!IMPORTANT]- Why read fails if filename contains newline
 > ```bash
-> $ touch test$'\n'file # File created with embedded \n on empty dir
+> $ touch test$'\n'file # File created with embedded \n in empty dir
 > ```
 > ```bash
 > # Empty IFS to avoid trimming {lead,trail}ing blanks
@@ -552,7 +552,10 @@ Hence, since filenames can contain special chars like newlines `\n`, reading fil
 >
 > One line is expected as output since only there's only one file in current directory
 >
-> But that embedded `\n` in its name causes that `read` splits input string into two words due to word splitting
+> But, because of read's default behavior, It reads until embedded filenames's newline `\n`, assigns that part of the filename as `read` declared parameter's value and process it inside the loop
+>
+> Instead of process the entire filename due that embedded newline `\n`
+>
 > > [!NOTE] Info
 >>
 > > Note that `read` reads until a newline `\n` char. This default behaviour can be changed through `-d` option, which changes the delimiter
@@ -616,7 +619,7 @@ done
 
 >[!CAUTION]- Wrong
 >
-> Note that if any pathname contains a space, `\n` or  `\t`, its name will be split into more than one word. Likewise, if pathname contains any globbing chars (`*`, `?`), shell will try to expand it to any matched file
+> Note that if any pathname contains a space, `\n` or  `\t`, its name will be split into more than one word. Likewise, if pathname contains any globbing chars (`*`, `?`), the shell will try to expand it to any matched file
 >
 > Furthermore, `$( )` expansion chop off any trailing newline
 > 
@@ -635,7 +638,8 @@ done
 > ```
 > > [!INFO]
 > >
-> > There're several standard ways to assign values to `IFS` parameter
+> > There're several standard ways to [[IFS#Ways to set `IFS`'s values|assign values to IFS parameter]]
+> >
 >> - [_Non-POSIX Compliant_](http://austingroupbugs.net/view.php?id=249). But It's quite expanded →
 >> ```bash
 >> $ IFS=$' \t\n' # ANSI-C Quoting
@@ -676,7 +680,7 @@ done
 >>
 >> However, remember that when in doubt, **always quote parameters references !!**
 >
-> Be aware that above `for loop` will break up pathnames that contain newlines `\n` and all parameter creation and modification is not saved due to `( )` subshell
+> Be aware that above `for loop` will break up pathnames that contain newlines `\n` plus all parameter creation and modification is not saved due to `( )` subshell
 >
 > To prevent subshell's above problem, `local` or `declare` shell builtins can be used to restrict to a local scope the shell parameters modification →
 > ```shell
@@ -707,7 +711,7 @@ done
 > > ```
 >> In the above function globbing is enabled once all stuff is done, but what if globbing was already disabled prior to `set -f `
 >>
->> To prevent that misleading situation, store shell options in a parameter through **command substitution**
+>> To prevent that misleading situation, store Shell Options in a parameter through **command substitution** `set +o`
 >>
 >> With all required actions done, just restore shell options from prior parameter through `eval` →
 >> ```shell
@@ -747,3 +751,65 @@ done
 >         [ -n "${_savedIFS+set}" ] && { IFS=$_savedIFS ; unset _savedIFS; }
 > }
 > ```
+>
+> Above code is explained [[IFS#Eval + Printf|here]]
+>
+> Take into account that if a filename contains an embedded newline, that filename will continue to be splitted into different parts due to [[Word Splitting]]
+>
+> This happens because the`IFS`'s value is a newline `\n`. There is no workaround to handle that newline splitting
+>
+> > You cannot want that a filename with an embedded newline does not split into several parts if you are relying on IFS to split on newlines
+
+```bash
+$ cat $( find . -name '.' -o -print ) > ./foo
+```
+
+> [!CAUTION]- Wrong
+> 
+> That **unquoted Command Substitution** undergoes [[Word Splitting]] and Globbing
+>
+> Therefore, any file whose name contains `$' \t\n'` will be splitted into several _fields/words_ (i.e. a file named `"John Doe.pdf` will be parsed as two files, `John` and `Doe.pdf`)
+>
+> Likewise, if a filename contains any globbing char like `*`, It will be expanded to the matched filenames in the current directory
+>
+> Any trailing newlines in the output expansion will be trimmed due to **Command Substitution behavior**
+>
+> Moreover, if `find` returns no filenames, `cat` will hang up waiting for any input
+>
+> Last situation can be handled correctly as follows →
+> ```bash
+> $ cat -- $( find . -name '.' -o -print ) /dev/null
+> ```
+> Thus, the command will not hang up as It receives at least one argument
+
+```bash
+(
+        for _file in $( find . -name '.' -o -print )
+        do
+                printf "File -> %s\n" "$_file"
+        done
+)
+```
+
+> [!CAUTION]- Wrong
+>
+> As in the previous cases, above expansion undergoes split-glob as It is not quoted
+> 
+> Therefore, any filename with embedded `IFS` chars will be splitted into several _fields/words_
+>
+> The same applies with globbing, any glob char such as `*` will expand to the files matched
+>
+> Furthermore, any parameter assignment or modification is not reflected in Shell Parent's environment due to the subshell `( )`
+
+```bash
+find . -name '.' -o -print | while read _file
+do
+        printf "File -> %s\n" "$_file"
+done
+```
+
+> [!CAUTION] Wrong
+>
+> 
+
+More information [here](https://dwheeler.com/essays/filenames-in-shell.html#save-restore)
