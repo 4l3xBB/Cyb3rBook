@@ -16,3 +16,34 @@ cssclasses:
 	- [[Globbing]]
 - ![](https://i.pinimg.com/736x/6b/e7/f7/6be7f7b015f91caab4a092f6f11de5a1.jpg)
 	- [[IFS]]
+
+<br>
+
+```bash
+$ nvim foo.bash
+```
+
+```bash
+#!/usr/bin/env bash
+
+bash()
+{
+        case $( /bin/ps -p "$PPID" -o comm= ) in
+
+                *bash)  return 0
+                        ;;
+
+                *)      printf "Shell is not a Bash. Exiting...\n" 1>&2
+                        return 1
+                        ;;
+        esac
+}
+
+bash || exit 99
+```
+
+```bash
+$ chmod u+x foo.bash
+$ dash -c './foo.bash'
+Shell is not Bash. Exiting...
+```
