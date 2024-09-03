@@ -70,7 +70,7 @@ Be aware that, in previous example, if directory has no files, `*` glob pattern 
 
 To avoid this issue, check file existence before executing any command which has that file as argument →
 
-##### POSIX Compliance
+###### POSIX Compliance
 
 ```bash
 for _file in ./*
@@ -84,7 +84,7 @@ done
 > [!IMPORTANT]-
 > Use `test` or `[ ]` [[Shell Builtins]] instead of `[[ ]]` non-standard Bash
 
-##### Non-Standard Shell Extension → `Nullglob`
+###### Non-Standard Shell Extension → `Nullglob`
 
 ```bash
 foo()
@@ -198,7 +198,7 @@ To deal with above aspects, it'd be more feasible to make use of `find` binary
 
 ##### Globbing
 
-###### POSIX Compliant (Portable) - Non-Hidden Files
+###### _POSIX Compliant_ - Non-Hidden Files
 
 ```bash
 for _file in ./* # ./* instead of *
@@ -209,7 +209,7 @@ do
 done
 ```
 
-###### POSIX Compliant (Portable) - Including Hidden Files
+###### _POSIX Compliant_ - Including Hidden Files
 
 ```bash
 for _file in ./* ./.[!.]* ./..?* # Non-POSIX Compliant → {*,.[!.]*,..?*} 
@@ -523,7 +523,19 @@ $ find . -maxdepth 1 -name '.' -o ... # Non-recursive and Omit . dir
 ```
 
 - **Is passed a directory and all matches begins with that directory in the command's output**. Therefore, errors probably don't arise when filename starts with a `-`, unlike globbing
-<br>
+
+> [!NOTE]-
+>
+> Just a random note to keep in mind when searching for files with `find`
+> ```bash
+> $ find . -name 'test' -type f
+> ```
+> Note that `-name` option comes before `-type` to avoid having to call _stat()_ syscall for each file
+>
+> `Find` man page →
+> 
+> > _The -name test comes before the -type test in order to avoid having to call stat(2) on every file_
+
 - **`find -exec` option allows to directly run commands with any matched file**. Although, if the pathnames are needed back into the shell, several alternatives arise →
 
 Before proceed to show them, take into account the following stuff →
@@ -609,6 +621,8 @@ Hence, since filenames can contain special chars like newlines `\n`, reading fil
 >> ```
 
 Some alternatives such as the following will also fail due to above problem →
+
+###### Incorrect Ways of Handling Filenames
 
 ```bash
 for _file in $( find . -name '.' -o -print )
@@ -754,7 +768,7 @@ done
 >
 > Above code is explained [[IFS#Eval + Printf|here]]
 >
-> Take into account that if a filename contains an embedded newline, that filename will continue to be splitted into different parts due to [[Word Splitting]]
+> Take into account that if a filename contains an embedded newline, that filename will continue to be split into different parts due to [[Word Splitting]]
 >
 > This happens because the`IFS`'s value is a newline `\n`. There is no workaround to handle that newline splitting
 >
@@ -768,7 +782,7 @@ $ cat $( find . -name '.' -o -print ) > ./foo
 > 
 > That **unquoted Command Substitution** undergoes [[Word Splitting]] and Globbing
 >
-> Therefore, any file whose name contains `$' \t\n'` will be splitted into several _fields/words_ (i.e. a file named `"John Doe.pdf` will be parsed as two files, `John` and `Doe.pdf`)
+> Therefore, any file whose name contains `$' \t\n'` will be split into several _fields/words_ (i.e. a file named `"John Doe.pdf` will be parsed as two files, `John` and `Doe.pdf`)
 >
 > Likewise, if a filename contains any globbing char like `*`, It will be expanded to the matched filenames in the current directory
 >
@@ -795,7 +809,7 @@ $ cat $( find . -name '.' -o -print ) > ./foo
 >
 > As in the previous cases, above expansion undergoes split-glob as It is not quoted
 > 
-> Therefore, any filename with embedded `IFS` chars will be splitted into several _fields/words_
+> Therefore, any filename with embedded `IFS` chars will be split into several _fields/words_
 >
 > The same applies with globbing, any glob char such as `*` will expand to the files matched
 >
@@ -808,8 +822,119 @@ do
 done
 ```
 
-> [!CAUTION] Wrong
+> [!CAUTION]- Wrong
 >
+> Above way handles correctly filenames with `\t` or blanks since `read`'s default behavior is to process an input stream until a newline `\n`
 > 
+> The problem arises when filenames contains `\n` since, as mentioned earlier, `read` splits that filename into several _fields/words_
+>
+> Leading and trailing whitespaces characters, such as blanks and tabs, are chopped off due to `IFS`'s default value `$' \t\n'`
+>
+> Remember that, in above action, any consecutive sequence of that characters is consolidated into a single delimiter and is trimmed (_leading, trailing or inner_)
+>
+> `read -r` is not used, therefore any backslash `\` followed by a specific character could be interpreted as an escape sequence rather than as a literal
+>
+>  Any modification or parameter assigment within `while loop` is not reflected in the Shell Parent's env due to the pipeline `|` as It creates a subshell for each command
 
-More information [here](https://dwheeler.com/essays/filenames-in-shell.html#save-restore)
+```bash
+find . -name '.' -o -print | while IFS= read -r _file
+do
+        printf "File -> %s\n" "$_file"
+done
+```
+
+> [!CAUTION]- Wrong
+>
+> This improves the above explained way to handle filenames, but It is still incorrect
+>
+> No _leading/trailing/inner_ whitespace chars are consolidated and trimmed as `IFS`'s value is an empty string
+>
+> Backslash characters are treated as literals now since `read -r` option is used
+>
+> However, this way fails dealing with files whose names contain an embedded newline, splitting them into serveral _words/fields_
+
+```bash
+$ find . -name '.' -o -print | xargs cat --
+```
+
+> [!CAUTION]- Wrong
+>
+> `Xargs` reads from stdin to parse a file as argument until a blank or newline `\n`
+>
+> Therefore, a filename that contains a blank or `\n` is split into several arguments that are passed to the `xargs`'s command. That would lead to an unintended actions 
+>
+> Above situation can be improved as follows →
+> ```bash
+> $ find . -name '.' -o -print | xargs -I{} cat -- {}
+> ```
+> `Xargs -I`'s argument option modifies default `xargs` behavior to read and process an argument until a newline (i.e. It excludes blanks as delimiters)
+>
+> However, It is still incorrect if a filename contains `\n`
+>
+> [[#_POSIX Compliant_ - Find -print0 + Xargs -0|See the correct approach]]
+
+As mentioned in above sections, a filename can contain any character unless _Null Byte `\0`_ or backslash `\`
+
+Since `find` process matched files and prints them line-by-line (i.e. one file per line), It's unfeasible to reprocess those ones through →
+
+- `read`'s default behavior as `read` process an input string until a newline char `\n`
+<br>
+- **Command Substitution** as It removes trailing newlines and has to be unquoted, therefore it undergoes [[Word Splitting]] and [[#Globbing]]
+
+Which can be improved modifying `IFS`'s value to a `\n` and disabling globbing through `set -f`. Although, the same problem arises, It cannot handle correctly filenames with newlines
+
+Therefore, process filenames line-by-line through those ways will fail
+
+A good approach is to separate pathnames with a _Null Byte_ `\0` rather than with a newline `\n` since filenames cannot contain `\0`
+
+Above way is [_POSIX Compliant_ since 2023](https://www.austingroupbugs.net/view.php?id=243), although It has been going on for a long time
+
+[See Issue 8](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/xargs.html#top)
+
+###### _POSIX Compliant_ - Find -exec '{}' \;
+
+```bash
+$ find . -name '.' -o -exec cat -- '{}' \;
+```
+
+> [!INFO]-
+>
+> It runs the command once for each file. It can be unwiedly if command is large
+>
+> Be aware that braces `{}` are enclosed in quotes to prevent that the Shell treats them sintactically meaningfull (**Brace expansion maybe**)
+>
+> The same applies with `;` as it's escaped (**Command termination**)
+
+###### _POSIX Compliant_ - Find -exec '{}' +
+
+```bash
+$ find . -name '.' -o -exec cat -- '{}' +
+```
+
+> [!INFO]-
+>
+> It runs much faster than the above one as long as command allows multiples filenames as arguments
+
+###### _POSIX Compliant_ - Find -print0 + Xargs -0
+
+```bash
+$ find . -name '.' -o -print0 | xargs -0 -I{} cat -- {}
+```
+
+> [!INFO]-
+> 
+> As mentioned earlier, `xargs` reads arguments from stdin delimited by blanks or newlines `\n`
+>
+> This default behaviour can be modified by the `-I` option (newlines as args delimiters, not blanks), and the recommended one `-0` (_Null Bytes_ as delimiters)
+>
+> In above command, `-print0` option modifies `find`'s output to use a _Null Byte_ as file delimiter instead a newline `\n` (i.e. one file per line)
+>
+> After that, `xargs -0` read from stdin (`find`'s stdout _fd1_) each argument until a _Null Byte_ rather than a blank or newline `\n`
+>
+> Finally, `xargs` passes those arguments to the specific command according to certain system limits
+
+Above commands are recommended if filename handling process is no longer than a few commands
+
+If a more complex filename processing task is required, such as the execution of several commands, the following are the feasible ones →
+
+###### 

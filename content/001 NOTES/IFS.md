@@ -203,7 +203,7 @@ When **Shell Expansion** is performed in shell's parsing, all unquoted expansion
 
 > [!INFO]-
 >
-> There're different types of shell expansion and they all occur in a set order after command has been splitted into tokens
+> There're different types of shell expansion and they all occur in a set order after command has been split into tokens
 > 
 > Ordered from the first to the last:
 >
@@ -859,7 +859,7 @@ As mentioned earlier, this situation can be improved **modifying `IFS` to a newl
 )
 ```
 
-With above code, because of `IFS` limited to just a newline, a line with blanks between non-whitespace chars is not splitted into several lines due to [[Word Splitting]] and the `foor loop` processing
+With above code, because of `IFS` limited to just a newline, a line with blanks between non-whitespace chars is not split into several lines due to [[Word Splitting]] and the `foor loop` processing
 
 Globbing character are not interpreted neither, therefore, no filename expansion is performed and no line is generated for each file matched with that glob pattern
 
