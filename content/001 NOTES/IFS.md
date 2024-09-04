@@ -669,7 +669,7 @@ foo()
 >
 > Just use `$( cat ./file )` rather than `$(< ./file )`
 >
-> Take into account that above code is correct as long as any Shell validation is implemented before it to prevent unintended results
+> Take into account that above code is correct as long as any [[Bash Versioning#Shell Check|Shell validation]] is implemented before it to prevent unintended results
 >
 > Since _POSIX-oriented_ shells such as _sh_ or _dash_ do not support above _Bash_-like functionality
 > ```bash

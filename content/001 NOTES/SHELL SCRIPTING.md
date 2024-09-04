@@ -28,7 +28,7 @@ foo(){
 
         while IFS= read -r _shell
         do
-                [[ $_shell == \#* ]] && continue
+                [[ $_shell == *sh ]] || continue
 
                 _shells+=("${_shell##*/}")
 
@@ -39,5 +39,10 @@ foo(){
 ```
 ```bash
 $ foo
-sh:bash:bash:rbash:rbash:sh:dash:dash:tmux:screen
+sh:bash:bash:rbash:rbash:sh:dash:dash
 ```
+
+---
+
+- ![](https://img.goodfon.com/wallpaper/big/c/9b/debian-linux-dark.jpg)
+	- [[POSIX]]

@@ -198,7 +198,7 @@ To deal with above aspects, it'd be more feasible to make use of `find` binary
 
 ##### Globbing
 
-###### _POSIX Compliant_ - Non-Hidden Files
+###### *POSIX Compliant* - Non-Hidden Files
 
 ```bash
 for _file in ./* # ./* instead of *
@@ -209,7 +209,7 @@ do
 done
 ```
 
-###### _POSIX Compliant_ - Including Hidden Files
+###### *POSIX Compliant* - Including Hidden Files
 
 ```bash
 for _file in ./* ./.[!.]* ./..?* # Non-POSIX Compliant → {*,.[!.]*,..?*} 
@@ -290,7 +290,7 @@ foo()
 >
 > Note that `globstar` Bash extension was added on *BASH 4.0 (2006)*. This does not include MACOS devices, whose latest Bash version is 3.2.57, due to licensing issues.
 >
-> To prevent unintended errors, add some Bash version validation on `.bash` scripts →
+> To prevent unintended errors, add some [[Bash Versioning|Bash version validation]] on `.bash` scripts →
 > ```bash
 > bar()
 > {
@@ -871,7 +871,8 @@ $ find . -name '.' -o -print | xargs cat --
 >
 > However, It is still incorrect if a filename contains `\n`
 >
-> [[#_POSIX Compliant_ - Find -print0 + Xargs -0|See the correct approach]]
+> [[#*POSIX Compliant* - Find -print0 + Xargs -0|See the correct approach]]
+>
 
 As mentioned in above sections, a filename can contain any character unless _Null Byte `\0`_ or backslash `\`
 
@@ -891,7 +892,7 @@ Above way is [_POSIX Compliant_ since 2023](https://www.austingroupbugs.net/view
 
 [See Issue 8](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/xargs.html#top)
 
-###### _POSIX Compliant_ - Find -exec '{}' \;
+###### *POSIX Compliant* - Find -exec '{}' \;
 
 ```bash
 $ find . -name '.' -o -exec cat -- '{}' \;
@@ -905,7 +906,7 @@ $ find . -name '.' -o -exec cat -- '{}' \;
 >
 > The same applies with `;` as it's escaped (**Command termination**)
 
-###### _POSIX Compliant_ - Find -exec '{}' +
+###### *POSIX Compliant* - Find -exec '{}' +
 
 ```bash
 $ find . -name '.' -o -exec cat -- '{}' +
@@ -915,7 +916,7 @@ $ find . -name '.' -o -exec cat -- '{}' +
 >
 > It runs much faster than the above one as long as command allows multiples filenames as arguments
 
-###### _POSIX Compliant_ - Find -print0 + Xargs -0
+###### *POSIX Compliant* - Find -print0 + Xargs -0
 
 ```bash
 $ find . -name '.' -o -print0 | xargs -0 -I{} cat -- {}
@@ -937,4 +938,97 @@ Above commands are recommended if filename handling process is no longer than a 
 
 If a more complex filename processing task is required, such as the execution of several commands, the following are the feasible ones →
 
-###### 
+###### *POSIX Compliant* - Find -print0 + IFS= Read -d '' (Pipelined)
+
+```bash
+find . -name '.' -o -print0 | while IFS= read -rd '' _file
+do
+        printf "File -> %s\n" "$_file"
+done
+```
+
+> [!INFO]-
+>
+> `Find`'s output format is modified due to `-print0` option as it splits filenames matched in _Null Bytes_ `\0` rather than in newlines `\n`
+>
+> `read -d ''` modifies `read`'s default behavior to process the input string until a _Null Byte_ instead of until a newline `\n`
+>
+> Those actions improve the following one, seen earlier →
+> ```bash
+> find . -name '.' -o -print | while IFS= read -r _file # WRONG!
+> do
+>         printf "File -> %s\n" "$_file" 
+> done
+> ```
+>
+> Note the above one fails and may create unintended results if a filename contains a newline `\n`, as `read` processes input string until a newline
+>
+> Therefore, _Null Byte_ related options such as `find -print0` and `read -d ''` prevent this behavior
+>
+> As said, since a filename cannot contain a _Null Byte_ `\0` and `read -d ''` processes an input string until a _Null Byte_, a filename cannot be splitted into several parts, It's a unit
+>
+> Furthermore, `IFS` is set to an empty string to prevent leading and trailing whitespace chars trimming and `read -r` treates backslash chars `\` as literals
+>
+> Be aware that `while loop` occurs in a subshell `( )` due to the pipeline `|`, so parameter assigment or modification may be _lost/unset_ in Shell Parent's environment
+
+###### *Non-POSIX Compliant* - Find -print0 + IFS= Read -d '' (Process Substitution)
+
+```bash
+while IFS= read -rd '' _file # read -d → Null Byte delimiter
+do
+        printf "File -> %s\n" "$_file"
+
+done < <( find . -name '.' -o -print0 ) # Process Substitution
+```
+
+> [!IMPORTANT]-
+>
+> Non-standard way, as it uses **Process Substitution** `<( )`, which is not _POSIX Compliant_
+>
+> [Process Substitution](https://www.gnu.org/software/bash/manual/bash.html#Process-Substitution) is specific to *[[BASH]], ZSH and KSH 93*
+>
+> With prior code, parameters **retains** its value in Shell Parent's env as **no subshell** is used
+>
+> `while loop`'s stdin (fd 0) is not empty. This can be changed as follows →
+>
+> ```bash
+> while IFS= read -rd '' _file 0<&4
+> do
+>       printf "File -> %s\n" "$_file"
+>
+> done 4< <( find . -name '.' -o -print0 )
+> ```` 
+>
+> Above command frees `read`'s stdin since `read` process the input from _fd 4_
+>
+> Specifically, this occurs:
+>
+> - **Process Substitution** → `find` is run within a subshell and its output is redirected to a _pipeline/tempfile_ `/dev/fd`
+> <br>
+> - **File Descriptor** → Within the `while loop` context, that `/dev/fd` tempfile is opened in _read mode_ and assigned to the _file descriptor 4_
+>
+> Therefore, _file descriptor 4_ is created and refers to the resource opened in _read mode_
+>
+> - **Read's Processing** → `read` processes the input from _file descriptor 4_ instead of from _file descriptor 0_ (i.e. Its stdin)
+>
+> Note that `while loop` is executed until `read` returns _false_ (i.e. `read` arrives to _EOF_)
+
+###### *POSIX Compliant* - Find -print0 + IFS= Read -d '' (FIFOS)
+
+```bash
+mkfifo -- ./namedpipe # FIFO creation
+
+find . -name '.' -o -print0 > ./namedpipe & # Find's output to FIFO in bg
+
+while IFS= read -rd '' _file 0<&4 # reads from FD4 rather than stdin (FD0)
+do
+        printf "File -> %s\n" "$_file"
+
+done 4< ./namedpipe # FIFO opened on read mode and assigned to FD4
+```
+
+> [!INFO]
+>
+> _Namedpipe_ or _FIFO_ is used rather than **Process Substitution**, which makes it _POSIX Compliant_
+>
+> 
