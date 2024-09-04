@@ -49,7 +49,7 @@ foo()
 > If It is not run by a [[BASH|Bash]], returns _false_. Thus, can be chained with →
 >
 > ```bash
-$ foo || exit 99 # Script exits with a 99 Error code if not a Bash
+> $ foo || exit 99 # Script exits with a 99 Error code if not a Bash
 >```
 >
 > It's _POSIX Compliant_ since only a `case` statement is used with **Command Substitution** and Standard [[Globbing]]
