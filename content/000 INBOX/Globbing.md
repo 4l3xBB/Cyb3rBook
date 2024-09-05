@@ -11,8 +11,15 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[BASH]]
 
+| **RESOURCES** | | |
+| --- | --- | --- |
+| **David A. Wheeler** | How to handle filenames correctly | [See Here](https://dwheeler.com/essays/filenames-in-shell.html) |
+| **Stephane Chazelas** | Handle filenames safely | [See Here](https://mywiki.wooledge.org/BashFAQ/020) |
+| **Stephane Chazelas** | Never parse `ls`'s output | [See here](https://mywiki.wooledge.org/ParsingLs) |
+
+
 | **Globs**  |                 **Meaning**                 |  **e.g**   |
-| :--------: | :-----------------------------------------: | :--------: |
+| -------- | ----------------------------------------- | -------- |
 |   **\***   |      **Match any str, of any lenght**       |  **foo**   |
 | **foo\***  |    **Match any str beginning with foo**     | **footer** |
 |  **bar?**  | **Match bar followed by one or cero chars** |  **bart**  |
@@ -75,7 +82,7 @@ To avoid this issue, check file existence before executing any command which has
 ```bash
 for _file in ./*
 do
-        [ -e "$_file" ] || continue # Use [ ] Instead of [[ ]]
+        [ -e "$_file" ] || [ -L "$_file" ] || continue # [ ] Instead of [[ ]]
 
         printf "File -> %s\n" "$_file"
 done
@@ -83,6 +90,14 @@ done
 
 > [!IMPORTANT]-
 > Use `test` or `[ ]` [[Shell Builtins]] instead of `[[ ]]` non-standard Bash
+>
+> Note that `[ -e string ]` checks if a string is an existent file in the system. If not, above code also checks if the string is a _Soft Link (Symbolic Link)_
+>
+> This is done since the string can be a broken _Soft Link_  that it could be restored later
+>
+> If only `[ -e string ]` check is performed and the string is a _soft link_, It will return _false_ as that _soft link_ is pointing to a non-existent file
+>
+> That is why `[ -L string ]` is used, to check if that string is a broken link and treat it
 
 ###### Non-Standard Shell Extension → `Nullglob`
 
@@ -151,11 +166,14 @@ This **`Nullglob` Non-Standard Shell Expansion** results way more efficient than
 Note that **Globbing** should only be used on `for` loops. If used as non-option command argument, and expasion results on a too long Filename List, command may not handle correctly all arguments
 
 - **`./`** → Prevents file processing, whose name starts with `-`, as a non-option cmd argument
+<br>
 - **`--`** → Denotes the end of option argumentes. It should be used as a additional measure, not the only one
+<br>
 - **`./.[!.]* ./..?*` or `dotglob`** → Adds hidden files to glob expansion list
+<br>
 - **`[ -e file ]` or `nullglob`** → Avoids to process non existent files
 
-But, with the above measures applied, the following case may arise →
+But, with the above measures applied, the following case may arises →
 
 ```bash
 # Incorrect, It may cause command hang-up
@@ -203,7 +221,8 @@ To deal with above aspects, it'd be more feasible to make use of `find` binary
 ```bash
 for _file in ./* # ./* instead of *
 do
-        [ -e "$_file" ] || continue # POSIX → [ ] instead of [[ ]]
+		# POSIX → [ ] instead of [[ ]]
+        [ -e "$_file" ] || [ -L "$_file" ] || continue
         
         cat -- "$_file" # -- → referring to end of cmd options
 done
@@ -214,7 +233,7 @@ done
 ```bash
 for _file in ./* ./.[!.]* ./..?* # Non-POSIX Compliant → {*,.[!.]*,..?*} 
 do
-        [ -e "$_file" ] || continue
+        [ -e "$_file" ] || [ -L "$_file" ] || continue
 
         cat -- "$_file"
 done
@@ -345,7 +364,8 @@ foo()
 
         for _file in ./** # With above Bash extensions enabled
         do
-                # [ -e "$_file" ] if nullglob not enabled ( less efficient )
+                # [ -e "$_file" ] || [ -L "$_file" ] if nullglob not enabled
+				# Less efficient but POSIX Compliant
                 command -- "$_file"
         done
 
@@ -1011,6 +1031,8 @@ done < <( find . -name '.' -o -print0 ) # Process Substitution
 >
 > - **Read's Processing** → `read` processes the input from _file descriptor 4_ instead of from _file descriptor 0_ (i.e. Its stdin)
 >
+> `Read` inherits the file descriptor from the `while loop` just as a Child process inherits them from its Parent process
+>
 > Note that `while loop` is executed until `read` returns _false_ (i.e. `read` arrives to _EOF_)
 
 ###### *POSIX Compliant* - Find -print0 + IFS= Read -d '' (FIFOS)
@@ -1027,8 +1049,84 @@ do
 done 4< ./namedpipe # FIFO opened on read mode and assigned to FD4
 ```
 
-> [!INFO]
+> [!INFO]-
 >
-> _Namedpipe_ or _FIFO_ is used rather than **Process Substitution**, which makes it _POSIX Compliant_
+> _Namedpipe_ or _FIFO_ is used rather than **Process Substitution**, which makes it _[[POSIX|POSIX Compliant]]_
 >
+> `Find`'s output (_fd 1_) is redirected to the _FIFO_ opened. That `find` process is sent to the background to allow
+>
+> This makes that while `find` process is writing to the _namedpipe_, the `while loop` is reading from it
 > 
+> That is, the  _FIFO_ connects `find`'s stdout (_fd 1_) with `read`'s stdin (_fd 0_)
+>
+> The `&` character is necessary to parallelise the execution of both processes
+>
+> As a _FIFO_ acts synchronously, if the process writing to the _FIFO_ is not sent to the background, the script flow will stop until a process reads from that _namedpipe_
+>
+> Therefore, `find` writes to the _FIFO_ in the background, the _FIFO_ is opened in read mode and the _file descriptor 4_ is assigned to it. Then, `read` reads from that _fd_, all this in parallel
+>
+> Note that the _file descriptor 4_ refers to the open _FIFO_  in read mode. This _fd_ is only created in the `while loop`'s context
+>
+> As mentioned earlier, the creation of that _file descriptor_ frees the `while loop`'s *stdin* and any process's *stdin* inside the loop
+
+> [!CAUTION]-
+>
+> It is important to create a new _file descriptor_, which refers to the FIFO opened in read mode, as the _stdin_ of the `while loop` and of the processes inside that loop is freed
+>
+> Thus, any process which reads from its _stdin_ will not process the _FIFO_'s content
+
+> **_Cleaner but not POSIX Compliant_**
+
+```bash
+foo()
+{
+        local -- _file= _FIFO=./namedpipe # Scope limited to the function
+
+        trap 'rm --force "$_FIFO"' RETURN # FIFO Cleanup
+
+        mkfifo -- "$_FIFO" # FIFO Creation
+
+        find . -name '.' -o -print0 > "$_FIFO" & # Find writes to the FIFO
+
+        while IFS= read -rd '' _file 0<&4 # Read reads from the FIFO (FD4)
+        do
+                printf "File -> %s\n" "$_file"
+
+        done 4< "$_FIFO" # FD 4 created refering to the FIFO
+
+        return 0
+}
+```
+
+> [!INFO]-
+>
+> Above code limits the parameter assigment and modification scope to the function through `local`
+>
+> It also removes the previous _FIFO_ created when the function returns any value due to `trap '' RETURN`
+>
+> However, those actions are not _[[POSIX|POSIX Compliant]]_, neither `local` nor `trap '' RETURN`
+>
+> Therefore, a [[Bash Versioning#Shell Check|Shell Check]] can be performed to avoid unintended actions if the script is executed via a _POSIX Compliant_ shell such as _dash or sh_
+>
+> Or if not, the above one can be modified as follows →
+>
+> ```bash
+> foo()
+> {
+>         _file= _FFO=./namedpipe # Global Scope
+>
+>         mkfifo -- "$_FIFO"
+>
+>         find . -name '.' -o -print0 > "$_FIFO" &
+>
+>         while IFS= read -rd '' _file 0<&4
+>         do
+>                 printf "File -> %s\n" "$_file"
+>
+>         done 4< "$_FIFO"
+>
+>         [ -p "$_FIFO" ] && rm --force "$_FIFO" # FIFO Cleanup
+>
+>         unset -v -- _file _FIFO # Unset assigned parameters globally
+> }
+> ```

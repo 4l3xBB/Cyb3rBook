@@ -30,7 +30,7 @@ It also can be installed as **CLI _Tool/Utility_** →
 $ sudo apt install shellcheck -y # Debian-based Distro
 ```
 
-##### *POSIX Compliant* Check
+##### *POSIX Compliant Check*
 
 ```bash
 $ shellcheck --shell=sh # or shell=dash
