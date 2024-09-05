@@ -15,6 +15,8 @@ cssclasses:
 - ![|250](https://avatars.githubusercontent.com/u/147928622?v=4)
 	- [[ROOT]]
 
+<br>
+
 #### DISCLAIMER❗
 
 ☣️ Please note that I'm not responsible for the use of any of the Vulnerabilites, Attack Vectors or Exploits that appear or are explained here,  the same applies to my [Github Account](https://github.com/4l3xBB) ☣️
