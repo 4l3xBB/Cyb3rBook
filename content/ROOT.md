@@ -5,7 +5,7 @@ banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=174
 banner_y: 0.88286
 cssclasses:
   - card-list
-  - blue-style
+  - purple-style
 ---
 
 # 4L3X ⚝
@@ -15,4 +15,4 @@ cssclasses:
 - ![](https://img.freepik.com/premium-photo/cartoon-girl-with-glasses-hoodie-with-word-broken-it_784625-10966.jpg)
 	- [[PENTESTING]]
 - ![](https://img.freepik.com/premium-photo/robot-with-hood-that-says-i-am-robot_937795-695.jpg)
-	- [[SHELL SCRIPTING]]
+	- [[SCRIPTING]]
