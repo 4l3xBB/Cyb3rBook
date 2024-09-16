@@ -1,6 +1,6 @@
 ---
 Primary_category: "[[PENTESTING]]"
-title: SETUP
+title: "SETUP"
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
@@ -15,7 +15,7 @@ cssclasses:
 
 #### Environment Customization
 
-| **SOURCES** |
+| **SOURCES** | | |
 | --- | --- | --- |
 | **[Parrot](https://parrotsec.org/)** | Operative System | **[See more](https://parrotsec.org/docs/)** |
 | **[bspwm](https://github.com/baskerville/bspwm)** | Windows Manager | **[See more](https://wiki.archlinux.org/title/Bspwm)** |
@@ -47,6 +47,59 @@ cssclasses:
 	- [[KITTY]]
 	
 <br>
+
+This Custom Linux Environment is deployed in _Parrot OS_ 🦜
+
+Before start with the above Components' Installation and Configuration →
+
+```bash
+$ sudo apt update # Repositories' update
+```
+
+```bash
+$ sudo parrot-upgrade
+```
+
+> [!CAUTION]-
+>
+> Be aware that the following upgrading way is not recommended →
+>
+> ```bash
+> $ sudo apt upgrade # Or sudo apt full-upgrade
+> ```
+> The above way may arises several errors such as the _Kernel Panic_ ones on reboot due to specific packages
+>
+> Therefore, the [Parrot](https://parrotsec.org/docs/) Team has created `parrot-upgrade`, a simple bash script, to avoid the mentioned problems
+>
+> ```bash
+> $ command -V parrot-upgrade
+> parrot-upgrade is /usr/bin/parrot-upgrade
+> ```
+>
+> ```bash
+> #!/bin/bash
+> set -e
+> DEBIAN_FRONTEND="noninteractive"
+> DEBIAN_PRIORITY="critical"
+> DEBCONF_NOWARNINGS="yes"
+> export DEBIAN_FRONTEND DEBIAN_PRIORITY DEBCONF_NOWARNINGS
+> apt update || echo failed to update index lists
+> dpkg --configure -a || echo failed to fix interrupted upgrades
+> apt --fix-broken --fix-missing install || echo failed to fix conflicts
+> apt -y --fix-broken --fix-missing full-upgrade
+> apt -y full-upgrade
+> ```
+>
+> Thus, on _Parrot OS_, instead of this →
+>
+> ```bash
+> $ sudo apt update && sudo apt upgrade -y
+> ```
+> Do this →
+>
+> ```bash
+> $ sudo apt update && sudo parrot-upgrade
+> ```
 
 ##### Customised Functions
 
