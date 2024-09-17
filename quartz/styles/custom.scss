@@ -465,13 +465,13 @@ article.purple-style.card-list > ul > li { /* cards border and shadow */
 
 /* 
 ###########################################################
-# END -> CSS STYLE RELATED TO CARD-LIST                   #
+#          END -> CSS STYLE RELATED TO CARD-LIST          #
 ###########################################################
 */
 
 /* 
 ###########################################################
-# BLOCK CODE AND LINE CODE SYNTAX                         #
+#              BLOCK CODE AND LINE CODE SYNTAX            #
 ###########################################################
 */
 
@@ -514,7 +514,7 @@ code span {
 
 /* 
 ###########################################################
-# MARKDOWN ALERTS (TIP,CAUTION,INFO,HINT,IMPORTANT...)    #
+#   MARKDOWN ALERTS (TIP,CAUTION,INFO,HINT,IMPORTANT...)  #
 ###########################################################
 */
 
@@ -532,4 +532,25 @@ blockquote.callout > .callout-title > div.fold-callout-icon {
 
 blockquote.callout > .callout-title > .callout-title-inner p {
     margin-top: -0.175rem;
+}
+
+/* 
+###########################################################
+#######################   LINKS   #########################
+###########################################################
+*/
+
+article a {
+    color: var(--accent-2);
+    background: none !important;
+}
+
+/* 
+########################################################
+#################  QUARTZ TAGS SECTION   ###############
+########################################################
+*/
+
+div.page-listing a {
+    color: var(--accent-2);
 }

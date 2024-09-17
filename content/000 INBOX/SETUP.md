@@ -52,7 +52,7 @@ This Custom Linux Environment is deployed in _Parrot OS_ 🦜
 
 **The Deployment Flow would be →**
 
-**bwpwm & sxhkd → **
+**bwpwm & sxhkd →**
 
 Before start with the above Components' Installation and Configuration →
 
