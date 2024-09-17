@@ -57,6 +57,235 @@ bspc is /usr/local/bin/bspc
 First of all, install the following requirements →
 
 ```bash
-$ apt install -y -- build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev
+$ sudo apt install -y -- build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev
 ```
 
+Clone the [bspwm's Github Repository](https://github.com/baskerville/bspwm) →
+
+```bash
+$ cd ~/Downloads
+$ git clone https://github.com/baskerville/bspwm.git bspwm
+```
+
+```bash
+$ cd !$ # cd ~/Downloads/bspwm
+$ make
+$ sudo make install
+```
+
+`.config/bspwm` directory and `bspwmrc` file →
+
+```bash
+$ mkdir -p ~/.config/bspwm
+$ cp ~/Downloads/bspwm/examples/bspwmrc !$
+```
+
+
+
+##### Configuration Files
+
+> [!IMPORTANT]-
+>
+> `bspwmrc` file is executed with the following command by `lightdm` process →
+>
+> ```bash
+> $ bspwm -c /path/to/bspwmrc
+> ```
+>
+> Therefore, the shell interpreter that executes `bspwmrc` is the one indicated by the _shebang_
+>
+> It's recommended to use a _[[POSIX|POSIX Compliant]]_ shell such as _sh_ or _dash_
+>
+> ```bash
+> #!/usr/bin/env sh 
+> ````
+> ```bash
+> #!/usr/bin/env dash
+> ```
+
+**Two files are required →**
+- **`~/.config/bspwm/bspwmrc`** → `bspwm`'s Configuration File
+- **`~/.config/bspwm/src/bspwmrc.sh`** → `bspwmrc` sources it
+
+###### _bspwmrc_
+
+> [!NOTE]- Non _POSIX Compliant_ Version
+>
+> ```bash
+> #!/usr/bin/env sh                                   
+>
+> # Import required Functions and Parameters
+> if [ -f ~/.config/bspwm/src/bspwmrc.sh ] ; then
+>   . ~/.config/bspwm/src/bspwmrc.sh
+> fi
+>
+> bspc monitor -d I II III IV V VI VII VIII IX X
+>
+> bspc config border_width         2
+> bspc config window_gap          12
+>
+> bspc config split_ratio          0.52
+> bspc config borderless_monocle   true
+> bspc config gapless_monocle      true
+>
+> bspc rule -a Gimp desktop='^8' state=floating follow=on
+> bspc rule -a Chromium desktop='^2'
+> bspc rule -a mplayer2 state=floating
+> bspc rule -a Kupfer.py focus=on
+> bspc rule -a Screenkey manage=off
+>
+> # No Windows Border
+> bspc config border_width 0
+>
+> # VMWare Bidirectional Clipboard
+> vmware-user-suid-wrapper &
+>
+> # Sxhkd Init
+> checkProcess sxhkd || launchProcess sxhkd
+>
+> # Polybar Init
+> checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
+>
+> # Picom Init
+> checkProcess picom || launchProcess picom
+>
+> # Feh Init (Desktop Wallpaper)
+> /usr/bin/feh --bg-fill /home/al3xbb/Desktop/Fondos/Fondo.jpg &
+> # Avoid Compatibility errors with Java applications (Burpsuite...)
+> # Change the Windows Manager Name from bspwm to LG3D (Only the name)
+> wmname LG3D &
+> ```
+>
+
+> [!CAUTION]- Non _POSIX Compliant_ Version
+>
+> ```bash
+> #!/usr/bin/env bash
+>
+> # Import required Functions and Parameters
+> if [[ -f ~/.config/bspwm/src/bspwmrc.sh ]] ; then
+>   . ~/.config/bspwm/src/bspwmrc.sh
+> fi
+>
+> bspc monitor -d I II III IV V VI VII VIII IX X
+>
+> bspc config border_width         2
+> bspc config window_gap          12
+>
+> bspc config split_ratio          0.52
+> bspc config borderless_monocle   true
+> bspc config gapless_monocle      true
+>
+> bspc rule -a Gimp desktop='^8' state=floating follow=on
+> bspc rule -a Chromium desktop='^2'
+> bspc rule -a mplayer2 state=floating
+> bspc rule -a Kupfer.py focus=on
+> bspc rule -a Screenkey manage=off
+>
+> # No Windows Border
+> bspc config border_width 0
+>
+> # VMWare Bidirectional Clipboard
+> vmware-user-suid-wrapper &
+>
+> # Sxhkd Init
+> checkProcess sxhkd || launchProcess sxhkd
+>
+> # Polybar Init
+> checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
+>
+> # Picom Init
+> checkProcess picom || launchProcess picom
+>
+> # Feh Init (Desktop Wallpaper)
+> /usr/bin/feh --bg-fill /home/al3xbb/Desktop/Fondos/Fondo.jpg &
+> # Avoid Compatibility errors with Java applications (Burpsuite...)
+> # Change the Windows Manager Name from bspwm to LG3D (Only the name)
+> wmname LG3D &
+> ```
+>
+
+###### src/bspwmrc.sh
+
+> [!NOTE]- _POSIX Compliant_ Version
+> ```bash
+> ####################################################
+> ###################  PARAMETERS  ###################
+> ####################################################
+> 
+> _pbl=~/.config/polybar/launch.sh
+> 
+> #####################################################
+> ####################  FUNCTIONS  ####################
+> #####################################################
+> 
+> # ------- Get an External Binary's Path ------- #
+> getCmd ()
+> {
+>   _cmdPath=$( command -v "$1" )
+>   [ -n "$_cmdPath" ] && return 0 || return 1
+> }
+> 
+> # ------- Check if a Process is running or not ------- #
+> checkProcess ()
+> {
+>   pgrep -x "$1" > /dev/null 2>&1 && return 0 || return 1
+> }
+> 
+> # ------- Launch a {script,binary} as a process ------- #
+> launchProcess ()
+> {
+>   _cmd=''
+>   case $1 in
+>     */*)  [ -f "$1" ] && _cmd=$1 || return 1
+>           ;;
+>     *)    getCmd "$1" || return $?
+>           _cmd=$_cmdPath ; unset -v -- _cmdPath
+>           ;;
+>   esac
+>   [ -x "$_cmd" ] && "$_cmd" &
+>   unset -v -- _cmd
+> }
+> ```
+>
+
+> [!CAUTION]- Non _POSIX Compliant_ Version
+>
+> ```bash
+> ####################################################
+> ###################  PARAMETERS  ###################
+> ####################################################
+> 
+> _pbl=~/.config/polybar/launch.sh
+> 
+> #####################################################
+> ####################  FUNCTIONS  ####################
+> #####################################################
+>
+> # ------- Get an External Binary's Path ------- #
+> checkCmd ()
+> {
+>   local -n -- _cmdPath=$2
+>   _cmdPath=$( command -v "$1" )
+>   [[ -n $_cmdPath ]] && return 0 || return 1
+> }
+> 
+> # ------- Check if a Process is running or not ------- #
+> checkProcess ()
+> {
+>   pgrep -x "$1" &> /dev/null && return 0 || return 1
+> }
+> 
+> # ------- Launch a {script,binary} as a process ------- #
+> launchProcess ()
+> {
+>   local -- _cmd=
+>   if [[ $1 = */* ]] ; then
+>     [[ -f $1 ]] && _cmd=$1 || return 1
+>   else
+>     checkCmd "$1" _cmd || return $?
+>   fi
+>   [[ -x $_cmd ]] && "$_cmd" &
+> }
+> ```
+>
