@@ -2,11 +2,10 @@
 Primary_category: "[[SETUP]]"
 title: SXHKD
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
 tags:
   - CustomEnvironment🦜
-  - pentesting👹
 cssclasses:
 ---
 
@@ -80,37 +79,66 @@ $ cp ~/Downloads/bspwm/examples/sxhkdrc !$
 
 ###### bspwm Section
 
-All _hotkey/key binding_ related to `bspwm` appears in the above link
+> The rest of the _key bindings_ related to `bspwm` in the `sxhkdrc` file are in the link above
 
-###### Kitty and Rofi Sections
+In the `bspwm` keybinding section, a custom [[BASH|bash]] script is set as the command to be executed when the following input events (hotkeys) are performed →
 
 ```bash
-################################################
-############# WM INDEPENDENT KEYS  #############
-################################################
+# Floating Windows' Custom Resize
+super + alt + {h,j,k,l}
+    /home/al3xbb/.config/bspwm/bin/bspwm_resize.sh {west,south,north,east}
+```
 
-## ----------------------------- ##
-## ----- terminal emulator ----- ## KITTY
-## ----------------------------- ##
+Create a directory inside `~/.config/bspwm` called `bin` and store the following `bspwm_resize.sh`'s content as a script (i.e. an **executable** file)
 
+```bash
+$ mkdir ~/.config/bspwm/bin
+$ touch bspwm_resize.sh
+$ chmod +x !$
+$ nvim $
+```
+
+> [!IMPORTANT]- bspwm_resize.sh
+>
+> ```bash
+> #!/usr/bin/env bash
+> 
+> if bspc query -N -n focused.floating > /dev/null ; then
+>     step=20
+> else
+>     step=100
+> fi
+>
+> case $1 in
+>     west) dir=right; falldir=left; x="-$step"; y=0;;
+>     east) dir=right; falldir=left; x="$step"; y=0;;
+>     north) dir=top; falldir=bottom; x=0; y="-$step";;
+>     south) dir=top; falldir=bottom; x=0; y="$step";;
+> esac
+>
+> bspc node -z "$dir" "$x" "$y" || bspc node -z "$falldir" "$x" "$y"
+> ```
+>
+
+###### Kitty Section
+
+```bash
 super + Return
   /opt/kitty/bin/kitty
+```
 
-## ---------------------------- ##
-## ----- program launcher ----- ## ROFI
-## ---------------------------- ##
+> Note that _super_ refers to the _Windows_ key
 
+###### Rofi Section
+
+```bash
 super + d
   /usr/bin/rofi -show run
 ```
 
-###### Other Processes Section
+###### Other Processess Section
 
 ```bash
-####################################################
-#################  OTHER PROGRAMS  #################
-####################################################
-
 # Open Firefox (Browser)
 super + shift + f
     /usr/bin/firefox
