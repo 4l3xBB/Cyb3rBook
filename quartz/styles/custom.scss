@@ -554,3 +554,13 @@ article a {
 div.page-listing a {
     color: var(--accent-2);
 }
+
+/* 
+########################################################
+#################  MARKDOWN QUOTATIONS  ################
+########################################################
+*/
+
+blockquote:not([class]) {
+    border-left: 3px solid var(--accent-2);
+}
