@@ -13,6 +13,78 @@ cssclasses:
 
 **[kitty](https://github.com/kovidgoyal/kitty) → Fast and Feature-Rich GPU Based Terminal Emulator**
 
-It is an **enhanced terminal** whose structure is organised into tabs
+It is an **enhanced terminal** with a _tabbed/tiling_ structure focused in performance and customization
 
-Each tab
+Each tab can be divided into several _panes/windows_
+
+Some of this **features** are →
+
+- **Multiple Instances and Windows**
+<br>
+- **Setting of _Keybinds/Hotkeys_  via a simple configuration file**
+<br>
+- **Image and Emojis Display**
+
+```bash
+$ kitty +kitten icat /path/to/image
+```
+
+- **SSH Protocol support**
+
+```bash
+$ kitty +kitten ssh user@hostname
+```
+
+Note that the above commands use the syntax `kitty +kitten`
+
+`kittens` are small integrated programs that extend `kitty`'s capacity - [See here](https://sw.kovidgoyal.net/kitty/kittens_intro/)
+
+`kitty` is launched by the [[SXHKD|sxhkd]] daemon when a certain input event, such as a _Hotkey_, is performed
+
+```bash
+# ~/.config/sxhkd/sxhkdrc - Kitty Launch Hotkey
+super + Return
+  /opt/kitty/bin/kitty
+```
+
+**Configuration File → `~/.config/kitty/kitty.conf`**
+
+**More information [here](https://github.com/kovidgoyal/kitty)**
+
+>  💫 Awesome Documentation → **[Kitty Site](https://sw.kovidgoyal.net/kitty/)**
+
+---
+
+##### Installation
+
+> [!CAUTION]-
+>
+> First, see the [[BSPWM|bspwm's installation]] before proceeding with this one related to `sxhkd`
+>
+> There are some dependencies that are needed in the following installation steps
+>
+
+---
+
+##### Configuration File
+
+> **Copy from [here](https://pastebin.com/9PxJas1E) the `kitty` Full Configuration File** 
+
+**Configuration File Documentation → [kitty.conf](https://sw.kovidgoyal.net/kitty/conf/)**
+
+---
+
+##### Actions and Default Shortcuts
+
+**All mappable actions [here](https://sw.kovidgoyal.net/kitty/actions/)**
+
+**All default shortcuts [here](https://sw.kovidgoyal.net/kitty/overview/#tabs-and-windows)**
+
+---
+
+##### Custom Shortcuts
+
+
+
+
+

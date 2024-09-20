@@ -65,7 +65,7 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 
 ---
 
-##### Polybar Installation
+##### Installation
 
 > [!CAUTION]-
 >

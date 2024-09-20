@@ -50,7 +50,7 @@ checkProcess picom || launchProcess picom
 
 ---
 
-##### picom Installation
+##### Installation
 
 > [!CAUTION]-
 >

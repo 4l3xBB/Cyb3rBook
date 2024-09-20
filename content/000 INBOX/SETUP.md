@@ -119,7 +119,9 @@ $ sudo apt install -y -- scrot scrub xclip bar locate ranger neofetch wmname acp
 
 ---
 
-##### Additional Notes
+#### Additional Notes
+
+##### Sessions Management and Shutdown
 
 During the installation of the above components, the user will have to be shutting down, restarting, logging out or simply blocking (i.e _lock_) the current session
 
@@ -171,7 +173,7 @@ $ loginctl terminate-session <session_number> # Finish a Session
 
 It can be handled through the _X Session Manager_ called `lightDM`
 
-To interact with the `lightdm` daemon, the `dm-tool` should be used
+To interact with the `lightdm` daemon, the `dm-tool` binary comes into actions
 
 ```bash
 $ dm-tool switch-to-greeter # Like the Change-User option in Windows

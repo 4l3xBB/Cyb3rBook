@@ -19,10 +19,10 @@ Displays to the user a list of options from which one or more options can be sel
 
 In this case, It is a list of the applications that are installed on the system
 
-`rofi` is launched by the [[SXHKD|sxhkd]] daemon when a certain input event, such as a _Hotkey, _ is performed
+`rofi` is launched by the [[SXHKD|sxhkd]] daemon when a certain input event, such as a _Hotkey_, is performed
 
 ```bash
-# ~/.config/sxhkd/sxhkdrc
+# ~/.config/sxhkd/sxhkdrc - Rofi Launch Hotkey
 super + d
   /usr/bin/rofi -show run
 ```
@@ -37,7 +37,7 @@ super + d
 
 ---
 
-##### rofi Installation
+##### Installation
 
 > [!CAUTION]-
 >
