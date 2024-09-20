@@ -50,7 +50,7 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 >
 > The `$_pbl` parameter is also declared in that file being the **Polybar Launcher Path**
 >
-> Above implementation would be something similar to the usual approach through `pgrep --exact process_name || process_name|script_path &` 
+> Above implementation would be something similar to the usual approach through `pgrep --exact process_name || binary|script_path &` 
 >
 > ```bash
 > #!/usr/bin/env sh
@@ -62,6 +62,8 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 **More information [here](https://github.com/polybar/polybar/wiki)**
 
 **[Polybar Site](https://polybar.github.io/)**
+
+---
 
 ##### Polybar Installation
 
@@ -76,10 +78,19 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 $ apt install -y -- polybar
 ```
 
+That's it
 
+```bash
+$ command -V polybar
+polybar is /usr/bin/polybar
+```
 
 > [!IMPORTANT]-
 >
 > Installation can be done either through the OS package manager or via the `git clone` command
 >
-> Note that the default OS repositories listed in `/etc/apt/sources.list` file and in `/etc/apt/sources.list.d` directory may have older versions unlike the `polybar`'s official Github repository
+> Note that the default OS repositories listed in `/etc/apt/sources.list` file and in `/etc/apt/sources.list.d` directory may have older versions unlike the `rofi`'s official Github repository
+>
+> As It is always is desirable to have the latest versions of any _package_ or _binary_ installed, I'd recommend installing them via their Github Repositories
+>
+> Although, in this case the _package_'s version installed from the `apt` Package Manager differs only slightly from the github one

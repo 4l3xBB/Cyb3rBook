@@ -52,7 +52,7 @@ This Custom Linux Environment is deployed in _Parrot OS_ 🦜
 
 **The Deployment Flow would be →**
 
-**bwpwm & sxhkd →**
+***bwpwm & sxhkd → Polybar & Picom & Rofi →***
 
 Before start with the above Components' Installation and Configuration →
 
@@ -104,6 +104,93 @@ $ sudo parrot-upgrade
 > ```bash
 > $ sudo apt update && sudo parrot-upgrade
 > ```
+
+ Environment Dependencies →
+
+```bash
+$ sudo apt install -y -- zenity build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev
+```
+
+Additional Packages →
+
+```bash
+$ sudo apt install -y -- scrot scrub xclip bar locate ranger neofetch wmname acpi imagemagick cmatrix
+```
+
+---
+
+##### Additional Notes
+
+During the installation of the above components, the user will have to be shutting down, restarting, logging out or simply blocking (i.e _lock_) the current session
+
+This actions can be performed as follows →
+
+###### Shut Down
+
+```bash
+$ sudo poweroff
+```
+
+###### Restart
+
+```bash
+$ sudo reboot
+```
+
+###### Log out
+
+```bash
+$ loginctl list-sessions # Get the Session's Number
+$ loginctl terminate-session <session_number> # Finish a Session
+```
+
+> [!INFO]-
+>
+> If the above command is not available because of the system has not been initialized with _systemd_, use the following one →
+> 
+> ```bash
+> $ pkill -SIGTERM --euid "$( id -u )" # Or pkill -15
+> ```
+>
+> This allows to all the processes related to the _EUID_ to terminate corrrectly and clean up resources
+>
+> If any process does not respond to the `SIGTERM` signal, just sent a `KILL` signal to it 
+>
+> ```bash
+> $ pkill -KILL --euid "$( id -u )" # Or pkill -9
+> ```
+>
+> Note that all signal types and their associated numbers can be enumerated as follows through these [[Shell Builtins|shell builtins]] →
+>
+> ```bash
+> $ kill -l # Or trap -l
+> ```
+>
+
+###### Session Lock
+
+It can be handled through the _X Session Manager_ called `lightDM`
+
+To interact with the `lightdm` daemon, the `dm-tool` should be used
+
+```bash
+$ dm-tool switch-to-greeter # Like the Change-User option in Windows
+```
+
+```bash
+$ dm-tool lock # Like Windows + L in Windows
+```
+
+> [!INFO]-
+>
+> If `lightdm` does not manages the user sessions and the host has been booted with systemd (i.e. ***PID 1***), then try this →
+>
+> ```bash
+> $ loginctl list-sessions
+> $ loginctl lock-session SESSION_NUMBER
+> ```
+
+---
 
 ##### Customised Functions
 
