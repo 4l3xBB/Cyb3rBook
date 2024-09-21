@@ -17,7 +17,7 @@ It is an **enhanced terminal** with a _tabbed/tiling_ structure focused in perfo
 
 Each tab can be divided into several _panes/windows_
 
-![[Excalidraw/Drawing 2024-09-21 12.07.48.excalidraw.md#^group=t1N4qrO2inu-0N-uPYbeY]]
+![[KITTY-20240921124521349.webp|350]]
 
 Some of this **features** are →
 
