@@ -15,6 +15,8 @@ cssclasses:
 
 #### Environment Customization
 
+![[SETUP-20240921163243628.webp|400]]
+
 | **SOURCES** | | |
 | --- | --- | --- |
 | **[Parrot](https://parrotsec.org/)** | Operative System | **[See more](https://parrotsec.org/docs/)** |
