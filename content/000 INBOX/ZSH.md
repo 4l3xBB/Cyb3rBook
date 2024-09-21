@@ -12,4 +12,6 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
+##### Configuration File
+
 **[.zshrc File](https://paste.mozilla.org/ZNBfNfOc)**
