@@ -116,7 +116,7 @@ enabled_layouts splits:split_axis=vertical
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/actions/#action-toggle_layout)***
 
-**Switch to [Stack Layout]()**
+**Switch to [Stack Layout](https://sw.kovidgoyal.net/kitty/layouts/#the-stack-layout)**
 
 ```bash
 map ctrl+shift+z toggle_layout stack
@@ -250,6 +250,22 @@ map alt+shift+j resize_window shorter 3
 >
 > While the second one controls the resizing increment
 
+###### Windows Detach → A-S-w
+
+> ***[Reference](https://sw.kovidgoyal.net/kitty/invocation/#detach-window)***
+
+**Completely detach a Window in a new Window OS**
+
+**Actions** → `detach_window`
+
+[See here](https://sw.kovidgoyal.net/kitty/actions/#action-detach_window)
+
+```bash
+map alt+shift+w detach_window
+```
+
+![[KITTY-20240921213015367.webp|450]]
+
 ##### Tab Management
 
 ###### Tab Creation → C-S-t
@@ -270,7 +286,7 @@ map ctrl+shift+t new_tab_with_cwd
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/invocation/#detach-window)***
 
-**Completely detach a tab in a new Windows OS**
+**Completely detach a tab in a new Window OS**
 
 **Action** → `detach_tab`
 
