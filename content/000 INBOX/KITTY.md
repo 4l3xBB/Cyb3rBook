@@ -70,7 +70,7 @@ super + Return
 
 #### Configuration File
 
-> **Copy from [here](https://pastebin.com/EPJ1epxr) the `kitty`'s Full Customised Configuration File** 
+> **Copy from [here](https://pastebin.com/hPcywME8) the `kitty`'s Full Customised Configuration File** 
 
 **Configuration File Documentation → [kitty.conf](https://sw.kovidgoyal.net/kitty/conf/)**
 
@@ -217,7 +217,7 @@ map ctrl+shift+j neighboring_window down
 
 ![[KITTY-20240921160959522.webp|350]]
 
-###### Windows Resize → A-S-{k,h,l,j}
+###### Windows Resize → A-S-{k,h,l,j,r}
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/layouts/#resizing-windows)***
 
@@ -249,6 +249,12 @@ map alt+shift+j resize_window shorter 3
 > The First one is simply the windows resize motion to be made (i.e. _Narrower, Taller, Shorter, Wider)_
 >
 > While the second one controls the resizing increment
+
+**To reset all Windows to their initial size,** use the `reset` option in the `resize_window` actions rather than a specific motion
+
+```bash
+map alt+shift+r resize_window reset
+```
 
 ###### Windows Detach → A-S-w
 
