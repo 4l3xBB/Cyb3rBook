@@ -66,6 +66,22 @@ super + Return
 > There are some dependencies that are needed in the following installation steps
 >
 
+##### Hack Nerd Fonts
+
+See [here](https://www.nerdfonts.com/font-downloads) to download them
+
+To install them, as _root_ →
+
+```bash
+$ mv /home/al3xbb/Downloads/Hack.zip /usr/local/share/fonts
+$ cd !$
+```
+
+```bash
+$ 7z x Hack.zip
+$ rm -i -- {LICENSE,README}.md !$
+```
+
 ---
 
 #### Configuration File
