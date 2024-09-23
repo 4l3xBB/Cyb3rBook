@@ -66,6 +66,48 @@ super + Return
 > There are some dependencies that are needed in the following installation steps
 >
 
+Download the binary and its related files from the [project's release page](https://github.com/kovidgoyal/kitty/releases). The required one, in this [[SETUP|Environment Setup]] is the _Linux amd64 binary bundle_
+
+Being _root_ →
+
+```bash
+$ mkdir /opt/kitty
+$ mv /home/al3xbb/Downloads/kitty-0.36.2-x86_64.txz !$
+```
+
+```bash
+$ cd !$ && tar --extract --verbose --file kitty-0.36.2-x86_64.txz
+$ rm -i -- !$
+```
+
+> [!INFO]-
+>
+> That _.TXZ_ file is simply a _TAR_ package compressed via _XZ_. As the above command does, It can be decompressed and unpacked using the `tar`  command
+>
+> It can also be done in two steps through →
+> ```bash
+> $ 7z x file.txz && tar --extract --verbose --file file.tar
+> ```
+> ```bash
+> $ xz --decompress --verbose --threads=0 file.txz
+> $ (( $? )) || tar --extract --verbose --file file.tar
+> ```
+
+That's it
+
+```bash
+$ command -V kitty
+kitty is /opt/kitty/bin/kitty
+```
+
+As for the _kitty's_ Configuration File, It need to be created
+
+Just create it in `~/.config/kitty` and paste this [[KITTY#Configuration File|Configuration File]]'s content into it
+
+```bash
+$ nvim ~/.config/kitty/kitty.conf # Or {nano,vi,emacs,vim...}
+```
+
 ##### Hack Nerd Fonts
 
 See [here](https://www.nerdfonts.com/font-downloads) to download them
@@ -78,17 +120,78 @@ $ cd !$
 ```
 
 ```bash
-$ 7z x Hack.zip
+$ 7z x Hack.zip # Or unzip
 $ rm -i -- {LICENSE,README}.md !$
 ```
+
+Once installed, just check in the `kitty.conf` file that the `font_family` parameter is set as follows →
+
+> ***[Reference](https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.font_family)***
+
+```bash
+font_family HackNerdFont
+```
+
+More info [[KITTY#Font|here]]
 
 ---
 
 #### Configuration File
 
-> **Copy from [here](https://pastebin.com/hPcywME8) the `kitty`'s Full Customised Configuration File** 
+> **_Kitty.conf_ [Configuration File Sample](https://github.com/CodyReichert/dotfiles/blob/master/kitty/.config/kitty/kitty.conf) Fully documented**
+
+**Copy from [here](https://pastebin.com/La9bEV1c) the `kitty`'s Full Customised Configuration File** 
 
 **Configuration File Documentation → [kitty.conf](https://sw.kovidgoyal.net/kitty/conf/)**
+
+---
+
+#### Parameters
+
+##### Font
+
+> ***[Reference](https://sw.kovidgoyal.net/kitty/conf/#fonts)***
+
+Several parameters related to the _kitty terminal's_ font such as the `font_family` or `font_size` can be specificed in the `kitty.conf` configuration file
+
+Take a look at [[KITTY#Hack Nerd Fonts|this]] installation for more information
+
+##### Shell
+
+> ***[Reference](https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.shell)***
+
+This [[SETUP|Enviroment Setup]] make use of a _ZSH_ as the [[SHELL SCRIPTING|Default Shell]]
+
+> [!IMPORTANT]-
+>
+> The following action requires the _ZSH_ shell to be installed on the system
+>
+> Just installed it via the _apt repositories_ as follows →
+>
+> ```bash
+> $ apt install -y -- zsh
+> ```
+>
+> Anyway, **[[ZSH#Installation|See this]]** to get it all set up as far as _ZSH_ is concerned
+
+Then, It's necessary to tell it to _Kitty_. This can be done via the `shell` parameter
+
+```bash
+shell zsh
+```
+
+
+##### Background Opacity
+
+> ***[Reference](https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.background_opacity)***
+
+The _kitty terminal_'s opacity is set by the `background_opacity` parameter
+
+Its value ranges from 0, **fully transparent,** to 1, **opaque**
+
+```bash
+background_opacity 0.55
+```
 
 ---
 
@@ -120,13 +223,17 @@ map KEYBIND ACTION # An Action may has arguments
 
 **All the Layouts are enabled by default**. To switch between them use default shorcut → **`C-S-l`**
 
-In the [[KITTY#Configuration File|configuration file]], the selected one is the **[Splits Layout](https://sw.kovidgoyal.net/kitty/layouts/#the-splits-layout)**
+In the [[KITTY#Configuration File|configuration file]], the selected ones are the **[Splits Layout](https://sw.kovidgoyal.net/kitty/layouts/#the-splits-layout)** and the **[Stack Layout](https://sw.kovidgoyal.net/kitty/layouts/#the-stack-layout)**
 
 Most of the [[KITTY#Actions and Default Shortcuts|mappeable actions]] used there have been implemented in the `kitty.conf` file, such as the below ones
 
 ```bash
-enabled_layouts splits:split_axis=vertical
+enabled_layouts splits,stack
 ```
+
+As mentioned in the _reference link_ above, the _Splits Layout_ is the most flexible layout
+
+The _Stack Layout_ is simple enabled to allow zooming in and out a specific _Window_, i.e. switching between the two layouts via the `toogle_layout` mappeable action [[KITTY#Switch to Stack Layout (Window Zoom {in,out}) → C-S-z|below]]
 
 ###### Switch to Stack Layout (Window Zoom {in,out}) → C-S-z
 
