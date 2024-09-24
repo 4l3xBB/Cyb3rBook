@@ -25,17 +25,21 @@ It implements features such as →
 - **Shared History between different terminals**
 - **Syntax Highlighting**
 
-##### Plugins
+#### Plugins
 
 Most of the above features can be implemented or enhanced through _ZSH Plugins_ that are sourced from the `.zshrc` [[ZSH#Configuration File|configuration file]]
 
-###### ZSH-autocomplete
+> The _.zsh_ files related to the plugins below are sourced from the `.zshrc` configuration file
+
+##### ZSH-autocomplete
 
 > ***[Reference](https://github.com/marlonrichert/zsh-autocomplete)***
 
 It enhances the _ZSH_'s inherent auto-complete capability
 
-The _.zsh_ file related to the plugin is sourced from the `.zshrc` configuration file
+![[zsh-autocomppletion.svg|350]]
+
+_.zsh_ file is sourced from `.zshrc`
 
 ```bash
 if [[ -f /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]]; then
@@ -43,23 +47,99 @@ if [[ -f /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]]; then
 fi
 ```
 
-
-###### ZSH-autosuggestions
+##### ZSH-autosuggestions
 
 > ***[Reference](https://github.com/zsh-users/zsh-autosuggestions/tree/master)***
 
 It suggests commands as the user types based on history and the previous completions
 
-![[zsh-autocomppletion.svg|400]]
+![[zsh-autosuggestions.svg|350]]
+
+_.zsh_ file is sourced from `.zshrc`
+
+```bash
+if [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+```
+
+##### ZSH-syntax-highlighting
+
+> ***[Reference](https://github.com/zsh-users/zsh-syntax-highlighting)***
+
+It enables highlighting of commands while typing them in an interactive terminal
+
+![[zsh-syntaxhighlighting.svg|350]]
+
+_.zsh_ file is sourced from `.zshrc`
+
+```bash
+if [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+```
+
+###### Dracula Theme
+
+There are different themes for this plugin, the one used in this [[SETUP|setup enviroment]] is the **[Dracula Theme](https://github.com/dracula/dracula-theme)**
+
+> ***[Reference](https://draculatheme.com/zsh-syntax-highlighting)***
+
+To use it, just `source`, in the `.zshrc` file, the _.zsh_ script resulting from the steps in the link above 
+
+```bash
+if [[ -f /home/al3xbb/.config/zsh/zsh-syntaxhighlighting/themes/dracula.zsh ]] ; then
+  source /home/al3xbb/.config/zsh/zsh-syntaxhighlighting/themes/dracula.zsh
+fi
+```
+
+> [!IMPORTANT]-
+> 
+> Note that the `dracula.zsh` script should only be sourced if the _zsh-syntax-highlighting_'s script has been sourced correctly previously
+>
+> The above action is performed in the _ZSH Custom [[ZSH#Configuration File|Configuration File]]_. It implements something like this →
+>
+> ```bash
+> $ [[ -f /plugin.zsh ]] && . /plugin.zsh && . /theme.zsh # Or source
+> ```
+>
+>
+> Moreover, It is necessary to create a directory where to store the `dracula.zsh` script after clone the repository →
+>
+> ```bash
+> $ mkdir -p ~/.config/zsh/zsh-syntaxhighlighting/themes/ ; cd !$
+> ```
+>```bash
+> $ git clone https://github.com/dracula/zsh-syntax-highlighting.git dracula
+>```
+> ```bash
+> $ cd !$ && mv zsh-syntax-highlighting.sh ../dracula.zsh
+> ```
+
+##### ZSH-sudo
+
+> ***[Reference](https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/sudo.plugin.zsh)***
+
+This plugins automatically places the _sudo_ binary at the beginnng of the line by pressing the **`Esc`** key twice
+
+![[zsh-sudo.svg|350]]
+
+_.zsh_ file is sourced from `.zshrc`
+
+```bash
+if [[ -f /usr/share/zsh-sudo/sudo.plugin.zsh ]]; then
+  source /usr/share/zsh-sudo/sudo.plugin.zsh
+fi
+```
 
 ---
 
-##### Installation
+#### Installation
 
 To install this 
 
 ---
 
-##### Configuration File
+#### Configuration File
 
-**[.zshrc File](https://paste.mozilla.org/ZNBfNfOc)**
+**[.zshrc File](https://pastebin.com/sg98cGRu)**

@@ -31,6 +31,23 @@ Some of this **features** are →
 $ kitty +kitten icat /path/to/image
 ```
 
+> [!IMPORTANT]-
+>
+> Note that some dependencies are required to display images in this _Kitty Terminal Emulator_ through the command above such as _imagemagick_
+>
+> Just check that the package is installed →
+>
+> ```bash
+> $ bash -c "apt list --installed *imagemagick*"
+> ```
+> If not →
+> 
+> ```bash
+> $ apt install -y -- imagemagick
+> ```
+>
+> Anyways, It should be installed, as It is indicated as environment dependency to be installed in the [[SETUP#Components|Setup's components section]]
+
 - **SSH Protocol support**
 
 ```bash
@@ -102,10 +119,18 @@ kitty is /opt/kitty/bin/kitty
 
 As for the _kitty's_ Configuration File, It need to be created
 
-Just create it in `~/.config/kitty` and paste this [[KITTY#Configuration File|Configuration File]]'s content into it
+Just create it in `~/.config/kitty` and paste this [[KITTY#Configuration File|Configuration File]]'s content into it →
 
 ```bash
 $ nvim ~/.config/kitty/kitty.conf # Or {nano,vi,emacs,vim...}
+```
+
+Moreover, as mentioned below, a _color.ini_ file must also be created in the `~/.config/kitty`  directory to apply various [[KITTY#Colours|terminal colours]]
+
+Copy the _Color.ini_ file from [[KITTY#Configuration File|here]] and paste into it →
+
+```bash
+$ nvim ~/.config/kitty/color.ini
 ```
 
 ##### Hack Nerd Fonts
@@ -140,7 +165,9 @@ More info [[KITTY#Font|here]]
 
 > **_Kitty.conf_ [Configuration File Sample](https://github.com/CodyReichert/dotfiles/blob/master/kitty/.config/kitty/kitty.conf) Fully documented**
 
-**Copy from [here](https://pastebin.com/La9bEV1c) the `kitty`'s Full Customised Configuration File** 
+**`kitty.conf` → Copy from [here](https://pastebin.com/La9bEV1c) the `kitty`'s Full Customised Configuration File** 
+
+**`color.ini` → Likewise, copy from [here](https://pastebin.com/bpvTqqef) the `kitty`'s [[KITTY#Colours|Colours File]]**
 
 **Configuration File Documentation → [kitty.conf](https://sw.kovidgoyal.net/kitty/conf/)**
 
@@ -192,6 +219,16 @@ Its value ranges from 0, **fully transparent,** to 1, **opaque**
 ```bash
 background_opacity 0.55
 ```
+
+##### Colours
+
+Regarding the _kitty terminal_'s colours, a _.ini_ file is included in the `kitty.conf` 
+
+```bash
+include color.ini
+```
+
+Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 ---
 
