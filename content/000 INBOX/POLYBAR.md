@@ -35,6 +35,8 @@ $ pgrep --list-full --exact polybar
 
 A module can execute any action such as a command, scripts...
 
+![[POLYBAR-20240925175458343.webp|350]]
+
 > Each bar with its configuration file as an argument is launched by the below script
 
 `polybar` is executed by [[BSPWM|bspwm]] from the [[BSPWM#*bspwmrc*|bspwmrc]] script through the `polybar`'s launcher script → `~/.config/polybar/launch.sh`
@@ -59,20 +61,23 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 
 **Configuration File → Any file which a `.ini` extension**
 
+**Launcher File → `~/.config/polybar/launch.sh`**
+
 **More information [here](https://github.com/polybar/polybar/wiki)**
 
 **[Polybar Site](https://polybar.github.io/)**
 
 ---
 
-##### Installation
+#### Installation
 
 > [!CAUTION]-
 >
-> First, see the [[BSPWM|bspwm's installation]] before proceeding with this one related to `polybar`
+> First, see the [[BSPWM|bspwm]], [[SXHKD|sxhkd]] and  [[KITTY|kitty]] installations before proceeding with this one related to `polybar`
 >
 > There are some dependencies that are needed in the following installation steps
 >
+> In addition, the above [[SETUP|setup]] components' installation facilitates the _ZSH Configuration_
 
 ```bash
 $ apt install -y -- polybar
@@ -89,8 +94,51 @@ polybar is /usr/bin/polybar
 >
 > Installation can be done either through the OS package manager or via the `git clone` command
 >
-> Note that the default OS repositories listed in `/etc/apt/sources.list` file and in `/etc/apt/sources.list.d` directory may have older versions unlike the `rofi`'s official Github repository
+> Note that the default OS repositories listed in `/etc/apt/sources.list` file and in `/etc/apt/sources.list.d` directory may have older versions unlike the `polybar`'s official Github repository
 >
 > As It is always is desirable to have the latest versions of any _package_ or _binary_ installed, I'd recommend installing them via their Github Repositories
 >
 > Although, in this case the _package_'s version installed from the `apt` Package Manager differs only slightly from the github one
+
+As a base for the configuration file's structure, clone the following [Github Repository](https://github.com/VaughnValle/blue-sky)
+
+```bash
+$ git clone https://github.com/VaughnValle/blue-sky ~/Downloads/blue-sky
+```
+
+Then, recursively copy the _polybar's content_ into `~/.config/polybar` →
+
+```bash
+$ cd !$
+$ bash -c "shopt -sq dotglob && cp -rv -- ./polybar/* ~/.config/polybar"
+```
+
+> [!INFO]-
+>
+> In the above command, `bash -c ` is used to run the inner commands inside a [[BASH|bash]]
+>
+> This is done in order to to be able to use the `shopt` [[SHELL SCRIPTING|shell]] builtin, and then enable the `dotglob` shell extension to expand also the hidden files through [[Globbing|globbing]]
+>
+> Note that prior action can also be performed in [[Globbing#*POSIX Compliant* - Including Hidden Files|this way]]
+
+Once the above is done, insert the following line in the [[BSPWM#*bspwmrc*|bspwmrc]] file related to the _Polybar's Launch_ →
+
+> As already stated, these functions check polybar's status and launch it
+
+```bash
+checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
+```
+
+Lastly, copy the _polybar's fonts_ (i.e. the _.ttf_ Files) into the system _TrueType Fonts_ directory and reset the _ system's fonts cache_ →
+
+```bash
+$ cp ~/.config/polybar/fonts/* /usr/share/fonts/truetype/
+$ fs-cache -v # Reset the System Fonts Cache
+```
+
+#### Configuration File
+
+
+
+#### Launcher File
+

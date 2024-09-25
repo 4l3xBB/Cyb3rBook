@@ -133,6 +133,12 @@ Copy the _Color.ini_ file from [[KITTY#Configuration File|here]] and paste into 
 $ nvim ~/.config/kitty/color.ini
 ```
 
+Once the above is done, as _Root_, copy the entire `/home/al3xbb/.config/kitty` directory's content into his _kitty's configuration directory_
+
+```bash
+$ cp /home/al3xbb/.config/kitty/* ~/.config/kitty/
+```
+
 ##### Hack Nerd Fonts
 
 See [here](https://www.nerdfonts.com/font-downloads) to download them
@@ -219,6 +225,10 @@ Its value ranges from 0, **fully transparent,** to 1, **opaque**
 ```bash
 background_opacity 0.55
 ```
+
+> [!IMPORTANT]-
+>
+> Note that the _Terminal's Background Opacity_ will probably not work until the [[PICOM|picom]] component is correctly configured
 
 ##### Colours
 

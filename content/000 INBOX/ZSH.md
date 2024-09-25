@@ -136,7 +136,16 @@ fi
 
 #### Installation
 
-To install this 
+> [!CAUTION]-
+>
+> First, see the [[BSPWM|bspwm]], [[SXHKD|sxhkd]] and  [[KITTY|kitty]] installations before proceeding with this one related to `zsh`
+>
+> The above [[SETUP|setup]] components facilitate the _ZSH Configuration_
+>
+
+```bash
+apt install -y -- zsh
+```
 
 ---
 
