@@ -16,14 +16,15 @@ cssclasses:
 
 This **[[SHELL SCRIPTING|shell]]** is prefered over _[[BASH|bash]]_ or _fish_ because of all the handy functionalities and customisation It offers to the users
 
-It implements features such as →
+It implements **handy features** such as →
 
-- **Advanced Autocomplete**
-- **Autosuggestions**
-- **Syntactical Corrections**
-- **Advanced [[Globbing]]**
-- **Shared History between different terminals**
-- **Syntax Highlighting**
+**Advanced Autocomplete ~ Autosuggestions ~ Syntactical Corrections ~ Advanced [[Globbing]]**
+
+**Shared History between different terminals ~ Syntax Highlighting**
+
+**Main File → `~/.zshrc`**
+
+**More info [here](https://github.com/zsh-users/zsh) and in the _[ZSH Manual](https://zsh.sourceforge.io/Doc/)_**
 
 #### Plugins
 
@@ -138,17 +139,78 @@ fi
 
 > [!CAUTION]-
 >
-> First, see the [[BSPWM|bspwm]], [[SXHKD|sxhkd]] and  [[KITTY|kitty]] installations before proceeding with this one related to `zsh`
+> First, see the [[BSPWM|bspwm]], [[SXHKD|sxhkd]] and  [[KITTY|kitty]] installations before proceeding with this one related to _ZSH_
 >
 > The above [[SETUP|setup]] components facilitate the _ZSH Configuration_
 >
 
 ```bash
-apt install -y -- zsh
+$ sudo apt install -y -- zsh
+```
+
+##### User's Default Shell
+
+To change the _users' default shell_ to a _ZSH_ one, as _Root_ →
+
+```bash
+for _user in al3xbb root
+do
+    usermod --shell "$( command -v zsh )" "$_user"
+done
+```
+
+##### Plugins
+
+To install most of the plugins → _[[ZSH#ZSH-autocomplete|Autocomplete]] ~ [[ZSH#ZSH-autosuggestions|Autosuggestions]] ~ [[ZSH#ZSH-syntax-highlighting|Syntax-hightlighting]]_
+
+```bash
+$ sudo apt install -y -- zsh-{autocomplete,autosuggestions,syntax-highlighting}
+```
+
+As _Root_, Install the _[[ZSH#zsh-sudo|ZSH-Sudo]] Plugin_, as follows  →
+
+```bash
+$ mkdir -p /usr/share/zsh-sudo ; (( $? )) || cd !$
+```
+
+```bash
+$ wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/plugins/sudo/sudo.plugin.zsh
+```
+
+> [!INFO]-
+>
+> In this [[SETUP|Environment Setup]], the only _ZSH Plugins_ to be used are _ZSH-Syntax-highlighting_ and _ZSH-Sudo_
+
+##### Theme
+
+> ***[Reference](https://github.com/romkatv/powerlevel10k)***
+
+**The _ZSH Theme_ to install → _Powerlevel10k_**
+
+Manual installation as follows →
+
+```bash
+$ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+```
+
+To source the _powerlevel10k script_ , insert this line at the **beginning** of the `.zshrc` file →
+
+```bash
+source /home/al3xbb/powerlevel10k/powerlevel10k.zsh-theme
+```
+
+Then, to start the interactive _powerlevel10k's setup_ →
+
+> _Hack Nerd Fonts_'s previous installation is required. See [[KITTY#Hack Nerd Fonts|here]]
+
+```bash
+$ source ~/.zshrc
 ```
 
 ---
 
 #### Configuration File
 
-**[.zshrc File](https://pastebin.com/sg98cGRu)**
+**_ZSH_ Configuration File → [.zshrc](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/.zshrc)**
+
+**_Powerlevel10k_ Configuration File → [.p10k.zsh](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/themes/.p10k.zsh)**
