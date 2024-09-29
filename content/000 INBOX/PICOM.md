@@ -127,7 +127,7 @@ This allows _picom_ to be launched on the _Windows Manager_ Startup → [[BSPWM|
 
 > ***_Picom.conf_ [Configuration File Sample](https://github.com/yshui/picom/blob/next/picom.sample.conf) Fully Documented***
 
-**Copy from [here](https://pastebin.com/xGywzDQX) the `picom`'s Full Customised Configuration File**
+**Copy from [here](https://github.com/4l3xBB/Env-Setup/blob/main/picom/picom.conf) the `picom`'s Full Customised Configuration File**
 
 ##### Parameters
 

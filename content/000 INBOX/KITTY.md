@@ -31,6 +31,8 @@ Some of this **features** are →
 $ kitty +kitten icat /path/to/image
 ```
 
+![[kitty_icat.gif|350]]
+
 > [!IMPORTANT]-
 >
 > Note that some dependencies are required to display images in this _Kitty Terminal Emulator_ through the command above such as _imagemagick_
@@ -171,9 +173,9 @@ More info [[KITTY#Font|here]]
 
 > **_Kitty.conf_ [Configuration File Sample](https://github.com/CodyReichert/dotfiles/blob/master/kitty/.config/kitty/kitty.conf) Fully documented**
 
-**`kitty.conf` → Copy from [here](https://pastebin.com/La9bEV1c) the `kitty`'s Full Customised Configuration File** 
+**`kitty.conf` → Copy from [here](https://github.com/4l3xBB/Env-Setup/blob/main/kitty/kitty.conf) the `kitty`'s Full Customised Configuration File** 
 
-**`color.ini` → Likewise, copy from [here](https://pastebin.com/bpvTqqef) the `kitty`'s [[KITTY#Colours|Colours File]]**
+**`color.ini` → Likewise, copy from [here](https://github.com/4l3xBB/Env-Setup/blob/main/kitty/color.ini) the `kitty`'s [[KITTY#Colours|Colours File]]**
 
 **Configuration File Documentation → [kitty.conf](https://sw.kovidgoyal.net/kitty/conf/)**
 

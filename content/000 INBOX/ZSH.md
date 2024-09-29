@@ -24,6 +24,10 @@ It implements **handy features** such as →
 
 **Main File → `~/.zshrc`**
 
+**Source File → `~/.config/zsh/src/custom.zsh`**
+
+**Theme's Configuration File (*Powerlevel10k*) → `~/.p10k.zsh`**
+
 **More info [here](https://github.com/zsh-users/zsh) and in the _[ZSH Manual](https://zsh.sourceforge.io/Doc/)_**
 
 #### Plugins
@@ -161,6 +165,8 @@ done
 
 ##### Plugins
 
+> Plugins' Path → `/usr/share/ZSH_PLUGIN_NAME`
+
 To install most of the plugins → _[[ZSH#ZSH-autocomplete|Autocomplete]] ~ [[ZSH#ZSH-autosuggestions|Autosuggestions]] ~ [[ZSH#ZSH-syntax-highlighting|Syntax-hightlighting]]_
 
 ```bash
@@ -187,6 +193,13 @@ $ wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/plugi
 
 **The _ZSH Theme_ to install → _Powerlevel10k_**
 
+> [!IMPORTANT]-
+>
+> Note that the following steps related to the _ZSH Theme's Installation_ should be applied for both _non-privileged_ and _privileged_ users
+>
+> Being in this case for **_Root_** and **_al3xbb_**
+>
+
 Manual installation as follows →
 
 ```bash
@@ -207,10 +220,254 @@ Then, to start the interactive _powerlevel10k's setup_ →
 $ source ~/.zshrc
 ```
 
+> Do not forget to repeat the above steps for the other users
+
+To set up a **more granular configuration**, just edit the [[ZSH#*.p10k.zsh*|.p10k.zsh]] file
+
+###### *.p10k.zsh - Modified Sections*
+
+In that _powerlevel10k file_, for this [[SETUP|Setup Enviroment]], as the _non-privileged user_, add/edit as follows →
+
+- **Left Prompt Elements**
+
+```bash
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+	os_icon
+	dir
+	vcs	
+	context
+	command_execution_time
+	status
+)
+```
+
+- **Righ Prompt Elements** → All of them should be commented as in the [[ZSH#*.p10k.zsh*|configuration file]]
+
+Regarding to the _[[ZSH#DIR|dir]] segment_, the _bold font_ can be disabled as follows →
+
+```bash
+typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=false # Or true to enable it
+```
+
+> Repeat all the above steps as _Root_
+
+Only as _Root_, add/edit as follows to add an icon as a [[ZSH#CONTEXT|context]]→ 
+
+> ***[Icon's Source](https://www.nerdfonts.com/cheat-sheet)***
+
+```bash
+typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='󰈸' # Custom Icon
+typeset -g POWERLEVEL9K_CONTEXT_PREFIX='' # Empty it
+```
+
+##### *.ZSHRC File*
+
+###### Symbolic Link
+
+To avoid having to modify, when a change is made, both the _Root_ and the _Non-privileged User_'s [[ZSH#*.zshrc*|.zshrc]] file, simply proceed as follows →
+
+> As _Root_
+
+```bash
+$ ln --symbolic --force -- /home/al3xbb/.zshrc ~/.zshrc
+```
+
+> [!INFO]-
+>
+> Above command just creates a _symbolic link_ as `~/.zshrc` which points to `/home/al3xbb/.zshrc`
+>
+> Therefore, any changes made to the _.zshrc_ file apply to both users
+
+###### _ZSH_ Plugins
+
+As mentioned in the [[ZSH#Plugins|Plugins]]' Section, each _Plugin's .zsh script_ must be sourced from the `.zshrc` file
+
+In this [[SETUP|environment setup]], the sourced ones are → _[[ZSH#ZSH-syntax-highlighting|zsh-syntax-highlighting]] ~ [[ZSH#ZSH-sudo|zsh-sudo]]_
+
+Check if exist and source them →
+
+- ***ZSH-Sudo***
+
+```bash
+if [[ -f /usr/share/zsh-sudo/sudo.plugin.zsh ]] ; then
+	source /usr/share/zsh-sudo/sudo.plugin.zsh
+fi
+```
+
+- ***ZSH-Syntax-Highlighting → 🦇 Dracula Theme 🧛🏻‍♂️***
+
+```bash
+if [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+  if [[ -f /home/al3xbb/.config/zsh/zsh-syntaxhighlighting/themes/dracula.zsh ]] ; then
+    source /home/al3xbb/.config/zsh/zsh-syntaxhighlighting/themes/dracula.zsh
+  fi
+fi
+```
+
+> _ZSH Plugin and Plugin's Theme sourced_
+
 ---
 
 #### Configuration File
 
+##### *ZSH*
+
+###### *.zshrc*
+
 **_ZSH_ Configuration File → [.zshrc](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/.zshrc)**
 
-**_Powerlevel10k_ Configuration File → [.p10k.zsh](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/themes/.p10k.zsh)**
+###### *src/custom.zsh*
+
+**_ZSH_ Source File → [custom.zsh](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/src/custom.zsh)**
+
+##### *Powerlevel10k*
+
+###### *.p10k.zsh*
+
+**_Non-Privileged User's Powerlevel10k_ Configuration File → [.p10k.zsh](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/themes/.p10k.zsh)**
+
+**_Root's Powerlevel10k_ Configuration File →[.p10k.zsh]()**
+
+---
+
+#### Parameters
+
+##### *Z Shell ~ .zshrc*
+
+###### Command History
+
+**Command History File** → `.zsh_history`
+
+```bash
+HISTFILE=~/.zsh_history
+```
+
+**Command History File's Size** → Number of entries in `.zsh_history`
+
+```bash
+SAVEHIST=10000
+```
+
+**Command History's Memory entries** → Number of entries in the History Memory
+
+```bash
+HISTSIZE=10000
+```
+
+To **ignore duplicate entries** in the _Command History_ and **Synchronise** it between the open terminals →
+
+```bash
+setopt histignorealldups sharehistory # Respectively
+```
+
+###### Default Text Editor
+
+**Editor → [[Neovim]]**
+
+```bash
+export EDITOR=/opt/nvim/nvim-linux64/bin/nvim
+```
+
+> This is extremely useful when e.g. doing `C-x C-e` to open the _Terminal Editor_
+
+![[zsh_terminal_editor.gif|375]]
+
+##### *Powerlevel10k* ~ *.p10k.zsh*
+
+> ***[Reference](https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#batteries-included)***
+
+This _ZSH Theme_ is extremely customizable
+
+The basic units are the _segments_, which display specific information from different sources at the _user's prompt_
+
+![[ZSH-20240929121722873.webp|400]]
+
+The _segments_ can be located in the left or right side  (_i.e. the left or right prompt_)
+
+In this [[SETUP|environment setup]], only those on the right are enabled →
+
+###### OS_ICON
+
+> [!INFO]-
+>
+> Note that the below code snippets are related to the _.p10.zsh_ file
+>
+
+It displays the _Operative System Icon_
+
+To enable it →
+
+```bash
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=( os_icon )
+```
+
+To modify the _displayed icon_ and its colour →
+
+```bash
+typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='' # Custom Icon
+typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=255 # Icon's Colour
+```
+
+###### DIR
+
+It displays the _Current Work Directory_
+
+To enable it →
+
+```bash
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=( dir )
+```
+
+![[zsh_p10k_dir.gif|400]]
+
+> Note how the _Current Work Directory_ changes continously
+
+###### VCS
+
+If the _Current Work Directory_ is a _Github Repository_, **It displays de Git Status**
+
+```bash
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=( vcs )
+```
+
+![[zsh_p10k_git.gif|375]]
+
+> See → _"on😺🌿master"_ 
+
+###### CONTEXT
+
+In this case, if someone is connected to other host remotely, **It shows the current user and hostname**
+
+```bash
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=( context )
+```
+
+![[zsh_p10k_context.gif|375]]
+
+> See → _"with test@parrot"_
+
+###### COMMAND_EXECUTION_TIME
+
+It displays the last command's time duration, from a `sleep` command to an _SSH Session_
+
+```bash
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=( command_execution_time )
+```
+
+![[zsh_p10k_cmdExectime.gif|375]]
+
+> See → _"Took⌛12s"_
+
+###### STATUS
+
+It displays the _Exit Code_ of the last command
+
+```bash
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=( status )
+```
+
+![[zsh_p10k_status.gif|375]]
+
+> See → _"❌127/1/INT/TSTP ~ ✅1"_
