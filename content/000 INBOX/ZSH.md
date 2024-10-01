@@ -336,6 +336,38 @@ fi
 
 ##### *Z Shell ~ .zshrc*
 
+###### PATH
+
+######
+
+###### Aliases
+
+Various _aliases_ are defined to carry out the following sustitutions →
+
+- **`batcat` rather than `cat`**
+
+```bash
+alias cat='bat' # Standard sustitution
+alias catn='bat --style=plain' # Only shows Plain Text (No decorations)
+alias catnp='bat --style=plain --paging=never' # Plain Text and No Pagination
+```
+
+> ***[Reference](https://github.com/sharkdp/bat)***
+
+- **`lsd` rather than `ls`** 
+
+```bash
+alias ll='lsd -lh --group-dirs=first'
+alias la='lsd -a --group-dirs=first'
+alias l='lsd --group-dirs=first'
+alias lla='lsd -lha --group-dirs=first'
+alias ls='lsd --group-dirs=first'
+```
+
+> ***[Reference](https://github.com/lsd-rs/lsd)***
+
+To remove the `lsd`'s _Bold_ applied to the font and file icons, just declare the `LS_COLORS` parameter as It appears in the [[ZSH#*.zshrc*|.zshrc]] configuration file
+
 ###### Command History
 
 **Command History File** → `.zsh_history`
@@ -362,7 +394,25 @@ To **ignore duplicate entries** in the _Command History_ and **Synchronise** it 
 setopt histignorealldups sharehistory # Respectively
 ```
 
-###### Default Text Editor
+###### Command Line Editor
+
+Use the following _ZSH Builints_ to enable the _Command Line Editor_ →
+
+```bash
+autoload -U edit-command-line # Loads the ZSH Function deferred
+zsl -N edit-command-line # Widget Creation from this ZSH Function
+binkey '\C-x\C-e' edit-command-line # Widget-Keybind association
+```
+
+The above code ensures that the _Command Line Editor_ can be accessed through `C-x C-e` as in [[BASH|bash]]
+
+> [!IMPORTANT]-
+>
+> Note that the _edit-command-line ZSH Function_ opens the _Command Line Editor_ with the text editor set as value in the _EDITOR_ parameter
+
+It is necessary to stablish the _Text Editor_ used in the _Command Line Editor_
+
+This is carried out through the `EDITOR` parameter
 
 **Editor → [[Neovim]]**
 
@@ -370,9 +420,56 @@ setopt histignorealldups sharehistory # Respectively
 export EDITOR=/opt/nvim/nvim-linux64/bin/nvim
 ```
 
-> This is extremely useful when e.g. doing `C-x C-e` to open the _Terminal Editor_
+> This is extremely useful when e.g. doing `C-x C-e` to open the _Command Line Editor_
 
 ![[zsh_terminal_editor.gif|375]]
+
+###### Completion System
+
+To enable the _ZSH's Modern Completion System_  →
+
+```bash
+autoload -Uz compinit && compinit
+```
+
+> [!INFO]-
+>
+> The above command deferred loads the _ZSH's compinit function_ and, if _true_, calls it
+>
+> Note that the `-U` option causes its function reference to not be loaded into the _ZSH Hash Table_
+>
+> While the `-z` option only checks that the function provided as an argument is strictly for _ZSH_
+>
+
+If the `compinit` function is loaded and called correctly, then various additional configurations are applied to the _ZSH Autocompletion System_
+
+These can be found in the [[ZSH#*.zshrc*|.zshrc]] configuration file
+
+###### FZF - _Fuzzy Finder_
+
+> ***[Reference](https://github.com/junegunn/fzf)***
+
+This _Fuzzy Finder_ is mainly used to modify the `C-r` [[SHELL SCRIPTING|Shell]]'s shortcut for _reverse history search_
+
+To load all _FZF_ functionality in the _ZSH Process Context_ →
+
+```bash
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh 
+```
+
+Then, to bind the _FZF's reverse history search_ to the `C-r` keybind →
+
+```bash
+export FZF_DEFAULT_OPTS='--bind=ctrl-r:toggle-sort,ctrl-u:up,ctrl-d:down'
+```
+
+The above command basically makes that _FZF_ takes control of the _Shell's reverse history search_
+
+![[zsh_fzf.gif|375]]
+
+###### Custom Functions
+
+
 
 ##### *Powerlevel10k* ~ *.p10k.zsh*
 
