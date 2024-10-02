@@ -8,6 +8,8 @@ tags:
   - ZSH
   - pentesting👹
 cssclasses:
+  - card-list
+  - purple-style
 ---
 
 ###### PRIMARY CATEGORY → [[SETUP]]
@@ -326,9 +328,9 @@ fi
 
 ###### *.p10k.zsh*
 
-**_Non-Privileged User's Powerlevel10k_ Configuration File → [.p10k.zsh](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/themes/.p10k.zsh)**
+**_Non-Privileged User's Powerlevel10k_ Configuration File → [.p10k.zsh](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/themes/p10k/users/.p10k.zsh)**
 
-**_Root's Powerlevel10k_ Configuration File →[.p10k.zsh]()**
+**_Root's Powerlevel10k_ Configuration File →[.p10k.zsh](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/themes/p10k/root/.p10k.zsh)**
 
 ---
 
@@ -338,7 +340,19 @@ fi
 
 ###### PATH
 
-######
+> _PATH Enviromental Parameter_
+
+```bash
+export PATH=/opt/kitty/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/sbin:/opt/nvim/nvim-linux64/bin:/home/al3xbb/.fzf/bin
+```
+
+In addition to the usual paths such as `/usr/bin:/bin:/usr/sbin:/usr/local/bin`, others are added such as →
+
+- [[KITTY|Kitty]] → `/opt/kitty/bin`
+- [[NEOVIM|Neovim]] → `/opt/nvim/nvim-linux64/bin`
+- _FZF_ → `/home/al3xbb/.fzf/bin`
+
+> **This allows to use their binaries from any path relatively**
 
 ###### Aliases
 
@@ -414,7 +428,7 @@ It is necessary to stablish the _Text Editor_ used in the _Command Line Editor_
 
 This is carried out through the `EDITOR` parameter
 
-**Editor → [[Neovim]]**
+**Editor → [[NEOVIM|Neovim]]**
 
 ```bash
 export EDITOR=/opt/nvim/nvim-linux64/bin/nvim
@@ -467,9 +481,48 @@ The above command basically makes that _FZF_ takes control of the _Shell's rever
 
 ![[zsh_fzf.gif|375]]
 
+###### JAVA Troubleshooting
+
+There are _Windows Managers_, such as [[BSPWM|bspwm]], that do not perform any _Windows Reparenting_
+
+Therefore, any _Java Application_ that uses _JWT_, may experience some integration problems in an environment with these _Windows Managers_
+
+In order to avoid the previous problems →
+
+```bash
+export _JAVA_AWT_WM_NONREPARENTING=1
+```
+
+The above code simply tells _Java_ to carry out the _Windows Reparenting_ instead of the _Windows Manager_
+
+> [!IMPORTANT]-
+>
+> Note that, in addition to the above measure, another is implemented in the [[BSPWM#*bspwmrc*|bspwmrc]]
+>
+> ```bash
+> wmname LG3D &
+> ```
+> This changes the current _Windows Manager_'s name, which the System recognises, to _LG3D_
+>
+> _LG3D_ is an old _Windows Manager_, and the _Java Applications_ created with _JWT_ run correctly on it
+>
+> So changing the _Windows Manager_'s Name tricks *Java* into thinking It is running in a supported environment
+>
+
 ###### Custom Functions
 
+All the _Custom Functions_ related to the [[ZSH#*.zshrc*|.zshrc]] file are sourced from the [[ZSH#*src/custom.zsh*|custom.zsh]] script
 
+There are several handy functions such as →
+
+- ***clearScreenAndScrollback → [[KITTY#Clear Screen and Scrollback Buffer|Reference]]***
+
+The remaining functions are related to the _[[PENTESTING|Pentesting]] Index Category_
+
+- ![](https://wallpapercave.com/wp/wp2661451.jpg)
+	- [[ZSH CUSTOM FUNCTIONS]]
+
+<br>
 
 ##### *Powerlevel10k* ~ *.p10k.zsh*
 

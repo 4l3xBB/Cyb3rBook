@@ -48,14 +48,72 @@ cssclasses:
 	- [[FEH]]
 - ![250](https://i.pinimg.com/1200x/06/b5/40/06b5401289915f753505baba16827c6a.jpg)
 	- [[KITTY]]
-	
+- ![250](https://img.freepik.com/premium-photo/latest-drawing-room-interior-decorating-ideas-designs-v-letter-logo-designs_1020867-119148.jpg)
+	- [[NEOVIM]]
+
 <br>
 
-This Custom Linux Environment is deployed in _Parrot OS_ 🦜
+
+##### Information 🛈
+
+**This Custom Linux Environment is deployed in _Parrot OS_ 🦜**
+
+###### Configuration Files
+
+***[Reference](https://github.com/4l3xBB/Env-Setup)***
+
+All necessary _Configuration Files_ can be found in the above link or in the _Components Documentation_
+
+> [!IMPORTANT]- _Configuration Files Structure_
+>
+> ```bash
+> .
+> ├── bspwm
+> │   ├── bin
+> │   │   └── bspwm_resize.sh
+> │   ├── bspwmrc
+> │   └── src
+> │       └── bspwmrc.sh
+> ├── kitty
+> │   ├── color.ini
+> │   └── kitty.conf
+> ├── picom
+> │   └── picom.conf
+> ├── polybar
+> │   ├── bin
+> │   │   ├── launch.sh
+> │   │   └── modules
+> │   │       ├── ethernet_status.sh
+> │   │       ├── target_to_hack.sh
+> │   │       └── vpn_status.sh
+> │   ├── current.ini
+> │   └── workspace.ini
+> ├── README.md
+> ├── sxhkd
+> │   └── sxhkdrc
+> └── zsh
+>     ├── plugins
+>     │   └── zsh-syntaxhighlighting
+>     │       └── themes
+>     │           └── dracula.zsh
+>     ├── src
+>     │   └── custom.zsh
+>     ├── themes
+>     │   └── p10k
+>     │       ├── root
+>     │       │   └── .p10k.zsh
+>     │       └── users
+>     │           └── .p10k.zsh
+>     └── .zshrc
+> ```
+
+###### Deployment Flow
 
 **The Deployment Flow would be →**
 
-***bwpwm & sxhkd → Polybar & Picom & Rofi →***
+***\[\[ EXCALIDRAW BANNER ]]***
+
+##### Previous Steps
 
 Before start with the above Components' Installation and Configuration →
 
@@ -100,7 +158,7 @@ $ sudo parrot-upgrade
 > Thus, on _Parrot OS_, instead of this →
 >
 > ```bash
-> $ sudo apt update && sudo apt upgrade -y
+> $ sudo apt update && sudo apt upgrade -y # Wrong!
 > ```
 > Do this →
 >
@@ -250,29 +308,3 @@ mkt()
 > }
 > ```
 > 
-
-###### Set Target Host - Polybar Right Module
-
-```bash
-setTarget()
-{
-  local -- _IP=$1 _machineName=$2 _IPPattern='[0-9]{1,3}(\.[0-9]{1,3}){3}'
-
-  (( $# != 2 )) && {
-    /bin/cat << HELP 1>&2
-
-  [!] This function requires two arguments: IP Addresss and Machine Name
-
-    Syntax: setTarget XXX.XXX.XXX.XXX "Machine Name"
-HELP
-    return 1
-  }
-
-  [[ $_IP =~ $_IPPattern ]] || { printf "\n%s\n" '[!] First args must be an IP' 1>&2 ; return 1 ; }
-
-  [[ -n $_IP && -n $_machineName ]] || { printf "\n%s\n" '[!] Args cannot be an empty string' 1>&2 ; return 1 ; }
-
-  printf "%s\n%s\n" "$_IP" "$_machineName" > /home/al3xbb/.config/bin/target
-}
-```
-
