@@ -25,8 +25,8 @@ cssclasses:
 | **[sxhkd](https://github.com/baskerville/sxhkd)** | Hotkey Daemon | **[See more](https://wiki.archlinux.org/title/Sxhkd)** |
 | **[Polybar](https://github.com/polybar/polybar)** | Status Bar | **[See more](https://wiki.archlinux.org/title/Polybar)** |
 | **[Picom](https://github.com/yshui/picom)** | Windows Visualizer (Compositor) | **[See more](https://wiki.archlinux.org/title/Picom)** |
-| **[Rofi](https://github.com/davatorium/rofi)** | Rofi | **[See more](https://wiki.archlinux.org/title/Rofi)** |
-| **[Feh](https://github.com/derf/feh)** | Image Viewer (Wallpaper) | **[See more](https://wiki.archlinux.org/title/Feh)** |
+| **[Rofi](https://github.com/davatorium/rofi)** | Application Launcher | **[See more](https://wiki.archlinux.org/title/Rofi)** |
+| **[Feh](https://github.com/derf/feh)** | Image Viewer (Desktop Wallpaper) | **[See more](https://wiki.archlinux.org/title/Feh)** |
 | **[Kitty](https://github.com/kovidgoyal/kitty)** | Terminal Emulator | **[See more](https://wiki.archlinux.org/title/Kitty)** |
 | **[ZSH](https://wiki.archlinux.org/title/Zsh_(Espa%C3%B1ol))** | [[SHELL SCRIPTING\|Shell]] | **[See more](https://zsh.sourceforge.io/Doc/Release/zsh_toc.html)** |
 
@@ -252,61 +252,3 @@ $ dm-tool lock # Like Windows + L in Windows
 > $ loginctl list-sessions
 > $ loginctl lock-session SESSION_NUMBER
 > ```
-
----
-
-##### Customised Functions
-
-###### Pentesting Folder Structure
-
-```bash
-mkt()
-{
-        local -- _dir=
-        local -a -- _dirs=(
-                evidence
-                logs
-                scans
-                scope
-                tools
-        )
-
-        for _dir in "${_dirs[@]}"
-        do
-                mkdir -p -- "$_dir"
-
-                [[ $_dir == "evidence" ]] &&
-
-                        mkdir -p -- "$_dir"/{creds,data,screenshots}
-        done
-}
-```
-
-> [!IMPORTANT]-
->
-> Note that above code is _[[POSIX|Non-POSIX Compliant]]_ due to Bash Specific Functionalities such as `local`, `[[ ]]` shell keyword, **Brace Expansion** `{ }` or _indexed arrays_
->
-> Therefore, It is not destined to _POSIX Compliant_ shells like _sh_ or _dash_
->
-> If _POSIX Compliant_ is needed →
-> ```bash
-> mkt()
-> {
->         _dir= _dirs="evidence logs scans scope tools"
->
->         for _dir in $_dirs
->         do
->                 mkdir -p -- "$_dir"
->
->                 [ "$_dir" = "evidence" ] &&
->
->                         mkdir -p -- "$_dir"/creds \
->                                     "$_dir"/data \
->                                     "$_dir"/screenshot
->         done
->
-> }
-> ```
-> 
-
-- hola [[NEOVIM]]
