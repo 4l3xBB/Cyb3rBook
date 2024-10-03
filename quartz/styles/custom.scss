@@ -362,7 +362,7 @@ div#preview-container > div.preview-inner > ul:not(.tags) > li > ul > li > a {
 ###########################################################
 */
 
-article.card-list > ul:has(li img) {
+article.card-list > ul:has(li > img) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
@@ -377,7 +377,7 @@ article.card-list > ul:has(li img) {
     margin-top: 4%;
 } 
 
-article.card-list > ul > li:has(img) {
+article.card-list > ul > li:has(> img) {
     border-radius: 10px;
     background-color: transparent;
     box-shadow: var(--cards-box-shadow);
@@ -395,7 +395,7 @@ article.card-list > ul > li:has(img) {
     width: 88%; 
 }
 
-article.card-list > ul > li:has(img) > ul {
+article.card-list > ul > li:has(> img) > ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -407,7 +407,7 @@ article.card-list > ul > li:has(img) > ul {
     height: 100%;
 }
 
-article.card-list > ul > li:has(img) > ul > li {
+article.card-list > ul > li:has(> img) > ul > li {
     text-align: center;
     margin-inline-start: 0;
     display: flex;
@@ -425,7 +425,7 @@ article.card-list > ul > li > img {
     flex-shrink: 0;
 }
 
-article.card-list > ul > li:has(img) > ul > li > a {
+article.card-list > ul > li:has(> img) > ul > li > a {
     text-decoration: none !important;
     color: var(--accent-2) !important;
     font-weight: 900;
@@ -439,31 +439,31 @@ article.card-list > ul > li:has(img) > ul > li > a {
 }
 
 @media (max-width: 768px) {
-    .card-list div > ul:has(li img) {
+    .card-list div > ul:has(li > img) {
         grid-template-columns: repeat(auto-fit, minmax(var(--cards-mobile-width), 1fr));
     }
 }
 
 @media (min-width: 400pt) {
 
-    .card-list div > ul:has(li img) {
+    .card-list div > ul:has(li > img) {
         --cards-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
-article.blue-style.card-list > ul > li:has(img) { /* cards border and shadow */
+article.blue-style.card-list > ul > li:has(> img) { /* cards border and shadow */
     border-color: var(--accent-1);
     border-width: 0.15em;
     box-shadow: 0 0 0.7em var(--accent-1);
 }
 
-article.purple-style.card-list > ul > li:has(img) { /* cards border and shadow */
+article.purple-style.card-list > ul > li:has(> img) { /* cards border and shadow */
     border-color: var(--accent-2);
     border-width: 0.15em;
     box-shadow: 0 0 0.7em var(--accent-2);
 }
 
-article.red-style.card-list > ul > li:has(img) { /* cards border and shadow */
+article.red-style.card-list > ul > li:has(> img) { /* cards border and shadow */
     border-color: var(--accent-7);
     border-width: 0.15em;
     box-shadow: 0 0 0.7em var(--accent-7);

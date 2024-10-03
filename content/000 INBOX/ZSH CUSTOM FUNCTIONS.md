@@ -37,13 +37,41 @@ fi
 
 ***Custom.zsh Source File → [See here](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/src/custom.zsh)***
 
-##### Pentesting
+#### *Terminal/Screen*
 
-**These _Shell Functions_ are related to the _[[PENTESTING|Pentesting]] Process_ →**
+***Shell Functions* related to the *Terminal and Screen* actions →**
+
+##### *clearScreenAndScrollback*
+
+> ***[Reference](https://unix.stackexchange.com/questions/517025/zsh-clear-scrollback-buffer#answer-531178)***
+
+It clears the _Screen Content and Scrollback Buffer_ through the `C-l` keybind
+
+> [!NOTE]- *Function*
+>
+> ```bash
+> clearScreenAndScrollback ()
+> {
+>     clear && printf '\e[3J'
+>     zle && zle .reset-prompt && zle -R
+> }
+> ```
+>
+> ```bash
+> zle -N clearScreenAndScrollback
+> bindkey '^L' clearScreenAndScrollback
+> ```
+>
+
+> ***More info [[KITTY#Clear Screen and Scrollback Buffer|here]]***
+
+#### *Pentesting*
+
+**_Shell Functions_ related to the _[[PENTESTING|Pentesting]] Process_ →**
 
 > Most of the functions are _[[POSIX|Non-POSIX-Compliant]]_ as _ZSH_ is the Targeted _Shell_
 
-###### *mkt*
+##### *mkt*
 
 It creates a _Pentesting Folder Structure_ to store all documentation related to the target 🎯
 
@@ -101,7 +129,7 @@ It creates a _Pentesting Folder Structure_ to store all documentation related to
 > ```
 > 
 
-###### *validateIP*
+##### *validateIP*
 
 This function simply checks if the _IP Address_ entered as an argument is valid
 
@@ -122,9 +150,16 @@ It is used by the _[[ZSH CUSTOM FUNCTIONS#setTarget|setTarget]] function_
 > ```
 > 
 
-###### setTarget
+##### *setTarget*
 
 It sets the Target's _IP Address_ and _Hostname_ as one of the _[[POLYBAR|Polybar]] Bar's Modules_
+
+This function prints the above data into the `/home/al3xbb/.config/bin/target` file
+
+Then the _Polybar Module_ carries out an action based on that _File's Content_ as follows →
+
+- ***If Empty*** → *"No target"* as _Polybar's Bar Content_
+- ***If not Empty*** →  _File's Content_ as the _Polybar's Bar Content_, i.e. the _IP Address and Hostame_
 
 > [!NOTE]- *Function*
 >
@@ -160,3 +195,24 @@ It sets the Target's _IP Address_ and _Hostname_ as one of the _[[POLYBAR|Polyba
 > }
 > ```
 >
+
+![[customZSHSetTargetFunction.gif|375]]
+
+##### *clearTarget*
+
+This functions empties the `/home/al3xbb/.config/bin/target` file
+
+Therefore, as mentioned in the [[ZSH CUSTOM FUNCTIONS#*setTarget*|setTarget]] function, the *[[POLYBAR|Polybar]] Module* sets *"No Target"* as _Polybar Bar's Content_
+
+> [!NOTE]- *Function*
+>
+> ```bash
+> clearTarget ()
+> {
+>     local -- _targetFile=/home/al3xbb/.config/bin/target
+>     [[ -s $_targetFile ]] && : '' > "$_targetFile" || return 1
+> }
+> ```
+>
+
+![[customZSHclearTargetFunction.gif|375]]
