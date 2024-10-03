@@ -138,13 +138,18 @@ It is used by the _[[ZSH CUSTOM FUNCTIONS#setTarget|setTarget]] function_
 > [!NOTE]- *Function*
 >
 > ```bash
- > validateIP () {
+> validateIP ()
+> {
 >     local _IP=$1 _octet=
+>
 >     [[ $_IP =~ ^[0-9]+(\.[0-9]+){3}$ ]] || return 1
+>
 >     while read -rd '.' _octet
 >     do
 >         (( _octet > 255 )) && return 1
+>
 >     done <<< "$_IP".
+>
 >     return 0
 > }
 > ```
@@ -210,6 +215,7 @@ Therefore, as mentioned in the [[ZSH CUSTOM FUNCTIONS#*setTarget*|setTarget]] fu
 > clearTarget ()
 > {
 >     local -- _targetFile=/home/al3xbb/.config/bin/target
+>
 >     [[ -s $_targetFile ]] && : '' > "$_targetFile" || return 1
 > }
 > ```
