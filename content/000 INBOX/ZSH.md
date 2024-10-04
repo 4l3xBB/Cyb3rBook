@@ -110,18 +110,6 @@ fi
 > $ [[ -f /plugin.zsh ]] && . /plugin.zsh && . /theme.zsh # Or source
 > ```
 >
->
-> Moreover, It is necessary to create a directory where to store the `dracula.zsh` script after clone the repository →
->
-> ```bash
-> $ mkdir -p ~/.config/zsh/zsh-syntaxhighlighting/themes/ ; cd !$
-> ```
->```bash
-> $ git clone https://github.com/dracula/zsh-syntax-highlighting.git dracula
->```
-> ```bash
-> $ cd !$ && mv zsh-syntax-highlighting.sh ../dracula.zsh
-> ```
 
 ##### ZSH-sudo
 
@@ -175,6 +163,12 @@ To install most of the plugins → _[[ZSH#ZSH-autocomplete|Autocomplete]] ~ [[ZS
 $ sudo apt install -y -- zsh-{autocomplete,autosuggestions,syntax-highlighting}
 ```
 
+> [!INFO]-
+>
+> In this [[SETUP|Environment Setup]], the only _ZSH Plugins_ to be used are _ZSH-Syntax-highlighting_ and _ZSH-Sudo_
+
+###### *ZSH-Sudo*
+
 As _Root_, Install the _[[ZSH#zsh-sudo|ZSH-Sudo]] Plugin_, as follows  →
 
 ```bash
@@ -185,9 +179,31 @@ $ mkdir -p /usr/share/zsh-sudo ; (( $? )) || cd !$
 $ wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/plugins/sudo/sudo.plugin.zsh
 ```
 
-> [!INFO]-
+###### *ZSH-Syntax-Highlighting*
+
+It has been previously installed via `apt` in the `/usr/share/zsh-syntax-highlighting/`
+
+As mentioned in the *[[ZSH#ZSH-syntax-highlighting|ZSH-Syntax-Highlighting]] Plugin's Section*, the *Theme* selected for this plugin is the *[[ZSH#Dracula Theme|Dracula Theme]]*
+
+Install the above _Syntax Theme_ as follows →
+
+```bash
+$ mkdir -p ~/.config/zsh/zsh-syntaxhighlighting/themes/ ; cd !$
+```
+
+```bash
+$ git clone https://github.com/dracula/zsh-syntax-highlighting.git dracula
+```
+
+```bash
+$ mv ./dracula/zsh-syntax-highlighting.sh ./dracula.zsh && rm -rf !$
+```
+
+> [!CAUTION]-
 >
-> In this [[SETUP|Environment Setup]], the only _ZSH Plugins_ to be used are _ZSH-Syntax-highlighting_ and _ZSH-Sudo_
+> Note that the `dracula.zsh` script should only be sourced if the _zsh-syntax-highlighting_'s script has been sourced correctly previously
+>
+> See the *[[ZSH#Dracula Theme|Dracula theme]] Section* for more information about the _Source Code Block_
 
 ##### Theme
 
@@ -224,7 +240,7 @@ $ source ~/.zshrc
 
 > Do not forget to repeat the above steps for the other users
 
-To set up a **more granular configuration**, just edit the [[ZSH#*.p10k.zsh*|.p10k.zsh]] file
+To set up a **more granular configuration**, just edit the [[ZSH#*.p10k.zsh*|.p10k.zsh]] file as follows →
 
 ###### *.p10k.zsh - Modified Sections*
 
@@ -346,7 +362,7 @@ fi
 export PATH=/opt/kitty/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/sbin:/opt/nvim/nvim-linux64/bin:/home/al3xbb/.fzf/bin
 ```
 
-In addition to the usual paths such as `/usr/bin:/bin:/usr/sbin:/usr/local/bin`, others are added such as →
+In addition to the usual paths such as `/usr/bin:/bin:/usr/sbin:/usr/local/bin`, others are added →
 
 - [[KITTY|Kitty]] → `/opt/kitty/bin`
 - [[NEOVIM|Neovim]] → `/opt/nvim/nvim-linux64/bin`
@@ -366,7 +382,7 @@ alias catn='bat --style=plain' # Only shows Plain Text (No decorations)
 alias catnp='bat --style=plain --paging=never' # Plain Text and No Pagination
 ```
 
-> ***[Reference](https://github.com/sharkdp/bat)***
+> ***[[BAT|Reference]]***
 
 - **`lsd` rather than `ls`** 
 
@@ -378,7 +394,7 @@ alias lla='lsd -lha --group-dirs=first'
 alias ls='lsd --group-dirs=first'
 ```
 
-> ***[Reference](https://github.com/lsd-rs/lsd)***
+> ***[[LSD|Reference]]***
 
 To remove the `lsd`'s _Bold_ applied to the font and file icons, just declare the `LS_COLORS` parameter as It appears in the [[ZSH#*.zshrc*|.zshrc]] configuration file
 

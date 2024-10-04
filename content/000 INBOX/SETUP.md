@@ -29,8 +29,9 @@ cssclasses:
 | **[Feh](https://github.com/derf/feh)** | Image Viewer (Desktop Wallpaper) | **[See more](https://wiki.archlinux.org/title/Feh)** |
 | **[Kitty](https://github.com/kovidgoyal/kitty)** | Terminal Emulator | **[See more](https://wiki.archlinux.org/title/Kitty)** |
 | **[ZSH](https://wiki.archlinux.org/title/Zsh_(Espa%C3%B1ol))** | [[SHELL SCRIPTING\|Shell]] | **[See more](https://zsh.sourceforge.io/Doc/Release/zsh_toc.html)** |
+| **[NEOVIM](https://github.com/neovim/neovim)** | Text Editor | **[See more](https://neovim.io/doc/)** |
 
-##### Components
+##### Components ⟡
 
 - ![](https://i.pinimg.com/originals/b0/3b/da/b03bda611e0210d07641bbb4bddc3c6d.jpg)
 	- [[ZSH]]
@@ -46,13 +47,21 @@ cssclasses:
 	- [[ROFI]]
 - ![](https://i0.wp.com/endeavouros.com/wp-content/uploads/2022/06/stars.png?resize=750%2C422&ssl=1)
 	- [[FEH]]
-- ![250](https://i.pinimg.com/1200x/06/b5/40/06b5401289915f753505baba16827c6a.jpg)
+- ![](https://i.pinimg.com/1200x/06/b5/40/06b5401289915f753505baba16827c6a.jpg)
 	- [[KITTY]]
-- ![250](https://img.freepik.com/premium-photo/latest-drawing-room-interior-decorating-ideas-designs-v-letter-logo-designs_1020867-119148.jpg)
+- ![](https://img.freepik.com/premium-photo/latest-drawing-room-interior-decorating-ideas-designs-v-letter-logo-designs_1020867-119148.jpg)
 	- [[NEOVIM]]
-
+	
 <br>
 
+##### Miscellaneous Δ
+
+- ![](https://mir-s3-cdn-cf.behance.net/projects/404/8b9d2f168858545.6441d700ed582.jpg)
+	- [[BAT]]
+- ![](https://c4.wallpaperflare.com/wallpaper/430/715/797/water-blue-dark-linux-debian-brands-logos-1920x1080-technology-linux-hd-art-wallpaper-preview.jpg)
+	- [[LSD]]
+
+<br>
 
 ##### Information 🛈
 
