@@ -252,15 +252,66 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 ---
 
-#### Custom Shortcuts
-
-##### TL;DR
+#### *Custom Shortcuts ~ TL;DR*
 
 ###### Layouts
 
+> ***[Reference](https://sw.kovidgoyal.net/kitty/layouts/#arrange-windows)***
+
 | **Action** | **Shortcut** |
 | --- | --- |
-| ***Toogle*** | **`C-`** |
+| **_[[KITTY#Switch to Stack Layout (Window Zoom {in,out}) → C-S-z\|Toogle between Split and Stack Layout]]_** | **`C-S-z`** |
+| **_[[KITTY#Split Rotation → C-S-o\|Split Rotation]]_** | **`C-S-o`** |
+
+###### Windows
+
+> ***[Reference](https://sw.kovidgoyal.net/kitty/overview/#windows)***
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***[[KITTY#Window Split\|Vertical Split]]*** | **`C-S-Enter`** |
+| ***[[KITTY#Window Split\|Horizontal Split]]*** | **`C-S-dash/hyphen`** |
+| ***[[KITTY#Window Split\|Adaptative Split]]*** | **`C-S-plus`** |
+| ***Windows Closing*** | **`C-S-w`** |
+| ***[[KITTY#Windows Movement → C-A-{k,h,l,j}\|Windows Movement → Up ~ Left ~ Right ~ Down]]*** | **`C-M-{k,h,l,j}`** |
+| ***[[KITTY#Windows Focus → C-S-{k,h,l,j}\|Windows Focus ⬆️ ⬅️ ➡️ ⬇️]]*** | **`C-S-{k,h,l,j}`** |
+| ***[[KITTY#Windows Resize → A-S-{k,h,l,j,r}\|Windows Resize ⬆️ ⬅️ ➡️ ⬇️]]*** | **`M-S-{k,h,l,j`** |
+| ***[[KITTY#Windows Resize → A-S-{k,h,l,j,r}\|Windows Resize - Reset]]*** | **`M-S-r`** |
+| ***[[KITTY#Windows Detach → A-S-w\|Windows Detach]]*** | **`M-S-w`** |
+
+###### Tabs
+
+> ***[Reference](https://sw.kovidgoyal.net/kitty/overview/#tabs)***
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***[[KITTY#Tab Creation → C-S-t\|Tab Creation]]*** | **`C-S-t`** |
+| ***Tab Closing*** | **`C-S-q`** |
+| ***[[KITTY#Tab Detach → C-M-o\|Tab Detach]]*** | **`C-M-o`** |
+| ***Tab Rename*** | **`C-M-S-t`** |
+| ***Tab Movement (Backward ~ Forward) ⬅️ ➡️*** | **`C-{S-TAB,TAB}`** |
+| ***Tab Focus (Previous - Next) ⬅️ ➡️*** | **`C-S{commma,dot}`**
+
+###### Misc
+
+> ***[Reference](https://sw.kovidgoyal.net/kitty/overview/#other-keyboard-shortcuts)***
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Paginate last Command Output*** | **`C-S-g`** |
+| ***[[KITTY#Clear Screen and Scrollback Buffer\|Clear Screen and Scrollback Buffer]]*** | **`C-l`** |
+| ***[[KITTY#Traditional Clipboards → C-S-{c,v}\|Copy to Clipboard]]*** | **`C-S-c`** |
+| **_[[KITTY#Traditional Clipboards → C-S-{c,v}\|Paste from Clipboard]]_** | **`C-S-v`** |
+| **_[[KITTY#Additional Clipboards (Buffers) → {f1,f2,f3,f4}\|Copy to Buffer A]]_** | **`f1`** |
+| **_[[KITTY#Additional Clipboards (Buffers) → {f1,f2,f3,f4}\|Paste from Buffer A]]_** | **`f2`** |
+| **_[[KITTY#Additional Clipboards (Buffers) → {f1,f2,f3,f4}\|Copy to Buffer B]]_** | **`f3`** |
+| **_[[KITTY#Additional Clipboards (Buffers) → {f1,f2,f3,f4}\|Paste from Buffer B]]_** | **`f4`** |
+| ***Increase/Decrease Font Size*** | **`C-S-{plus,minus} (Block-Num)`** |
+| ***Restore Font Size*** | **`C-S-Backspace`** |
+
+---
+
+#### Custom Shortcuts
 
 Note that, as mentioned earlier, a keybind is mapped to a [[KITTY#Actions and Default Shortcuts|specific action]]
 
@@ -359,7 +410,7 @@ The `--cwd=current` option of the `launch` action causes the terminal of the new
 >
 > See [here](https://sw.kovidgoyal.net/kitty/launch/#cmdoption-launch-location)
 
-###### Windows Movement → C-A-{k,h,l,j}
+###### Windows Movement → C-M-{k,h,l,j}
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/actions/#action-move_window)***
 
@@ -380,7 +431,7 @@ map ctrl+alt+j move_window down
 
 ![[KITTY-20240921154947816.webp|345]]
 
-###### Windows Focus → C-S-{k,h,l,j}
+###### Windows Focus → C-M-{k,h,l,j}
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/actions/#action-neighboring_window)***
 
@@ -397,7 +448,7 @@ map ctrl+shift+j neighboring_window down
 
 ![[KITTY-20240921160959522.webp|350]]
 
-###### Windows Resize → A-S-{k,h,l,j,r}
+###### Windows Resize → M-S-{k,h,l,j,r}
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/layouts/#resizing-windows)***
 
@@ -436,7 +487,7 @@ map alt+shift+j resize_window shorter 3
 map alt+shift+r resize_window reset
 ```
 
-###### Windows Detach → A-S-w
+###### Windows Detach → M-S-w
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/invocation/#detach-window)***
 
@@ -468,7 +519,7 @@ This allows to create a new tab while keeping the _CWD_
 map ctrl+shift+t new_tab_with_cwd
 ```
 
-###### Tab Detach → C-A-o
+###### Tab Detach → C-M-o
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/invocation/#detach-window)***
 
@@ -484,7 +535,7 @@ map ctrl+alt+o detach_tab
 
 ![[KITTY-20240921180937965.webp|450]]
 
-##### *Copy/Paste*
+##### Copy ~ Paste
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/actions/#copy-paste)***
 
