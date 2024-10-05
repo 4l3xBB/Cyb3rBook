@@ -62,14 +62,17 @@ fzf is /home/al3xbb/.fzf/bin/fzf
 
 To enable some handy features of _FZF_, add the following lines in the _[[ZSH#*.zshrc*|.zshrc]] file_ →
 
+> ***File Preview with BAT***
+
 ```bash
-export FZF_DEFAULT_OPTS="--height 40% --border --preview 'bat --color=always {} 2> /dev/null'" # File Preview with Bat
+export FZF_DEFAULT_OPTS="--height 40% --border --preview 'bat --color=always {} 2> /dev/null'"
 ```
 
 The above one modifies the *FZF's Display Format and enables* *File Preview Mode with* *BAT*
 
 ![[FZF_FILE_DISPLAY.gif|375]]
 
+> ***FD instead of Find***
 
 ```bash
 export FZF_DEFAULT_COMMAND="fd --type f" # FD instead of Find
