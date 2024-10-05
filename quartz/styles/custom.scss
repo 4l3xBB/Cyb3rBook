@@ -254,7 +254,7 @@ article > h3 {
 article > h4 {
     color: var(--color-2) !important;
     text-shadow: 0 0 0.75em var(--accent-2);
-    font-size: 1.50em;
+    font-size: 1.45em;
     font-weight: 700;
 }
 article > h5 {
@@ -592,6 +592,9 @@ div#graph-container g > circle.node {
 
 /* GRAPH VIEW */
 div#global-graph-container g > line.link {
-    stroke: rgb(151, 26, 26) !important;
+    stroke: var(--accent-2) !important;
+}
+
+div#global-graph-container g > circle {
     fill: var(--accent-1) !important;
 }

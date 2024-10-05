@@ -364,9 +364,9 @@ export PATH=/opt/kitty/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/ga
 
 In addition to the usual paths such as `/usr/bin:/bin:/usr/sbin:/usr/local/bin`, others are added →
 
-- [[KITTY|Kitty]] → `/opt/kitty/bin`
-- [[NEOVIM|Neovim]] → `/opt/nvim/nvim-linux64/bin`
-- _FZF_ → `/home/al3xbb/.fzf/bin`
+- _[[KITTY|Kitty]]_ → `/opt/kitty/bin`
+- _[[NEOVIM|Neovim]]_ → `/opt/nvim/nvim-linux64/bin`
+- _[[FZF]]_ → `/home/al3xbb/.fzf/bin`
 
 > **This allows to use their binaries from any path relatively**
 
@@ -454,9 +454,9 @@ export EDITOR=/opt/nvim/nvim-linux64/bin/nvim
 
 ![[zsh_terminal_editor.gif|375]]
 
-###### Completion System
+###### Autocompletion System
 
-To enable the _ZSH's Modern Completion System_  →
+To enable the _ZSH's Modern Autocompletion System_  →
 
 ```bash
 autoload -Uz compinit && compinit
@@ -477,23 +477,25 @@ These can be found in the [[ZSH#*.zshrc*|.zshrc]] configuration file
 
 ###### FZF - _Fuzzy Finder_
 
-> ***[Reference](https://github.com/junegunn/fzf)***
+> ***[[FZF|Reference]]***
 
 This _Fuzzy Finder_ is mainly used to modify the `C-r` [[SHELL SCRIPTING|Shell]]'s shortcut for _reverse history search_
 
-To load all _FZF_ functionality in the _ZSH Process Context_ →
+To load all _FZF Functionality and Shortcuts_ in the _ZSH Process Context_ →
 
 ```bash
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh 
 ```
 
-Then, to bind the _FZF's reverse history search_ to the `C-r` keybind →
+Then, to enable some _FZF_'s handy features →
 
 ```bash
-export FZF_DEFAULT_OPTS='--bind=ctrl-r:toggle-sort,ctrl-u:up,ctrl-d:down'
+export FZF_DEFAULT_OPTS="--height 40% --border --preview 'bat --color=always {} 2> /dev/null'" # File Preview with BAT
 ```
 
-The above command basically makes that _FZF_ takes control of the _Shell's reverse history search_
+```bash
+export FZF_DEFAULT_COMMAND="fd --type f" # FD instead of Find
+```
 
 ![[zsh_fzf.gif|375]]
 

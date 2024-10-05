@@ -31,13 +31,33 @@ It is an interactive ***Text Filter*** program for any kind of list such as →
 
 ![[FZF_SSH.gif|375]]
 
-###### References
+###### References 🛈
 
 ***[Github Repository](https://github.com/junegunn/fzf)***
 
 ***[FZF Documentation](https://junegunn.github.io/fzf/)***
 
 ***Check [this](https://www.redhat.com/sysadmin/fzf-linux-fuzzy-finder) out too***
+
+##### Keybinds
+
+###### Reverse History
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Toogle*** | **`C-r`** |
+| ***Up/Down*** | **`C-k`/`C-j` *or* `C-p`/`C-n`** |
+| ***Select Item*** | **`Enter`** |
+| ***Exit*** | **`C-g`/`C-c`/`Esc`** |
+| ***Multiselect Mode - Mark Items*** | **`TAB`/`S-TAB`** | 
+
+###### Others
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***File Selection*** | **`C-t`** |
+| ***cd-like Movement*** | **`M-c`** |
+| ***Autocomplete*** | **`** + TAB`** |
 
 ##### Installation
 
@@ -75,7 +95,7 @@ The above one modifies the *FZF's Display Format and enables* *File Preview Mode
 > ***FD instead of Find***
 
 ```bash
-export FZF_DEFAULT_COMMAND="fd --type f" # FD instead of Find
+export FZF_DEFAULT_COMMAND="fd --type f"
 ```
 
 > [!IMPORTANT]-
@@ -83,7 +103,7 @@ export FZF_DEFAULT_COMMAND="fd --type f" # FD instead of Find
 > Note that the above actions require _[[BAT|Bat]]_ and _FD_ to be installed in the system
 >
 
-##### *Integration*
+##### Integration
 
 ***FZF* supports integrations with some *Tools and Functionalities* such as →**
 

@@ -254,6 +254,14 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 #### Custom Shortcuts
 
+##### TL;DR
+
+###### Layouts
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Toogle*** | **`C-`** |
+
 Note that, as mentioned earlier, a keybind is mapped to a [[KITTY#Actions and Default Shortcuts|specific action]]
 
 **Keybind → Action**
