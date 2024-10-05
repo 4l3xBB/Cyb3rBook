@@ -26,11 +26,11 @@ First of all, access to the _[Releases](https://github.com/lsd-rs/lsd/releases)_
 Then, install it as follows →
 
 ```bash
-$ wget -O lsd.deb "DOWNLOAD_LINK_LSD_AMD64.DEB"
+wget -O lsd.deb "DOWNLOAD_LINK_LSD_AMD64.DEB"
 ```
 
 ```bash
-$ sudo dpkg --install lsd.deb
+sudo dpkg --install lsd.deb
 ```
 
 That's it!

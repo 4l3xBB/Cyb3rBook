@@ -58,8 +58,10 @@ cssclasses:
 
 - ![](https://mir-s3-cdn-cf.behance.net/projects/404/8b9d2f168858545.6441d700ed582.jpg)
 	- [[BAT]]
-- ![](https://c4.wallpaperflare.com/wallpaper/430/715/797/water-blue-dark-linux-debian-brands-logos-1920x1080-technology-linux-hd-art-wallpaper-preview.jpg)
+- ![](https://e1.pxfuel.com/desktop-wallpaper/753/322/desktop-wallpaper-debian-blue-neon-logo-01-debian-blue.jpg)
 	- [[LSD]]
+- ![](https://p4.wallpaperbetter.com/wallpaper/625/89/275/archlinux-digital-art-linux-arch-linux-tech-hd-wallpaper-preview.jpg)
+	- [[FZF]]
 
 <br>
 

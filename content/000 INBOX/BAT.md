@@ -22,7 +22,7 @@ It supports it for a large number of *Programming* and *Markup* Languages
 To list all supported →
 
 ```bash
-$ bat --list-language
+bat --list-language
 ```
 
 ![[batcat_file_display.gif|400]]
@@ -50,11 +50,11 @@ First of all, access to the *[Releases](https://github.com/sharkdp/bat/releases)
 Then, install it as follows →
 
 ```bash
-$ wget -O bat.deb "DOWNLOAD_LINK_BAT_AMD64.DEB"
+wget -O bat.deb "DOWNLOAD_LINK_BAT_AMD64.DEB"
 ```
 
 ```bash
-$ sudo dpkg --install bat.deb
+sudo dpkg --install bat.deb
 ```
 
 That's it!
@@ -82,7 +82,7 @@ $ command -V cat
 cat is an alias for bat 
 ```
 
-##### Integration
+##### *Integration*
 
 > ***[Reference](https://github.com/sharkdp/bat?tab=readme-ov-file#integration-with-other-tools)***
 
