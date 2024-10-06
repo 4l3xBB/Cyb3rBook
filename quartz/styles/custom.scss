@@ -576,7 +576,7 @@ blockquote:not([class]) {
 #####################################################
 */
 
-/* GRAPH PREVIEW (SMALL GRAPH) */
+/* GRAPH PREVIEW (LOCAL GRAPH) */
 
 div.graph-outer > svg#global-graph-icon {
     color: var(--accent-2) !important;
@@ -590,11 +590,22 @@ div#graph-container g > circle.node {
     fill: var(--accent-1);
 }
 
-/* GRAPH VIEW */
+/* GRAPH VIEW (GLOBAL GRAPH)*/
 div#global-graph-container g > line.link {
     stroke: var(--accent-2) !important;
 }
 
 div#global-graph-container g > circle {
     fill: var(--accent-1) !important;
+}
+
+/* 
+#################################################
+################  MARKDOWN TABLES ###############
+#################################################
+*/
+
+
+div.table-container > table > tbody > tr > td:not(:last-child) {
+    border-right: 1px solid #393639; 
 }

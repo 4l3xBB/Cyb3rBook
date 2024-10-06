@@ -18,7 +18,7 @@ cssclasses:
 
 ![[SETUP-20240921163243628.webp|400]]
 
-| **SOURCES** | | |
+| **Component** | **Role** | |
 | --- | --- | --- |
 | **[Parrot](https://parrotsec.org/)** | Operative System | **[See more](https://parrotsec.org/docs/)** |
 | **[bspwm](https://github.com/baskerville/bspwm)** | Windows Manager | **[See more](https://wiki.archlinux.org/title/Bspwm)** |
@@ -29,7 +29,7 @@ cssclasses:
 | **[Feh](https://github.com/derf/feh)** | Image Viewer (Desktop Wallpaper) | **[See more](https://wiki.archlinux.org/title/Feh)** |
 | **[Kitty](https://github.com/kovidgoyal/kitty)** | Terminal Emulator | **[See more](https://wiki.archlinux.org/title/Kitty)** |
 | **[ZSH](https://wiki.archlinux.org/title/Zsh_(Espa%C3%B1ol))** | [[SHELL SCRIPTING\|Shell]] | **[See more](https://zsh.sourceforge.io/Doc/Release/zsh_toc.html)** |
-| **[NEOVIM](https://github.com/neovim/neovim)** | Text Editor | **[See more](https://neovim.io/doc/)** |
+| **[Neovim](https://github.com/neovim/neovim)** | Text Editor | **[See more](https://neovim.io/doc/)** |
 
 ##### Components ⟡
 

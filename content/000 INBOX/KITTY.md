@@ -273,9 +273,9 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 | ***[[KITTY#Window Split\|Horizontal Split]]*** | **`C-S-dash/hyphen`** |
 | ***[[KITTY#Window Split\|Adaptative Split]]*** | **`C-S-plus`** |
 | ***Windows Closing*** | **`C-S-w`** |
-| ***[[KITTY#Windows Movement → C-A-{k,h,l,j}\|Windows Movement → Up ~ Left ~ Right ~ Down]]*** | **`C-M-{k,h,l,j}`** |
+| ***[[KITTY#Windows Movement → C-A-{k,h,l,j}\|Windows Movement ⬆️ ⬅️ ➡️ ⬇️]]*** | **`C-M-{k,h,l,j}`** |
 | ***[[KITTY#Windows Focus → C-S-{k,h,l,j}\|Windows Focus ⬆️ ⬅️ ➡️ ⬇️]]*** | **`C-S-{k,h,l,j}`** |
-| ***[[KITTY#Windows Resize → A-S-{k,h,l,j,r}\|Windows Resize ⬆️ ⬅️ ➡️ ⬇️]]*** | **`M-S-{k,h,l,j`** |
+| ***[[KITTY#Windows Resize → A-S-{k,h,l,j,r}\|Windows Resize ⬆️ ⬅️ ➡️ ⬇️]]*** | **`M-S-{k,h,l,j}`** |
 | ***[[KITTY#Windows Resize → A-S-{k,h,l,j,r}\|Windows Resize - Reset]]*** | **`M-S-r`** |
 | ***[[KITTY#Windows Detach → A-S-w\|Windows Detach]]*** | **`M-S-w`** |
 
