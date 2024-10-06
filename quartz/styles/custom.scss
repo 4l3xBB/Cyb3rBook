@@ -356,6 +356,13 @@ div#preview-container > div.preview-inner > ul:not(.tags) > li > ul > li > a {
     font-size: 15px;
 }
 
+/* EXTERNAL LINKS (BACKLINKS) & INTERNAL LINKS */
+
+div#preview-container > div.preview-inner a {
+    color: var(--accent-2);
+    background: none !important;
+}
+
 /* 
 ###########################################################
 #                       CARD-LIST                         #
@@ -604,7 +611,6 @@ div#global-graph-container g > circle {
 ################  MARKDOWN TABLES ###############
 #################################################
 */
-
 
 div.table-container > table > tbody > tr > td:not(:last-child) {
     border-right: 1px solid #393639; 
