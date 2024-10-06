@@ -14,7 +14,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[PENTESTING]]
 
-#### Environment Customization
+### Environment Customization
 
 ![[SETUP-20240921163243628.webp|400]]
 
@@ -31,7 +31,7 @@ cssclasses:
 | **[ZSH](https://wiki.archlinux.org/title/Zsh_(Espa%C3%B1ol))** | [[SHELL SCRIPTING\|Shell]] | **[See more](https://zsh.sourceforge.io/Doc/Release/zsh_toc.html)** |
 | **[Neovim](https://github.com/neovim/neovim)** | Text Editor | **[See more](https://neovim.io/doc/)** |
 
-##### Components ⟡
+#### Components ⟡
 
 - ![](https://i.pinimg.com/originals/b0/3b/da/b03bda611e0210d07641bbb4bddc3c6d.jpg)
 	- [[ZSH]]
@@ -54,30 +54,44 @@ cssclasses:
 	
 <br>
 
-##### Miscellaneous Δ
+#### Miscellaneous Δ
 
 - ![](https://mir-s3-cdn-cf.behance.net/projects/404/8b9d2f168858545.6441d700ed582.jpg)
 	- [[BAT]]
 - ![](https://e1.pxfuel.com/desktop-wallpaper/753/322/desktop-wallpaper-debian-blue-neon-logo-01-debian-blue.jpg)
 	- [[LSD]]
-- ![](https://p4.wallpaperbetter.com/wallpaper/625/89/275/archlinux-digital-art-linux-arch-linux-tech-hd-wallpaper-preview.jpg)
+- ![](https://img.freepik.com/premium-photo/close-up-cartoon-character-with-glowing-eyes-smile-generative-ai_1034033-62607.jpg)
 	- [[FZF]]
+- ![](https://img.freepik.com/premium-photo/power-off-button-with-bright-glowing-futuristic-orange-neon-lights-black-background-3d-render_989822-4167.jpg)
+	- [[SESSION MANAGEMENT]]
 
 <br>
 
-##### Information 🛈
+#### Shortcuts ⌨
+
+> 
+
+##### *SXHKD*
+
+**[[SXHKD#Sxhkd|SXHKD]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[SXHKD#Bspwm|BSPWM]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[SXHKD#OS Window|OS WINDOWS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[SXHKD#Program Launch|PROGRAMS' LAUNCH]]**
+
+##### *KITTY*
+
+**[[KITTY#Layouts|LAYOUTS]] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[KITTY#Windows|WINDOWS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[KITTY#Tabs|TABS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[KITTY#Misc|MISCELLANEOUS]]**
+
+#### Information 🛈
 
 **This Custom Linux Environment is deployed in _Parrot OS_ 🦜**
 
-###### Configuration Files
+##### Configuration Files
 
-***[Reference](https://github.com/4l3xBB/Env-Setup)***
+> ***[Reference](https://github.com/4l3xBB/Env-Setup)***
 
 All necessary _Configuration Files_ can be found in the above link or in the _Components Documentation_
 
-> [!IMPORTANT]- _Configuration Files Structure_
+> [!IMPORTANT]- _Configuration Files Layout_
 >
-> ```bash
+> ```bash title="https://github.com/4l3xBB/Env-Setup"
 > .
 > ├── bspwm
 > │   ├── bin
@@ -118,22 +132,22 @@ All necessary _Configuration Files_ can be found in the above link or in the _Co
 >     └── .zshrc
 > ```
 
-###### Deployment Flow
+##### Deployment Flow
 
 **The Deployment Flow would be →**
 
 ***\[\[ EXCALIDRAW BANNER ]]***
 
-##### Previous Steps
+#### Previous Steps
 
 Before start with the above Components' Installation and Configuration →
 
 ```bash
-$ sudo apt update # Repositories' update
+sudo apt update # Repositories' update
 ```
 
 ```bash
-$ sudo parrot-upgrade
+sudo parrot-upgrade
 ```
 
 > [!CAUTION]-
@@ -141,7 +155,7 @@ $ sudo parrot-upgrade
 > Be aware that the following upgrading way is not recommended →
 >
 > ```bash
-> $ sudo apt upgrade # Or sudo apt full-upgrade
+> sudo apt upgrade # Or sudo apt full-upgrade
 > ```
 > The above way may arises several errors such as the _Kernel Panic_ ones on reboot due to specific packages
 >
@@ -152,7 +166,7 @@ $ sudo parrot-upgrade
 > parrot-upgrade is /usr/bin/parrot-upgrade
 > ```
 >
-> ```bash
+> ```bash title="/usr/bin/parrot-upgrade"
 > #!/bin/bash
 > set -e
 > DEBIAN_FRONTEND="noninteractive"
@@ -169,97 +183,24 @@ $ sudo parrot-upgrade
 > Thus, on _Parrot OS_, instead of this →
 >
 > ```bash
-> $ sudo apt update && sudo apt upgrade -y # Wrong!
+> sudo apt update && sudo apt upgrade -y # Wrong!
 > ```
 > Do this →
 >
 > ```bash
-> $ sudo apt update && sudo parrot-upgrade
+> sudo apt update && sudo parrot-upgrade
 > ```
 
  Environment Dependencies →
 
 ```bash
-$ sudo apt install -y -- zenity build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev
+sudo apt install -y -- zenity build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev
 ```
 
 Additional Packages →
 
 ```bash
-$ sudo apt install -y -- scrot scrub xclip bar locate ranger neofetch wmname acpi imagemagick cmatrix
+sudo apt install -y -- scrot scrub xclip bar locate ranger neofetch wmname acpi imagemagick cmatrix
 ```
 
----
 
-#### Additional Notes
-
-##### Sessions Management and Shutdown
-
-During the installation of the above components, the user will have to be shutting down, restarting, logging out or simply blocking (i.e _lock_) the current session
-
-This actions can be performed as follows →
-
-###### Shut Down
-
-```bash
-$ sudo poweroff
-```
-
-###### Restart
-
-```bash
-$ sudo reboot
-```
-
-###### Log out
-
-```bash
-$ loginctl list-sessions # Get the Session's Number
-$ loginctl terminate-session <session_number> # Finish a Session
-```
-
-> [!INFO]-
->
-> If the above command is not available because of the system has not been initialized with _systemd_, use the following one →
-> 
-> ```bash
-> $ pkill -SIGTERM --euid "$( id -u )" # Or pkill -15
-> ```
->
-> This allows to all the processes related to the _EUID_ to terminate corrrectly and clean up resources
->
-> If any process does not respond to the `SIGTERM` signal, just sent a `KILL` signal to it 
->
-> ```bash
-> $ pkill -KILL --euid "$( id -u )" # Or pkill -9
-> ```
->
-> Note that all signal types and their associated numbers can be enumerated as follows through these [[Shell Builtins|shell builtins]] →
->
-> ```bash
-> $ kill -l # Or trap -l
-> ```
->
-
-###### Session Lock
-
-It can be handled through the _X Session Manager_ called `lightDM`
-
-To interact with the `lightdm` daemon, the `dm-tool` binary comes into actions
-
-```bash
-$ dm-tool switch-to-greeter # Like the Change-User option in Windows
-```
-
-```bash
-$ dm-tool lock # Like Windows + L in Windows
-```
-
-> [!INFO]-
->
-> If `lightdm` does not manages the user sessions and the host has been booted with systemd (i.e. ***PID 1***), then try this →
->
-> ```bash
-> $ loginctl list-sessions
-> $ loginctl lock-session SESSION_NUMBER
-> ```

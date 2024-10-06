@@ -41,7 +41,7 @@ It displays the modifications compared to the last _Commit_
 
 **More info [here](https://github.com/sharkdp/bat)**
 
-##### Installation
+#### Installation
 
 > ***[Reference](https://github.com/sharkdp/bat?tab=readme-ov-file#installation)***
 
@@ -69,7 +69,7 @@ bat 0.24.0 (fc95468)
 
 To replace `cat` with `bat`, simply add the following aliases in the _[[ZSH#*.zshrc*|.zshrc]]_ file →
 
-```bash
+```bash title="~/.zshrc"
 alias cat='bat' # Standard sustitution
 alias catn='bat --style=plain' # Only shows Plain Text (No decorations)
 alias catnp='bat --style=plain --paging=never' # Plain Text and No Pagination
@@ -82,7 +82,7 @@ $ command -V cat
 cat is an alias for bat 
 ```
 
-##### *Integration*
+#### *Integration*
 
 > ***[Reference](https://github.com/sharkdp/bat?tab=readme-ov-file#integration-with-other-tools)***
 
@@ -122,7 +122,7 @@ $ man nmap
 
 To make the above action permanent, add the following line in the _[[ZSH#*.zshrc*|.zshrc]] file_ →
 
-```bash
+```bash title="~/.zshrc"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 ```
 

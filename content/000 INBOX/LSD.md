@@ -19,7 +19,7 @@ This `ls` fork offers features such as ***colors, icons, tree-view and more...**
 
 **More info [here](https://github.com/lsd-rs/lsd)**
 
-##### Installation
+#### Installation
 
 First of all, access to the _[Releases](https://github.com/lsd-rs/lsd/releases)_ page and copy the _Download Link_ of the _**lsd_X.X.X_amd64.deb**_
 
@@ -45,7 +45,7 @@ lsd 1.1.5
 
 To replace `ls` with `lsd`, simply add the following aliases in the _[[ZSH#*.zshrc*|.zshrc]]_ file →
 
-```bash
+```bash title="~/.zshrc"
 alias ll='lsd -lh --group-dirs=first'
 alias la='lsd -a --group-dirs=first'
 alias l='lsd --group-dirs=first'

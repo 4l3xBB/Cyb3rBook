@@ -17,7 +17,7 @@ cssclasses:
 
 <br>
 
-#### DISCLAIMER❗
+### DISCLAIMER❗
 
 ☣️ Please note that I'm not responsible for the use of any of the Vulnerabilites, Attack Vectors or Exploits that appear or are explained here,  the same applies to my [Github Account](https://github.com/4l3xBB) ☣️
 

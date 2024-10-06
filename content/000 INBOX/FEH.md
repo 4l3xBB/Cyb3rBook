@@ -21,8 +21,8 @@ It has several image display modes and allows the background image to be changed
 
 `feh` is launched by [[BSPWM|bspwm]] from the [[BSPWM#*bspwmrc*|bspwmrc]] script as follows →
 
-```bash
-# ~/.config/bspwm/bspwmrc - feh Binary Launch
+```bash title="~/.config/bspwm/bspwmrc"
+# Feh Binary Launch
 /usr/bin/feh --bg-fill /home/al3xbb/Desktop/4l3xBB/Wallpapers/Fondo.jpg &
 ```
 
@@ -46,7 +46,7 @@ As always, all the information needed to handle this tool can be found in its **
 
 ---
 
-##### Installation
+#### Installation
 
 > [!CAUTION]-
 >
@@ -56,7 +56,7 @@ As always, all the information needed to handle this tool can be found in its **
 >
 
 ```bash
-$ apt install -y -- feh
+apt install -y -- feh
 ```
 
 That's it
@@ -79,21 +79,21 @@ feh is /usr/bin/feh
 Once installed, download the desired image and save it in the following directory →
 
 ```bash
-$ mkdir -p ~/Desktop/4l3xBB/Wallpapers
-$ mv ~/Downloads/Image.jpg !$
+mkdir -p ~/Desktop/4l3xBB/Wallpapers
+mv ~/Downloads/Image.jpg !$
 ```
 
 To set it as the _Desktop Wallpaper_ →
 
 ```bash
-$ feh --bg-fill /home/al3xbb/Desktop/4l3xBB/Wallpapers/Fondo.jpg
+feh --bg-fill /home/al3xbb/Desktop/4l3xBB/Wallpapers/Fondo.jpg
 ```
 
 > [!INFO]-
 >
 > Note that, as mentioned earlier, the above command has to be implement in the [[BSPWM#*bspwmrc*|bspwmrc]] file to set the image as the _Desktop Wallpaper_ automatically
 >
-> ```bash
+> ```bash title="~/.config/bspwm/bspwmrc"
 > /usr/bin/feh --bg-fill /home/al3xbb/Desktop/4l3xBB/Wallpapers/Fondo.jpg &
 > ```
 >

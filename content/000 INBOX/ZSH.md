@@ -48,7 +48,7 @@ It enhances the _ZSH_'s inherent auto-complete capability
 
 _.zsh_ file is sourced from `.zshrc`
 
-```bash
+```bash title="~/.zshrc"
 if [[ -f /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]]; then
 	source /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 fi
@@ -64,7 +64,7 @@ It suggests commands as the user types based on history and the previous complet
 
 _.zsh_ file is sourced from `.zshrc`
 
-```bash
+```bash title="~/.zshrc"
 if [[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
@@ -80,7 +80,7 @@ It enables highlighting of commands while typing them in an interactive terminal
 
 _.zsh_ file is sourced from `.zshrc`
 
-```bash
+```bash title="~/.zshrc"
 if [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
@@ -94,7 +94,7 @@ There are different themes for this plugin, the one used in this [[SETUP|setup e
 
 To use it, just `source`, in the `.zshrc` file, the _.zsh_ script resulting from the steps in the link above 
 
-```bash
+```bash title="~/.zshrc"
 if [[ -f /home/al3xbb/.config/zsh/zsh-syntaxhighlighting/themes/dracula.zsh ]] ; then
   source /home/al3xbb/.config/zsh/zsh-syntaxhighlighting/themes/dracula.zsh
 fi
@@ -121,7 +121,7 @@ This plugins automatically places the _sudo_ binary at the beginnng of the line 
 
 _.zsh_ file is sourced from `.zshrc`
 
-```bash
+```bash title="~/.zshrc"
 if [[ -f /usr/share/zsh-sudo/sudo.plugin.zsh ]]; then
   source /usr/share/zsh-sudo/sudo.plugin.zsh
 fi
@@ -139,7 +139,7 @@ fi
 >
 
 ```bash
-$ sudo apt install -y -- zsh
+sudo apt install -y -- zsh
 ```
 
 ##### User's Default Shell
@@ -160,7 +160,7 @@ done
 To install most of the plugins → _[[ZSH#ZSH-autocomplete|Autocomplete]] ~ [[ZSH#ZSH-autosuggestions|Autosuggestions]] ~ [[ZSH#ZSH-syntax-highlighting|Syntax-hightlighting]]_
 
 ```bash
-$ sudo apt install -y -- zsh-{autocomplete,autosuggestions,syntax-highlighting}
+sudo apt install -y -- zsh-{autocomplete,autosuggestions,syntax-highlighting}
 ```
 
 > [!INFO]-
@@ -172,11 +172,11 @@ $ sudo apt install -y -- zsh-{autocomplete,autosuggestions,syntax-highlighting}
 As _Root_, Install the _[[ZSH#zsh-sudo|ZSH-Sudo]] Plugin_, as follows  →
 
 ```bash
-$ mkdir -p /usr/share/zsh-sudo ; (( $? )) || cd !$
+mkdir -p /usr/share/zsh-sudo ; (( $? )) || cd !$
 ```
 
 ```bash
-$ wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/plugins/sudo/sudo.plugin.zsh
+wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/plugins/sudo/sudo.plugin.zsh
 ```
 
 ###### *ZSH-Syntax-Highlighting*
@@ -188,15 +188,15 @@ As mentioned in the *[[ZSH#ZSH-syntax-highlighting|ZSH-Syntax-Highlighting]] Plu
 Install the above _Syntax Theme_ as follows →
 
 ```bash
-$ mkdir -p ~/.config/zsh/zsh-syntaxhighlighting/themes/ ; cd !$
+mkdir -p ~/.config/zsh/zsh-syntaxhighlighting/themes/ ; cd !$
 ```
 
 ```bash
-$ git clone https://github.com/dracula/zsh-syntax-highlighting.git dracula
+git clone https://github.com/dracula/zsh-syntax-highlighting.git dracula
 ```
 
 ```bash
-$ mv ./dracula/zsh-syntax-highlighting.sh ./dracula.zsh && rm -rf !$
+mv ./dracula/zsh-syntax-highlighting.sh ./dracula.zsh && rm -rf !$
 ```
 
 > [!CAUTION]-
@@ -221,12 +221,12 @@ $ mv ./dracula/zsh-syntax-highlighting.sh ./dracula.zsh && rm -rf !$
 Manual installation as follows →
 
 ```bash
-$ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 ```
 
 To source the _powerlevel10k script_ , insert this line at the **beginning** of the `.zshrc` file →
 
-```bash
+```bash title="~/.zshrc"
 source /home/al3xbb/powerlevel10k/powerlevel10k.zsh-theme
 ```
 
@@ -235,7 +235,7 @@ Then, to start the interactive _powerlevel10k's setup_ →
 > _Hack Nerd Fonts_'s previous installation is required. See [[KITTY#Hack Nerd Fonts|here]]
 
 ```bash
-$ source ~/.zshrc
+source ~/.zshrc
 ```
 
 > Do not forget to repeat the above steps for the other users
@@ -248,7 +248,7 @@ In that _powerlevel10k file_, for this [[SETUP|Setup Enviroment]], as the _non-p
 
 - **Left Prompt Elements**
 
-```bash
+```bash title="~/.p10k.zsh"
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
 	os_icon
 	dir
@@ -263,7 +263,7 @@ typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
 
 Regarding to the _[[ZSH#DIR|dir]] segment_, the _bold font_ can be disabled as follows →
 
-```bash
+```bash title="~/.p10k.zsh"
 typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=false # Or true to enable it
 ```
 
@@ -273,7 +273,7 @@ Only as _Root_, add/edit as follows to add an icon as a [[ZSH#CONTEXT|context]]�
 
 > ***[Icon's Source](https://www.nerdfonts.com/cheat-sheet)***
 
-```bash
+```bash title="~/.p10k.zsh"
 typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='󰈸' # Custom Icon
 typeset -g POWERLEVEL9K_CONTEXT_PREFIX='' # Empty it
 ```
@@ -287,7 +287,7 @@ To avoid having to modify, when a change is made, both the _Root_ and the _Non-p
 > As _Root_
 
 ```bash
-$ ln --symbolic --force -- /home/al3xbb/.zshrc ~/.zshrc
+ln --symbolic --force -- /home/al3xbb/.zshrc ~/.zshrc
 ```
 
 > [!INFO]-
@@ -306,7 +306,7 @@ Check if exist and source them →
 
 - ***ZSH-Sudo***
 
-```bash
+```bash title="~/.zshrc"
 if [[ -f /usr/share/zsh-sudo/sudo.plugin.zsh ]] ; then
 	source /usr/share/zsh-sudo/sudo.plugin.zsh
 fi
@@ -314,7 +314,7 @@ fi
 
 - ***ZSH-Syntax-Highlighting → 🦇 Dracula Theme 🧛🏻‍♂️***
 
-```bash
+```bash title="~/.zshrc"
 if [[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

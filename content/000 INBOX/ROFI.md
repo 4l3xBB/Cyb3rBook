@@ -21,8 +21,8 @@ In this case, It is a list of the applications that are installed on the system
 
 `rofi` is launched by the [[SXHKD|sxhkd]] daemon when a certain input event, such as a _Hotkey_, is performed
 
-```bash
-# ~/.config/sxhkd/sxhkdrc - Rofi Launch Hotkey
+```bash title="~/.config/sxhkd/sxhkdrc"
+# Rofi Launch
 super + d
   /usr/bin/rofi -show run
 ```
@@ -37,7 +37,7 @@ super + d
 
 ---
 
-##### Installation
+#### Installation
 
 > [!CAUTION]-
 >
@@ -47,7 +47,7 @@ super + d
 >
 
 ```bash
-$ apt install -y -- rofi
+apt install -y -- rofi
 ```
 
 That's it

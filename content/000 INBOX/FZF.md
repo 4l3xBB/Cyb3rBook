@@ -39,27 +39,7 @@ It is an interactive ***Text Filter*** program for any kind of list such as →
 
 ***Check [this](https://www.redhat.com/sysadmin/fzf-linux-fuzzy-finder) out too***
 
-##### Keybinds
-
-###### Reverse History
-
-| **Action** | **Shortcut** |
-| --- | --- |
-| ***Toogle*** | **`C-r`** |
-| ***Up/Down*** | **`C-k`/`C-j` *or* `C-p`/`C-n`** |
-| ***Select Item*** | **`Enter`** |
-| ***Exit*** | **`C-g`/`C-c`/`Esc`** |
-| ***Multiselect Mode - Mark Items*** | **`TAB`/`S-TAB`** | 
-
-###### Others
-
-| **Action** | **Shortcut** |
-| --- | --- |
-| ***File Selection*** | **`C-t`** |
-| ***cd-like Movement*** | **`M-c`** |
-| ***Autocomplete*** | **`** + TAB`** |
-
-##### Installation
+#### Installation
 
 > ***[Reference](https://github.com/junegunn/fzf?tab=readme-ov-file#installation)***
 
@@ -84,7 +64,7 @@ To enable some handy features of _FZF_, add the following lines in the _[[ZSH#*.
 
 > ***File Preview with BAT***
 
-```bash
+```bash title="~/.zshrc"
 export FZF_DEFAULT_OPTS="--height 40% --border --preview 'bat --color=always {} 2> /dev/null'"
 ```
 
@@ -94,7 +74,7 @@ The above one modifies the *FZF's Display Format and enables* *File Preview Mode
 
 > ***FD instead of Find***
 
-```bash
+```bash title="~/.zshrc"
 export FZF_DEFAULT_COMMAND="fd --type f"
 ```
 
@@ -103,7 +83,38 @@ export FZF_DEFAULT_COMMAND="fd --type f"
 > Note that the above actions require _[[BAT|Bat]]_ and _FD_ to be installed in the system
 >
 
-##### Integration
+#### Shortcuts
+
+##### *Shorcuts' Meaning*
+
+| **Key** | **Meaning** | |
+| --- | --- | --- |
+| ***C*** | ***`Control`*** | ***`C-c` → `Control+c`*** |
+| ***M*** | ***`Alt`*** | ***`M-a` → `Alt+a`*** |
+| ***S*** | ***`Shift`*** | ***`S-o` → `Shift+o`***  |
+| ***Super*** | ***`Windows`*** | ***`Super-s` → `Windows+s`*** |
+| ***-*** | ***`+`*** | ***`C-z` → `Control+z`*** |
+| ***{a,b,c,d}*** | ***`a` `b` `c` `d`*** | ***`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`*** |
+
+##### Reverse History
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Toogle*** | **`C-r`** |
+| ***Up/Down*** | **`C-k`/`C-j` *or* `C-p`/`C-n`** |
+| ***Select Item*** | **`Enter`** |
+| ***Exit*** | **`C-g`/`C-c`/`Esc`** |
+| ***Multiselect Mode - Mark Items*** | **`TAB`/`S-TAB`** | 
+
+##### Others
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***File Selection*** | **`C-t`** |
+| ***cd-like Movement*** | **`M-c`** |
+| ***Autocomplete*** | **`** + TAB`** |
+
+#### Integration
 
 ***FZF* supports integrations with some *Tools and Functionalities* such as →**
 

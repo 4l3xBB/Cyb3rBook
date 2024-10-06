@@ -12,4 +12,54 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
+***Neovim → Vim Fork focused on extensibility and usability***
 
+It greatly improves the user experience with a _Text Editor_ and enhances aspects such as ***Efficiency and Performance***
+
+##### Compared to *Vim*
+
+- ***More Modern***
+<br>
+- ***More Extensible***
+<br>
+- ***More Efficient***
+
+##### Modal Editor
+
+Therefore, each mode has its own _keybinds_ mapped to a specifics actions →
+
+- ***Normal Mode*** 
+<br>
+- ***Insert Mode***
+<br>
+- ***Visual Mode***
+
+**More info [here](https://github.com/neovim/neovim)**
+
+***[Neovim Documentation](https://neovim.io/doc/)***
+
+#### Installation
+
+##### *Neovim*
+
+***[Reference](https://github.com/neovim/neovim/blob/master/INSTALL.md#linux)***
+
+Access to the *[Releases](https://github.com/neovim/neovim/releases)* to copy the _Download Link_ of the *nvim-linux64.tar.gz* to `wget` it or simply proceed as follows →
+
+```bash
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+sudo rm -rf /opt/nvim
+sudo tar -C /opt -xzf nvim-linux64.tar.gz
+```
+
+Then, add this to the _Shell Configuration File_ → _[[ZSH#*.zshrc*|.zshrc]]_
+
+```bash title="~/.zshrc"
+export PATH="$PATH:/opt/nvim-linux64/bin"
+```
+
+Source the above 
+
+#### *Nvim* Cheatsheet
+
+![[NEOVIM-20241006135518276.webp]]

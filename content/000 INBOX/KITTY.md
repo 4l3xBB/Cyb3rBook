@@ -40,12 +40,12 @@ $ kitty +kitten icat /path/to/image
 > Just check that the package is installed →
 >
 > ```bash
-> $ bash -c "apt list --installed *imagemagick*"
+> bash -c "apt list --installed *imagemagick*"
 > ```
 > If not →
 > 
 > ```bash
-> $ apt install -y -- imagemagick
+> apt install -y -- imagemagick
 > ```
 >
 > Anyways, It should be installed, as It is indicated as environment dependency to be installed in the [[SETUP#Components|Setup's components section]]
@@ -62,8 +62,8 @@ Note that the above commands use the syntax `kitty +kitten`
 
 `kitty` is launched by the [[SXHKD|sxhkd]] daemon when a certain input event, such as a _Hotkey_, is performed
 
-```bash
-# ~/.config/sxhkd/sxhkdrc - Kitty Launch Hotkey
+```bash title="~/.config/sxhkd/sxhkdrc"
+# Kitty Launch
 super + Return
   /opt/kitty/bin/kitty
 ```
@@ -90,13 +90,13 @@ Download the binary and its related files from the [project's release page](http
 Being _root_ →
 
 ```bash
-$ mkdir /opt/kitty
-$ mv /home/al3xbb/Downloads/kitty-0.36.2-x86_64.txz !$
+mkdir /opt/kitty
+mv /home/al3xbb/Downloads/kitty-0.36.2-x86_64.txz !$
 ```
 
 ```bash
-$ cd !$ && tar --extract --verbose --file kitty-0.36.2-x86_64.txz
-$ rm -i -- !$
+cd !$ && tar --extract --verbose --file kitty-0.36.2-x86_64.txz
+rm -i -- !$
 ```
 
 > [!INFO]-
@@ -124,7 +124,7 @@ As for the _kitty's_ Configuration File, It need to be created
 Just create it in `~/.config/kitty` and paste this [[KITTY#Configuration File|Configuration File]]'s content into it →
 
 ```bash
-$ nvim ~/.config/kitty/kitty.conf # Or {nano,vi,emacs,vim...}
+nvim ~/.config/kitty/kitty.conf # Or {nano,vi,emacs,vim...}
 ```
 
 Moreover, as mentioned below, a _color.ini_ file must also be created in the `~/.config/kitty`  directory to apply various [[KITTY#Colours|terminal colours]]
@@ -132,13 +132,13 @@ Moreover, as mentioned below, a _color.ini_ file must also be created in the `~/
 Copy the _Color.ini_ file from [[KITTY#Configuration File|here]] and paste into it →
 
 ```bash
-$ nvim ~/.config/kitty/color.ini
+nvim ~/.config/kitty/color.ini
 ```
 
 Once the above is done, as _Root_, copy the entire `/home/al3xbb/.config/kitty` directory's content into his _kitty's configuration directory_
 
 ```bash
-$ cp /home/al3xbb/.config/kitty/* ~/.config/kitty/
+cp /home/al3xbb/.config/kitty/* ~/.config/kitty/
 ```
 
 ##### Hack Nerd Fonts
@@ -148,20 +148,20 @@ See [here](https://www.nerdfonts.com/font-downloads) to download them
 To install them, as _root_ →
 
 ```bash
-$ mv /home/al3xbb/Downloads/Hack.zip /usr/local/share/fonts
-$ cd !$
+mv /home/al3xbb/Downloads/Hack.zip /usr/local/share/fonts
+cd !$
 ```
 
 ```bash
-$ 7z x Hack.zip # Or unzip
-$ rm -i -- {LICENSE,README}.md !$
+7z x Hack.zip # Or unzip
+rm -i -- {LICENSE,README}.md !$
 ```
 
 Once installed, just check in the `kitty.conf` file that the `font_family` parameter is set as follows →
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.font_family)***
 
-```bash
+```bash title="~/.config/kitty/kitty.conf"
 font_family HackNerdFont
 ```
 
@@ -204,7 +204,7 @@ This [[SETUP|Enviroment Setup]] make use of a _ZSH_ as the [[SHELL SCRIPTING|Def
 > Just installed it via the _apt repositories_ as follows →
 >
 > ```bash
-> $ apt install -y -- zsh
+> apt install -y -- zsh
 > ```
 >
 > Anyway, **[[ZSH#Installation|See this]]** to get it all set up as far as _ZSH_ is concerned
@@ -254,6 +254,17 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 #### *Custom Shortcuts ~ TL;DR*
 
+##### *Shorcuts' Meaning*
+
+| **Key** | **Meaning** | |
+| --- | --- | --- |
+| ***C*** | ***`Control`*** | ***`C-c` → `Control+c`*** |
+| ***M*** | ***`Alt`*** | ***`M-a` → `Alt+a`*** |
+| ***S*** | ***`Shift`*** | ***`S-o` → `Shift+o`***  |
+| ***Super*** | ***`Windows`*** | ***`Super-s` → `Windows+s`*** |
+| ***-*** | ***`+`*** | ***`C-z` → `Control+z`*** |
+| ***{a,b,c,d}*** | ***`a` `b` `c` `d`*** | ***`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`*** |
+
 ##### Layouts
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/layouts/#arrange-windows)***
@@ -289,8 +300,8 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 | ***Tab Closing*** | **`C-S-q`** |
 | ***[[KITTY#Tab Detach → C-M-o\|Tab Detach]]*** | **`C-M-o`** |
 | ***Tab Rename*** | **`C-M-S-t`** |
-| ***Tab Movement (Backward ~ Forward) ⬅️➡️*** | **`C-{S-TAB,TAB}`** |
-| ***Tab Focus (Previous - Next) ⬅️➡️*** | **`C-S{commma,dot}`**
+| ***Tab Movement (Backward ~ Forward) ⬅️➡️*** | **`C-S-{comma,dot}`** |
+| ***Tab Focus (Previous - Next) ⬅️➡️*** | **`C-{S-TAB,TAB}`**
 
 ##### Misc
 
@@ -620,14 +631,14 @@ In this [[SETUP|environment setup]], this action is implemented in the [[ZSH#Con
 
 > ***[Reference](https://unix.stackexchange.com/questions/517025/zsh-clear-scrollback-buffer#answer-531178)***
 
-```bash
+```bash title="~/.zshrc"
 clearScreenAndScrollback () {
 	clear && printf '\e[3J' # Or printf "\e[H\e[3J"
 	zle && zle .reset-prompt && zle -R # Avoid Screen Element/Prompt Corruption
 }
 ```
 
-```bash
+```bash title="~/.zshrc"
 zle -N clearScreenAndScrollback 
 bindkey '^L' clearScreenAndScrollback
 ```
@@ -639,5 +650,3 @@ bindkey '^L' clearScreenAndScrollback
 > - `zle -N FUNCTION_NAME` → Function register as a New Widget in _ZSH Line Editor_
 > <br>
 > - `bindkey KEYBIND FUNCTION_NAME` → A certain keybind runs the passed function
-
-######

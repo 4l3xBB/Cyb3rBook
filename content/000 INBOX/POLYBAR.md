@@ -41,8 +41,8 @@ A module can execute any action such as a command, scripts...
 
 `polybar` is executed by [[BSPWM|bspwm]] from the [[BSPWM#*bspwmrc*|bspwmrc]] script through the `polybar`'s launcher script → `~/.config/polybar/launch.sh`
 
-```bash
-# ~/.config/bspwm/bspwmrc - Polybar Launch
+```bash title="~/.config/bspwm/bspwmrc"
+# Polybar Launch
 checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 ```
 
@@ -56,7 +56,7 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 >
 > ```bash
 > #!/usr/bin/env sh
-> $ pgrep --exact polybar > /dev/null 2>&1 || ~/.config/polybar/launch.sh &
+> pgrep --exact polybar > /dev/null 2>&1 || ~/.config/polybar/launch.sh &
 > ```
 
 **Configuration File → Any file which a `.ini` extension**
@@ -80,7 +80,7 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 > In addition, the above [[SETUP|setup]] components' installation facilitates the _ZSH Configuration_
 
 ```bash
-$ apt install -y -- polybar
+apt install -y -- polybar
 ```
 
 That's it
@@ -103,14 +103,14 @@ polybar is /usr/bin/polybar
 As a base for the configuration file's structure, clone the following [Github Repository](https://github.com/VaughnValle/blue-sky)
 
 ```bash
-$ git clone https://github.com/VaughnValle/blue-sky ~/Downloads/blue-sky
+git clone https://github.com/VaughnValle/blue-sky ~/Downloads/blue-sky
 ```
 
 Then, recursively copy the _polybar's content_ into `~/.config/polybar` →
 
 ```bash
-$ cd !$
-$ bash -c "shopt -sq dotglob && cp -rv -- ./polybar/* ~/.config/polybar"
+cd !$
+bash -c "shopt -sq dotglob && cp -rv -- ./polybar/* ~/.config/polybar"
 ```
 
 > [!INFO]-
@@ -125,15 +125,15 @@ Once the above is done, insert the following line in the [[BSPWM#*bspwmrc*|bspwm
 
 > As already stated, these functions check polybar's status and launch it
 
-```bash
+```bash title="~/.config/bspwm/bspwmrc"
 checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 ```
 
 Lastly, copy the _polybar's fonts_ (i.e. the _.ttf_ Files) into the system _TrueType Fonts_ directory and reset the _ system's fonts cache_ →
 
 ```bash
-$ cp ~/.config/polybar/fonts/* /usr/share/fonts/truetype/
-$ fs-cache -v # Reset the System Fonts Cache
+cp ~/.config/polybar/fonts/* /usr/share/fonts/truetype/
+fs-cache -v # Reset the System Fonts Cache
 ```
 
 #### Configuration File
