@@ -254,7 +254,7 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 #### *Custom Shortcuts ~ TL;DR*
 
-###### Layouts
+##### Layouts
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/layouts/#arrange-windows)***
 
@@ -263,7 +263,7 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 | **_[[KITTY#Switch to Stack Layout (Window Zoom {in,out}) → C-S-z\|Toogle between Split and Stack Layout]]_** | **`C-S-z`** |
 | **_[[KITTY#Split Rotation → C-S-o\|Split Rotation]]_** | **`C-S-o`** |
 
-###### Windows
+##### Windows
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/overview/#windows)***
 
@@ -273,13 +273,13 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 | ***[[KITTY#Window Split\|Horizontal Split]]*** | **`C-S-dash/hyphen`** |
 | ***[[KITTY#Window Split\|Adaptative Split]]*** | **`C-S-plus`** |
 | ***Windows Closing*** | **`C-S-w`** |
-| ***[[KITTY#Windows Movement → C-A-{k,h,l,j}\|Windows Movement ⬆️ ⬅️ ➡️ ⬇️]]*** | **`C-M-{k,h,l,j}`** |
-| ***[[KITTY#Windows Focus → C-S-{k,h,l,j}\|Windows Focus ⬆️ ⬅️ ➡️ ⬇️]]*** | **`C-S-{k,h,l,j}`** |
-| ***[[KITTY#Windows Resize → A-S-{k,h,l,j,r}\|Windows Resize ⬆️ ⬅️ ➡️ ⬇️]]*** | **`M-S-{k,h,l,j}`** |
-| ***[[KITTY#Windows Resize → A-S-{k,h,l,j,r}\|Windows Resize - Reset]]*** | **`M-S-r`** |
-| ***[[KITTY#Windows Detach → A-S-w\|Windows Detach]]*** | **`M-S-w`** |
+| ***[[KITTY#Windows Movement → C-M-{k,h,l,j}\|Windows Movement ⬆️⬅️➡️⬇️]]*** | **`C-M-{k,h,l,j}`** |
+| ***[[KITTY#Windows Focus → C-S-{k,h,l,j}\|Windows Focus ⬆️⬅️➡️⬇️]]*** | **`C-S-{k,h,l,j}`** |
+| ***[[KITTY#Windows Resize → M-S-{k,h,l,j,r}\|Windows Resize ⬆️⬅️➡️⬇️]]*** | **`M-S-{k,h,l,j}`** |
+| ***[[KITTY#Windows Resize → M-S-{k,h,l,j,r}\|Windows Resize - Reset]]*** | **`M-S-r`** |
+| ***[[KITTY#Windows Detach → M-S-w\|Windows Detach]]*** | **`M-S-w`** |
 
-###### Tabs
+##### Tabs
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/overview/#tabs)***
 
@@ -289,10 +289,10 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 | ***Tab Closing*** | **`C-S-q`** |
 | ***[[KITTY#Tab Detach → C-M-o\|Tab Detach]]*** | **`C-M-o`** |
 | ***Tab Rename*** | **`C-M-S-t`** |
-| ***Tab Movement (Backward ~ Forward) ⬅️ ➡️*** | **`C-{S-TAB,TAB}`** |
-| ***Tab Focus (Previous - Next) ⬅️ ➡️*** | **`C-S{commma,dot}`**
+| ***Tab Movement (Backward ~ Forward) ⬅️➡️*** | **`C-{S-TAB,TAB}`** |
+| ***Tab Focus (Previous - Next) ⬅️➡️*** | **`C-S{commma,dot}`**
 
-###### Misc
+##### Misc
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/overview/#other-keyboard-shortcuts)***
 
@@ -325,7 +325,7 @@ map KEYBIND ACTION # An Action may has arguments
 >
 > All the following block codes are snippets extracted from the [[KITTY#Configuration File|Kitty's Configuration File]]
 
-##### Layouts
+##### Layouts Management
 
 **[Types of Layout](https://sw.kovidgoyal.net/kitty/layouts/)**
 
@@ -431,7 +431,7 @@ map ctrl+alt+j move_window down
 
 ![[KITTY-20240921154947816.webp|345]]
 
-###### Windows Focus → C-M-{k,h,l,j}
+###### Windows Focus → C-S-{k,h,l,j}
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/actions/#action-neighboring_window)***
 
