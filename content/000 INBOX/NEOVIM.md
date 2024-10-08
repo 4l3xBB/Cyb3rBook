@@ -7,7 +7,8 @@ banner_y: 0.88286
 tags:
   - CustomEnvironment🦜
 cssclasses:
-
+  - card-list
+  - purple-style
 ---
 
 ###### PRIMARY CATEGORY → [[SETUP]]
@@ -42,7 +43,13 @@ Therefore, each mode has its own _keybinds_ mapped to a specifics actions →
 
 ##### *Neovim*
 
-***[Reference](https://github.com/neovim/neovim/blob/master/INSTALL.md#linux)***
+> ***[Reference](https://github.com/neovim/neovim/blob/master/INSTALL.md#linux)***
+
+If *Neovim* is already installed, It is probably an older version that the one to be installed below. So, just uninstall it →
+
+```bash
+sudo apt remove -y -- neovim
+```
 
 Access to the *[Releases](https://github.com/neovim/neovim/releases)* to copy the _Download Link_ of the *nvim-linux64.tar.gz* to `wget` it or simply proceed as follows →
 
@@ -56,9 +63,32 @@ Then, add this to the _Shell Configuration File_ → _[[ZSH#*.zshrc*|.zshrc]]_
 
 ```bash title="~/.zshrc"
 export PATH="$PATH:/opt/nvim-linux64/bin"
+export EDITOR=/opt/nvim-linux64/bin/nvim
 ```
 
-Source the above 
+Also execute the above command to apply changes in the current _Shell Context_ or →
+
+```bash
+source ~/.zshrc
+```
+
+That's it!
+
+```bash
+$ command -V nvim
+nvim is /opt/nvim-linux64/bin/nvim
+```
+
+> ***To setup a Neovim Distro, See [[#_Distributions_|Here]]***
+
+##### _Distributions_
+
+To improve even more the ***Editor Base Experience***, just try one of the following _distros_ →
+
+- ![](https://img.freepik.com/premium-photo/living-bust-portrait-v-vendetta-illustration-high-quality-detailed-art-nouveau-style_1157627-165.jpg)
+	- [[NVCHAD]]
+
+<br>
 
 #### *Nvim* Cheatsheet
 

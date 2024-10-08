@@ -145,6 +145,11 @@ cp /home/al3xbb/.config/kitty/* ~/.config/kitty/
 
 See [here](https://www.nerdfonts.com/font-downloads) to download them
 
+> [!CAUTION]-
+>
+> Make sure the *Nerd Font* installed does not end with *mono* to prevent small icons
+>
+
 To install them, as _root_ →
 
 ```bash

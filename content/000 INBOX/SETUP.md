@@ -79,6 +79,10 @@ cssclasses:
 
 **[[KITTY#Layouts|LAYOUTS]] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[KITTY#Windows|WINDOWS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[KITTY#Tabs|TABS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [[KITTY#Misc|MISCELLANEOUS]]**
 
+##### *FZF*
+
+**[[FZF#Reverse History|REVERSE HISTORY]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[FZF#Others|OTHERS]]**
+
 #### Information 🛈
 
 **This Custom Linux Environment is deployed in _Parrot OS_ 🦜**

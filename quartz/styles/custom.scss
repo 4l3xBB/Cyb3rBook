@@ -715,7 +715,7 @@ article.popover-hint img:not(li > img) {
 }
 
 article.popover-hint img:active:not(li > img){
-    transform: scale(1.5);
+    transform: scale(2);
     transition: transform 0.5s ease;
     z-index: 10 !important;
     cursor: zoom-out;
