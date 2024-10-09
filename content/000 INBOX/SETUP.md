@@ -83,6 +83,10 @@ cssclasses:
 
 **[[FZF#Reverse History|REVERSE HISTORY]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[FZF#Others|OTHERS]]**
 
+##### *NEOVIM*
+
+**[[NEOVIM#*Nvim Cheatsheet*|NVIM CHEATSHEET]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#Shortcuts ~ TL;DR|NVCHAD]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#Shortcuts ~ TL;DR|NVCHAD CHEATSHEET]]** 
+
 #### Information 🛈
 
 **This Custom Linux Environment is deployed in _Parrot OS_ 🦜**

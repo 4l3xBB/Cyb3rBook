@@ -110,15 +110,35 @@ To select any ***NVChad Theme***, inside *Neovim* → **`Space-t-h`**
 > ***[Reference](https://samolusola.me/how-to-enable-relative-line-numbers-in-vim-or-neovim)***
 
 ```lua title="~/.config/nvim/init.lua"
- vim.wo.relativenumber = true
+vim.wo.relativenumber = true
 ```
 
-###### Miscellaneous
+###### *$ at each EOL*
 
-Disable `$` char at the end of each line →
+To disable `$` char at the end of each line →
 
-```lua title="~/.config/nvim/lua/mappings.lua"
+```lua title="~/.config/nvim/init.lua"
 vim.opt.listchars = "tab:»·,trail:·"
+```
+
+###### *# → Autocomment at each Newline*
+
+- ***Problem***
+
+If a line is commented using the `#` character, the next line created is automatically commented in the same way
+
+- ***POC***
+
+![[NVChad_Autocomment.gif|400]]
+
+- ***Workaround***
+
+> ***[Reference](https://www.reddit.com/r/neovim/comments/12gfkmg/question_how_to_disable_auto_comment_in_the_next/)***
+
+To disable autocommenting from a commented line →
+
+```bash title="~/.config/nvim/init.lua"
+vim.cmd([[autocmd FileType * set formatoptions-=ro]])
 ```
 
 ##### *Mappings.lua*
@@ -128,6 +148,7 @@ vim.opt.listchars = "tab:»·,trail:·"
 Disable `;` *Command Mode* mapping in order to allow the `;` char's default behaviour
 
 **`;` → *~~Command Mode~~***
+
 **`;` → *Repeat latest `f`, `t`, `F` or `T` N times (Default Behaviour)***
 
 ```lua title="~/.config/nvim/lua/mappings.lua"
@@ -139,8 +160,84 @@ map("n", ":", ":", { desc = "CMD enter command mode" })
 Disable `C-h` mapping in order to allow _Character Deletion_ in *Insert Mode* as with `Backspace`  →
 
 **`C-h` → *~~Cursor N Chars to the left in Insert Mode~~***
+
 **`C-h` → *Left Character Deletion in Insert Mode***
 
 ```lua title="~/.config/nvim/lua/mappings.lua"
 vim.keymap.set('i', '<C-h>', '<BS>', { noremap = true, silent = true })
 ```
+
+##### Miscellaneous
+
+###### Disable *Neovim CMP*
+
+> ***About the Plugin → [Reference](https://github.com/hrsh7th/nvim-cmp)***
+
+***NVChad* installs the *NVim CMP Plugin***
+
+To disable it, simply delete the lines below in the indicated file →
+
+> ***See [here](https://pastebin.com/sW0XJ58j) too***
+
+> [!IMPORTANT]- *CMP Plugin Lines*
+>
+> ```bash title="~/.local/share/nvim/lazy/NvChad/lua/nvchad/plugins/init.lua"
+ > -- load luasnips + cmp related in insert mode only
+> {
+>   "hrsh7th/nvim-cmp",
+>   event = "InsertEnter",
+>   dependencies = {
+>     {
+>       -- snippet plugin
+>       "L3MON4D3/LuaSnip",
+>       dependencies = "rafamadriz/friendly-snippets",
+>       opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+>       config = function(_, opts)
+>         require("luasnip").config.set_config(opts)
+>         require "nvchad.configs.luasnip"
+>       end,
+>     },
+>
+>     -- autopairing of (){}[] etc
+>     {
+>       "windwp/nvim-autopairs",
+>       opts = {
+>         fast_wrap = {},
+>         disable_filetype = { "TelescopePrompt", "vim" },
+>       },
+>       config = function(_, opts)
+>         require("nvim-autopairs").setup(opts)
+>
+>         -- setup cmp for autopairs
+>         local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+>         require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+>       end,
+>     },
+>
+>     -- cmp sources plugins
+>     {
+>       "saadparwaiz1/cmp_luasnip",
+>       "hrsh7th/cmp-nvim-lua",
+>       "hrsh7th/cmp-nvim-lsp",
+>       "hrsh7th/cmp-buffer",
+>       "hrsh7th/cmp-path",
+>     },
+>   },
+>   opts = function()
+>     return require "nvchad.configs.cmp"
+>   end,
+> },
+> ```
+>
+
+![[NVChad_CMP_Plugin.gif|400]]
+
+#### Shortcuts ~ TL;DR
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Open/Close NVimTree*** | **`C-n`** |
+
+#### *NVChad Cheatsheet*
+
+![[NVCHAD-20241009205008486.webp|500]]

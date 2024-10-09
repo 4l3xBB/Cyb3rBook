@@ -79,9 +79,9 @@ $ command -V nvim
 nvim is /opt/nvim-linux64/bin/nvim
 ```
 
-> ***To setup a Neovim Distro, See [[#_Distributions_|Here]]***
+> ***To setup a Neovim Distro, See [[#Distributions|Here]]***
 
-##### _Distributions_
+#### Distributions
 
 To improve even more the ***Editor Base Experience***, just try one of the following _distros_ →
 
@@ -90,6 +90,6 @@ To improve even more the ***Editor Base Experience***, just try one of the follo
 
 <br>
 
-#### *Nvim* Cheatsheet
+#### *Nvim Cheatsheet*
 
 ![[NEOVIM-20241006135518276.webp]]
