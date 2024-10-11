@@ -234,9 +234,91 @@ To disable it, simply delete the lines below in the indicated file →
 
 #### Shortcuts ~ TL;DR
 
+As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
+
+***Default Prefix → `Space`***
+
+##### *Terminology*
+
+| **Elements** | |
+| --- | --- |
+| ***Buffer (Item/File)*** | **File opened in Memory** |
+| ***Window*** | **Buffer Visualization** |
+| ***Tab*** | **Group or Set of Windows** |
+
+##### *Shorcuts' Meaning*
+
+| **Key** | **Meaning** | |
+| --- | --- | --- |
+| ***\<leader\>*** | **`Space`** | **`<leader> + a` → `Space+a`** |
+| ***C*** | **`Control`** | **`C-c` → `Control+c`** |
+| ***M*** | **`Alt`** | **`M-a` → `Alt+a`** |
+| ***S*** | **`Shift`** | **`S-o` → `Shift+o`**  |
+| ***Super*** | **`Windows`** | **`Super-s` → `Windows+s`** |
+| ***Return*** | **`Enter`** | **`C-S-Return` → `Control+Shift+Enter`** |
+| ***-*** | **`+`** | **`C-z` → `Control+z`** |
+| ***{a,b,c,d}*** | **`a` `b` `c` `d`** | **`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`** |
+
+##### *NVimTree*
+
 | **Action** | **Shortcut** |
 | --- | --- |
-| ***Open/Close NVimTree*** | **`C-n`** |
+| ***Open/Close FileTree Window*** | **`C-n`** |
+| ***Toogle to FileTree Window*** | **`<leader> + e`**
+| ***Switch between FileTree and Editor⬅️➡️*** | **`C-{h,l}` <br> `C-w-{h,l}`** |
+| ***Move Cursor⬆️⬇️*** | **`k` `j`** |
+| ***Open/Rename a Directory/File*** | **`Return` `r`** |
+| ***Create/Delete a File*** | **`a` `d`** |
+| ***Copy/Paste a File*** | **`c` `p`** |
+| ***Search a File (Filter Mode)*** | **`f`** |
+| ***Select a File (Mark Mode)*** | **`m`** |
+
+##### *Telescope*
+
+> ***[Reference I](https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#default-mappings)&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;[Reference II](https://github.com/nvim-telescope/telescope.nvim/blob/df534c3042572fb958586facd02841e10186707c/lua/telescope/mappings.lua#L147c)*** 
+
+###### *Finders*
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Find Files*** | **`<leader> + ff`** |
+| ***Find All Files*** | **`<leader> + fa`** |
+| ***Find Buffers*** | **`<leader> + fb` <br> `:ls`** |
+| ***Find in Current Buffer*** | **`<leader> + fz` <br> `/` `?`** |
+
+###### *Finder Navigation*
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Confirm Item Selection (Open Item - Current Window)*** | **`Return`** |
+| ***Open Item - Horizontal/Vertical Split*** | **`C-x` `C-v`** |
+| ***Open Item - New Tab*** | **`C-t`** |
+| ***Select Item and Go Forward/Backward*** | **`TAB` `S-TAB`** |
+| ***Next/Previous Item (Insert Mode)*** | **`C-n` `C-p`** <br> `Down` `Up`|
+| ***Next/Previous Item (Normal Mode)*** | **`j` `k` <br> `Down` `Up`** |
+| ***High/Middle/Low Position (Normal Mode)*** | **`H` `M` `L`** |
+| ***First/Last Item (Normal Mode)*** | **`gg` `G`** |
+| ***Scroll Preview Window⬆️⬇️⬅️➡️*** | **`C-{u,d,f,k}`** |
+| ***Scroll Results Window⬅️➡️*** | **`M-{f,k}`** |
+| ***Close Telescope (Insert/Normal Mode)*** | **`C-c` `ESC`** |
+
+##### *Buffer*
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***List Buffers*** | **`<leader> + fb` <br> `:ls`** |
+| ***Next/Previous Buffer*** | **`TAB` `S-TAB` <br> `:bn` `:bp`** |
+| ***Open/Close a Buffer*** | **`<leader> + b` `<leader> + x` <br> `:e` `:bd`**
+| ***Go to Specific Buffer*** | **`:b <BUFFER_NUMBER>`** |
+
+##### Misc
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Toogle Line Number*** | **`<leader> + n` <br> `:set nu`** |
+| ***Toogle Relative Number*** | **`<leader> + rn` <br> `:set rnu`** |
+| ***NVChad Cheatsheet*** | **`<leader> + ch`** |
+| ***Clear Highlight*** | **`Esc` <br> `:noh`** |
 
 #### *NVChad Cheatsheet*
 
