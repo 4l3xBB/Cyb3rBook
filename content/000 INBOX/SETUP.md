@@ -83,9 +83,21 @@ cssclasses:
 
 **[[FZF#Reverse History|REVERSE HISTORY]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[FZF#Others|OTHERS]]**
 
-##### *NEOVIM*
+##### NEOVIM &nbsp; Δ &nbsp; NVCHAD
 
-**[[NEOVIM#*Nvim Cheatsheet*|NVIM CHEATSHEET]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#Shortcuts ~ TL;DR|NVCHAD]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#Shortcuts ~ TL;DR|NVCHAD CHEATSHEET]]** 
+###### COMPONENTS
+
+**[[NVCHAD#*Buffers*|BUFFERS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Windows*|WINDOWS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Terminal*|TERMINAL]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#Miscellaneous|MISCELLANEOUS]]**
+
+###### PLUGINS
+
+**[[NVCHAD#*Treesitter → Syntax Highlighting*|TREESITTER]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*NVimTree → File Tree*|NVIMTREE]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Telescope → Fuzzy Finder*|TELESCOPE]]**
+
+###### CHEATSHEETS
+
+**[[NEOVIM#*Nvim Cheatsheet*|NVIM CHEATSHEET]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*NVChad Cheatsheet*|NVCHAD CHEATSHEET]]** 
+
+---
 
 #### Information 🛈
 
@@ -145,6 +157,8 @@ All necessary _Configuration Files_ can be found in the above link or in the _Co
 **The Deployment Flow would be →**
 
 ***\[\[ EXCALIDRAW BANNER ]]***
+
+---
 
 #### Previous Steps
 

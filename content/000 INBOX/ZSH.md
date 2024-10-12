@@ -32,6 +32,8 @@ It implements **handy features** such as →
 
 **More info [here](https://github.com/zsh-users/zsh) and in the _[ZSH Manual](https://zsh.sourceforge.io/Doc/)_**
 
+---
+
 #### Plugins
 
 Most of the above features can be implemented or enhanced through _ZSH Plugins_ that are sourced from the `.zshrc` [[ZSH#Configuration File|configuration file]]

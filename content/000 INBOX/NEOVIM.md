@@ -39,6 +39,8 @@ Therefore, each mode has its own _keybinds_ mapped to a specifics actions →
 
 ***[Neovim Documentation](https://neovim.io/doc/)***
 
+---
+
 #### Installation
 
 ##### *Neovim*
@@ -80,6 +82,8 @@ nvim is /opt/nvim-linux64/bin/nvim
 ```
 
 > ***To setup a Neovim Distro, See [[#Distributions|Here]]***
+
+---
 
 #### Distributions
 

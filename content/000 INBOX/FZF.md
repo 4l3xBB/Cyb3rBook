@@ -39,6 +39,8 @@ It is an interactive ***Text Filter*** program for any kind of list such as →
 
 ***Check [this](https://www.redhat.com/sysadmin/fzf-linux-fuzzy-finder) out too***
 
+---
+
 #### Installation
 
 > ***[Reference](https://github.com/junegunn/fzf?tab=readme-ov-file#installation)***
@@ -83,28 +85,32 @@ export FZF_DEFAULT_COMMAND="fd --type f"
 > Note that the above actions require _[[BAT|Bat]]_ and _FD_ to be installed in the system
 >
 
+---
+
 #### Shortcuts
 
 ##### *Shorcuts' Meaning*
 
 | **Key** | **Meaning** | |
 | --- | --- | --- |
-| ***C*** | ***`Control`*** | ***`C-c` → `Control+c`*** |
-| ***M*** | ***`Alt`*** | ***`M-a` → `Alt+a`*** |
-| ***S*** | ***`Shift`*** | ***`S-o` → `Shift+o`***  |
-| ***Super*** | ***`Windows`*** | ***`Super-s` → `Windows+s`*** |
-| ***-*** | ***`+`*** | ***`C-z` → `Control+z`*** |
-| ***{a,b,c,d}*** | ***`a` `b` `c` `d`*** | ***`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`*** |
+| ***\<leader\>*** | **`Space`** | **`<leader> + a` → `Space+a`** |
+| ***C*** | **`Control`** | **`C-c` → `Control+c`** |
+| ***M*** | **`Alt`** | **`M-a` → `Alt+a`** |
+| ***S*** | **`Shift`** | **`S-o` → `Shift+o`**  |
+| ***Super*** | **`Windows`** | **`Super-s` → `Windows+s`** |
+| ***Return*** | **`Enter`** | **`C-S-Return` → `Control+Shift+Enter`** |
+| ***-*** | **`+`** | **`C-z` → `Control+z`** |
+| ***{a,b,c,d}*** | **`a` `b` `c` `d`** | **`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`** |
 
 ##### Reverse History
 
 | **Action** | **Shortcut** |
 | --- | --- |
 | ***Toogle*** | **`C-r`** |
-| ***Up/Down*** | **`C-k`/`C-j` *or* `C-p`/`C-n`** |
+| ***Up/Down*** | **`C-k` `C-j` <br> `C-p` `C-n`** |
 | ***Select Item*** | **`Enter`** |
-| ***Exit*** | **`C-g`/`C-c`/`Esc`** |
-| ***Multiselect Mode - Mark Items*** | **`TAB`/`S-TAB`** | 
+| ***Exit*** | **`C-g` `C-c` `Esc`** |
+| ***Mark Items Backward/Forward <br> (Multiselect Mode)*** | **`TAB` `S-TAB`** | 
 
 ##### Others
 
@@ -113,6 +119,8 @@ export FZF_DEFAULT_COMMAND="fd --type f"
 | ***File Selection*** | **`C-t`** |
 | ***cd-like Movement*** | **`M-c`** |
 | ***Autocomplete*** | **`** + TAB`** |
+
+---
 
 #### Integration
 

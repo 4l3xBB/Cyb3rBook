@@ -19,6 +19,8 @@ This `ls` fork offers features such as ***colors, icons, tree-view and more...**
 
 **More info [here](https://github.com/lsd-rs/lsd)**
 
+---
+
 #### Installation
 
 First of all, access to the _[Releases](https://github.com/lsd-rs/lsd/releases)_ page and copy the _Download Link_ of the _**lsd_X.X.X_amd64.deb**_

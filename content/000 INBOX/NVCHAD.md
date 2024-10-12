@@ -38,6 +38,8 @@ It has several handy features such as →
 
 **[NVChad Documentation](https://nvchad.com/)**
 
+---
+
 #### Installation
 
 > ***[Reference](https://nvchad.com/docs/quickstart/install)***
@@ -100,6 +102,8 @@ To select any ***NVChad Theme***, inside *Neovim* → **`Space-t-h`**
 ```bash title="nvim"
 :lazy sync
 ```
+
+---
 
 #### Configuration Files
 
@@ -232,6 +236,8 @@ To disable it, simply delete the lines below in the indicated file →
 
 ![[NVChad_CMP_Plugin.gif|400]]
 
+---
+
 #### Shortcuts ~ TL;DR
 
 As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
@@ -244,9 +250,9 @@ As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 
 | **Elements** | |
 | --- | --- |
-| ***Buffer (Item/File)*** | **File opened in Memory** |
-| ***Window*** | **Buffer Visualization** |
-| ***Tab*** | **Group or Set of Windows** |
+| **Buffer (Item/File)** | File opened in Memory |
+| **Window** | Buffer Visualization/Viewport |
+| **Tab** | Group or Set of Windows |
 
 ##### *Shorcuts' Meaning*
 
@@ -261,7 +267,18 @@ As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 | ***-*** | **`+`** | **`C-z` → `Control+z`** |
 | ***{a,b,c,d}*** | **`a` `b` `c` `d`** | **`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`** |
 
-##### *NVimTree*
+##### *Treesitter → Syntax Highlighting*
+
+> ***[Reference](https://github.com/nvim-treesitter/nvim-treesitter)&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;[Supported Languages](https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#supported-languages)***
+
+| **Actions** | **Commands** |
+| --- | --- | 
+| ***Install a Language*** | **`:TSInstall <LANGUAGE_TO_INSTALL>`** |
+| ***Check Installed Languages*** | **`:TSInstallInfo`** |
+
+##### *NVimTree → File Tree*
+
+> ***[Reference](https://github.com/nvim-tree/nvim-tree.lua)***
 
 | **Action** | **Shortcut** |
 | --- | --- |
@@ -275,7 +292,7 @@ As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 | ***Search a File (Filter Mode)*** | **`f`** |
 | ***Select a File (Mark Mode)*** | **`m`** |
 
-##### *Telescope*
+##### *Telescope → Fuzzy Finder*
 
 > ***[Reference I](https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#default-mappings)&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;[Reference II](https://github.com/nvim-telescope/telescope.nvim/blob/df534c3042572fb958586facd02841e10186707c/lua/telescope/mappings.lua#L147c)*** 
 
@@ -283,10 +300,13 @@ As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 
 | **Action** | **Shortcut** |
 | --- | --- |
+| ***NVChad Themes - Selector*** | **`<leader> + th`** |
 | ***Find Files*** | **`<leader> + ff`** |
 | ***Find All Files*** | **`<leader> + fa`** |
-| ***Find Buffers*** | **`<leader> + fb` <br> `:ls`** |
-| ***Find in Current Buffer*** | **`<leader> + fz` <br> `/` `?`** |
+| ***Find Old Opened Files*** | **`<leader> + fo`** |
+| ***Find Buffers*** | **`<leader> + fb` → Telescope <br> `:ls` → OG** |
+| ***Find in Current Buffer*** | **`<leader> + fz` → Telescope <br> `/` `?` → OG** |
+| ***Find Git Commits*** | **`<leader> + cm`** |
 
 ###### *Finder Navigation*
 
@@ -306,26 +326,59 @@ As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 
 ##### *Buffers*
 
+> ***[Reference](https://neovim.io/doc/user/usr_22.html#_the-buffer-list)***
+
 | **Action** | **Shortcut** |
 | --- | --- |
 | ***List Buffers*** | **`<leader> + fb` → Telescope <br> `:ls` → OG** |
-| ***Next/Previous Buffer*** | **`TAB` `S-TAB` <br> `:bn` `:bp`** |
-| ***Open/Close a Buffer*** | **`<leader> + b` `<leader> + x` <br> `:e` `:bd`**
-| ***Go to Specific Buffer*** | **`:b <BUFFER_NUMBER>`** |
+| ***Next/Previous Buffer*** | **`TAB` `S-TAB` → NVChad <br> `:bn` `:bp` → OG** |
+| ***Open an Empty Buffer*** | **`<leader> + b` → NVChad <br> `:enew` → OG** |
+| ***Open an Existent Buffer*** | **`:e /path/to/{file,directory}` → OG** |
+| ***Remove Current Buffer*** | **`<leader> + x` → NVChad <br> `:bd` → OG** |
+| ***Remove N Buffer*** | **`:bd <BUFFER_NUMBER>`** |
+| ***Go to Specific Buffer*** | **`:b <BUFFER_NUMBER>` → OG** |
+
+###### *Buffers' List Terminology*
+
+| **Term** | **Meaning** |
+| --- | --- |
+| ***`%`*** | Current Buffer |
+| ***`#`*** | Alternate Buffer |
+| ***`a`*** | Buffer Loaded and Displayed |
+| ***`h`*** | Buffer Loaded but Hidden |
+| ***`=`*** | Buffer is Read-Only |
+| ***`-`*** | Buffer is not modifiable |
+| ***`+`*** | Buffer modified |
 
 ##### *Windows*
 
-***[Reference](https://neovim.io/doc/user/windows.html#windows)***
+> ***[Reference](https://neovim.io/doc/user/windows.html#windows)***
 
 | **Action** | **Shortcut** |
 | --- | --- |
-| ***Vertical Split*** | **`C-w-v`** |
-| ***Horizontal Split*** | **`C-w-s`** |
+| ***Vertical Split*** | **`C-w-v` <br> `:vsp`**  |
+| ***Horizontal Split*** | **`C-w-s` <br> `:sp`** |
+| ***Windows Split by opening an Empty Buffer*** | **`C-w-n`** |
 | ***Windows Closing*** | **`C-w-q` <br> `ZQ` `:q`** |
+| ***Close All Windows (Except the Active one)*** | **`C-w-o`** |
+| ***Windows Detach into a New Tab*** | **`C-w-T`** |
 | ***Windows Movement⬆️⬇️⬅️➡️*** | **`C-w-S-{k,j,h,l}`** |
-| ***Windows Focus⬆️⬇️⬅️➡️*** | **`C-w-{k,j,h,l}`** |
+| ***Windows Focus⬆️⬇️⬅️➡️*** | **`C-{k,j,h,l}` → NVChad <br> `C-w-{k,j,h,l}` → OG** |
+| ***Windows Rotation (Vertical/Horizontal)*** | **`C-w-t C-w-K` <br> `C-w-t C-w-H`** |
 | ***Windows Resize⬆️⬇️⬅️➡️*** | **`NUMBER-C-w-{plus,dash,<,>}`** |
 | ***Windows Resize - Reset*** | **`C-w-=`** |
+| ***Windows Exchange*** | **`C-w-x`** |
+| ***Max Out Windows Height/Width*** | **`C-w-_` `C-w-\|`** |
+
+##### *Terminal*
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Vertical Split*** | **`<leader> + v`** |
+| ***Horizontal Split*** | **`<leader> + h`** |
+| ***Toogle Floating Term*** | **`M-i`** |
+| ***Toogeable Horizontal/Vertical Term*** | **`M-h` `M-v`** |
+| ***Quit Terminal Mode*** | **`C-x`** |
 
 ##### Misc
 
@@ -335,6 +388,10 @@ As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 | ***Toogle Relative Number*** | **`<leader> + rn` <br> `:set rnu`** |
 | ***NVChad Cheatsheet*** | **`<leader> + ch`** |
 | ***Clear Highlight*** | **`Esc` <br> `:noh`** |
+| ***List All Registers (Normal Mode)*** | **`"` → NVChad <br> `:reg` → OG** |
+| ***List All Registers (Insert Mode)*** | **`C-r`** |
+
+---
 
 #### *NVChad Cheatsheet*
 

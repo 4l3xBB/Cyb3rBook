@@ -41,6 +41,8 @@ It displays the modifications compared to the last _Commit_
 
 **More info [here](https://github.com/sharkdp/bat)**
 
+---
+
 #### Installation
 
 > ***[Reference](https://github.com/sharkdp/bat?tab=readme-ov-file#installation)***
@@ -81,6 +83,8 @@ That's it!
 $ command -V cat
 cat is an alias for bat 
 ```
+
+---
 
 #### *Integration*
 

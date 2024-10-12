@@ -27,6 +27,9 @@ super + d
   /usr/bin/rofi -show run
 ```
 
+
+![[ROFI_LAUNCHER 1.gif|400]]
+
 **Configuration File → `~/.config/rofi/config.rasi`**
 
 > [!IMPORTANT]-
@@ -66,3 +69,31 @@ rofi is /usr/bin/rofi
 > As It is always is desirable to have the latest versions of any _package_ or _binary_ installed, I'd recommend installing them via their Github Repositories
 >
 > Although, in this case the _package_'s version installed from the `apt` Package Manager differs only slightly from the github one
+
+##### Themes
+
+> ***[Reference](https://github.com/newmanls/rofi-themes-collection)***
+
+Create the `~/.config/rofi/themes` to store  *.RASI File* for each *ROFI Theme* →
+
+```bash
+mkdir -p -- ~/.config/rofi/themes
+```
+
+Clone the Github Repository below into `/opt` and copy all *ROFI Themes* to the directory created above →
+
+```bash
+sudo git clone https://github.com/newmanls/rofi-themes-collection /opt/rofi
+```
+
+```bash
+cp -rv !$/themes/* ~/.config/rofi/themes
+```
+
+Open the *ROFI Theme Selector* and choose the *Theme* you like the most →
+
+```bash
+command -V -- rofi-theme-selector &> /dev/null && rofi-theme-selector
+```
+
+![[ROFI_Theme_Selector.gif|400]]

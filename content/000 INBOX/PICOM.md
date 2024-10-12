@@ -199,6 +199,8 @@ It modifies the Sharpness degree of the _Windows OS's applications_
 blur-background = true # Or false to disable it
 ```
 
+---
+
 #### Miscellaneous
 
 ##### OS Windows Borders

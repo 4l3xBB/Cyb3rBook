@@ -263,12 +263,14 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 | **Key** | **Meaning** | |
 | --- | --- | --- |
-| ***C*** | ***`Control`*** | ***`C-c` → `Control+c`*** |
-| ***M*** | ***`Alt`*** | ***`M-a` → `Alt+a`*** |
-| ***S*** | ***`Shift`*** | ***`S-o` → `Shift+o`***  |
-| ***Super*** | ***`Windows`*** | ***`Super-s` → `Windows+s`*** |
-| ***-*** | ***`+`*** | ***`C-z` → `Control+z`*** |
-| ***{a,b,c,d}*** | ***`a` `b` `c` `d`*** | ***`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`*** |
+| ***\<leader\>*** | **`Space`** | **`<leader> + a` → `Space+a`** |
+| ***C*** | **`Control`** | **`C-c` → `Control+c`** |
+| ***M*** | **`Alt`** | **`M-a` → `Alt+a`** |
+| ***S*** | **`Shift`** | **`S-o` → `Shift+o`**  |
+| ***Super*** | **`Windows`** | **`Super-s` → `Windows+s`** |
+| ***Return*** | **`Enter`** | **`C-S-Return` → `Control+Shift+Enter`** |
+| ***-*** | **`+`** | **`C-z` → `Control+z`** |
+| ***{a,b,c,d}*** | **`a` `b` `c` `d`** | **`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`** |
 
 ##### Layouts
 
@@ -285,7 +287,7 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 | **Action** | **Shortcut** |
 | --- | --- |
-| ***[[KITTY#Window Split\|Vertical Split]]*** | **`C-S-Enter`** |
+| ***[[KITTY#Window Split\|Vertical Split]]*** | **`C-S-Return`** |
 | ***[[KITTY#Window Split\|Horizontal Split]]*** | **`C-S-dash/hyphen`** |
 | ***[[KITTY#Window Split\|Adaptative Split]]*** | **`C-S-plus`** |
 | ***Windows Closing*** | **`C-S-w`** |
