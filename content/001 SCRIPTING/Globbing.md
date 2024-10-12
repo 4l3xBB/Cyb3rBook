@@ -77,7 +77,7 @@ Be aware that, in previous example, if directory has no files, `*` glob pattern 
 
 To avoid this issue, check file existence before executing any command which has that file as argument →
 
-###### POSIX Compliance
+###### *POSIX Compliant*
 
 ```bash
 for _file in ./*
@@ -99,7 +99,7 @@ done
 >
 > That is why `[ -L string ]` is used, to check if that string is a broken link and treat it
 
-###### Non-Standard Shell Extension → `Nullglob`
+###### Non-Standard Shell Extension → *Nullglob*
 
 ```bash
 foo()

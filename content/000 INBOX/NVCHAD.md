@@ -240,6 +240,8 @@ As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 
 ##### *Terminology*
 
+> ***[Reference](https://neovim.io/doc/user/windows.html#_1.-introduction)***
+
 | **Elements** | |
 | --- | --- |
 | ***Buffer (Item/File)*** | **File opened in Memory** |
@@ -302,14 +304,28 @@ As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 | ***Scroll Results Window⬅️➡️*** | **`M-{f,k}`** |
 | ***Close Telescope (Insert/Normal Mode)*** | **`C-c` `ESC`** |
 
-##### *Buffer*
+##### *Buffers*
 
 | **Action** | **Shortcut** |
 | --- | --- |
-| ***List Buffers*** | **`<leader> + fb` <br> `:ls`** |
+| ***List Buffers*** | **`<leader> + fb` → Telescope <br> `:ls` → OG** |
 | ***Next/Previous Buffer*** | **`TAB` `S-TAB` <br> `:bn` `:bp`** |
 | ***Open/Close a Buffer*** | **`<leader> + b` `<leader> + x` <br> `:e` `:bd`**
 | ***Go to Specific Buffer*** | **`:b <BUFFER_NUMBER>`** |
+
+##### *Windows*
+
+***[Reference](https://neovim.io/doc/user/windows.html#windows)***
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***Vertical Split*** | **`C-w-v`** |
+| ***Horizontal Split*** | **`C-w-s`** |
+| ***Windows Closing*** | **`C-w-q` <br> `ZQ` `:q`** |
+| ***Windows Movement⬆️⬇️⬅️➡️*** | **`C-w-S-{k,j,h,l}`** |
+| ***Windows Focus⬆️⬇️⬅️➡️*** | **`C-w-{k,j,h,l}`** |
+| ***Windows Resize⬆️⬇️⬅️➡️*** | **`NUMBER-C-w-{plus,dash,<,>}`** |
+| ***Windows Resize - Reset*** | **`C-w-=`** |
 
 ##### Misc
 

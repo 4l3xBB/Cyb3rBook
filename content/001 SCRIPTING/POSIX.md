@@ -27,7 +27,7 @@ It can be found as [Web Interface](https://www.shellcheck.net/)
 It also can be installed as **CLI _Tool/Utility_** →
 
 ```bash
-$ sudo apt install shellcheck -y # Debian-based Distro
+$ sudo apt install -y -- shellcheck # Debian-based Distro
 ```
 
 ##### *POSIX Compliant Check*
