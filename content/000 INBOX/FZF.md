@@ -80,6 +80,10 @@ The above one modifies the *FZF's Display Format and enables* *File Preview Mode
 export FZF_DEFAULT_COMMAND="fd --type f"
 ```
 
+> ***Repeat all the above steps as Root***
+
+<br>
+
 > [!IMPORTANT]-
 >
 > Note that the above actions require _[[BAT|Bat]]_ and _FD_ to be installed in the system
