@@ -13,7 +13,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-***Neovim → Vim Fork focused on extensibility and usability***
+**[NEOVIM](https://github.com/neovim/neovim) → *Vim Fork focused on extensibility and usability***
 
 It greatly improves the user experience with a _Text Editor_ and enhances aspects such as ***Efficiency and Performance***
 
@@ -35,7 +35,7 @@ Therefore, each mode has its own _keybinds_ mapped to a specifics actions →
 <br>
 - ***Visual Mode***
 
-**More info [here](https://github.com/neovim/neovim)**
+**More information [here](https://github.com/neovim/neovim)**
 
 ***[Neovim Documentation](https://neovim.io/doc/)***
 
@@ -47,7 +47,9 @@ Therefore, each mode has its own _keybinds_ mapped to a specifics actions →
 
 > ***[Reference](https://github.com/neovim/neovim/blob/master/INSTALL.md#linux)***
 
-If *Neovim* is already installed, It is probably an older version that the one to be installed below. So, just uninstall it →
+If *Neovim* is already installed, It is probably an older version that the one to be installed below
+
+So, just uninstall it →
 
 ```bash
 sudo apt remove -y -- neovim
@@ -76,12 +78,12 @@ source ~/.zshrc
 
 That's it!
 
+> ***To setup a Neovim Distro, See [[#Distributions|Here]]***
+
 ```bash
 $ command -V nvim
 nvim is /opt/nvim-linux64/bin/nvim
 ```
-
-> ***To setup a Neovim Distro, See [[#Distributions|Here]]***
 
 ---
 

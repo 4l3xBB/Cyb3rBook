@@ -11,7 +11,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-**[kitty](https://github.com/kovidgoyal/kitty) → Fast and Feature-Rich GPU Based Terminal Emulator**
+**[KITTY](https://github.com/kovidgoyal/kitty) → Fast and Feature-Rich GPU Based Terminal Emulator**
 
 It is an **enhanced terminal** with a _tabbed/tiling_ structure focused in performance and customization
 
@@ -80,10 +80,11 @@ super + Return
 
 > [!CAUTION]-
 >
-> First, see the [[BSPWM|bspwm's installation]] before proceeding with this one related to `sxhkd`
+> First, see the [[BSPWM|bspwm]] and the [[SXHKD|sxhkd's]] installation before proceeding with this one related to `kitty`
 >
 > There are some dependencies that are needed in the following installation steps
 >
+
 
 Download the binary and its related files from the [project's release page](https://github.com/kovidgoyal/kitty/releases). The required one, in this [[SETUP|Environment Setup]] is the _Linux amd64 binary bundle_
 
@@ -118,6 +119,15 @@ That's it
 $ command -V kitty
 kitty is /opt/kitty/bin/kitty
 ```
+
+To run the component, simply map its launch to a certain *keybind* through a *Hotkey Daemon* such as [[SXHKD|sxhkd]]
+
+```bash title="~/.config/sxhkd/sxhkdrc"
+super + Return # Windows + Enter
+	/opt/kitty/bin/kitty
+```
+
+***Shortcut*** → **`Super-Return`**
 
 As for the _kitty's_ Configuration File, It need to be created
 
@@ -176,13 +186,18 @@ More info [[KITTY#Font|here]]
 
 #### Configuration File
 
-> **_Kitty.conf_ [Configuration File Sample](https://github.com/CodyReichert/dotfiles/blob/master/kitty/.config/kitty/kitty.conf) Fully documented**
+##### *Kitty.conf*
 
-**`kitty.conf` → Copy from [here](https://github.com/4l3xBB/Env-Setup/blob/main/kitty/kitty.conf) the `kitty`'s Full Customised Configuration File** 
+> ***[Configuration File Sample](https://github.com/CodyReichert/dotfiles/blob/master/kitty/.config/kitty/kitty.conf) Fully documented***
 
-**`color.ini` → Likewise, copy from [here](https://github.com/4l3xBB/Env-Setup/blob/main/kitty/color.ini) the `kitty`'s [[KITTY#Colours|Colours File]]**
+
+**Copy from [here](https://github.com/4l3xBB/Env-Setup/blob/main/kitty/kitty.conf) the `kitty`'s Full Customised Configuration File** 
 
 **Configuration File Documentation → [kitty.conf](https://sw.kovidgoyal.net/kitty/conf/)**
+
+##### *Color.ini*
+
+**Likewise, copy from [here](https://github.com/4l3xBB/Env-Setup/blob/main/kitty/color.ini) the `kitty`'s [[KITTY#Colours|Colours File]]**
 
 ---
 
@@ -257,7 +272,7 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 ---
 
-#### *Custom Shortcuts ~ TL;DR*
+#### TL;DR ⌨
 
 ##### *Shorcuts' Meaning*
 

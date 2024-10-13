@@ -11,7 +11,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-**FEH → Fast and Light Image Viewer**
+**[FEH](https://github.com/derf/feh) → Fast and Light Image Viewer**
 
 With this tool, images can be displayed on the terminal as [[KITTY|kitty]] does through `kitten icat`
 
@@ -50,10 +50,11 @@ As always, all the information needed to handle this tool can be found in its **
 
 > [!CAUTION]-
 >
-> First, see the [[BSPWM|bspwm's installation]] before proceeding with this one related to `feh`
+> First, see the [[BSPWM|bspwm]] and the [[SXHKD|sxhkd's]] installation before proceeding with this one related to `feh`
 >
-> There are some dependencies that may be required in the following installation steps
+> There are some dependencies that are needed in the following installation steps
 >
+
 
 ```bash
 apt install -y -- feh

@@ -93,6 +93,13 @@ Remove the `~/.config/nvim/.git`
 rm -rf ~/.config/nvim/.git
 ```
 
+> [!IMPORTANT]-
+>
+> Note that the following steps related to the *Neovim Installation* should be applied for both _non-privileged_ and _privileged_ users
+>
+> Being in this case for **_Root_** and **_al3xbb_**
+>
+
 ##### Theme Selection
 
 To select any ***NVChad Theme***, inside *Neovim* → **`Space-t-h`**
@@ -238,7 +245,7 @@ To disable it, simply delete the lines below in the indicated file →
 
 ---
 
-#### Shortcuts ~ TL;DR
+#### Shortcuts
 
 As with [[TMUX]], in **NVChad** all shortcuts are preceded by a certain prefix
 

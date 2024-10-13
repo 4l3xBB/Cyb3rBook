@@ -62,14 +62,14 @@ cssclasses:
 	- [[LSD]]
 - ![](https://img.freepik.com/premium-photo/close-up-cartoon-character-with-glowing-eyes-smile-generative-ai_1034033-62607.jpg)
 	- [[FZF]]
+- ![](https://img.freepik.com/premium-photo/locked-padlock-with-bright-glowing-futuristic-blue-neon-lights-black-background-3d-render_989822-3824.jpg)
+	- [[I3LOCK-FANCY]]
 - ![](https://img.freepik.com/premium-photo/power-off-button-with-bright-glowing-futuristic-orange-neon-lights-black-background-3d-render_989822-4167.jpg)
 	- [[SESSION MANAGEMENT]]
 
 <br>
 
 #### Shortcuts ⌨
-
-> 
 
 ##### *SXHKD*
 
@@ -160,7 +160,7 @@ All necessary _Configuration Files_ can be found in the above link or in the _Co
 
 ---
 
-#### Previous Steps
+#### Previous Steps ⚠︎
 
 Before start with the above Components' Installation and Configuration →
 

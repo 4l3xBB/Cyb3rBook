@@ -11,7 +11,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-***LSD → The next Gen LS Command 🗂️***
+**[LSD](https://github.com/lsd-rs/lsd)** → ***The next Gen LS Command 🗂️***
 
 This `ls` fork offers features such as ***colors, icons, tree-view and more...***
 

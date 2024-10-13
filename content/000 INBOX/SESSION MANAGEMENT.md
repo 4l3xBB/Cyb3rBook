@@ -82,3 +82,5 @@ $ dm-tool lock # Like Windows + L in Windows
 > $ loginctl lock-session SESSION_NUMBER
 > ```
 >
+
+Alternatively, components such as *[[I3LOCK-FANCY|I3Lock-Fancy]]* can also be used to perform a *Screen Lock*

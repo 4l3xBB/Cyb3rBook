@@ -14,15 +14,15 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-**_ZSH_ → Z Shell**
+**[ZSH](https://github.com/zsh-users/zsh) → Z Shell**
 
-This **[[SHELL SCRIPTING|shell]]** is prefered over _[[BASH|bash]]_ or _fish_ because of all the handy functionalities and customisation It offers to the users
+This **[[SHELL SCRIPTING|Shell]]** is prefered over _[[BASH|bash]]_ or _fish_ because of all the handy functionalities and customisation It offers to the users
 
 It implements **handy features** such as →
 
-**Advanced Autocomplete ~ Autosuggestions ~ Syntactical Corrections ~ Advanced [[Globbing]]**
+**[[ZSH#ZSH-autocomplete|Autocompletion]] &nbsp;\~&nbsp; [[ZSH#ZSH-autosuggestions|Autosuggestions]] &nbsp;\~&nbsp; Syntactical Corrections &nbsp;\~&nbsp; Advanced [[Globbing]]**
 
-**Shared History between different terminals ~ Syntax Highlighting**
+**Shared History between different terminals &nbsp;\~&nbsp; [[ZSH#ZSH-syntax-highlighting|Syntax Highlighting]]**
 
 **Main File → `~/.zshrc`**
 
@@ -30,7 +30,9 @@ It implements **handy features** such as →
 
 **Theme's Configuration File (*Powerlevel10k*) → `~/.p10k.zsh`**
 
-**More info [here](https://github.com/zsh-users/zsh) and in the _[ZSH Manual](https://zsh.sourceforge.io/Doc/)_**
+**More info [here](https://github.com/zsh-users/zsh)**
+
+**_[ZSH Manual](https://zsh.sourceforge.io/Doc/)_**
 
 ---
 

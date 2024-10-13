@@ -11,7 +11,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-***Batcat → A cat(1) clone with Wings 🦇***
+**[BATCAT](https://github.com/sharkdp/bat)** → ***A cat(1) clone with Wings 🦇***
 
 This `cat` clone offers features such as →
 

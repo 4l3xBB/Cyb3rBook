@@ -11,7 +11,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-**`picom` → Compositor for X**
+**[PICOM](https://github.com/yshui/picom) → Compositor for X**
 
 It manages the way **Windows** and **Graphical Elements** are displayed on the screen
 
@@ -54,9 +54,9 @@ checkProcess picom || launchProcess picom
 
 > [!CAUTION]-
 >
-> First, see the [[BSPWM|bspwm's installation]] before proceeding with this one related to `picom`
+> First, see the [[BSPWM|bspwm]] and the [[SXHKD|sxhkd's]] installation before proceeding with this one related to `picom`
 >
-> There are some dependencies that are needed in the following installation steps. That is why  you should see the note above first
+> There are some dependencies that are needed in the following installation steps
 >
 
 First of all, install the following dependencies →
@@ -124,6 +124,8 @@ This allows _picom_ to be launched on the _Windows Manager_ Startup → [[BSPWM|
 ---
 
 #### Configuration File
+
+##### *Picom.conf*
 
 > ***_Picom.conf_ [Configuration File Sample](https://github.com/yshui/picom/blob/next/picom.sample.conf) Fully Documented***
 

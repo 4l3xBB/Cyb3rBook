@@ -11,7 +11,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-**`polybar` → Highly Customizable Status Bars**
+**[POLYBAR](https://github.com/polybar/polybar) → Highly Customizable Status Bars**
 
 Each bar has its own modules and It is executed as a daemon
 
@@ -39,7 +39,7 @@ A module can execute any action such as a command, scripts...
 
 > Each bar with its configuration file as an argument is launched by the below script
 
-`polybar` is executed by [[BSPWM|bspwm]] from the [[BSPWM#*bspwmrc*|bspwmrc]] script through the `polybar`'s launcher script → `~/.config/polybar/launch.sh`
+***Polybar*** is executed by [[BSPWM|bspwm]] from the [[BSPWM#*bspwmrc*|bspwmrc]] script through the `polybar`'s launcher script → `~/.config/polybar/launch.sh`
 
 ```bash title="~/.config/bspwm/bspwmrc"
 # Polybar Launch
@@ -83,7 +83,7 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 apt install -y -- polybar
 ```
 
-That's it
+That's it!
 
 ```bash
 $ command -V polybar
@@ -100,7 +100,9 @@ polybar is /usr/bin/polybar
 >
 > Although, in this case the _package_'s version installed from the `apt` Package Manager differs only slightly from the github one
 
-As a base for the configuration file's structure, clone the following [Github Repository](https://github.com/VaughnValle/blue-sky)
+As a base for the configuration file's structure, clone the following *Github Repository*
+
+> ***[Reference](https://github.com/VaughnValle/blue-sky)***
 
 ```bash
 git clone https://github.com/VaughnValle/blue-sky ~/Downloads/blue-sky
@@ -120,6 +122,7 @@ bash -c "shopt -sq dotglob && cp -rv -- ./polybar/* ~/.config/polybar"
 > This is done in order to to be able to use the `shopt` [[SHELL SCRIPTING|shell]] builtin, and then enable the `dotglob` shell extension to expand also the hidden files through [[Globbing|globbing]]
 >
 > Note that prior action can also be performed in [[Globbing#*POSIX Compliant* - Including Hidden Files|this way]]
+>
 
 Once the above is done, insert the following line in the [[BSPWM#*bspwmrc*|bspwmrc]] file related to the _Polybar's Launch_ →
 
@@ -136,9 +139,20 @@ cp ~/.config/polybar/fonts/* /usr/share/fonts/truetype/
 fs-cache -v # Reset the System Fonts Cache
 ```
 
+---
+
 #### Configuration File
 
+##### *Current.ini*
 
+
+
+##### *Workspace.ini*
+
+
+
+---
 
 #### Launcher File
 
+##### *Launch.sh*

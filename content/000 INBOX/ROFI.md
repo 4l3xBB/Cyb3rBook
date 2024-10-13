@@ -11,7 +11,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-**[Rofi](https://github.com/davatorium/rofi) → Application Launcher**
+**[ROFI](https://github.com/davatorium/rofi) → Application Launcher**
 
 Basically, It's an application launcher and a ssh-launcher
 
@@ -44,7 +44,7 @@ super + d
 
 > [!CAUTION]-
 >
-> First, see the [[BSPWM|bspwm's installation]] before proceeding with this one related to `rofi`
+> First, see the [[BSPWM|bspwm]] and the [[SXHKD|sxhkd's]] installation before proceeding with this one related to `rofi`
 >
 > There are some dependencies that are needed in the following installation steps
 >
@@ -53,7 +53,7 @@ super + d
 apt install -y -- rofi
 ```
 
-That's it
+That's it!
 
 ```bash
 $ command -V rofi
@@ -69,6 +69,15 @@ rofi is /usr/bin/rofi
 > As It is always is desirable to have the latest versions of any _package_ or _binary_ installed, I'd recommend installing them via their Github Repositories
 >
 > Although, in this case the _package_'s version installed from the `apt` Package Manager differs only slightly from the github one
+
+To run the component, simply map its launch to a certain *keybind* through a *Hotkey Daemon* such as [[SXHKD|sxhkd]]
+
+```bash title="~/.config/sxhkd/sxhkdrc"
+super + d # Windows + d
+	/usr/bin/rofi -show run
+```
+
+***Shortcut*** → **`Super-d`**
 
 ##### Themes
 

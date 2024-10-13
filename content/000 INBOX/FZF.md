@@ -11,7 +11,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[SETUP]]
 
-***FZF → A General-Purpose Command-Line Fuzzy Finder 🔎*** 
+**[FZF](https://github.com/junegunn/fzf)** → ***A General-Purpose Command-Line Fuzzy Finder 🔎*** 
 
 It is an interactive ***Text Filter*** program for any kind of list such as →
 

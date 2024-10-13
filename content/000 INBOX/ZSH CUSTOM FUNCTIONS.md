@@ -37,11 +37,13 @@ fi
 
 ***Custom.zsh Source File → [See here](https://github.com/4l3xBB/Env-Setup/blob/main/zsh/src/custom.zsh)***
 
-### *Terminal/Screen*
+---
+
+#### *Terminal/Screen*
 
 ***Shell Functions* related to the *Terminal and Screen* actions →**
 
-#### *clearScreenAndScrollback*
+##### *clearScreenAndScrollback*
 
 > ***[Reference](https://unix.stackexchange.com/questions/517025/zsh-clear-scrollback-buffer#answer-531178)***
 
@@ -65,13 +67,15 @@ It clears the _Screen Content and Scrollback Buffer_ through the `C-l` keybind
 
 > ***More info [[KITTY#Clear Screen and Scrollback Buffer|here]]***
 
-### *Pentesting*
+---
+
+#### *Pentesting*
 
 **_Shell Functions_ related to the _[[PENTESTING|Pentesting]] Process_ →**
 
 > Most of the functions are _[[POSIX|Non-POSIX-Compliant]]_ as _ZSH_ is the Targeted _Shell_
 
-#### *mkt*
+##### *mkt*
 
 It creates a _Pentesting Folder Structure_ to store all documentation related to the target 🎯
 
@@ -129,7 +133,7 @@ It creates a _Pentesting Folder Structure_ to store all documentation related to
 > ```
 > 
 
-#### *validateIP*
+##### *validateIP*
 
 This function simply checks if the _IP Address_ entered as an argument is valid
 
@@ -155,7 +159,7 @@ It is used by the _[[ZSH CUSTOM FUNCTIONS#setTarget|setTarget]] function_
 > ```
 > 
 
-#### *setTarget*
+##### *setTarget*
 
 It sets the Target's _IP Address_ and _Hostname_ as one of the _[[POLYBAR|Polybar]] Bar's Modules_
 
@@ -203,7 +207,7 @@ Then the _Polybar Module_ carries out an action based on that _File's Content_ a
 
 ![[customZSHSetTargetFunction.gif|375]]
 
-#### *clearTarget*
+##### *clearTarget*
 
 This functions empties the `/home/al3xbb/.config/bin/target` file
 
