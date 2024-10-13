@@ -161,7 +161,7 @@ It is used by the _[[ZSH CUSTOM FUNCTIONS#setTarget|setTarget]] function_
 
 ##### *setTarget*
 
-It sets the Target's _IP Address_ and _Hostname_ as one of the _[[POLYBAR|Polybar]] Bar's Modules_
+It sets the Target's _IP Address_ and _Hostname_ as one of the _[[POLYBAR#target_to_hack|Polybar]] Bar's Modules_
 
 This function prints the above data into the `/home/al3xbb/.config/bin/target` file
 
@@ -211,7 +211,7 @@ Then the _Polybar Module_ carries out an action based on that _File's Content_ a
 
 This functions empties the `/home/al3xbb/.config/bin/target` file
 
-Therefore, as mentioned in the [[ZSH CUSTOM FUNCTIONS#*setTarget*|setTarget]] function, the *[[POLYBAR|Polybar]] Module* sets *"No Target"* as _Polybar Bar's Content_
+Therefore, as mentioned in the [[ZSH CUSTOM FUNCTIONS#*setTarget*|setTarget]] function, the *[[POLYBAR#target_to_hack|Polybar]] Module* sets *"No Target"* as _Polybar Bar's Content_
 
 > [!NOTE]- *Function*
 >

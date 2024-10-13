@@ -143,16 +143,328 @@ fs-cache -v # Reset the System Fonts Cache
 
 #### Configuration File
 
-##### *Current.ini*
+##### Current.ini
 
+> ***[See here](https://github.com/4l3xBB/Env-Setup/blob/main/polybar/current.ini)***
 
+Most of the *Bars* and their *Modules* are defined in this ***Configuration File***
 
-##### *Workspace.ini*
+##### Workspace.ini
 
+> ***[See here](https://github.com/4l3xBB/Env-Setup/blob/main/polybar/workspace.ini)***
 
+This ***Configuration File*** contains the *[[POLYBAR#primary|Main Bar]]*'s definition related to the ***[[BSPWM|Windows Manager]] Workspaces***
 
 ---
 
 #### Launcher File
 
-##### *Launch.sh*
+##### Launch.sh
+
+> ***[See here](https://github.com/4l3xBB/Env-Setup/blob/main/polybar/bin/launch.sh)***
+
+This ***[[SHELL SCRIPTING|shell]] script*** launchs all the *Bars* defined in the above *configuration files*
+
+---
+
+#### Bars
+
+A *bar* can contain one or several *[[POLYBAR#Modules|modules]]*
+
+There is a distinction between the **position** of the ***Top Bars*** →
+
+- ***Left Bar***
+<br>
+- ***Center Bar***
+<br>
+- ***Right Bar***
+
+![[POLYBAR-20241013161148167.webp|350]]
+
+##### Left
+
+###### os_icon
+
+It is launched from the *[[POLYBAR#launch.sh|launch.sh]] script*  as follows →
+
+```bash title="~/.config/polybar/launch.sh"
+polybar os_icon -c ~/.config/polybar/current.ini &
+```
+
+***Module processed within the bar → [[POLYBAR#my-text-label|my-text-label]]***
+
+```bash title="~/.config/polybar/current.ini"
+modules-center = my-text-label # Module Loaded
+```
+
+![[POLYBAR-20241013172458601.webp|70]]
+
+###### ethernet_bar
+
+It is launched from the *[[POLYBAR#Launch.sh|launch.sh]] script*  as follows →
+
+```bash title="~/.config/polybar/launch.sh"
+polybar ethernet_bar -c ~/.config/polybar/current.ini &
+```
+
+***Module processed within the bar → [[POLYBAR#ethernet_status|ethernet_status]]***
+
+```bash title="~/.config/polybar/current.ini"
+modules-center = ethernet_status # Module Loaded
+```
+
+![[POLYBAR-20241013172422793.webp|175]]
+
+###### vpn_bar
+
+It is launched from the *[[POLYBAR#Launch.sh|launch.sh]] script*  as follows →
+
+```bash title="~/.config/polybar/launch.sh"
+polybar vpn_bar -c ~/.config/polybar/current.ini &
+```
+
+***Module processed within the bar → [[POLYBAR#vpn_status|vpn_status]]***
+
+```bash title="~/.config/polybar/current.ini"
+modules-center = vpn_status # Module Loaded
+```
+
+![[POLYBAR-20241013172336620.webp|175]]
+
+##### Center
+
+###### primary
+
+It is launched from the *[[POLYBAR#Launch.sh|launch.sh]] script*  as follows →
+
+```bash title="~/.config/polybar/launch.sh"
+polybar primary -c ~/.config/polybar/workspace.ini &
+```
+
+***Module processed within the bar → [[POLYBAR#workspaces|workspaces]]***
+
+```bash title="~/.config/polybar/workspace.ini"
+modules-center = workspaces # Module Loaded
+```
+
+![[POLYBAR-20241013172919202.webp|350]]
+
+##### Right
+
+###### target_to_hack
+
+It is launched from the *[[POLYBAR#Launch.sh|launch.sh]] script*  as follows →
+
+```bash title="~/.config/polybar/launch.sh"
+polybar target_to_hack -c ~/.config/polybar/current.ini &
+```
+
+***Module processed within the bar → [[POLYBAR#target_to_hack|target_to_hack]]***
+
+```bash title="~/.config/polybar/current.ini"
+modules-center = target_to_hack # Module Loaded
+```
+
+![[POLYBAR-20241013173336639.webp|175]]
+
+###### primary
+
+It is launched from the *[[POLYBAR#Launch.sh|launch.sh]] script*  as follows →
+
+```bash title="~/.config/polybar/launch.sh"
+polybar primary -c ~/.config/polybar/current.ini &
+```
+
+***Module processed within the bar → [[POLYBAR#sysmenu|sysmenu]]***
+
+```bash title="~/.config/polybar/current.ini"
+modules-center = sysmenu # Module Loaded
+```
+
+![[POLYBAR-20241013173422877.webp|75]]
+
+---
+
+#### Modules
+
+A *module* is a *execution unit* that can perform a specific action, such as *run a script*, within a *[[POLYBAR#Bars|bar]]*
+
+One or several *modules* can be processed in the same *bar*
+
+![[POLYBAR-20241013174024652.webp|350]]
+
+##### my-text-label
+
+It simply displays the icon specified in the `content` parameter
+
+***Associated Bar → [[POLYBAR#os_icon|os_icon]]***
+
+***Module definition →***
+
+```bash title="~/.config/polybar/current.ini"
+[module/my-text-label]
+type = custom/text
+content = %{T7}
+```
+
+##### ethernet_status
+
+This module executes the specified *script* through the `exec` parameter every two seconds
+
+***Associated Bar → [[POLYBAR#ethernet_bar|ethernet_bar]]***
+
+***Module definition →***
+
+```bash title="~/.config/polybar/current.ini"
+[module/ethernet_status]
+type = custom/script
+interval = 2
+exec = ~/.config/bspwm/bin/ethernet_status.sh
+```
+
+###### modules/ethernet_status.sh
+
+> ***[Reference](https://github.com/4l3xBB/Env-Setup/blob/main/polybar/bin/modules/ethernet_status.sh)***
+
+It displays the *IP Address* assigned to a specific *Network Interface*
+
+> [!NOTE]- *ethernet_status.sh*
+>
+> ```bash
+> #!/usr/bin/env bash
+>
+> printf "%%{F#2495e7}󰈀 %%{F#ffffff}$( /usr/sbin/ifconfig ens33 | awk '/inet\s/ { print $2 }' )%%{u-}\n"
+> ```
+>
+
+##### vpn_status
+
+This module executes the specified *script* through the `exec` parameter every two seconds
+
+***Associated Bar → [[POLYBAR#vpn_bar|vpn_bar]]***
+
+***Module definition →***
+
+```bash title="~/.config/polybar/current.ini"
+[module/vpn_status]
+type = custom/script
+interval = 2
+exec = ~/.config/bspwm/bin/vpn_status.sh
+```
+
+###### modules/vpn_status.sh
+
+> ***[Reference](https://github.com/4l3xBB/Env-Setup/blob/main/polybar/bin/modules/vpn_status.sh)***
+
+It displays the *IP Address* assigned to the *VPN Network Interface (Tun0)*
+
+> [!NOTE]- *vpn_status.sh*
+>
+> ```bash
+> #!/usr/bin/env bash
+>
+> checkVPNiface ()
+> {
+>   local -- _vpnIface=$( /usr/sbin/ifconfig tun0 &> /dev/null )
+>
+>   if [[ -n $_vpnIface ]] ; then
+>     printf "%%{F#1bbf3e}󰆧 %%{F#ffffff}$( /usr/sbin/ifconfig tun0 | awk '/inet\s/ { print $2 }' )%%{u-}\n"
+>   else
+>     printf "%%{F#1bbf3e}󰆧 %%{u-} Disconnected\n"
+>   fi
+> }
+>
+> checkVPNiface
+> ```
+>
+
+##### workspaces
+
+It displays all *Workspaces* in a row
+
+***Associated Bar → [[POLYBAR#primary|primary]]***
+
+***Part of the Module definition →***
+
+```bash title="~/.config/polybar/workspace.ini"
+[module/workspaces]
+type = internal/xworkspaces
+```
+
+**To see all the information related to this module → [[POLYBAR#Workspace.ini|workspace.ini]]**
+
+##### target_to_hack
+
+This module executes the specified *script* through the `exec` parameter every two seconds
+
+***Associated Bar → [[POLYBAR#target_to_hack|target_to_hack]]***
+
+***Module definition →***
+
+```bash title="~/.config/polybar/current.ini"
+[module/target_to_hack]
+type = custom/script
+interval = 2
+exec = ~/.config/bspwm/bin/target_to_hack.sh
+```
+
+###### modules/target_to_hack.sh
+
+> ***[Reference](https://github.com/4l3xBB/Env-Setup/blob/main/polybar/bin/modules/target_to_hack.sh)***
+
+This module sets the *IP Address* and *Hostname* of a specific target based on the `~/.config/bin/target` file
+
+> [!NOTE]- *target_to_hack.sh*
+>
+> ```bash
+ > #!/usr/bin/env bash
+>
+> extractData ()
+> {
+>   local -- _IP= _machineName= _targetFile=/home/al3xbb/.config/bin/target
+>
+>   [[ -s $_targetFile ]] || {
+>
+>     printf "%%{F#e51d0b}󰓾 %%{u-}%%{F#ffffff} No target\n"
+>   }
+>
+>   while IFS=: read -r _IP _machineName
+>   do
+>     printf "%%{F#e51d0b}󰓾 %%{F#ffffff}%s%%{u-} - %s\n" "$_machineName" "$_IP"
+>
+>   done < "$_targetFile"
+> }
+>
+> extractData
+> ```
+>
+
+###### Shell Functions
+
+The following [[SHELL SCRIPTING|shell]] functions performs the following actions to the above file (`target`) →
+
+- ***[[ZSH CUSTOM FUNCTIONS#*setTarget*|setTarget]] → Prints the IP Address and Hostname of the target***
+
+![[customZSHSetTargetFunction.gif|375]]
+
+- ***[[ZSH CUSTOM FUNCTIONS#*clearTarget*|clearTarget]] → Empties the file*** 
+
+![[customZSHclearTargetFunction.gif|375]]
+
+##### sysmenu
+
+This module performs the following actions →
+
+- ***Icon Display via the `content` parameter***
+- ***Executes the specified script in the `click-left` parameter***
+
+***Associated Bar → [[POLYBAR#primary|primary]]***
+
+***Module definition →***
+
+```bash title="~/.config/polybar/current.ini"
+[module/sysmenu]
+type = custom/text
+content = 襤
+click-left = ~/.config/polybar/scripts/powermenu_alt
+```
