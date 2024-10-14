@@ -287,7 +287,7 @@ modules-center = sysmenu # Module Loaded
 
 #### Modules
 
-A *module* is a *execution unit* that can perform a specific action, such as *run a script*, within a *[[POLYBAR#Bars|bar]]*
+A *module* is a *execution unit* that can perform a specific action within a *[[POLYBAR#Bars|bar]]*, such as *run a script*
 
 One or several *modules* can be processed in the same *bar*
 
@@ -306,6 +306,31 @@ It simply displays the icon specified in the `content` parameter
 type = custom/text
 content = %{T7}
 ```
+
+###### Font
+
+> ***See [[KITTY#Hack Nerd Fonts|here]] to install the Hack Nerd Fonts***
+
+The `content` parameter above uses the *`T7` Font Type*
+
+This *Font Type* is not declared by default
+
+***Chosen Font → Hack Nerd Font***
+
+To declare it and set the *size* and *position* of the *OS Icon* →
+
+```bash title="~/.config/polybar/current.ini"
+font-7 = "Hack Nerd Font Mono:size=20;6" # Filter by 'font-' in the above file
+```
+
+> [!INFO]-
+> 
+> Note that the `size` parameter sets both the *OS Icon*'s size and position
+>
+> ```bash
+> size=SIZE;POSITION
+> ```
+>
 
 ##### ethernet_status
 
@@ -392,6 +417,15 @@ type = internal/xworkspaces
 ```
 
 **To see all the information related to this module → [[POLYBAR#Workspace.ini|workspace.ini]]**
+
+###### Workspaces' States
+
+To change the colour of both *active* and *occupied* *Workspaces* →
+
+```bash title="~/.config/polybar/workspace.ini"
+label-active-foreground = ${color.red} # Active
+label-occupied-foreground = ${color.yellow} # Occupied
+```
 
 ##### target_to_hack
 

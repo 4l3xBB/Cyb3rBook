@@ -16,7 +16,7 @@ cssclasses:
 
 ### Environment Customization
 
-![[SETUP-20240921163243628.webp|400]]
+![[SETUP-20241014204413856.webp|500]]
 
 | **Component** | **Role** | |
 | --- | --- | --- |
@@ -156,7 +156,7 @@ All necessary _Configuration Files_ can be found in the above link or in the _Co
 
 **The Deployment Flow would be →**
 
-***\[\[ EXCALIDRAW BANNER ]]***
+![[SETUP-20241014202855773.webp|500]]
 
 ---
 

@@ -12,7 +12,9 @@ cssclasses:
 
 #  🛈 INDEX CATEGORIES
 
-- ![](https://img.freepik.com/premium-photo/cartoon-girl-with-glasses-hoodie-with-word-broken-it_784625-10966.jpg)
+- ![](https://img.freepik.com/premium-photo/little-robot-with-blue-eyes-hoodie-that-says-i-m-robot_937795-776.jpg)
 	- [[PENTESTING]]
 - ![](https://img.freepik.com/premium-photo/robot-with-hood-that-says-i-am-robot_937795-695.jpg)
 	- [[SCRIPTING]]
+- ![](https://img.freepik.com/premium-photo/cartoon-girl-with-glasses-hoodie-with-word-broken-it_784625-10966.jpg)
+	- [[SETUP]]
