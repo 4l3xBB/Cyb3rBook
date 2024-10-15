@@ -1,15 +1,15 @@
 ---
-Primary_category: "[[SETUP]]"
+Primary_category: "[[DESKTOP SETUP]]"
 title: POLYBAR
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
 tags:
   - CustomEnvironment🦜
-cssclasses:
+cssclasses: 
 ---
 
-###### PRIMARY CATEGORY → [[SETUP]]
+###### PRIMARY CATEGORY → [[DESKTOP SETUP]]
 
 **[POLYBAR](https://github.com/polybar/polybar) → Highly Customizable Status Bars**
 
@@ -77,7 +77,7 @@ checkProcess polybar || { launchProcess "$_pbl" ; unset -v -- _pbl ; }
 >
 > There are some dependencies that are needed in the following installation steps
 >
-> In addition, the above [[SETUP|setup]] components' installation facilitates the _ZSH Configuration_
+> In addition, the above [[DESKTOP SETUP|setup]] components' installation facilitates the _ZSH Configuration_
 
 ```bash
 apt install -y -- polybar

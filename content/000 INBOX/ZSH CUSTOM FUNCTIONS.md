@@ -12,7 +12,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[ZSH]]
 
-In this [[SETUP|Setup environment]], all the following _[[SHELL SCRIPTING|Shell]] Functions_ are declared in the _[[ZSH#*src/custom.zsh*|custom.zsh]] script_
+In this [[DESKTOP SETUP|Setup environment]], all the following _[[SHELL SCRIPTING|Shell]] Functions_ are declared in the _[[ZSH#*src/custom.zsh*|custom.zsh]] script_
 
 Then, the _custom.zsh script_ is sourced from the [[ZSH#*.zshrc*|.zshrc]] file as follows →
 

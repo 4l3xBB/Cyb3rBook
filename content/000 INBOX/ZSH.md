@@ -1,5 +1,5 @@
 ---
-Primary_category: "[[SETUP]]"
+Primary_category: "[[DESKTOP SETUP]]"
 title: ZSH
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -12,7 +12,7 @@ cssclasses:
   - purple-style
 ---
 
-###### PRIMARY CATEGORY → [[SETUP]]
+###### PRIMARY CATEGORY → [[DESKTOP SETUP]]
 
 **[ZSH](https://github.com/zsh-users/zsh) → Z Shell**
 
@@ -92,7 +92,7 @@ fi
 
 ###### Dracula Theme
 
-There are different themes for this plugin, the one used in this [[SETUP|setup enviroment]] is the **[Dracula Theme](https://github.com/dracula/dracula-theme)**
+There are different themes for this plugin, the one used in this [[DESKTOP SETUP|setup enviroment]] is the **[Dracula Theme](https://github.com/dracula/dracula-theme)**
 
 > ***[Reference](https://draculatheme.com/zsh-syntax-highlighting)***
 
@@ -139,7 +139,7 @@ fi
 >
 > First, see the [[BSPWM|bspwm]], [[SXHKD|sxhkd]] and  [[KITTY|kitty]] installations before proceeding with this one related to _ZSH_
 >
-> The above [[SETUP|setup]] components facilitate the _ZSH Configuration_
+> The above [[DESKTOP SETUP|setup]] components facilitate the _ZSH Configuration_
 >
 
 ```bash
@@ -169,7 +169,7 @@ sudo apt install -y -- zsh-{autocomplete,autosuggestions,syntax-highlighting}
 
 > [!INFO]-
 >
-> In this [[SETUP|Environment Setup]], the only _ZSH Plugins_ to be used are _ZSH-Syntax-highlighting_ and _ZSH-Sudo_
+> In this [[DESKTOP SETUP|Environment Setup]], the only _ZSH Plugins_ to be used are _ZSH-Syntax-highlighting_ and _ZSH-Sudo_
 
 ###### *ZSH-Sudo*
 
@@ -248,7 +248,7 @@ To set up a **more granular configuration**, just edit the [[ZSH#*.p10k.zsh*|.p1
 
 ###### *.p10k.zsh - Modified Sections*
 
-In that _powerlevel10k file_, for this [[SETUP|Setup Enviroment]], as the _non-privileged user_, add/edit as follows →
+In that _powerlevel10k file_, for this [[DESKTOP SETUP|Setup Enviroment]], as the _non-privileged user_, add/edit as follows →
 
 - **Left Prompt Elements**
 
@@ -304,7 +304,7 @@ ln --symbolic --force -- /home/al3xbb/.zshrc ~/.zshrc
 
 As mentioned in the [[ZSH#Plugins|Plugins]]' Section, each _Plugin's .zsh script_ must be sourced from the `.zshrc` file
 
-In this [[SETUP|environment setup]], the sourced ones are → _[[ZSH#ZSH-syntax-highlighting|zsh-syntax-highlighting]] ~ [[ZSH#ZSH-sudo|zsh-sudo]]_
+In this [[DESKTOP SETUP|environment setup]], the sourced ones are → _[[ZSH#ZSH-syntax-highlighting|zsh-syntax-highlighting]] ~ [[ZSH#ZSH-sudo|zsh-sudo]]_
 
 Check if exist and source them →
 
@@ -558,7 +558,7 @@ The basic units are the _segments_, which display specific information from diff
 
 The _segments_ can be located in the left or right side  (_i.e. the left or right prompt_)
 
-In this [[SETUP|environment setup]], only those on the right are enabled →
+In this [[DESKTOP SETUP|environment setup]], only those on the right are enabled →
 
 ###### OS_ICON
 

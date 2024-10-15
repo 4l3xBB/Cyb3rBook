@@ -1,15 +1,15 @@
 ---
-Primary_category: "[[SETUP]]"
+Primary_category: "[[DESKTOP SETUP]]"
 title: KITTY
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
 tags:
   - CustomEnvironment🦜
-cssclasses:
+cssclasses: 
 ---
 
-###### PRIMARY CATEGORY → [[SETUP]]
+###### PRIMARY CATEGORY → [[DESKTOP SETUP]]
 
 **[KITTY](https://github.com/kovidgoyal/kitty) → Fast and Feature-Rich GPU Based Terminal Emulator**
 
@@ -48,7 +48,7 @@ $ kitty +kitten icat /path/to/image
 > apt install -y -- imagemagick
 > ```
 >
-> Anyways, It should be installed, as It is indicated as environment dependency to be installed in the [[SETUP#Components|Setup's components section]]
+> Anyways, It should be installed, as It is indicated as environment dependency to be installed in the [[DESKTOP SETUP#Components|Setup's components section]]
 
 - **SSH Protocol support**
 
@@ -86,7 +86,7 @@ super + Return
 >
 
 
-Download the binary and its related files from the [project's release page](https://github.com/kovidgoyal/kitty/releases). The required one, in this [[SETUP|Environment Setup]] is the _Linux amd64 binary bundle_
+Download the binary and its related files from the [project's release page](https://github.com/kovidgoyal/kitty/releases). The required one, in this [[DESKTOP SETUP|Environment Setup]] is the _Linux amd64 binary bundle_
 
 Being _root_ →
 
@@ -215,7 +215,7 @@ Take a look at [[KITTY#Hack Nerd Fonts|this]] installation for more information
 
 > ***[Reference](https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.shell)***
 
-This [[SETUP|Enviroment Setup]] make use of a _ZSH_ as the [[SHELL SCRIPTING|Default Shell]]
+This [[DESKTOP SETUP|Enviroment Setup]] make use of a _ZSH_ as the [[SHELL SCRIPTING|Default Shell]]
 
 > [!IMPORTANT]-
 >
@@ -574,7 +574,7 @@ map ctrl+alt+o detach_tab
 
 ###### Traditional Clipboards → C-S-{c,v}
 
-This [[SETUP|environment setup]] make use of several _Copy/Paste_ mappeable actions such as:
+This [[DESKTOP SETUP|environment setup]] make use of several _Copy/Paste_ mappeable actions such as:
 
 - **[`copy_to_clipboard`](https://sw.kovidgoyal.net/kitty/actions/#action-copy_to_clipboard) → `C-S-c`**
 - **[`paste_from_clipboard`](https://sw.kovidgoyal.net/kitty/actions/#action-paste_from_clipboard) → `C-S-v`**
@@ -649,7 +649,7 @@ map ctrl+l clear_terminal to_cursor active
 >
 > See this [pull request discussion](https://github.com/Powerlevel9k/powerlevel9k/pull/1176#discussion_r299303453)
 
-In this [[SETUP|environment setup]], this action is implemented in the [[ZSH#Configuration File|zshrc]] as follows →
+In this [[DESKTOP SETUP|environment setup]], this action is implemented in the [[ZSH#Configuration File|zshrc]] as follows →
 
 > ***[Reference](https://unix.stackexchange.com/questions/517025/zsh-clear-scrollback-buffer#answer-531178)***
 

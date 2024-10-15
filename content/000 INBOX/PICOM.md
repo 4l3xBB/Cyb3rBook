@@ -1,15 +1,15 @@
 ---
-Primary_category: "[[SETUP]]"
+Primary_category: "[[DESKTOP SETUP]]"
 title: PICOM
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
 tags:
   - CustomEnvironment🦜
-cssclasses:
+cssclasses: 
 ---
 
-###### PRIMARY CATEGORY → [[SETUP]]
+###### PRIMARY CATEGORY → [[DESKTOP SETUP]]
 
 **[PICOM](https://github.com/yshui/picom) → Compositor for X**
 
@@ -19,7 +19,7 @@ Basically, It combines the above elements, called _**Buffers**_, into a **Final 
 
 Note that `picom` is a fork of [Compton](https://github.com/yshui/picom/blob/next/History.md), which is already _deprecated_
 
-This binary is executed as a daemon like most of the tools in this [[SETUP|setup]]
+This binary is executed as a daemon like most of the tools in this [[DESKTOP SETUP|setup]]
 
 ```bash
 $ pgrep --list-full --exact picom
@@ -168,7 +168,7 @@ shadow-offset-y = -15
 
 It implements a fade effect when opening or closing _OS Windows_
 
-In this [[SETUP|Setup Configuration]], It is disabled
+In this [[DESKTOP SETUP|Setup Configuration]], It is disabled
 
 ```bash
 fading = false # Or true to enable it

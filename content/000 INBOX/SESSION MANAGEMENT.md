@@ -1,17 +1,17 @@
 ---
-Primary_category: "[[SETUP]]"
+Primary_category: "[[DESKTOP SETUP]]"
 title: SESSION MANAGEMENT
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
 tags:
   - CustomEnvironment🦜
-cssclasses:
+cssclasses: 
 ---
 
-###### PRIMARY CATEGORY → [[SETUP]]
+###### PRIMARY CATEGORY → [[DESKTOP SETUP]]
 
-During the installation of the *[[SETUP#Components ⟡|Setup Components]]*, the user will have to be shutting down, restarting, logging out or simply blocking (i.e _lock_) the current session
+During the installation of the *[[DESKTOP SETUP#Components ⟡|Setup Components]]*, the user will have to be shutting down, restarting, logging out or simply blocking (i.e _lock_) the current session
 
 ##### Actions
 
