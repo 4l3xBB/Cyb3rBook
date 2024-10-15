@@ -13,7 +13,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[ROOT]]
 
-#### Environments
+#### Environments ⟡
 
 - ![](https://img.freepik.com/premium-photo/robot-with-purple-eyes-hood-that-says-no-one-is-wearing_937795-585.jpg)
 	- [[DESKTOP SETUP|DESKTOP]]
