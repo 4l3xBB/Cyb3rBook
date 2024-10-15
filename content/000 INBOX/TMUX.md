@@ -106,7 +106,7 @@ sudo rm -rf -- /usr/local/bin/tmux /usr/local/share/man/man1/tmux.1
 
 ##### *Tmux.conf*
 
-> ***[See here]()***
+> ***[See here](https://pastebin.com/yfiXx9Um)***
 
 ###### Default Prefix Modification
 
