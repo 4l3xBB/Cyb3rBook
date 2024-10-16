@@ -25,3 +25,29 @@ cssclasses:
 	- [[FZF]]
 - ![](https://img.freepik.com/premium-photo/latest-drawing-room-interior-decorating-ideas-designs-v-letter-logo-designs_1020867-119148.jpg)
 	- [[NEOVIM]]
+
+<br>
+
+#### Shorcuts ⌨
+
+##### *TMUX*
+
+**[[TMUX#*Sessions*|SESSIONS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[TMUX#*Windows*|WINDOWS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[TMUX#*Panes*|PANES]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[TMUX#*Misc*|MISCELLANEOUS]]**
+
+##### *FZF*
+
+**[[FZF#Reverse History|REVERSE HISTORY]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[FZF#Others|OTHERS]]**
+
+##### NEOVIM &nbsp; Δ &nbsp; NVCHAD
+
+###### COMPONENTS
+
+**[[NVCHAD#*Buffers*|BUFFERS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Windows*|WINDOWS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Terminal*|TERMINAL]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#Misc|MISCELLANEOUS]]**
+
+###### PLUGINS
+
+**[[NVCHAD#*Treesitter → Syntax Highlighting*|TREESITTER]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*NVimTree → File Tree*|NVIMTREE]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Telescope → Fuzzy Finder*|TELESCOPE]]**
+
+###### CHEATSHEETS
+
+**[[NEOVIM#*Nvim Cheatsheet*|NVIM CHEATSHEET]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*NVChad Cheatsheet*|NVCHAD CHEATSHEET]]** 

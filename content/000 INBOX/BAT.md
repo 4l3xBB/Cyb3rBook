@@ -9,7 +9,7 @@ tags:
 cssclasses: 
 ---
 
-###### PRIMARY CATEGORY → [[DESKTOP SETUP]]&nbsp;&nbsp;[[SERVER SETUP]]
+###### PRIMARY CATEGORIES → [[DESKTOP SETUP]]&nbsp;&nbsp;•&nbsp;&nbsp;[[SERVER SETUP]]
 
 **[BATCAT](https://github.com/sharkdp/bat)** → ***A cat(1) clone with Wings 🦇***
 

@@ -11,7 +11,7 @@ cssclasses:
   - purple-style
 ---
 
-###### PRIMARY CATEGORY → [[DESKTOP SETUP]]
+###### PRIMARY CATEGORIES → [[DESKTOP SETUP]]&nbsp;&nbsp;•&nbsp;&nbsp;[[SERVER SETUP]]
 
 **[NEOVIM](https://github.com/neovim/neovim) → *Vim Fork focused on extensibility and usability***
 

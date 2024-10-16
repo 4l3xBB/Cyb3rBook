@@ -87,7 +87,7 @@ cssclasses:
 
 ###### COMPONENTS
 
-**[[NVCHAD#*Buffers*|BUFFERS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Windows*|WINDOWS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Terminal*|TERMINAL]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#Miscellaneous|MISCELLANEOUS]]**
+**[[NVCHAD#*Buffers*|BUFFERS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Windows*|WINDOWS]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#*Terminal*|TERMINAL]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[NVCHAD#Misc|MISCELLANEOUS]]**
 
 ###### PLUGINS
 

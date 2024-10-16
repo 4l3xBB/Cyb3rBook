@@ -2,7 +2,7 @@
 Primary_category: "[[SERVER SETUP]]"
 title: TMUX
 draft: false
-banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
 tags:
   - CustomEnvironment🦜
@@ -107,7 +107,7 @@ sudo rm -rf -- /usr/local/bin/tmux /usr/local/share/man/man1/tmux.1
 
 ##### *Tmux.conf*
 
-> ***[See here](https://pastebin.com/yfiXx9Um)***
+> ***[See here](https://github.com/4l3xBB/dotfiles/blob/main/tmux/.tmux.conf)***
 
 ###### Default Prefix Modification
 
@@ -129,7 +129,7 @@ bind-key M-i send-prefix
 
 | **Key** | **Meaning** | |
 | --- | --- | --- |
-| ***\<leader\>*** | **`Space`** | **`<leader> + a` → `Space+a`** |
+| ***\<leader\>*** | **`M-i`** | **`<leader> + a` → `Alt+i+a`** |
 | ***C*** | **`Control`** | **`C-c` → `Control+c`** |
 | ***M*** | **`Alt`** | **`M-a` → `Alt+a`** |
 | ***S*** | **`Shift`** | **`S-o` → `Shift+o`**  |
@@ -138,27 +138,59 @@ bind-key M-i send-prefix
 | ***-*** | **`+`** | **`C-z` → `Control+z`** |
 | ***{a,b,c,d}*** | **`a` `b` `c` `d`** | **`C-{a,b,c,d}` → `C-a` `C-b` `C-c` `C-d`** |
 
+##### *Sessions*
+
+###### Commands
+
+| **Action** | **Shorcut** |
+| --- | --- |
+| ***Create Session*** | **`tmux new -s TMUX_SESSION_NAME_OR_ID`** |
+| ***Kill Session*** | **`tmux kill-sess -t TMUX_SESSION_NAME_OR_ID`** |
+| ***List Sessions*** | **`tmux ls` → Name <br> `tmux ls -F '#{session_id}: #{session_name}'` → ID/Name** |
+| ***Kill Server*** (Kill All Sessions) | **`tmux kill-server`** |
+| ***Session Attach*** | **`tmux a -t TMUX_SESSION_NAME_OR_ID`** |
+| ***Last Session Attach*** | **`tmux a`** |
+
+###### Shortcuts
+
+| **Action** | **Shorcut** |
+| --- | --- |
+| ***Session Detach*** | **`<leader> + d`** |
+| ***Session Rename*** | **`<leader> + $`** |
+| ***Toogle to Sessions Select Mode*** | **`<leader> + s`** |
+| ***Session Movement⬅️➡️*** | **`<leader> + (` `<leader> + )`**  |
+
 #####  *Windows*
 
 | **Action** | **Shortcut** |
 | --- | --- |
-| ***Windows Creation*** | **`c`** |
-| ***Windows Closing*** | **`&`** |
-| ***Windows Rename*** | **`comma`** |
+| ***Windows Creation*** | **`<leader> + c`** |
+| ***Windows Closing*** | **`<leader> + &`** |
+| ***Windows Rename*** | **`<leader> + comma`** |
+| ***Windows Focus⬅️➡️*** | **`<leader> + p` `<leader> + n`** |
+| ***Windows Focus (Numeric)*** | **`<leader> + {0..9}`** |
+| ***Windows Movement⬅️➡️*** | **`<leader> + S-comma` `<leader> + S-dot`** |
+| ***Toogle to Windows Select Mode*** | **`<leader> + w`** |
 
 ##### *Panes*
 
 | **Action** | **Shortcut** |
 | --- | --- |
-| ***Vertical Split*** | **`Return`** |
-| ***Horizontal Split*** | **`dash`** |
-| ***Pane Closing*** | **`x`** |
-| ***Close All Panes (Except the focused one)*** | **`C-o`** |
-| ***Pane Zoom In/Out*** | **`z`** |
-| ***Pane Focus⬆️⬇️⬅️➡️*** | **`C-{k,j,h,l}`** |
-| ***Pane Movement⬆️⬇️⬅️➡️*** | **`S-{k,j,h,l}`** |
-| ***Pane Resize⬆️⬇️⬅️➡️*** | **`M-{k,j,h,l}`** |
-| ***Pane Resize - Reset (Toogle to Tiled Layout)*** | **`r`** |
-| ***Toogle between All Layouts*** | **`Space`** |
-| ***Pane Detach into a New Window*** | **`!`** |
+| ***Vertical Split*** | **`<leader> + Return`** |
+| ***Horizontal Split*** | **`<leader> + dash`** |
+| ***Pane Closing*** | **`<leader> + x`** |
+| ***Close All Panes (Except the focused one)*** | **`<leader> + C-o`** |
+| ***Pane Zoom In/Out*** | **`<leader> + z`** |
+| ***Pane Movement⬆️⬇️⬅️➡️*** | **`<leader> + S-{k,j,h,l}`** |
+| ***Pane Focus⬆️⬇️⬅️➡️*** | **`<leader> + C-{k,j,h,l}`** |
+| ***Pane Resize⬆️⬇️⬅️➡️*** | **`<leader> + M-{k,j,h,l}`** |
+| ***Pane Resize - Reset (Toogle to Tiled Layout)*** | **`<leader> + r`** |
+| ***Toogle between All Layouts*** | **`<leader> + Space`** |
+| ***Pane Detach into a New Window*** | **`<leader> + !`** |
 
+##### *Misc*
+
+| **Action** | **Shortcut** |
+| --- | --- |
+| ***TMUX Cheatsheet (Keybindings)*** | **`<leader> + ?`** |
+| ***Toogle to Command Mode*** | **`<leader> + `** |

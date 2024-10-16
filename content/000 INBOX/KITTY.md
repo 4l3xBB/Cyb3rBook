@@ -278,7 +278,6 @@ Get the `color.ini` file content [[KITTY#Configuration File|here]]
 
 | **Key** | **Meaning** | |
 | --- | --- | --- |
-| ***\<leader\>*** | **`Space`** | **`<leader> + a` → `Space+a`** |
 | ***C*** | **`Control`** | **`C-c` → `Control+c`** |
 | ***M*** | **`Alt`** | **`M-a` → `Alt+a`** |
 | ***S*** | **`Shift`** | **`S-o` → `Shift+o`**  |
@@ -415,7 +414,7 @@ Basically rotates the current **Windows Split** (i.e. **Horizonal ↔ Vertical**
 
 Different types of Split are implemented through the **[launch action](https://sw.kovidgoyal.net/kitty/launch/#the-launch-command)**
 
-- **Vertical Split** → **`C-S-enter`**
+- **Vertical Split** → **`C-S-Return`**
 
 ```bash
 map ctrl+shift+enter launch --location=vsplit --cwd=current
