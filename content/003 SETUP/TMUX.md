@@ -13,13 +13,26 @@ cssclasses:
 
 **[TMUX](https://github.com/tmux/tmux) → Terminal Multiplexer**
 
-It enables a number of terminal to be controlled in a single screen
+It allows to create and access multiple *Terminal Sessions* through a Server
 
 *Tmux* works with *Sessions*
 
 A *Session* can contain one or several *Windows*
 
 Each *Window* can be divided into several *Panes*
+
+> [!IMPORTANT]- *Simple Visualization*
+>
+> ```bash
+> Server
+> └── Session
+>     ├── Window 1
+>     │   ├── Pane 1
+>     │   └── Pane 2
+>     └── Window 2
+>         └── Pane 1
+> ```
+>
 
 ![[TMUX-20241015165125813.webp|500]]
 
