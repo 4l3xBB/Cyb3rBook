@@ -355,10 +355,12 @@ It displays the *IP Address* assigned to a specific *Network Interface*
 
 > [!NOTE]- *ethernet_status.sh*
 >
+> > ***Delete Backslashes hiding the `%` characters***
+>
 > ```bash
 > #!/usr/bin/env bash
 >
-> printf "%%{F#2495e7}󰈀 %%{F#ffffff}$( /usr/sbin/ifconfig ens33 | awk '/inet\s/ { print $2 }' )%%{u-}\n"
+> printf "\%\%{F#2495e7}󰈀 \%\%{F#ffffff}$( /usr/sbin/ifconfig ens33 | awk '/inet\s/ { print $2 }' )\%\%{u-}\n"
 > ```
 >
 
