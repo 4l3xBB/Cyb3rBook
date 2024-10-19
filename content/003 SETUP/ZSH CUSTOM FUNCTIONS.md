@@ -133,6 +133,97 @@ It creates a _Pentesting Folder Structure_ to store all documentation related to
 > ```
 > 
 
+##### *extractPorts*
+
+This function mainly displays a **Summary** of the Target's Open Ports
+
+Furthermore, it **copies the Open Ports** to the *System Clipboard*
+
+> [!NOTE]- *Function*
+>
+> ```bash
+ > extractPorts()
+> {
+>   local -- _file=$1 _ip= _ipAddress= IFS=, \
+>            _tmpFile=$( mktemp --quiet --suffix=.log --tmpdir=. )
+>   local -a -- _ports=()
+>
+>   trap 'rm --force "$_tmpFile"' RETURN
+>
+>   [[ -s $_file ]] || {
+>     printf "\n[!] File must be a Nmap Grepable Format :)\n" 1>&2
+>     return 1
+>   }
+>
+>   while IFS=$' ' read -r _ _ip
+>   do
+>     [[ $_ip =~ (^[[:digit:]]{1,3}(\.[[:digit:]]{1,3}){3}) ]] && {
+>       _ipAddress=${_ip%%[[:space:]]*}
+>       break
+>     }
+>
+>   done < "$_file"
+>
+>   while IFS= read -r _port
+>   do
+>     _ports+=( "$_port" )
+>
+>   done < <( grep --only-matching \
+>                  --perl-regexp \
+>                  '\s\K\d{1,5}(?=/open)' \
+>                  "$_file"
+>           )
+>
+>   cat << PORTS > "$_tmpFile"
+>
+>   [+] Extracting information...
+>
+>       [+] IP Address: $_ipAddress
+>       [+] Open Ports: ${_ports[*]}
+>
+>   [+] Ports Copied to Clipboard
+>
+> PORTS
+>
+>   command -V xclip &> /dev/null && xclip -sel clip < <( tr -d '\n' <<< "${_ports[*]}" )
+>
+>   command -V bat &> /dev/null && bat "$_tmpFile"
+>
+>   return 0
+> }
+> ```
+>
+
+> [!IMPORTANT]-
+>
+>  An error related to the `trap 'COMMAND' RETURN`  line may occur when callling the function
+>
+> If this happens, simply replace the above line with `rm --force -- "$_tmpFile"` at the end of the *Function*
+>
+> Likewise, instead of a function, the above code can be copied into a [[BASH|bash]] script as follows →
+>
+> ```bash
+> sudo nvim /usr/bin/extractPorts
+> ```` 
+>
+> ```bash
+> chmod 777 !$
+> ```
+>
+> > ***Script Content***
+>
+> ```bash
+> #!/usr/bin/env bash
+>
+> extractPorts()
+> {
+> 	FUNCTION_CONTENT
+> }
+> 
+> extractPorts "$@" || exit 99
+> ```
+>
+
 ##### *validateIP*
 
 This function simply checks if the _IP Address_ entered as an argument is valid

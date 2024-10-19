@@ -218,7 +218,7 @@ When **Shell Expansion** is performed in shell's parsing, all unquoted expansion
 > $ echo ~+  # → $PWD
 > $ echo ~-  # → $OLDPWD
 > ```
-> Note that one `$` char preceding a string introduce differente types of expansion like the following ones 
+> Note that one `$` char preceding a string introduce different types of expansion like the following ones 
 >
 > - **Parameter Expansion** →
 > ```bash
@@ -800,7 +800,7 @@ $ IFS=${IFS%X}
 
 > [!IMPORTANT]- Explanation
 >
-> Same as the `eval` + `printf ` one. Only `IFS` assignment is differente
+> Same as the `eval` + `printf` one. Only `IFS` assignment is different
 >
 > A character is placed after the newline `\n` to prevent that the expansion trims trail newline
 >
