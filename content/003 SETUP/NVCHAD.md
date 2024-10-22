@@ -178,6 +178,15 @@ Disable `C-h` mapping in order to allow _Character Deletion_ in *Insert Mode* as
 vim.keymap.set('i', '<C-h>', '<BS>', { noremap = true, silent = true })
 ```
 
+###### Disable *Short Tabulations*
+
+To adjust the tabulation size in *Insert* and *Normal* mode →
+
+```bash title="~/.config/nvim/lua/mappings.lua"
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+```
+
 ##### Miscellaneous
 
 ###### Disable *Neovim CMP*
