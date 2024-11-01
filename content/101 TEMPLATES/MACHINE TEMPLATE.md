@@ -10,11 +10,19 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[EASY]]
 
+###### PRIMARY CATEGORY → [[MEDIUM]]
+
+###### PRIMARY CATEGORY → [[HARD]]
+
+###### PRIMARY CATEGORY → [[INSANE]]
+
 #### Summary
 
 - ***Summary A***
 - ***Summary B***
 - ***Summary C***
+- ***Summary D***
+- ***Summary E***
 
 ![[ACADEMY-20241101164644590.webp|400]]
 
@@ -25,7 +33,7 @@ cssclasses:
 Directory creation with the Machine's Name
 
 ```bash
-mkdir Academy && cd !$
+mkdir MACHINE_NAME && cd !$
 ```
 
 Creation of a *Pentesting Folder Structure* to store all the information related to the target
@@ -115,7 +123,7 @@ Then, the ***Comprehensive Scan*** is performed to gather the ***Service and Ver
 Note that this scan is also exported to have evidence at hand
 
 ```bash title="MACHINE_NAME/Scans"
-nmap -p22,80 -sCV -oN targeted 10.129.96.84
+nmap -p22,80 -sCV -oN targeted TARGET
 ```
 
 > [!NOTES]- *Command Output*
@@ -132,7 +140,7 @@ According to the **Version Column Data** of the [[#Comprehensive Scan]], proceed
 
 - ***PORT NUMBER - PROTOCOL NAME***
 
-> ***[Reference]()***
+> ***[Reference](LINK TO LAUNCHPAD)***
 
 ```bash title="Firefox"
 SERVICE VERSION e.g. OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 site:launchpad.net
@@ -140,13 +148,13 @@ SERVICE VERSION e.g. OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 site:launchpad.net
 
 - ***PORT NUMBER - PROTOCOL NAME***
 
-> ***[Reference]()***
+> ***[Reference](LINK TO LAUNCHPAD)***
 
 ```bash title="Firefox"
 SERVICE_VERSION
 ```
 
-***Codename → [Distro Codename e.g. Debian Buster]()***
+***Codename → [Distro Codename e.g. Debian Buster](LINK TO INFO ABOUT THE CODENAME)***
 
 This can be verified once the [[SHELL SCRIPTING|shell]] is obtained, i.e. the system has been compromised
 
@@ -209,18 +217,20 @@ searchsploit --mirror linux/remote/45939.py
 mv "${_##*/}" ssh_exploit.py
 ```
 
-```bash="Nibbles/tools"
+```bash title="MACHINE_NAME/tools"
 python2 !$
 ```
 
 > [!INFO]-
 >
-> There are situations where, even if the *OpenSSH Version is earlier than the v7.7*, *User Enumration* does not work due due to some configuration or manual patches
+> There are situations where, even if the *OpenSSH Version is earlier than the v7.7*, *User Enumeration* does not work due due to some configuration or manual patches
 >
 
 In this case, nothing interesting is extracted
 
 ##### *PORT NUMBER - PROTOCOL NAME*
+
+##### *e.g. 80 - HTTP*
 
 ---
 
@@ -236,6 +246,8 @@ In this case, nothing interesting is extracted
 Once a connection via *Reverse Shell* is stablished, just proceed as follows to upgrade the obtained shell to a *Fully Interactive TTY*
 
 > ***[Reference](https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/)***
+
+##### *Script*
 
 ```bash title="Target"
 script /dev/null -c bash
