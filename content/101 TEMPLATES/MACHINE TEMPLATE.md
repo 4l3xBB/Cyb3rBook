@@ -73,7 +73,7 @@ The standard values are →
 - ***About 128 → Windows***
 
 ```bash title="MACHINE_NAME/scans"
-ping -c1 10.129.96.84
+ping -c1 TARGET
 ```
 
 > [!NOTE]- *Command Output*
@@ -82,7 +82,7 @@ ping -c1 10.129.96.84
 > ```
 >
 
-As mentioned, according to the TTL, It seems that It is a ***________ Target***
+As mentioned, according to the TTL, It seems that It is a ***LINUX/WINDOWS Target***
 
 ##### *Port Scanning*
 
@@ -98,7 +98,7 @@ nmap -p- --open -sS --min-rate 5000 -n -vvv -Pn -oG allPorts TARGET
 
 > [!NOTE]- *AllPorts Output*
 >
-> ```bash title="Nibbles/scans/AllPorts"
+> ```bash title="MACHINE_NAME/scans/AllPorts"
 > ```
 >
 
@@ -112,9 +112,9 @@ The *[[ZSH CUSTOM FUNCTIONS#extractPorts|ExtractPorts]]* utility is used to get 
 extractPorts allPorts
 ```
 
-> [!NOTES]- *Command Output*
+> [!NOTES]- *ExtractPorts Output*
 >
-> ```bash
+> ```bash title="MACHINE_NAME/scans"
 > ```
 >
 
@@ -126,9 +126,9 @@ Note that this scan is also exported to have evidence at hand
 nmap -p22,80 -sCV -oN targeted TARGET
 ```
 
-> [!NOTES]- *Command Output*
+> [!NOTES]- *Targeted Output*
 >
-> ```bash
+> ```bash title="MACHINE_NAME/scans/Targeted"
 > ```
 >
 
@@ -182,11 +182,28 @@ cat /proc/version
 
 ##### *22 - SSH*
 
-***OpenSSH Version → v7.2***
+***OpenSSH Version → vX.X***
+
+###### *Banner Grabbling*
+
+The Version of the Service running can also be obtained via *Banner Grabbling* as follows →
+
+```bash
+nc -v TARGET 22 <<< ""
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash title="MACHINE_NAME/scans"
+>
+> ```
+>
+
+###### *CVE-2018-15473*
 
 All the *OpenSSH* Versions prior to the *v7.7* one are vulnerable to a **System User Enumeration**
 
-> ***[Reference](https://www.rapid7.com/db/modules/auxiliary/scanner/ssh/ssh_enumusers/)***
+> ***[Reference](https://nvd.nist.gov/vuln/detail/cve-2018-15473)***
 
 **CVE-2018-15473** → ***OpenSSH < v7.7***
 
