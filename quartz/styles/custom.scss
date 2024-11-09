@@ -580,6 +580,11 @@ figure > figcaption {
     font-size: 13px !important;
 }
 
+/*BLOCK CODE - WORD REFERENCE*/
+blockquote code mark {
+    background-color: #731818 !important;
+}
+
 /* 
 ###########################################################
 #   MARKDOWN ALERTS (TIP,CAUTION,INFO,HINT,IMPORTANT...)  #
