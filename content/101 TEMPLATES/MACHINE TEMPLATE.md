@@ -46,7 +46,7 @@ mkt
 
 > [!IMPORTANT]- *Tree*
 >
-> ```bash
+> ```bash title="MACHINE_NAME"
 > .
 > ├── evidence
 > │   ├── creds
@@ -188,7 +188,7 @@ cat /proc/version
 
 The Version of the Service running can also be obtained via *Banner Grabbling* as follows →
 
-```bash
+```bash title="MACHINE_NAME/scans"
 nc -v TARGET 22 <<< ""
 ```
 
