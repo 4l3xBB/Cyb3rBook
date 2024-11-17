@@ -2,9 +2,20 @@
 Primary_category: "[[EASY]]"
 title: ACTIVE
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
-tags: 
+tags:
+  - HTB
+  - HTBEasy
+  - RPC
+  - LDAP
+  - Kerberos
+  - Kerbrute
+  - SMB
+  - GPPDecryption
+  - Kerberoasting
+  - PSExec
+  - Impacket
 cssclasses:
 ---
 
@@ -12,11 +23,15 @@ cssclasses:
 
 #### Summary
 
-- ***Summary A***
-- ***Summary B***
-- ***Summary C***
-- ***Summary D***
-- ***Summary E***
+- ***DNS Enumration***
+- ***RPC Enumeration (RPC Endpoints via EMP)***
+- ***LDAP Enumeration via LDAPDomainDump***
+- ***Domain User Enumeration via Kerbrute***
+- ***SMB Enumeration***
+- ***GPP Decryption (Groups.xml's CPasssword Field) using gpp-decrypt***
+- ***Kerberoasting Attack (SPN Enumeration and TGS Cracking) through GetUserSPNs***
+- ***Reverse Connection stablished via PSExec (Cmd.exe and Powershell.exe)***
+- ***Encoding-Scheme Modification to UTF-16LE and Base64 Encoding***
 
 ![[ACTIVE-20241116160153849.webp|450]]
 
@@ -786,7 +801,7 @@ So, let's request the *TGS* to the *KDC's Ticket Granting Service*
 
 > [!INFO]-
 >
-> As mentioned earlier, in order to request a *TGS* for any available *SPN*, the client must have a *TGT* previousy issued by the *KDC*
+> As mentioned earlier, in order to request a *TGS* for any available *SPN*, the client must have a *TGT* previously issued by the *KDC*
 >
 > In this case, the *GetUserSPNs* tool takes care of this for us before we request the *TGS*
 >
@@ -926,7 +941,7 @@ First, you need a *reverse shell* payload in powershell to establish a reverse c
 
 The idea is to use `psexec` to run a `powershell.exe` instance that will use `Invoke-Expression`, aka `IEX`, to execute as a command the *HTTP Response's Body*, which is the *reverse shell* payload that the attacker is sharing with a *Simple HTTP Web Server*
 
-Thus, let's we will use the ***[Nishang Reverse TCP Oneliner](https://raw.githubusercontent.com/samratashok/nishang/refs/heads/master/Shells/Invoke-PowerShellTcpOneLine.ps1)*** as the payload
+Thus, let's use the ***[Nishang Reverse TCP Oneliner](https://raw.githubusercontent.com/samratashok/nishang/refs/heads/master/Shells/Invoke-PowerShellTcpOneLine.ps1)*** as the payload
 
 ```bash title="Active/tools"
 curl --silent --request GET --location --output reverse.ps1 "https://raw.githubusercontent.com/samratashok/nishang/refs/heads/master/Shells/Invoke-PowerShellTcpOneLine.ps1"
