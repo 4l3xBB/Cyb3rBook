@@ -12,10 +12,10 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[MISCELLANOUS]]
 
-| ***REFERENCES*** |
-| --- |
-| ***[How does Kerberos work](https://www.tarlogic.com/blog/how-kerberos-works/)*** |
-| ***[How to attack Kerberos](https://www.tarlogic.com/blog/how-to-attack-kerberos/)*** |
+| ***REFERENCES*** | |
+| --- | --- |
+| ***How does Kerberos work*** | ***[See here](https://www.tarlogic.com/blog/how-kerberos-works/)*** |
+| ***How to attack Kerberos*** | ***[See here](https://www.tarlogic.com/blog/how-to-attack-kerberos/)*** |
 
 #### User Enumeration
 
@@ -29,6 +29,8 @@ If username does not exist, the *KDC* responds with a *PRINCIPAL UNKNOWN ERROR*
 
 If username exists, the *KDC* prompts for pre-auth, then the client-side closes the connection and we know the user exists
 
+###### *List of Usernames*
+
 ```bash
 kerbrute userenum --domain <DOMAIN> --dc <TARGET> <WORDLIST>
 ```
@@ -37,6 +39,12 @@ With a list of existent *Domain User Accounts*, certain actions can be performed
 
 - ***[[AS_REPROAST|AS_REP Roast Attack]]***
 - ***Password Spraying***
+
+###### *Check if a username is valid*
+
+```bash
+kerbrute userenum --domain <DOMAIN> --dc <TARGET> <(echo "<USERNAME>")
+```
 
 ---
 
