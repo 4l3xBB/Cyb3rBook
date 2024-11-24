@@ -1,6 +1,6 @@
 ---
 Primary_category: "[[PENTESTING ROOT]]"
-title: WINDOWS PENTESTING
+title: FILE MANIPULATION
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
@@ -14,7 +14,7 @@ cssclasses:
 
 #### Components ⟡
 
-- ![](https://img.freepik.com/premium-photo/cyber-security-with-key-icon-dark-digital-technology-background_974729-20160.jpg)
-	- [[WINDOWS REMOTE ACCESS]]
-- ![](https://img.freepik.com/premium-photo/cyber-security-with-key-icon-dark-digital-futuristic-background_475577-65626.jpg)
-	- [[WINDOWS PRIVESC]]
+- ![](https://st4.depositphotos.com/36966820/38692/v/450/depositphotos_386921414-stock-illustration-database-server-icon-data-storage.jpg)
+	- [[MDB]]
+- ![](https://i.pinimg.com/1200x/d2/c0/ea/d2c0ea27a6c81231d56e07193803f0a4.jpg)
+	- [[PST]]
