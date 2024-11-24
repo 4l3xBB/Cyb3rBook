@@ -18,8 +18,8 @@ cssclasses:
 
 ```bash
 ftp <TARGET> [PORT]
-> <USER>
-> <PASSWORD>
+> USER
+> PASSWORD
 ```
 
 ######  *Web Browser*

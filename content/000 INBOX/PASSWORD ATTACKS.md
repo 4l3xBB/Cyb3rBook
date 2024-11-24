@@ -12,7 +12,7 @@ cssclasses:
 
 #### Cracking Offline
 
-##### *ZIP*
+##### ZIP
 
 ###### *Show .ZIP File Technical Metadata and Other information*
 
