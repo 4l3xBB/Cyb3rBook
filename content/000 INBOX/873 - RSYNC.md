@@ -55,7 +55,7 @@ telnet <TARGET> 873
 ##### Nmap
 
 ```bash
-nmap -p873 -sS -T5 -n -Pn --disable-arp-ping <TARGET>
+nmap -p873 -sV -T5 -n -Pn --disable-arp-ping <TARGET>
 ```
 
 ##### Modules/Shared Folders Enumeration
