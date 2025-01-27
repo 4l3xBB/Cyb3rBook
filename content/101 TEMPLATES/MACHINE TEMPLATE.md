@@ -93,7 +93,7 @@ Let's run a *Nmap* Scan to check what *TCP* Ports are opened in the machine
 The Scan result is exported in a grepable format for subsequent *Port Parsing*
 
 ```bash title="MACHINE_NAME/scans"
-nmap -p- --open -sS --min-rate 5000 -n -vvv -Pn -oG allPorts TARGET
+nmap -p- --open -sS --min-rate 5000 -n -vvv -Pn --disable-arp-ping -oG allPorts TARGET
 ```
 
 > [!NOTE]- *AllPorts Output*

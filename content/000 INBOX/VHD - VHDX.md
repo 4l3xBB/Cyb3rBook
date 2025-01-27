@@ -1,0 +1,93 @@
+---
+Primary_category: "[[FILE MANIPULATION]]"
+title: "VHD - VHDX"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags: 
+cssclasses:
+---
+
+###### PRIMARY CATEGORY →  [[FILE MANIPULATION]]
+
+
+#### Content Listing
+
+##### 7z
+
+```bash
+7z l <VHD_OR_VHDX>
+```
+
+---
+
+#### Files Extraction
+
+##### 7z
+
+> ***See [[#Content Listing|here]] first to list the Content of a VHD or VHDX File***
+
+###### *Keeping the Directory Structure*
+
+```bash
+7z x <VHD_OR_VHDX> -o<OUTPUT_DIR> <DIRECTORY_OR_FILE_PATH>
+```
+
+###### *Without keep the Directory Structure*
+
+```bash
+7z e <VHD_OR_VHDX> -o<OUTPUT_DIR> <DIRECTORY_OR_FILE_PATH>
+```
+
+---
+
+#### VHD | VHDX Mounting
+
+Obviously It can be done from a Windows Machine using the *Disk Management* or through *HyperV*, but there are different ways to accomplish the same thing on Linux 🐧
+
+##### Guestmount
+
+> ***[Reference](https://github.com/libguestfs/libguestfs/tree/master)***
+
+###### *Installation*
+
+First of all, install the required package to have access to the tool
+
+```bash
+apt install -y -- libguestfs-tools
+```
+
+###### *Mounting*
+
+Then, proceed as follows to mount the VHD or VHDX content in a local directory →
+
+```bash
+mkdir <LOCAL_PATH>
+```
+
+```bash
+guestmount --add <VHD_OR_VHDX> --inspector --ro <LOCAL_PATH> -v
+```
+
+> [!INFO]-
+>
+> If the VHD or VHDX file is in a remote folder shared via SMB or NFS, simply mount that directory first in the local system 
+>
+> - ***SBM***
+>
+> ```bash
+> mount --types cifs //TARGET/SHARED_RESOURCE LOCAL_PATH
+> ```
+>
+> If Authentication is required →
+> 
+> ```bash
+> mount --types cifs --options username=USER,password=PASSWORD //TARGET//SHARED_RESOURCE LOCAL_PATH
+> ```
+>
+> - ***NFS***
+>
+> ```bash
+> mount --types nfs --options vers=NFS_VERSION,nolock TARGET:REMOTE_RESOURCE_PATH LOCAL_PATH
+> ```
+>
