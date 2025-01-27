@@ -15,6 +15,6 @@ cssclasses:
 #### Components ⟡
 
 - ![](https://img.freepik.com/premium-photo/villainous-joker-hollywood-movie-scene-vector-illustration_1246444-67738.jpg?semt=ais_hybrid)
-	- [[MREMOTENG - PASSWORD DECRYPTION]]
+	- [[PASSWORD DECRYPTION]]
 - ![](https://e0.pxfuel.com/wallpapers/388/452/desktop-wallpaper-joker-iphone-top-joker-iphone-background-joker-logo.jpg)
 	- [[404]]
