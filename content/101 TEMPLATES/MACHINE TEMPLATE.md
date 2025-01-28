@@ -40,13 +40,13 @@ Creation of a *Pentesting Folder Structure* to store all the information related
 
 > ***[[ZSH CUSTOM FUNCTIONS#mkt|Reference]]***
 
-```bash title="MACHINE_NAME"
+```bash
 mkt
 ```
 
 > [!IMPORTANT]- *Tree*
 >
-> ```bash title="MACHINE_NAME"
+> ```bash
 > .
 > ├── evidence
 > │   ├── creds
@@ -72,7 +72,7 @@ The standard values are →
 - ***About 64 → Linux***
 - ***About 128 → Windows***
 
-```bash title="MACHINE_NAME/scans"
+```bash
 ping -c1 TARGET
 ```
 
@@ -92,13 +92,13 @@ Let's run a *Nmap* Scan to check what *TCP* Ports are opened in the machine
 
 The Scan result is exported in a grepable format for subsequent *Port Parsing*
 
-```bash title="MACHINE_NAME/scans"
+```bash
 nmap -p- --open -sS --min-rate 5000 -n -vvv -Pn --disable-arp-ping -oG allPorts TARGET
 ```
 
 > [!NOTE]- *AllPorts Output*
 >
-> ```bash title="MACHINE_NAME/scans/AllPorts"
+> ```bash
 > ```
 >
 
@@ -108,13 +108,13 @@ nmap -p- --open -sS --min-rate 5000 -n -vvv -Pn --disable-arp-ping -oG allPorts 
 
 The *[[ZSH CUSTOM FUNCTIONS#extractPorts|ExtractPorts]]* utility is used to get a **Readable Summary** of the previous scan and have ***all Open Ports copied to the clipboard***
 
-```bash title="MACHINE_NAME/Scans"
+```bash
 extractPorts allPorts
 ```
 
 > [!NOTES]- *ExtractPorts Output*
 >
-> ```bash title="MACHINE_NAME/scans"
+> ```bash
 > ```
 >
 
@@ -122,13 +122,13 @@ Then, the ***Comprehensive Scan*** is performed to gather the ***Service and Ver
 
 Note that this scan is also exported to have evidence at hand
 
-```bash title="MACHINE_NAME/Scans"
+```bash
 nmap -p22,80 -sCV -oN targeted TARGET
 ```
 
 > [!NOTES]- *Targeted Output*
 >
-> ```bash title="MACHINE_NAME/scans/Targeted"
+> ```bash
 > ```
 >
 
@@ -142,7 +142,7 @@ According to the **Version Column Data** of the [[#Comprehensive Scan]], proceed
 
 > ***[Reference](LINK TO LAUNCHPAD)***
 
-```bash title="Firefox"
+```bash
 SERVICE VERSION e.g. OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 site:launchpad.net
 ```
 
@@ -150,7 +150,7 @@ SERVICE VERSION e.g. OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 site:launchpad.net
 
 > ***[Reference](LINK TO LAUNCHPAD)***
 
-```bash title="Firefox"
+```bash
 SERVICE_VERSION
 ```
 
@@ -188,13 +188,13 @@ cat /proc/version
 
 The Version of the Service running can also be obtained via *Banner Grabbling* as follows →
 
-```bash title="MACHINE_NAME/scans"
+```bash
 nc -v TARGET 22 <<< ""
 ```
 
 > [!NOTE]- *Command Output*
 >
-> ```bash title="MACHINE_NAME/scans"
+> ```bash
 >
 > ```
 >
@@ -229,12 +229,12 @@ searchsploit --examine linux/remote/45939.py |& cat --language python
 
 Then, execute it as follows →
 
-```bash title="MACHINE_NAME/tools"
+```bash
 searchsploit --mirror linux/remote/45939.py
 mv "${_##*/}" ssh_exploit.py
 ```
 
-```bash title="MACHINE_NAME/tools"
+```bash
 python2 !$
 ```
 
@@ -266,17 +266,17 @@ Once a connection via *Reverse Shell* is stablished, just proceed as follows to 
 
 ##### *Script*
 
-```bash title="Target"
+```bash
 script /dev/null -c bash
 <C-z>
 ```
 
-```bash title="Attacker"
+```bash
 stty raw -echo ; fg
 reset xterm
 ```
 
-```bash title="Target"
+```bash
 export TERM=xterm-256color
 export SHELL=/bin/bash
 . /etc/skel/.bashrc
