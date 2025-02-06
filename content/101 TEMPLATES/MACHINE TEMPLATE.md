@@ -96,7 +96,7 @@ The Scan result is exported in a grepable format for subsequent *Port Parsing*
 nmap -p- --open -sS --min-rate 5000 -n -vvv -Pn --disable-arp-ping -oG allPorts TARGET
 ```
 
-> [!NOTE]- *AllPorts Output*
+> [!BUG]- *AllPorts*
 >
 > ```bash
 > ```
@@ -112,7 +112,7 @@ The *[[ZSH CUSTOM FUNCTIONS#extractPorts|ExtractPorts]]* utility is used to get 
 extractPorts allPorts
 ```
 
-> [!NOTES]- *ExtractPorts Output*
+> [!BUG]- *ExtractPorts*
 >
 > ```bash
 > ```
@@ -126,7 +126,7 @@ Note that this scan is also exported to have evidence at hand
 nmap -p22,80 -sCV -oN targeted TARGET
 ```
 
-> [!NOTES]- *Targeted Output*
+> [!BUG]- *Targeted*
 >
 > ```bash
 > ```
