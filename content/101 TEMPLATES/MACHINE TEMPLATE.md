@@ -184,9 +184,9 @@ cat /proc/version
 
 ***OpenSSH Version → vX.X***
 
-###### *Banner Grabbling*
+###### *Banner Grabbing*
 
-The Version of the Service running can also be obtained via *Banner Grabbling* as follows →
+The Version of the Service running can also be obtained via *Banner Grabbing* as follows →
 
 ```bash
 nc -v TARGET 22 <<< ""
