@@ -43,7 +43,7 @@ Therefore, each mode has its own _keybinds_ mapped to a specifics actions →
 
 #### Installation
 
-##### *Neovim*
+##### *Neovim - Standard Installation*
 
 > ***[Reference](https://github.com/neovim/neovim/blob/master/INSTALL.md#linux)***
 
@@ -58,16 +58,16 @@ sudo apt remove -y -- neovim
 Access to the *[Releases](https://github.com/neovim/neovim/releases)* to copy the _Download Link_ of the *nvim-linux64.tar.gz* to `wget` it or simply proceed as follows →
 
 ```bash
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux64.tar.gz
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 ```
 
 Then, add this to the _Shell Configuration File_ → _[[ZSH#*.zshrc*|.zshrc]]_
 
 ```bash title="~/.zshrc"
-export PATH="$PATH:/opt/nvim-linux64/bin"
-export EDITOR=/opt/nvim-linux64/bin/nvim
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export EDITOR="$PATH:/opt/nvim-linux-x86_64/bin/nvim"
 ```
 
 Also execute the above command to apply changes in the current _Shell Context_ or →
@@ -83,6 +83,70 @@ That's it!
 ```bash
 $ command -V nvim
 nvim is /opt/nvim-linux64/bin/nvim
+```
+
+##### *Neovim - Installation From Source*
+
+If *Neovim* is already installed, It is probably an older version that the one to be installed below
+
+So, just uninstall it →
+
+```bash
+sudo apt remove -y -- neovim
+```
+
+###### *Prerequisites*
+
+> ***[Reference](https://github.com/neovim/neovim/blob/master/BUILD.md#build-prerequisites)***
+
+```bash
+sudo apt install -y -- ninja-build gettext cmake unzip curl build-essential
+```
+
+###### *CMake Installation*
+
+> ***[Reference](https://cmake.org/download/)***
+
+This binaries suite is necessary in order to correctly compile from source the ***[neovim](https://github.com/neovim/neovim)*** project
+
+First, take a look at the ***[releases](https://cmake.org/download/)*** and download the latest version whose installation is performed by a *.sh* script
+
+Then, proceed as follows →
+
+```bash
+mkdir /opt/cmake
+cd !$ && wget -O install.sh "https://github.com/Kitware/CMake/releases/download/vX.XX.X/cmake-X.XX.X-linux-x86_64.sh"
+chmod 700 install.sh && ./install.sh
+```
+
+Note that the installation is performed on the `/opt/cmake` directory. So, simply add the previous *directory path* to the *PATH* environment parameter
+
+> [!IMPORTANT]-
+>
+> Be aware that the path where the `cmake` installation was performed must be set before the standard `cmake` path in the *PATH* env parameter in order to use the installed `cmake` version
+>
+
+###### *Neovim Installation*
+
+> ***[Reference I](https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-source)&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;[Reference II](https://github.com/neovim/neovim/blob/master/BUILD.md)*** 
+
+```bash
+git clone https://github.com/neovim/neovim Neovim
+```
+
+```bash
+cd !$ && make CMAKE_BUILD_TYPE=RelWithDebInfo
+```
+
+```bash
+make install
+```
+
+After this, the `neovim` binary is installed in the `/usr/loca/` directory, so there is no need to modify the *PATH* environment parameter since the above path is already in it
+
+```bash
+$ command -V nvim
+nvim is /usr/local/nvim
 ```
 
 ---
