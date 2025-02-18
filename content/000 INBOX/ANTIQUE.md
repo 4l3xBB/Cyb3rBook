@@ -1,10 +1,21 @@
 ---
 Primary_category: "[[EASY]]"
-title: "ANTIQUE"
+title: ANTIQUE
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
-tags: 
+tags:
+  - HTB
+  - HTBEasy
+  - SNMP
+  - OffensivePython
+  - Pwncat-cs
+  - ImproperAccessControl
+  - Tunneling
+  - PortForwarding
+  - CUPS
+  - InformationLeakage
+  - UDP
 cssclasses:
 ---
 
@@ -12,11 +23,14 @@ cssclasses:
 
 #### Summary
 
-- ***Summary A***
-- ***Summary B***
-- ***Summary C***
-- ***Summary D***
-- ***Summary E***
+- ***UDP Port Scanning using Nmap***
+- ***Information Disclosure via SNMP***
+- ***Retrieving the value of an SNMP OID using Python Scripting***
+- ***Connection from the Remote Machine Telnet Session via a Rev Shell using Pwncat-cs***
+- ***Inspection of System Process and Systemd Services***
+- ***Reverse Port Forwarding using Chisel to access a Remote Machine's Local Port***
+- ***Local Privilege Escalation through a CUPS CVE***
+- ***Leveraging Improper Access Control via Python Scripting***
 
 ![[ANTIQUE-20250217155916945.webp|400]]
 
@@ -662,7 +676,7 @@ As expected, we cannot list the *sockets* or *ports* opened by this process usin
 lsof -p$( pgrep --full cups ) -a -i 4TCP -s TCP:listen -Pn
 ```
 
-> [!NOTE]-
+> [!NOTE]- *Command Output*
 >
 > ```bash
 > (readlink: Permission denied)
@@ -879,7 +893,7 @@ curl 'http://localhost:631/admin/log/error_log'
 
 Therefore, we can proceed as follows to get the content of the following sensitive files →
 
-> [!IMPORTANT]-
+> [!IMPORTANT]- *Important*
 >
 > Note that we have seen that the *CUPS* process is running as *Root*, which means that we can get the content of any file on the system
 >
