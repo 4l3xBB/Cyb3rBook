@@ -1,10 +1,22 @@
 ---
 Primary_category: "[[EASY]]"
-title: "RETURN"
+title: RETURN
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
-tags: 
+tags:
+  - HTB
+  - HTBEasy
+  - SMB
+  - InformationLeakage
+  - Burp
+  - WinRM
+  - Evil-WinRM
+  - ServerOperators
+  - ConPtyShell
+  - WebFuzzing
+  - Gobuster
+  - Feroxbuster
 cssclasses:
 ---
 
@@ -12,11 +24,17 @@ cssclasses:
 
 #### Summary
 
-- ***Summary A***
-- ***Summary B***
-- ***Summary C***
-- ***Summary D***
-- ***Summary E***
+- ***SMB Enumeration (Netexec)***
+- ***DNS Enumeration (Dig)***
+- ***Kerberos User Enumeration (Kerbrute)***
+- ***Trying an AS-REP Roasting Attack (GetNPUsers)***
+- ***Failed RPC Enumeration***
+- ***Fuzzing Web Content using Feroxbuster***
+- ***Fuzzing Virtual Hosts using Gobuster***
+- ***Information Disclosure (Password) via an HTTP Form Request***
+- ***Using Evil-WinRM to establish a connection to the Target via WinRM***
+- ***Local Privesc though the Server Operators Security Group***
+- ***Shell Upgrade to a Fully Interactive TTY (ConPtyShell)***
 
 ![[RETURN-20250220155149089.webp|400]]
 
@@ -983,7 +1001,7 @@ sc.exe start VMTools
 
 And now we have access, but there is a problem with this *reverse shell*, since the service is being launched running the *netcat binary* that we have uploaded to the *target*, it fails after a few seconds and the shell we receive hangs out
 
-###### *Getting a Persistent and Fully Interactive Shell"
+###### *Getting a Persistent and Fully Interactive Shell*
 
 Thefore, I would recommend, before launch the service, to prepare the following command to associate a *Logical Unit* to the *SMB Server* we have as we did before
 
