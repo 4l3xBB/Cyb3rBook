@@ -1,6 +1,6 @@
 ---
-Primary_category: "[[WINDOWS PENTESTING]]"
-title: WINDOWS PRIVESC
+Primary_category: "[[WINDOWS PRIVESC]]"
+title: HIGH PRIVILEGED GROUPS
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
@@ -10,16 +10,11 @@ cssclasses:
   - purple-style
 ---
 
-###### PRIMARY CATEGORY → [[WINDOWS PENTESTING]]
-
-#### Components ⟡
+###### PRIMARY CATEGORY → [[WINDOWS PRIVESC]]
 
 - ![](https://i.pinimg.com/736x/8d/f5/24/8df5245e68502ac2be2a146c60da5563.jpg)
-	- [[DPAPI ABUSE]]
+	- [[SYSTEM OPERATOR]]
 - ![](https://i.pinimg.com/736x/8d/f5/24/8df5245e68502ac2be2a146c60da5563.jpg)
-	- [[GPP PASSWORDS]]
+	- [[BACKUP OPERATORS]]
 - ![](https://i.pinimg.com/736x/8d/f5/24/8df5245e68502ac2be2a146c60da5563.jpg)
-	- [[ADS]]
-- ![](https://i.pinimg.com/736x/8d/f5/24/8df5245e68502ac2be2a146c60da5563.jpg)
-	- [[HIGH PRIVILEGED GROUPS]]
-	
+	- [[PRINTER OPERATORS]]

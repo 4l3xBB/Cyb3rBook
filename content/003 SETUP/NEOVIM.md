@@ -67,7 +67,7 @@ Then, add this to the _Shell Configuration File_ → _[[ZSH#*.zshrc*|.zshrc]]_
 
 ```bash title="~/.zshrc"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
-export EDITOR="$PATH:/opt/nvim-linux-x86_64/bin/nvim"
+export EDITOR="/opt/nvim-linux-x86_64/bin/nvim"
 ```
 
 Also execute the above command to apply changes in the current _Shell Context_ or →
