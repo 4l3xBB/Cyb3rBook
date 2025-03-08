@@ -303,7 +303,7 @@ stty rows <ROWS> columns <COLUMNS>
 
 > ***[Reference (if exists)]()***
 
-> [!IMPORTANT]- *EXPLOIT NAME*
+> [!BUG]- *EXPLOIT NAME*
 >
 > ```python
 > ```
