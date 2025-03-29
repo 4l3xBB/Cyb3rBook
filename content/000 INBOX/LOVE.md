@@ -1,10 +1,26 @@
 ---
 Primary_category: "[[EASY]]"
-title: "LOVE"
+title: LOVE
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
-tags: 
+tags:
+  - HTB
+  - HTBEasy
+  - Windows
+  - SMB
+  - RPC
+  - OpenSSL
+  - SSRF
+  - WebFuzzing
+  - Gobuster
+  - RCE
+  - FileUpload
+  - InformationLeakage
+  - OffensivePython
+  - AlwaysInstallElevated
+  - MSFVenom
+  - MSI
 cssclasses:
 ---
 
@@ -12,11 +28,17 @@ cssclasses:
 
 #### Summary
 
-- ***Summary A***
-- ***Summary B***
-- ***Summary C***
-- ***Summary D***
-- ***Summary E***
+- ***Trying several SMB Authentication Methods (Netexec)***
+- ***Failed RPC Enumeration***
+- ***Extracting information from a TLS Certificate using OpenSSL***
+- ***Access to externally restricted ports leveraging a Server Side Request Forgery***
+- ***Fuzzing Web Content using Gobuster***
+- ***Authenticated Remote Code Execution via an Arbitrary File Upload***
+- ***Automation of the RCE via File Upload with Python Scripting***
+- ***Using Nishang Reverse TCP Script to stablish a Reverse Connection***
+- ***System Enumeration through PowerUp.ps1 and WinPeas.exe***
+- ***Local PE via the AlwaysInstallElevated Windows Policy***
+- ***Malicious MSI file creation using MSFVenom***
 
 ![[LOVE-20250329131912985.webp|400]]
 
