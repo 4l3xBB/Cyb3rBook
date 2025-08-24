@@ -1,0 +1,142 @@
+---
+Primary_category: "[[KERBEROS]]"
+title: KERBEROS DELEGATIONS
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags: 
+cssclasses:
+  - card-list
+  - purple-style
+---
+
+###### PRIMARY CATEGORY → [[KERBEROS]]
+
+#### *Components* ⟡
+
+> ***Types of Delegation***
+
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
+	- [[UNCONSTRAINED DELEGATION|KUD]]
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
+	- [[CONSTRAINED DELEGATION|KCD]]
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
+	- [[RBCD]]
+
+<br>
+
+---
+
+#### *Recon*
+
+##### *findDelegation.py*
+
+> ***Impacket***
+
+> ***[findDelegation.py](https://github.com/fortra/impacket/blob/master/examples/findDelegation.py)***
+
+```bash
+findDelegation.py -target-domain <DOMAIN> '<DOMAIN>/<USER>:<PASSWORD>'
+```
+
+##### *Active Directory Module*
+
+> ***Powershell Module***
+
+> ***[AD Module](https://learn.microsoft.com/en-us/powershell/module/activedirectory/?view=windowsserver2025-ps)***
+
+| **PROPERTY** | **DELEGATION TYPE** |
+| --- | --- |
+| **`TrustedForDelegation`** | ***[[UNCONSTRAINED DELEGATION\|KUD]]*** |
+| **`TrustedToAuthForDelegation`** | ***[[CONSTRAINED DELEGATION\|KCD with Protocol Transition]]*** |
+| **`msDS-AllowedToDelegateTo`** | ***[[Constrained delegation\|KCD]]*** |
+| **`PrincipalsAllowedToDelegateToAccount`** | ***[[RBCD]]*** |
+
+```bash
+Get-ADComputer "Account" -Properties TrustedForDelegation, TrustedToAuthForDelegation, msDS-AllowedToDelegateTo, PrincipalsAllowedToDelegateToAccount
+```
+
+##### *Powerview*
+
+> ***[Powerview](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)***
+
+###### *KCD*
+
+- ***User Accounts***
+
+```bash
+Get-DomainUser -TrustedToAuth
+```
+
+- ***Computer Accounts***
+
+```bash
+Get-DomainComputer -TrustedToAuth
+```
+
+###### *RBCD*
+
+- ***User Accounts***
+
+```bash
+Get-DomainUser | Where-Object {$_.'msDS-AllowedToActOnBehalfOfOtherIdentity' -ne $null}
+```
+
+- ***Computer Accounts***
+
+```bash
+Get-DomainComputer | Where-Object {$_.'msDS-AllowedToActOnBehalfOfOtherIdentity' -ne $null}
+```
+
+##### *Bloodhound*
+
+> ***[Bloodhound](https://github.com/SpecterOps/BloodHound)***
+
+###### *KUD*
+
+```bash
+MATCH (c {unconstraineddelegation:true}) return c
+```
+
+###### *KCD with Protocol Transition*
+
+```bash
+MATCH (c) WHERE NOT c.allowedtodelegate IS NULL AND c.trustedtoauth=true return c
+```
+
+###### *KCD w/o Protocol Transition (Kerberos Only)*
+
+```bash
+MATCH (c) WHERE NOT c.allowedtodelegate IS NULL AND c.trustedtoauth=false return c
+```
+
+###### *RBCD*
+
+```bash
+MATCH p=(u)-[:AllowedToAct]->(c) RETURN p
+```
+
+###### *Bloodhound Cypher Cheatsheet*
+
+> ***[Reference](https://hausec.com/2019/09/09/bloodhound-cypher-cheatsheet/)***
+
+> **Filter by the *Delegation* term**
+
+---
+
+#### *Type of Services*
+
+> ***Interesting when modifying the SNAME field of a Service Ticket***
+
+> ***[Reference](https://www.thehacker.recipes/ad/movement/kerberos/ptt#modifying-the-spn)***
+
+| **SERVICE TYPE** | **ST's SNAME** |
+| --- | --- |
+| ***WMI*** | ***HOST <br> RPCSS*** |
+| ***MS-PSRP*** | ***HOST <br> HTTP <br> Depending on the OS: <br> WSMAN <br> RPCSS*** |
+| ***WinRM*** | ***HOST <br> HTTP <br> WINRM*** |
+| ***Scheduled Tasks*** | ***HOST*** |
+| ***Windows File Share or PSEXEC*** | ***CIFS*** |
+| ***LDAP Operations, included DCSync*** | ***LDAP*** |
+| ***Windows Remote Server Administration Tools*** | ***RPCSS <br> LDAP <br> CIFS*** |
+| ***Golden Tickets*** | ***KRBTGT*** |
