@@ -1,0 +1,48 @@
+---
+Primary_category: "[[WINDOWS MOVEMENT]]"
+title: KERBEROS
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags: 
+cssclasses:
+  - card-list
+  - purple-style
+---
+
+###### PRIMARY CATEGORY → [[WINDOWS MOVEMENT]]
+
+#### *Components* ⟡
+
+- ![](https://giffiles.alphacoders.com/222/222700.gif)
+	- [[OVERPASS THE HASH]]
+- ![](https://giffiles.alphacoders.com/222/222700.gif)
+	- [[PASS THE KEY|PASS THE KEY - PtK]]
+- ![](https://giffiles.alphacoders.com/222/222700.gif)
+	- [[PASS THE TICKET|PASS THE TICKET - PtT]]
+- ![](https://giffiles.alphacoders.com/222/222700.gif)
+	- [[PASS THE TICKET|PASS THE CACHE]]
+- ![](https://giffiles.alphacoders.com/222/222700.gif)
+	- [[PASS THE CERTIFICATE|PASS THE CERT - PtC]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[ASREPROAST]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[KERBEROAST]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[KERBEROS DELEGATIONS|DELEGATIONS]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[SHADOW CREDENTIALS]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[UNPAC THE HASH]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[FORGED TICKETS]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[KERBEROS RELAY|KRB RELAY]]
+
+<br>
+
+----
+
+#### *Workflow*
+
+![[KERBEROS-20250628181145754.webp|4500]]

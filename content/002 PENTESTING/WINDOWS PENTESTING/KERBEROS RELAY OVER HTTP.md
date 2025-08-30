@@ -1,0 +1,34 @@
+---
+Primary_category: "[[KERBEROS RELAY]]"
+title: "KERBEROS RELAY OVER HTTP"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[KERBEROS RELAY]]
+
+#### *Theory*
+
+
+
+
+---
+
+#### *User Account*
+
+> ***Unauthenticated through [[DHCPV6 SPOOFING|DHCPv6]] to [[DNS SPOOFING|DNS Spoofing]] ([mitm6](https://github.com/dirkjanm/mitm6)) or via [[LLMNR - NBTNS - MDNS SPOOFING|LLMNR, NBT-NS or mDNS Spoofing]]***
+
+---
+
+#### *Authenticated - Computer Account*
+
+> ***Authenticated → [[MITM & COERCED AUTHS|Coercion]] must be carried out***
+
+---
+
+#### *Resources*
+
+***[Synacktiv: Abusing Multicast Poisoning for Pre-Auth Kerberos Relay over HTTP](https://www.synacktiv.com/publications/abusing-multicast-poisoning-for-pre-authenticated-kerberos-relay-over-http-with)***
