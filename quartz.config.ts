@@ -2,41 +2,33 @@ import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
 
 /**
- * Quartz 4.0 Configuration
+ * Quartz 4 Configuration
  *
  * See https://quartz.jzhao.xyz/configuration for more information.
  */
 const config: QuartzConfig = {
   configuration: {
-<<<<<<< HEAD
-    pageTitle: "💥Cyb3rBook",
-=======
-    pageTitle: "🪴 Quartz 4.0",
+    pageTitle: "Quartz 4",
     pageTitleSuffix: "",
->>>>>>> upstream/v4
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "4l3xbb.github.io/Cyb3rBook/",
+    baseUrl: "quartz.jzhao.xyz",
     ignorePatterns: ["private", "templates", ".obsidian"],
-    defaultDateType: "created",
-    generateSocialImages: false,
+    defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
         header: "Schibsted Grotesk",
         body: "Source Sans Pro",
-        code: "Fira Mono",
+        code: "IBM Plex Mono",
       },
       colors: {
         lightMode: {
-<<<<<<< HEAD
-          light: "#090909",
-=======
           light: "#faf8f8",
           lightgray: "#e5e5e5",
           gray: "#b8b8b8",
@@ -49,23 +41,12 @@ const config: QuartzConfig = {
         },
         darkMode: {
           light: "#161618",
->>>>>>> upstream/v4
           lightgray: "#393639",
           gray: "#646464",
           darkgray: "#d4d4d4",
           dark: "#ebebec",
-          secondary: "#f44336",
-          tertiary: "#ea9999",
-          highlight: "rgba(143, 159, 169, 0.15)",
-        },
-        darkMode: {
-          light: "#090909",
-          lightgray: "#393639",
-          gray: "#646464",
-          darkgray: "#d4d4d4",
-          dark: "#ebebec",
-          secondary: "#f44336",
-          tertiary: "#ea9999",
+          secondary: "#7b97aa",
+          tertiary: "#84a59d",
           highlight: "rgba(143, 159, 169, 0.15)",
           textHighlight: "#b3aa0288",
         },
@@ -76,18 +57,18 @@ const config: QuartzConfig = {
     transformers: [
       Plugin.FrontMatter(),
       Plugin.CreatedModifiedDate({
-        priority: ["frontmatter", "filesystem"],
+        priority: ["frontmatter", "git", "filesystem"],
       }),
       Plugin.SyntaxHighlighting({
         theme: {
-          light: "github-dark",
+          light: "github-light",
           dark: "github-dark",
         },
         keepBackground: false,
       }),
       Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
       Plugin.GitHubFlavoredMarkdown(),
-      Plugin.TableOfContents({ maxDepth: 4 }),
+      Plugin.TableOfContents(),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
@@ -105,7 +86,10 @@ const config: QuartzConfig = {
       }),
       Plugin.Assets(),
       Plugin.Static(),
+      Plugin.Favicon(),
       Plugin.NotFoundPage(),
+      // Comment out CustomOgImages to speed up build time
+      Plugin.CustomOgImages(),
     ],
   },
 }
