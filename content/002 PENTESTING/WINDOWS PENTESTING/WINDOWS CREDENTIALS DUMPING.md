@@ -1,0 +1,35 @@
+---
+Primary_category: "[[WINDOWS CREDENTIALS]]"
+title: WINDOWS CREDENTIALS DUMPING
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags: 
+cssclasses:
+  - card-list
+  - purple-style
+---
+
+###### PRIMARY CATEGORY → [[WINDOWS CREDENTIALS]]
+
+#### *Components* ⟡
+
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
+	- [[SAM & SECURITY|SAM - SECURITY]]
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
+	- [[NTDS]]
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
+	- [[LSASS]]
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
+	- [[DPAPI ABUSE#Data Extraction with Mimikatz.exe|DPAPI]]
+
+<br>
+
+---
+
+#### *Resources*
+
+***[Stealing Windows Credentials](https://book.hacktricks.wiki/en/windows-hardening/stealing-credentials/index.html)*** 
+
+
+

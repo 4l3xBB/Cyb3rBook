@@ -184,9 +184,9 @@ cat /proc/version
 
 ***OpenSSH Version → vX.X***
 
-###### *Banner Grabbling*
+###### *Banner Grabbing*
 
-The Version of the Service running can also be obtained via *Banner Grabbling* as follows →
+The Version of the Service running can also be obtained via *Banner Grabbing* as follows →
 
 ```bash
 nc -v TARGET 22 <<< ""
@@ -303,7 +303,7 @@ stty rows <ROWS> columns <COLUMNS>
 
 > ***[Reference (if exists)]()***
 
-> [!IMPORTANT]- *EXPLOIT NAME*
+> [!BUG]- *EXPLOIT NAME*
 >
 > ```python
 > ```
