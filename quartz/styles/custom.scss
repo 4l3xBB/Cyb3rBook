@@ -135,34 +135,38 @@ nav.breadcrumb-container a:hover {
 ###########################################################
 */
 
-div.explorer.desktop-only button#explorer > h1 {
+div.explorer button.title-button > h2 {
     color: var(--accent-1) !important;
     text-shadow: 0 0 0.75em var(--accent-1);
 }
 
-div.explorer.desktop-only div.folder-container > svg.folder-icon {
+div.explorer button.title-button > svg.fold {
+    color: var(--accent-2);
+}
+
+div.explorer div.folder-container svg.folder-icon {
     color: var(--accent-1);
 }
 
-div.explorer.desktop-only button.folder-button > span.folder-title {
-    color: var(--accent-2) !important;
+div.explorer div.explorer-content div.folder-container a.folder-title {
+    color: var(--accent-2);
 }
 
-div.explorer.desktop-only ul.content > li > a:hover {
+div.explorer ul.content li a:hover {
     color: rgb(235, 235, 236) !important;
 }
 
-div.explorer.desktop-only ul.content > li > div.folder-outer > ul.content > li > a:hover {
+div.explorer ul.content > li > div.folder-outer > ul.content > li > a:hover {
     color: var(--color-2) !important;
 }
 
-div.explorer.desktop-only ul#explorer-ul > li > div.folder-outer > ul.content > li > a:hover {
+div.explorer ul#explorer-ul > li > div.folder-outer > ul.content > li > a:hover {
     color: var(--color-2) !important;
 }
 
 /* ICONS */
 
-button.folder-button > span.folder-title::before {
+div.explorer-content div.folder-container > div > a.folder-title::before {
     display: inline-block;
     content: "";
     margin-right: 5px;
@@ -173,7 +177,7 @@ button.folder-button > span.folder-title::before {
     -webkit-mask: url('https://api.iconify.design/mdi/folder-open.svg');
 }
 
-div.explorer.desktop-only ul.content > li > a::before {
+div.explorer ul.content > li > a::before {
     display: inline-block;
     margin-right: 5px;
     vertical-align: text-bottom;
@@ -320,60 +324,60 @@ article > h6 {
 
 /* ARTICLE TITLE */
 
-div#preview-container h1.article-title {
+div.preview-container h1.article-title {
     color: var(--accent-1) !important;
     text-shadow: 0 0 0.75em var(--accent-1);
 }
 
 /* TAGS */
 
-div#preview-container ul.tags > li {
+div.preview-container ul.tags > li {
     border: 0.15em solid #F3CBFF !important;
     border-radius: 2em;
     padding: 2px;
 }
 
-div#preview-container ul.tags > li > a {
+div.preview-container ul.tags > li > a {
     color: var(--accent-1) !important;
 }
 
-div#preview-container ul.tags > li > a:hover {
+div.preview-container ul.tags > li > a:hover {
     color: var(--accent-1) !important;
 }
 
 /* HEADERS */
 
-div#preview-container > div.preview-inner > h1 {
+div.preview-container > div.preview-inner > h1 {
     color: var(--color-1) !important;
     text-shadow: 0 0 0.5em var(--accent-1);
     font-size: 2.25em;
     font-weight: 700;
 }
-div#preview-container > div.preview-inner > h2 {
+div.preview-container > div.preview-inner > h2 {
     color: var(--color-2) !important;
     text-shadow: 0 0 0.5em var(--accent-2);
     font-size: 2em;
     font-weight: 700;
 }
-div#preview-container > div.preview-inner > h3 {
+div.review-container > div.preview-inner > h3 {
     color: var(--color-3) !important;
     text-shadow: 0 0 0.5em var(--accent-3);
     font-size: 1.75em;
     font-weight: 700;
 }
-div#preview-container > div.preview-inner > h4 {
+div.preview-container > div.preview-inner > h4 {
     color: var(--color-4) !important;
     text-shadow: 0 0 0.75em var(--accent-4);
     font-size: 1.50em;
     font-weight: 700;
 }
-div#preview-container > div.preview-inner > h5 {
+div.preview-container > div.preview-inner > h5 {
     color: var(--color-5) !important;
     text-shadow: 0 0 0.75em var(--accent-5);
     font-size: 1.25em;
     font-weight: 700;
 }
-div#preview-container > div.preview-inner > h6 {
+div.preview-container > div.preview-inner > h6 {
     color: var(--color-6) !important;
     text-shadow: 0 0 0.75em var(--accent-6);
     font-size: 1em;
@@ -382,7 +386,7 @@ div#preview-container > div.preview-inner > h6 {
 
 /* PRIMARY CATEGORY H6 */
 
-div#preview-container > div.preview-inner > h6 > a {
+div.preview-container > div.preview-inner > h6 > a {
     color: var(--accent-2) !important;
     text-shadow: none;
     font-weight: 600;
@@ -390,7 +394,7 @@ div#preview-container > div.preview-inner > h6 > a {
 
 /* CARD LIST -> LINK ( LI ) */
 
-div#preview-container > div.preview-inner > ul:not(.tags) > li > ul > li > a {
+div.preview-container > div.preview-inner > ul:not(.tags) > li > ul > li > a {
     text-decoration: none !important;
     color: var(--accent-2) !important;
     font-weight: 900;
@@ -399,18 +403,18 @@ div#preview-container > div.preview-inner > ul:not(.tags) > li > ul > li > a {
 
 /* EXTERNAL LINKS (BACKLINKS) & INTERNAL LINKS */
 
-div#preview-container > div.preview-inner a {
+div.preview-container > div.preview-inner a {
     color: var(--accent-2);
     background: none !important;
 }
 
 /* HIGHLIGHTED MATCHES */
 
-div#results-container span.highlight {
+div.results-container span.highlight {
     background: rgb(179, 49, 49) !important;
 }
 
-div#preview-container > div.preview-inner span.highlight {
+div.preview-container > div.preview-inner span.highlight {
     background: rgb(179, 49, 49) !important;
 }
 
@@ -662,7 +666,7 @@ blockquote:not([class]) {
 
 /* GRAPH PREVIEW (LOCAL GRAPH) */
 
-div.graph-outer > svg#global-graph-icon {
+div.graph-outer button.global-graph-icon > svg {
     color: var(--accent-2) !important;
 }
 
