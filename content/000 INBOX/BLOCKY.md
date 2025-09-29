@@ -1,10 +1,21 @@
 ---
 Primary_category: "[[EASY]]"
-title: "Blocky"
+title: Blocky
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
-tags: 
+tags:
+  - Linux
+  - FTP
+  - WebFuzzing
+  - Gobuster
+  - jar
+  - JD-GUI
+  - BinaryDecompiling
+  - Java
+  - SudoPrivesc
+  - HTBEasy
+  - HTB
 cssclasses:
 ---
 
@@ -12,11 +23,13 @@ cssclasses:
 
 #### *Summary*
 
-- ***Summary A***
-- ***Summary B***
-- ***Summary C***
-- ***Summary D***
-- ***Summary E***
+- ***Checking FTP Anonymous access***
+- ***Web Technologies enumeration with whatweb and wappalyzer***
+- ***Manual Enumeration of WordPress' users and plugins***
+- ***Directory fuzzing with gobuster***
+- ***JAR file extraction and decompilation using JD-GUI***
+- ***Information Leakage in Java source code***
+- ***LPE via sudo privileges***
 
 ![[BLOCKY-20250928174927657.webp|400]]
 
@@ -517,8 +530,8 @@ nxc ssh blocky.htb --username 'root' --password '8YsqfCTnvxAUeduzjNSXe22'
 > [!NOTE]- *Command Output*
 >
 > ```bash
-SSH         10.129.107.255  22     blocky.htb       [*] SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.2
-SSH         10.129.107.255  22     blocky.htb       [-] root:8YsqfCTnvxAUeduzjNSXe22
+> SSH         10.129.107.255  22     blocky.htb       [*] SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.2
+> SSH         10.129.107.255  22     blocky.htb       [-] root:8YsqfCTnvxAUeduzjNSXe22
 > ```
 >
 
