@@ -16,7 +16,7 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[INSANE]]
 
-#### Summary
+#### *Summary*
 
 - ***Summary A***
 - ***Summary B***
@@ -28,7 +28,7 @@ cssclasses:
 
 ---
 
-#### Setup
+#### *Setup*
 
 Directory creation with the Machine's Name
 
@@ -38,30 +38,13 @@ mkdir MACHINE_NAME && cd !$
 
 Creation of a *Pentesting Folder Structure* to store all the information related to the target
 
-> ***[[ZSH CUSTOM FUNCTIONS#mkt|Reference]]***
-
 ```bash
-mkt
+mkdir {Scans,Data,Tools}
 ```
-
-> [!IMPORTANT]- *Tree*
->
-> ```bash
-> .
-> ├── evidence
-> │   ├── creds
-> │   ├── data
-> │   └── screenshots
-> ├── logs
-> ├── scans
-> ├── scope
-> └── tools
-> ```
->
 
 ---
 
-#### Recon
+#### *Recon*
 
 ##### *OS Identification*
 
@@ -96,7 +79,7 @@ The Scan result is exported in a grepable format for subsequent *Port Parsing*
 nmap -p- --open -sS --min-rate 5000 -n -vvv -Pn --disable-arp-ping -oG allPorts TARGET
 ```
 
-> [!BUG]- *AllPorts*
+> [!BUG]- *\<TARGET\>.allPorts*
 >
 > ```bash
 > ```
@@ -104,29 +87,21 @@ nmap -p- --open -sS --min-rate 5000 -n -vvv -Pn --disable-arp-ping -oG allPorts 
 
 **Open Ports →**
 
+```bash
+
+```
+
 ###### *Comprehensive Scan*
 
-The *[[ZSH CUSTOM FUNCTIONS#extractPorts|ExtractPorts]]* utility is used to get a **Readable Summary** of the previous scan and have ***all Open Ports copied to the clipboard***
+We can apply a little filter to the *\<TARGET\>.allPorts* file to extract the ports and conduct a more comprehensive scan on them by extracting the services and their version running on each port and also executing some default scripts to gather more information
+
+>  ***Note that this scan is also exported to have evidence at hand***
 
 ```bash
-extractPorts allPorts
+nmap -p$( grep -ioP --color -- '\d{1,5}(?=/open)' <TARGET>.allPorts | xargs | sed 's@\s@,@g' ) -sCV -n -Pn --disable-arp-ping -oN <TARGET>.targeted <TARGET>
 ```
 
-> [!BUG]- *ExtractPorts*
->
-> ```bash
-> ```
->
-
-Then, the ***Comprehensive Scan*** is performed to gather the ***Service and Version*** running on each open port and launch a set of ***Nmap Basic Recon Scripts***
-
-Note that this scan is also exported to have evidence at hand
-
-```bash
-nmap -p22,80 -sCV -oN targeted TARGET
-```
-
-> [!BUG]- *Targeted*
+> [!BUG]- *\<TARGET\>.targeted*
 >
 > ```bash
 > ```
@@ -251,14 +226,14 @@ In this case, nothing interesting is extracted
 
 ---
 
-#### Exploitation
+#### *Exploitation*
 
 ##### *Vulnerability Name or Vuln Chaining*
 
 ##### *e.g. RCE via Authenticated File Upload*
 
 ---
-#### Shell as Web User
+#### *Shell as Web User*
 
 Once a connection via *Reverse Shell* is stablished, just proceed as follows to upgrade the obtained shell to a *Fully Interactive TTY*
 
@@ -285,19 +260,19 @@ stty rows <ROWS> columns <COLUMNS>
 
 ---
 
-#### Privesc #1
+#### *Privesc #1*
 
 ***Initial Non-Privileged User → USERNAME***
 
 ##### *PRIVESC VECTOR A*
 
-#### Privesc #2 (If exists)
+#### *Privesc #2 (If exists)*
 
 ##### *PRIVESC VECTOR A*
 
 ---
 
-#### Custom Exploits
+#### *Custom Exploits*
 
 ##### *EXPLOIT A*
 
