@@ -1,10 +1,34 @@
 ---
 Primary_category: "[[MEDIUM]]"
-title: "CASCADE"
+title: CASCADE
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
-tags: 
+tags:
+  - Windows
+  - HTB
+  - HTBMedium
+  - AD
+  - RPC
+  - LDAP
+  - ldapsearch
+  - InformationLeakage
+  - PasswordPolicy
+  - SMB
+  - PasswordSpraying
+  - NetRPC
+  - CIFS
+  - VNC
+  - PasswordDecryption
+  - ldapdomaindump
+  - BinaryDecompiling
+  - CodeAnalysis
+  - dotNet
+  - DotPeek
+  - OffensivePython
+  - CyberChef
+  - ADRecycleBin
+  - ADDeletedObjects
 cssclasses:
 ---
 
@@ -12,11 +36,22 @@ cssclasses:
 
 #### *Summary*
 
-- ***Summary A***
-- ***Summary B***
-- ***Summary C***
-- ***Summary D***
-- ***Summary E***
+- ***Domain User Enumeration via RPC with RPCClient (Samba Suite)***
+- ***Checking for ASREPRoasting on domain user accounts with Impacket's GetNPUsers.py***
+- ***Domain Enumeration via LDAP using ldapsearch***
+- ***Information Leakage in a Domain User Account attribute through LDAP***
+- ***Listing the Domain Password Policy***
+- ***SMB Password Spraying***
+- ***Service Principal Name (SPN) enumeration via LDAP with ldapsearch***
+- ***Checking for Kerberoasting on domain service accounts with Impacket's GetUserSPNs.py***
+- ***Domain User Enumeration using Net RPC (Samba Suite) and Impacket's GetADUsers.py***
+- ***Listing available Shares via SMB with Netexec and SMBMap***
+- ***Mounting those shares locally through CIFS (SMB Implementation)***
+- ***PE: Information Leakage leads to VNC Password Decryption***
+- ***Exhaustive Domain Enumeration via LDAP using ldapdomaindump.py***
+- ***PE: Information Leakage through .NET Assembly decompiling with DotPeek from a Windows machine leads to another Password Decryption***
+- ***AES Decryption with Python Scripting (PyCryptoDome) and CyberChef.io***
+- ***LPE: Password Leakage in an LDAP Attribute of a Deleted AD Directory User account via AD Recycle Bin group membership***
 
 ![[CASCADE-20251014194827847.webp|400]]
 
@@ -1355,7 +1390,7 @@ And we are in!
 
 ***Initial Non-Privileged User → ArkSvc***
 
-##### *Information Leakage in an LDAP attribute from a Deleted User Account Object via AD Recycle Bin membership*
+##### *Information Leakage in an LDAP attribute of a Deleted User Account Object via AD Recycle Bin membership*
 
 First, let's check the privileges associated with the access token of the current *network logon session*
 
