@@ -1,0 +1,12 @@
+{
+  "vimMode": true,
+  "showLineNumber": true,
+  "foldIndent": false,
+  "showIndentGuide": false,
+  "spellcheck": false,
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "000 INBOX",
+  "attachmentFolderPath": "100 ATTACHMENTS",
+  "smartIndentList": false
+}

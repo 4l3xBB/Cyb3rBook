@@ -1,0 +1,62 @@
+body {
+    --accent-1: #C1FDFF;
+    --accent-2: #F3CBFF;
+    --accent-3: #00FFFF;
+    --accent-4: #FF0000;
+    --accent-5: #FF0000;
+    --accent-6: #BD93F9;
+
+    --accent-1-muted: #ff79c6;
+    --accent-2-muted: #8be9fd;
+    --accent-3-muted: #50fa7b;
+    --accent-4-muted: #ffb86c;
+    --accent-5-muted: #ff5555;
+    --accent-6-muted: #bd93f9;
+}
+
+/* FOLDER AND FILES LEFT PANEL MENU */
+
+.nav-folder:not(.mod-root) .nav-folder-title-content::before {
+    display: inline-block;
+    content: "";
+    margin-right: 5px;
+    vertical-align: text-bottom;
+    height: 16px;
+    width: 16px;
+    background-color: var(--accent-1);
+  }
+
+  .nav-folder:not(.mod-root):not(.is-collapsed) .nav-folder-title-content::before {
+    -webkit-mask: url('https://api.iconify.design/mdi/folder-open.svg');
+  }
+  
+  .nav-folder:not(.mod-root).is-collapsed .nav-folder-title-content::before {
+    -webkit-mask: url('https://api.iconify.design/mdi/folder-open.svg');
+  }
+    
+.nav-file-title-content::before {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+    height: 16px;
+    width: 16px;
+  }
+  
+  .nav-file-title[data-path$="png"] .nav-file-title-content:before{
+  content: url('https://api.iconify.design/clarity/image-line.svg?color=%23C1FDFF');
+  }
+  
+  .nav-file-title[data-path$="md"] .nav-file-title-content:before{
+  content: url('https://api.iconify.design/bi/file-text.svg?color=%23C1FDFF');
+  }
+  
+  .nav-file-title[data-path$="pdf"] .nav-file-title-content:before{
+  content: url('https://api.iconify.design/bi/file-pdf.svg?color=%23C1FDFF');
+  }
+
+  /* BORDER VERTICAL LEFT PANEL OBSIDIAN */
+
+div.side-dock-actions .clickable-icon.side-dock-ribbon-action {
+    color: var(--accent-2);
+    filter: drop-shadow(0 0 0.1em var(--accent-2));
+}
