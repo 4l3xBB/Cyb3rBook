@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/AD OFFENSIVE CHECKLIST.md",
+                "file": "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
@@ -35,7 +35,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/AD OFFENSIVE CHECKLIST.md",
+                "file": "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
                 "mode": "preview",
                 "source": false,
                 "backlinks": false
@@ -258,9 +258,9 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "c3862405dabe6092",
+  "active": "44498cadc63d1eef",
   "lastOpenFiles": [
-    "000 INBOX/AD OFFENSIVE CHECKLIST.md",
+    "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
     "002 PENTESTING/999 MACHINES/EASY.md",
     "002 PENTESTING/999 MACHINES/Neest.md",
     "002 PENTESTING/999 MACHINES/NEST.md",
