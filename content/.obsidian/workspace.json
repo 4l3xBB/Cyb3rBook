@@ -15,7 +15,7 @@
               "state": {
                 "file": "002 PENTESTING/999 MACHINES/FLUFFY.md",
                 "mode": "source",
-                "source": false,
+                "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
