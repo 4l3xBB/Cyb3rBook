@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/POSTMAN.md",
+                "file": "002 PENTESTING/999 MACHINES/POSTMAN.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
@@ -35,7 +35,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/POSTMAN.md",
+                "file": "002 PENTESTING/999 MACHINES/POSTMAN.md",
                 "mode": "preview",
                 "source": false,
                 "backlinks": false
@@ -258,12 +258,12 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "df0219b616826a27",
+  "active": "44498cadc63d1eef",
   "lastOpenFiles": [
     "100 ATTACHMENTS/POSTMAN-20251223145014353.webp",
     "100 ATTACHMENTS/POSTMAN-20251223144606911.webp",
-    "000 INBOX/6379 - REDIS.md",
-    "000 INBOX/POSTMAN.md",
+    "002 PENTESTING/PROTOCOLS AND SERVICES/6379 - REDIS.md",
+    "002 PENTESTING/999 MACHINES/POSTMAN.md",
     "100 ATTACHMENTS/POSTMAN-20251218210112920.webp",
     "100 ATTACHMENTS/POSTMAN-20251218204954166.webp",
     "100 ATTACHMENTS/POSTMAN-20251218204809383.webp",
