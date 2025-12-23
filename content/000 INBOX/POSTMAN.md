@@ -1,10 +1,21 @@
 ---
 Primary_category: "[[EASY]]"
-title: "POSTMAN"
+title: POSTMAN
 draft: false
-banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner: https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 banner_y: 0.88286
-tags: 
+tags:
+  - Linux
+  - HTB
+  - HTBEasy
+  - Redis
+  - SSHKeys
+  - FileUpload
+  - InformationLeakage
+  - HashCracking
+  - ssh2john
+  - RCE
+  - Webmin
 cssclasses:
 ---
 
@@ -12,11 +23,12 @@ cssclasses:
 
 #### *Summary*
 
-- ***Summary A***
-- ***Summary B***
-- ***Summary C***
-- ***Summary D***
-- ***Summary E***
+- ***Enumerating Redis using Redis-cli***
+- ***Remote SSH Authentication via File Upload on Redis***
+- ***PE: SSH Private Key Disclosure***
+- ***Extracting a Crackable Hash from an RSA Private Key with SSH2John***
+- ***Cracking hashes using Hashcat***
+- ***Authenticated RCE on Webmin leveraging the Software Package Update feature***
 
 ![[POSTMAN-20251218200147901.webp|400]]
 
