@@ -13,9 +13,9 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/TRICK.md",
+                "file": "002 PENTESTING/999 MACHINES/TRICK.md",
                 "mode": "source",
-                "source": true,
+                "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
@@ -35,7 +35,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/TRICK.md",
+                "file": "002 PENTESTING/999 MACHINES/TRICK.md",
                 "mode": "preview",
                 "source": false,
                 "backlinks": false
@@ -258,10 +258,13 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "df0219b616826a27",
+  "active": "44498cadc63d1eef",
   "lastOpenFiles": [
+    "002 PENTESTING/999 MACHINES/EASY.md",
+    "002 PENTESTING/999 MACHINES/POSTMAN.md",
+    "002 PENTESTING/999 MACHINES/TRICK.md",
+    "100 ATTACHMENTS/TRICK-20260107201442383.webp",
     "100 ATTACHMENTS/FZF_SSH.gif",
-    "000 INBOX/TRICK.md",
     "100 ATTACHMENTS/TRICK-20260107180719520.webp",
     "100 ATTACHMENTS/TRICK-20260107180157398.webp",
     "100 ATTACHMENTS/TRICK-20260107175924182.webp",
@@ -270,10 +273,6 @@
     "100 ATTACHMENTS/TRICK-20260103204000053.webp",
     "100 ATTACHMENTS/TRICK-20260103201656021.webp",
     "100 ATTACHMENTS/TRICK-20260102194149951.webp",
-    "100 ATTACHMENTS/TRICK-20260102191949799.webp",
-    "100 ATTACHMENTS/TRICK-20260102191942549.webp",
-    "002 PENTESTING/999 MACHINES/EASY.md",
-    "002 PENTESTING/999 MACHINES/POSTMAN.md",
     "002 PENTESTING/PROTOCOLS AND SERVICES/6379 - REDIS.md",
     "002 PENTESTING/PROTOCOLS AND SERVICES/1433 - MSSQL.md",
     "002 PENTESTING/PROTOCOLS AND SERVICES/PROTOCOLS AND SERVICES.md",
