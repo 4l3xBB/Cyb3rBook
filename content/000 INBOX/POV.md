@@ -1,10 +1,29 @@
 ---
 Primary_category: "[[MEDIUM]]"
-title: "POV"
+title: POV
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
-tags: 
+tags:
+  - Windows
+  - HTB
+  - HTBMedium
+  - WebFuzzing
+  - FileDisclosure
+  - LFI
+  - DirectoryPathTraversal
+  - WebConfig
+  - ASPNET
+  - InsecureObjectDeserialization
+  - VIEWSTATE
+  - RCE
+  - YSoSerialNET
+  - PSCredential
+  - CLI-XML
+  - PortForwarding
+  - Chisel
+  - seDebugPrivilege
+  - PSGetSystem
 cssclasses:
 ---
 
@@ -12,11 +31,13 @@ cssclasses:
 
 #### *Summary*
 
-- ***Summary A***
-- ***Summary B***
-- ***Summary C***
-- ***Summary D***
-- ***Summary E***
+- ***Fuzzing web resources with Ffuf***
+- ***File Disclosure leads to LFI via Directory Path Traversal***
+- ***Leaked web.config file thanks to LFI leads to a Deserialization Attack***
+- ***Deserialization: VIEWSTATE Code Injection to gain RCE as the service account running the web application using YSoSerial.NET***
+- ***LPE: File Disclosure leads to a plain password extraction from a PSCredential Object stored in a CLI-XML file - $cred.GetNetworkCredential().password***
+- ***Local Port Forwarding with Chisel to make the WinRM port accesible***
+- ***PE: Abusing seDebugPrivilege to gain RCE as Local System using PSGetSystem.ps1***
 
 ![[POV-20260114191535093.webp|400]]
 
@@ -138,7 +159,7 @@ This time we only have one *TCP* port to inspect, namely *port 80*
 Let's start by enumerating the web technologies running behing the web application hosted on the target
 
 ```bash
-hatweb http://10.129.230.183
+whatweb http://10.129.230.183
 ```
 
 > [!NOTE]- *Command Output*
@@ -309,6 +330,8 @@ printf "\t%s" "dev.pov.htb" >> /etc/hosts
 And we have another website, the entered *URL* redirects to **`http://dev/pov.htb/portfolio`**
 
 ![[POV-20260113193122685.webp|350]]
+
+> ***Zoom in***
 
 Any section of the header send us to different locations on the same page
 
