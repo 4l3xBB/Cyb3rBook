@@ -15,7 +15,7 @@
               "state": {
                 "file": "002 PENTESTING/999 MACHINES/TOMBWATCHER.md",
                 "mode": "source",
-                "source": true,
+                "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
@@ -258,8 +258,9 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "44498cadc63d1eef",
+  "active": "df0219b616826a27",
   "lastOpenFiles": [
+    "100 ATTACHMENTS/TOMBWATCHER-20260129215546056.webp",
     "002 PENTESTING/999 MACHINES/TOMBWATCHER.md",
     "002 PENTESTING/WINDOWS PENTESTING/ADCS - ESC15.md",
     "002 PENTESTING/WINDOWS PENTESTING/REANIMATE-TOMBSTONES.md",
@@ -286,7 +287,6 @@
     "002 PENTESTING/WINDOWS PENTESTING/FORCECHANGEPASSWORD.md",
     "002 PENTESTING/WINDOWS PENTESTING/READGMSAPASSWORD.md",
     "002 PENTESTING/WINDOWS PENTESTING/KERBEROASTING.md",
-    "002 PENTESTING/PENTESTING ROOT.md",
     "100 ATTACHMENTS/POV-20260114191535093.webp",
     "100 ATTACHMENTS/POV-20260114164144725.webp",
     "100 ATTACHMENTS/POV-20260113203025654.webp",
