@@ -10,7 +10,7 @@ cssclasses:
 
 > This is [4l3xBB's](https://github.com/4l3xBB) Notes Website 
 
- 👾 Here it will be stored all the Info and Docs that I'll collect and generate throughout my progress in _IT/Cybersecurity's_ Field, especifically on ~~Pentesting~~ and ~~Red Teaming~~ ️ 👾
+ 👾 All the info and docs that I collect and generate throughout my progress in the IT/cybersecurity field, specifically on pentesting and red teaming, will be stored here 👾
 
 - ![](https://avatars.githubusercontent.com/u/147928622?v=4)
 	- [[ROOT]]
