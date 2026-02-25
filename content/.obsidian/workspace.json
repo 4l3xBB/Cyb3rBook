@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/XSS.md",
+                "file": "000 INBOX/PERSISTENT XSS.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "XSS"
+              "title": "PERSISTENT XSS"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/XSS.md",
+                "file": "000 INBOX/PERSISTENT XSS.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "XSS"
+              "title": "PERSISTENT XSS"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -258,22 +258,26 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "df0219b616826a27",
+  "active": "02258c0061c0b447",
   "lastOpenFiles": [
-    "000 INBOX/PERSISTENT XSS.md",
     "000 INBOX/XSS.md",
+    "000 INBOX/PERSISTENT XSS.md",
     "000 INBOX/NON-PERSISTENT XSS.md",
-    "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
+    "000 INBOX/AUTHENTICATION BYPASS SQLI.md",
+    "000 INBOX/CRACKING.md",
+    "000 INBOX/CREDENTIAL HUNTING.md",
     "000 INBOX/IN-BAND SQLI.md",
+    "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
+    "000 INBOX/LOGIN BRUTE FORCING.md",
     "000 INBOX/SQLi.md",
     "000 INBOX/SQLMAP.md",
     "000 INBOX/UNION BASED SQLI.md",
+    "000 INBOX/WORDLISTS.md",
+    "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
     "100 ATTACHMENTS/SQLMAP-20260210210526544.webp",
     "100 ATTACHMENTS/SQLMAP-20260210204151808.webp",
-    "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
     "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
     "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
-    "000 INBOX/AUTHENTICATION BYPASS SQLI.md",
     "000 INBOX/MYSQL & MARIADB ENUMERATION.md",
     "000 INBOX/Untitled.md",
     "002 PENTESTING/WEB PENTESTING/WEB PENTESTING.md",
@@ -287,11 +291,7 @@
     "100 ATTACHMENTS/SQLi-20260203174424594.webp",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
-    "000 INBOX/LOGIN BRUTE FORCING.md",
     "002 PENTESTING/PASSWORD ATTACKS.md",
-    "000 INBOX/WORDLISTS.md",
-    "000 INBOX/CREDENTIAL HUNTING.md",
-    "000 INBOX/CRACKING.md",
     "100 ATTACHMENTS/TOMBWATCHER-20260129215546056.webp",
     "100 ATTACHMENTS/REANIMATE-TOMBSTONES-20260124173801360.webp",
     "100 ATTACHMENTS/POV-20260114191535093.webp",

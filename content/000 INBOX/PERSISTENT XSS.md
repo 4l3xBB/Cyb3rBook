@@ -16,6 +16,4 @@ cssclasses:
 #### *Components* ⟡
 
 - ![](https://i.gifer.com/embedded/download/KNT9.gif)
-	- [[REFLECTED XSS]]
-- ![](https://i.gifer.com/embedded/download/KNT9.gif)
-	- [[DOM-BASED XSS]]
+	- [[STORED XSS]]
