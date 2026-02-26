@@ -26,21 +26,13 @@ cssclasses:
 
 ***e.g.***
 
-***POST Parameters in a Login/Registration Form → [[SQLi]]***
+***GET/POST Parameters in a Login/Registration Form → [[SQLi]]***
 
-***POST Parameters in Contact Form → [[XSS]]***
+***GET/POST Parameters in Contact Form | Comments | Support Tickets → [[XSS]]***
 
 ***A web page with GET Parameters such as*** `File`, `Page` ***and so on → [[LFI]] or [[RFI]]***
 
 - [ ] ***Custom HTTP Response Headers and Cookies***
-
-- [ ] ***Web Page with a Contact Form → Check for [[XSS]]***
-
-- [ ] ***Login/Registration Panel → Check for [[AUTHENTICATION BYPASS SQLI|Authentication Bypass]] via [[SQLi]]***
-
-- [ ] ***If the website has a login feature and we are logged in, check for [[FILE UPLOAD|File Upload]]***
-
-- [ ] ***If Werkzeug is the Web Server, check for [[SSTI|SSTI (Server Side Template Injection)]]***
 
 ###### *Fuzzing*
 
@@ -49,6 +41,28 @@ cssclasses:
 - [ ] ***[[FUZZING#Virtual Hosts|Virtual Hosts and Subdomains]]***
 
 - [ ] ***[[FUZZING#HTTP Parameters|Hidden Parameters]]***
+
+###### *XSS*
+
+- [ ] ***Web Page with a Contact Form → Check for [[XSS]]***
+
+- [ ] ***Web Page with a Comment Section → Check for [[XSS]]***
+
+- [ ] ***Support Web Page with a Ticket creation Feature → Check for [[XSS]]***
+
+###### *SQLi*
+
+- [ ] ***Login/Registration Panel → Check for [[AUTHENTICATION BYPASS SQLI|Authentication Bypass]] via [[SQLi]]***
+
+- [ ] ***Any POST or GET Parameter. Any Cookie and User-Agent value as well***
+
+###### *File Upload*
+
+- [ ] ***If the website has a login feature and we are logged in, check for [[FILE UPLOAD|File Upload]]***
+
+###### *SSTI*
+
+- [ ] ***If Werkzeug is the Web Server, check for [[SSTI|SSTI (Server Side Template Injection)]]***
 
 ##### *FTP*
 
@@ -90,6 +104,12 @@ cssclasses:
 - [ ] ***If [[UNION BASED SQLI#Writing Files|WRITE]] Permissions → Web Shell Deployment on Web Root or any directory on which the system user running the DBMS has write permissions***
 
 ###### *XSS*
+
+- [ ] ***[[XSS#Web Defacement|Web Defacement]]***
+
+- [ ] ***[[BLIND XSS#Session Hijacking|Session Hijacking]]***
+
+- [ ] ***[[XSS#Login Form Injection|Phishing via Login Form Injection]]***
 
 ###### *LFI*
 

