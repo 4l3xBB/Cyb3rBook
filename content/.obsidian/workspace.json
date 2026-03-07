@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WEB PENTESTING/LFI.md",
+                "file": "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "LFI"
+              "title": "LINUX OFFENSIVE CHECKLIST"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WEB PENTESTING/LFI.md",
+                "file": "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "LFI"
+              "title": "LINUX OFFENSIVE CHECKLIST"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -69,7 +69,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Explorador de archivos"
             }
           },
           {
@@ -103,7 +103,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "Buscar"
             }
           }
         ]
@@ -190,7 +190,7 @@
                 "searchQuery": ""
               },
               "icon": "lucide-archive",
-              "title": "All properties"
+              "title": "Todas las propiedades"
             }
           },
           {
@@ -220,7 +220,7 @@
               "type": "graph",
               "state": {},
               "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "title": "Vista gráfica"
             }
           }
         ]
@@ -248,25 +248,36 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "bases:Create new base": false,
-      "switcher:Open quick switcher": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "graph:Open graph view": false,
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false,
       "templater-obsidian:Templater": false
     }
   },
   "active": "02258c0061c0b447",
   "lastOpenFiles": [
-    "000 INBOX/PHP SESSION POISONING.md",
-    "002 PENTESTING/WEB PENTESTING/LFI.md",
-    "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
-    "000 INBOX/XSS.md",
-    "000 INBOX/SQLi.md",
-    "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
     "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
+    "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
+    "002 PENTESTING/WEB PENTESTING/LFI.md",
+    "000 INBOX/LFI TO RCE - FILE UPLOAD.md",
+    "000 INBOX/LFI TO RCE - PHP WRAPPERS.md",
+    "000 INBOX/LFI - BASIC BYPASSES.md",
+    "000 INBOX/LFI - FUZZING.md",
+    "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
+    "002 PENTESTING/WEB PENTESTING/FUZZING.md",
+    "000 INBOX/LFI - PHP FILTERS.md",
+    "000 INBOX/SQLi.md",
+    "000 INBOX/LFI TO RCE - LOG POISONING.md",
+    "000 INBOX/LFI TO RCE - PHP SESSION POISONING.md",
+    "100 ATTACHMENTS/LFI TO RCE - LOG POISONING-20260302203331044.webp",
+    "000 INBOX/LFI TO RCE - RFI.md",
+    "101 TEMPLATES/SIMPLE NOTE TEMPLATE.md",
+    "000 INBOX/XSS.md",
+    "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
     "000 INBOX/BLIND XSS.md",
     "000 INBOX/PERSISTENT XSS.md",
     "000 INBOX/NON-PERSISTENT XSS.md",
@@ -276,18 +287,8 @@
     "000 INBOX/IN-BAND SQLI.md",
     "000 INBOX/LOGIN BRUTE FORCING.md",
     "000 INBOX/SQLMAP.md",
-    "000 INBOX/UNION BASED SQLI.md",
-    "000 INBOX/WORDLISTS.md",
     "100 ATTACHMENTS/SQLMAP-20260210210526544.webp",
     "100 ATTACHMENTS/SQLMAP-20260210204151808.webp",
-    "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
-    "000 INBOX/MYSQL & MARIADB ENUMERATION.md",
-    "000 INBOX/Untitled.md",
-    "002 PENTESTING/WEB PENTESTING/WEB PENTESTING.md",
-    "002 PENTESTING/PENTESTING ROOT.md",
-    "002 PENTESTING/PENTESTING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS DELEGATIONS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
     "100 ATTACHMENTS/SQLi-20260203182242985.webp",
     "100 ATTACHMENTS/SQLi-20260203175946381.webp",
     "100 ATTACHMENTS/SQLi-20260203175917535.webp",
@@ -295,7 +296,6 @@
     "100 ATTACHMENTS/TOMBWATCHER-20260129215546056.webp",
     "100 ATTACHMENTS/REANIMATE-TOMBSTONES-20260124173801360.webp",
     "100 ATTACHMENTS/POV-20260114191535093.webp",
-    "100 ATTACHMENTS/POV-20260114164144725.webp",
     "002 PENTESTING/899 TOOLS",
     "002 PENTESTING/LINUX PENTESTING",
     "002 PENTESTING/WINDOWS PENTESTING",

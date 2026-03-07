@@ -60,6 +60,10 @@ cssclasses:
 
 - [ ] ***If the website has a login feature and we are logged in, check for [[FILE UPLOAD|File Upload]]***
 
+###### *LFI*
+
+- [ ] ***Any POST or GET parameter***
+
 ###### *SSTI*
 
 - [ ] ***If Werkzeug is the Web Server, check for [[SSTI|SSTI (Server Side Template Injection)]]***
@@ -113,7 +117,7 @@ cssclasses:
 
 ###### *LFI*
 
-###### *RFI*
+- [ ] ******
 
 ###### *File Upload*
 

