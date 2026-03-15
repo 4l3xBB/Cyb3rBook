@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
+                "file": "000 INBOX/HTTP VERB TAMPERING.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "LINUX OFFENSIVE CHECKLIST"
+              "title": "HTTP VERB TAMPERING"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
+                "file": "000 INBOX/HTTP VERB TAMPERING.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "LINUX OFFENSIVE CHECKLIST"
+              "title": "HTTP VERB TAMPERING"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -258,14 +258,29 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "02258c0061c0b447",
+  "active": "df0219b616826a27",
   "lastOpenFiles": [
-    "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
     "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
+    "000 INBOX/HTTP VERB TAMPERING.md",
+    "000 INBOX/COMMAND INJECTION.md",
+    "000 INBOX/FILE UPLOAD.md",
+    "000 INBOX/FILE UPLOAD - LIMITED FILE UPLOADS.md",
+    "000 INBOX/FILE UPLOAD - FILTER BYPASSES.md",
     "002 PENTESTING/WEB PENTESTING/LFI.md",
+    "000 INBOX/LFI - BASIC BYPASSES.md",
+    "100 ATTACHMENTS/FILE UPLOAD - FILTER BYPASSES-20260310180310808.webp",
+    "100 ATTACHMENTS/FILE UPLOAD - FILTER BYPASSES-20260310175847638.webp",
+    "000 INBOX/Sin título.md",
+    "100 ATTACHMENTS/FILE UPLOAD-20260309103548948.webp",
+    "100 ATTACHMENTS/FILE UPLOAD-20260307204034612.webp",
+    "100 ATTACHMENTS/FILE UPLOAD-20260307201732325.webp",
+    "100 ATTACHMENTS/FILE UPLOAD-20260307201537554.webp",
+    "100 ATTACHMENTS/FILE UPLOAD-20260307201505721.webp",
+    "002 PENTESTING/SHELLS AND PAYLOADS.md",
+    "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
+    "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
     "000 INBOX/LFI TO RCE - FILE UPLOAD.md",
     "000 INBOX/LFI TO RCE - PHP WRAPPERS.md",
-    "000 INBOX/LFI - BASIC BYPASSES.md",
     "000 INBOX/LFI - FUZZING.md",
     "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
     "002 PENTESTING/WEB PENTESTING/FUZZING.md",
@@ -277,25 +292,10 @@
     "000 INBOX/LFI TO RCE - RFI.md",
     "101 TEMPLATES/SIMPLE NOTE TEMPLATE.md",
     "000 INBOX/XSS.md",
-    "000 INBOX/LINUX OFFENSIVE CHECKLIST.md",
     "000 INBOX/BLIND XSS.md",
     "000 INBOX/PERSISTENT XSS.md",
-    "000 INBOX/NON-PERSISTENT XSS.md",
-    "000 INBOX/AUTHENTICATION BYPASS SQLI.md",
-    "000 INBOX/CRACKING.md",
-    "000 INBOX/CREDENTIAL HUNTING.md",
-    "000 INBOX/IN-BAND SQLI.md",
-    "000 INBOX/LOGIN BRUTE FORCING.md",
-    "000 INBOX/SQLMAP.md",
     "100 ATTACHMENTS/SQLMAP-20260210210526544.webp",
     "100 ATTACHMENTS/SQLMAP-20260210204151808.webp",
-    "100 ATTACHMENTS/SQLi-20260203182242985.webp",
-    "100 ATTACHMENTS/SQLi-20260203175946381.webp",
-    "100 ATTACHMENTS/SQLi-20260203175917535.webp",
-    "100 ATTACHMENTS/SQLi-20260203174424594.webp",
-    "100 ATTACHMENTS/TOMBWATCHER-20260129215546056.webp",
-    "100 ATTACHMENTS/REANIMATE-TOMBSTONES-20260124173801360.webp",
-    "100 ATTACHMENTS/POV-20260114191535093.webp",
     "002 PENTESTING/899 TOOLS",
     "002 PENTESTING/LINUX PENTESTING",
     "002 PENTESTING/WINDOWS PENTESTING",

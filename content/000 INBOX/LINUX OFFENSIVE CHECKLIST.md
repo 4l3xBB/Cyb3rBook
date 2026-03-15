@@ -103,8 +103,6 @@ cssclasses:
 
 ***Home Directory Files such as SSH Keys, Shell History Files and so on***
 
-- [ ] ***If [[UNION BASED SQLI#Reading Files|READ]] Permissions via a Non-Blind SQLi ( i.e. Data displayed in the HTTP Response ) → Check for Log Poisoning as it is was [[LFI]]***
-
 - [ ] ***If [[UNION BASED SQLI#Writing Files|WRITE]] Permissions → Web Shell Deployment on Web Root or any directory on which the system user running the DBMS has write permissions***
 
 ###### *XSS*
@@ -117,7 +115,25 @@ cssclasses:
 
 ###### *LFI*
 
-- [ ] ******
+- [ ] ***Try different [[LFI - BASIC BYPASSES|Bypasses]]***
+
+Once we are able to exploit the *LFI* to point to other web files
+
+- [ ] ***Information Leakage e.g. Configuration files***
+
+- [ ] ***Source code of Webroot scripts e.g. Other PHP scripts***
+
+***RCE***
+
+- [ ] ***[[LFI TO RCE - PHP WRAPPERS|PHP Wrappers]] e.g. ( `data:// | input:// | expect://` )***
+
+- [ ] ***[[LFI TO RCE - FILE UPLOAD|File Upload]]***
+
+- [ ] ***[[LFI TO RCE - RFI|RFI]]***
+
+- [ ] ***[[LFI TO RCE - LOG POISONING|Log Poisoning]]***
+
+- [ ] ***[[LFI TO RCE - PHP SESSION POISONING|PHP Session Poisoning]]***
 
 ###### *File Upload*
 
