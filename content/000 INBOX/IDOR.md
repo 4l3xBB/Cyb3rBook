@@ -1,0 +1,34 @@
+---
+Primary_category: "[[WEB ATTACKS]]"
+title: IDOR
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+  - card-list
+  - purple-style
+---
+
+###### PRIMARY CATEGORY → [[WEB ATTACKS]]
+
+#### *Components* ⟡
+
+- ![](https://giffiles.alphacoders.com/222/222700.gif)
+	- [[IDOR - INFORMATION DISCLOSURE|INFORMATION DISCLOSURE]]
+
+<br>
+
+---
+
+#### *Insecure Function Calls*
+
+Once certain sensitive information is gathered through an *IDOR* attack *( See [[IDOR - INFORMATION DISCLOSURE|here]] )*, we can use the given data to try to update, delete or create new information structures through *IDOR Insecure Function Calls*
+
+That is, any information disclosure we achieve through an *IDOR* is usually via a *GET* request, either to the web application or to an *API*
+
+However, if we want to carry out any creation, deletion or modification process, we should bear in mind that this can be done through the following *HTTP* verbs
+
+- ***POST → Creation***
+- ***PUT → Modification ( Updates )***
+- ***DELETE → Deletion***
