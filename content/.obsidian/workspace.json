@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/XXE - DATA DISCLOSURE.md",
+                "file": "002 PENTESTING/LINUX OFFENSIVE CHECKLIST.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "XXE - DATA DISCLOSURE"
+              "title": "LINUX OFFENSIVE CHECKLIST"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/XXE - DATA DISCLOSURE.md",
+                "file": "002 PENTESTING/LINUX OFFENSIVE CHECKLIST.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "XXE - DATA DISCLOSURE"
+              "title": "LINUX OFFENSIVE CHECKLIST"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -119,7 +119,7 @@
       {
         "id": "db7108f15f145a2b",
         "type": "tabs",
-        "dimension": 39.150090415913205,
+        "dimension": 50.1552795031056,
         "children": [
           {
             "id": "638fecbb96ba0d72",
@@ -173,10 +173,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "002 PENTESTING/MISCELLANOUS.md"
+                "file": "002 PENTESTING/LINUX OFFENSIVE CHECKLIST.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of MISCELLANOUS"
+              "title": "Esquema de LINUX OFFENSIVE CHECKLIST"
             }
           },
           {
@@ -206,12 +209,12 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       },
       {
         "id": "5a8b1138835dbac2",
         "type": "tabs",
-        "dimension": 27.21518987341772,
+        "dimension": 20.341614906832298,
         "children": [
           {
             "id": "c3862405dabe6092",
@@ -228,7 +231,7 @@
       {
         "id": "f649d99eafaed70f",
         "type": "tabs",
-        "dimension": 33.634719710669074,
+        "dimension": 29.503105590062113,
         "children": [
           {
             "id": "09af1a6217969f09",
@@ -260,20 +263,27 @@
   },
   "active": "02258c0061c0b447",
   "lastOpenFiles": [
-    "000 INBOX/XXE.md",
-    "000 INBOX/XXE - RCE.md",
-    "000 INBOX/XXE - DATA DISCLOSURE.md",
+    "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
+    "002 PENTESTING/WEB PENTESTING/WEB TECHNOLOGIES.md",
+    "002 PENTESTING/WEB PENTESTING/WEB PENTESTING.md",
+    "002 PENTESTING/PENTESTING ROOT.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS RECONAISSANCE.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
     "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
-    "002 PENTESTING/WEB PENTESTING/SQLi.md",
+    "000 INBOX/XXE.md",
+    "000 INBOX/XXE - DATA DISCLOSURE.md",
+    "002 PENTESTING/WEB PENTESTING/HTTP VERB TAMPERING.md",
     "000 INBOX/IDOR.md",
     "000 INBOX/IDOR - INFORMATION DISCLOSURE.md",
-    "002 PENTESTING/WEB PENTESTING/LFI.md",
-    "002 PENTESTING/LINUX OFFENSIVE CHECKLIST.md",
-    "002 PENTESTING/WEB PENTESTING/HTTP VERB TAMPERING.md",
-    "002 PENTESTING/WORDLISTS.md",
-    "002 PENTESTING/WEB PENTESTING/COMMAND INJECTION.md",
     "002 PENTESTING/WEB PENTESTING/FILE UPLOAD.md",
     "002 PENTESTING/WEB PENTESTING/FILE UPLOAD - LIMITED FILE UPLOADS.md",
+    "000 INBOX/XXE - RCE.md",
+    "002 PENTESTING/WEB PENTESTING/SQLi.md",
+    "002 PENTESTING/WEB PENTESTING/LFI.md",
+    "002 PENTESTING/LINUX OFFENSIVE CHECKLIST.md",
+    "002 PENTESTING/WORDLISTS.md",
+    "002 PENTESTING/WEB PENTESTING/COMMAND INJECTION.md",
     "002 PENTESTING/WEB PENTESTING/FILE UPLOAD - FILTER BYPASSES.md",
     "002 PENTESTING/WEB PENTESTING/LFI - BASIC BYPASSES.md",
     "100 ATTACHMENTS/FILE UPLOAD - FILTER BYPASSES-20260310180310808.webp",
@@ -285,14 +295,7 @@
     "100 ATTACHMENTS/FILE UPLOAD-20260307201537554.webp",
     "100 ATTACHMENTS/FILE UPLOAD-20260307201505721.webp",
     "002 PENTESTING/SHELLS AND PAYLOADS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
     "002 PENTESTING/WEB PENTESTING/LFI TO RCE - FILE UPLOAD.md",
-    "002 PENTESTING/WEB PENTESTING/LFI TO RCE - PHP WRAPPERS.md",
-    "002 PENTESTING/WEB PENTESTING/LFI - FUZZING.md",
-    "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
-    "002 PENTESTING/WEB PENTESTING/FUZZING.md",
-    "002 PENTESTING/WEB PENTESTING/LFI - PHP FILTERS.md",
-    "002 PENTESTING/WEB PENTESTING/LFI TO RCE - LOG POISONING.md",
     "100 ATTACHMENTS/LFI TO RCE - LOG POISONING-20260302203331044.webp",
     "100 ATTACHMENTS/SQLMAP-20260210210526544.webp",
     "100 ATTACHMENTS/SQLMAP-20260210204151808.webp",
