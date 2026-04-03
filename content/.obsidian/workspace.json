@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/OSTICKET.md",
+                "file": "000 INBOX/IIS.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "OSTICKET"
+              "title": "IIS"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/OSTICKET.md",
+                "file": "000 INBOX/IIS.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "OSTICKET"
+              "title": "IIS"
             },
             "group": "ad889aa88e391c7c"
           }
@@ -173,13 +173,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "000 INBOX/OSTICKET.md",
+                "file": "000 INBOX/IIS.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de OSTICKET"
+              "title": "Esquema de IIS"
             }
           },
           {
@@ -263,42 +263,42 @@
   },
   "active": "df0219b616826a27",
   "lastOpenFiles": [
-    "000 INBOX/PRTG.md",
-    "000 INBOX/OSTICKET.md",
     "002 PENTESTING/WEB PENTESTING/WEB TECHNOLOGIES.md",
-    "100 ATTACHMENTS/PRTG-20260330172746246.webp",
-    "100 ATTACHMENTS/PRTG-20260330171818414.webp",
-    "100 ATTACHMENTS/PRTG-20260329195019576.webp",
-    "100 ATTACHMENTS/PRTG-20260329194345413.webp",
-    "100 ATTACHMENTS/PRTG-20260329193906736.webp",
-    "100 ATTACHMENTS/PRTG-20260329193723329.webp",
+    "000 INBOX/IIS.md",
+    "000 INBOX/COLDFUSION.md",
     "000 INBOX/JOOMLA.md",
-    "000 INBOX/SPLUNK.md",
-    "100 ATTACHMENTS/SPLUNK-20260329175608136.webp",
-    "100 ATTACHMENTS/SPLUNK-20260329175153309.webp",
-    "100 ATTACHMENTS/SPLUNK-20260329175059179.webp",
-    "002 PENTESTING/WEB PENTESTING/JENKINS.md",
-    "100 ATTACHMENTS/SPLUNK-20260329164106082.webp",
+    "000 INBOX/THICK CLIENT APPLICATIONS.md",
+    "000 INBOX/CGI.md",
+    "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
+    "100 ATTACHMENTS/CGI-20260402134429176.webp",
+    "000 INBOX/TOMCAT CGI.md",
+    "000 INBOX/GITLAB.md",
+    "100 ATTACHMENTS/GITLAB-20260330205223256.webp",
+    "100 ATTACHMENTS/GITLAB-20260330195235794.webp",
+    "100 ATTACHMENTS/GITLAB-20260330193644501.webp",
+    "000 INBOX/Sin título.md",
+    "100 ATTACHMENTS/GITLAB-20260330193254695.webp",
+    "000 INBOX/WORDPRESS.md",
     "002 PENTESTING/WEB PENTESTING/WEB PENTESTING.md",
+    "000 INBOX/OSTICKET.md",
+    "100 ATTACHMENTS/OSTICKET-20260330191839306.webp",
+    "100 ATTACHMENTS/OSTICKET-20260330191720236.webp",
+    "100 ATTACHMENTS/OSTICKET-20260330190727125.webp",
+    "100 ATTACHMENTS/OSTICKET-20260330190510110.webp",
+    "100 ATTACHMENTS/OSTICKET-20260330190457352.webp",
+    "000 INBOX/PRTG.md",
+    "000 INBOX/SPLUNK.md",
+    "002 PENTESTING/WEB PENTESTING/JENKINS.md",
     "002 PENTESTING/999 MACHINES/JEEVES.md",
     "002 PENTESTING/WEB PENTESTING/PANDORA FMS.md",
-    "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
-    "000 INBOX/WORDPRESS.md",
     "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
     "000 INBOX/DRUPAL.md",
-    "000 INBOX/Sin título.md",
     "002 PENTESTING/PENTESTING ROOT.md",
     "002 PENTESTING/PENTESTING.md",
     "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
     "002 PENTESTING/LINUX OFFENSIVE CHECKLIST.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS RECONAISSANCE.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
-    "000 INBOX/XXE.md",
-    "000 INBOX/XXE - DATA DISCLOSURE.md",
-    "002 PENTESTING/WEB PENTESTING/HTTP VERB TAMPERING.md",
-    "000 INBOX/IDOR.md",
-    "000 INBOX/IDOR - INFORMATION DISCLOSURE.md",
     "002 PENTESTING/899 TOOLS",
     "002 PENTESTING/LINUX PENTESTING",
     "002 PENTESTING/WINDOWS PENTESTING",
