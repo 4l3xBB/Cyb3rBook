@@ -101,9 +101,19 @@ Once inside the container, just go to **`/mnt/root`** to see all resources from 
 
 If the current user belongs to the *docker* group, we can spawn new *docker* containers and compromise the entire machine using volumes by mounting the system root **`/`** on the container's **`/mnt`** directory
 
+This is because, by default, both *ROOT* user and the *Docker* group have write permissions over the *Docker Daemon's Socket*
+
+Therefore, a member of the *Docker* group can use the *docker* command *( Docker Client )* to send requests to the *Docker Daemon's API REST* without receiving an access denied error
+
+Alternatively, *Docker* may have *SUID* set or the current user is in the *sudoers* file
+
+In any case, we can create a *Docker Container* with a *bind mount* so that the host's file system is accesible from the container
+
 ```bash
-docker run -v /:/mnt --rm -it ubuntu chroot /mnt sh
+docker run --volume /:/mnt --rm --interactive --tty ubuntu chroot /mnt /bin/bash
 ```
+
+To interact with the *Docker Daemon's Socket*, see ***[[CONTAINERS ABUSE#Docker Sockets|Abusing Docker Sockets]]***
 
 ---
 

