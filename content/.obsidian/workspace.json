@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/EVENT LOG READERS.md",
+                "file": "000 INBOX/DNS ADMINS.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "EVENT LOG READERS"
+              "title": "DNS ADMINS"
             },
             "group": "ca81ca48c6363938"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/EVENT LOG READERS.md",
+                "file": "000 INBOX/DNS ADMINS.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "EVENT LOG READERS"
+              "title": "DNS ADMINS"
             },
             "group": "ca81ca48c6363938"
           }
@@ -173,13 +173,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "000 INBOX/EVENT LOG READERS.md",
+                "file": "000 INBOX/DNS ADMINS.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de EVENT LOG READERS"
+              "title": "Esquema de DNS ADMINS"
             }
           },
           {
@@ -263,17 +263,24 @@
   },
   "active": "df0219b616826a27",
   "lastOpenFiles": [
-    "000 INBOX/BACKUP OPERATORS.md",
-    "000 INBOX/EVENT LOG READERS.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC.md",
-    "002 PENTESTING/WINDOWS PENTESTING/NTDS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS SECURITY GROUPS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/SERVER OPERATORS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/FORGED TICKETS.md",
+    "000 INBOX/DNS ADMINS.md",
+    "000 INBOX/WPAD SPOOFING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/KERBEROAST.md",
     "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS BUILT-INS & SETTINGS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/MITM & COERCED AUTHS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/FORGED TICKETS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS DELEGATIONS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/NTLM CAPTURE.md",
+    "100 ATTACHMENTS/WPAD SPOOFING-20260423205241872.webp",
+    "000 INBOX/BACKUP OPERATORS.md",
+    "000 INBOX/EVENT LOG READERS.md",
     "000 INBOX/SETAKEOWNERSHIPPRIVILEGE.md",
+    "002 PENTESTING/WINDOWS PENTESTING/SERVER OPERATORS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/NTDS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS SECURITY GROUPS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS BUILT-INS & SETTINGS.md",
     "000 INBOX/SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE.md",
     "002 PENTESTING/WINDOWS PENTESTING/SEDEBUGPRIVILEGE.md",
     "002 PENTESTING/LINUX PENTESTING/PYTHON LIBRARY HIJACKING.md",
@@ -283,12 +290,6 @@
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
     "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
     "000 INBOX/NAMED PIPES ABUSE.md",
-    "000 INBOX/WINDOWS OFFENSIVE CHECKLIST.md",
-    "002 PENTESTING/LINUX PENTESTING/LINUX PRIVESC.md",
-    "002 PENTESTING/WINDOWS PENTESTING/DPAPI ABUSE.md",
-    "002 PENTESTING/WINDOWS PENTESTING/ADS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/ALWAYS INSTALL ELEVATED.md",
-    "002 PENTESTING/WINDOWS PENTESTING/PSCREDENTIAL OBJECT.md",
     "100 ATTACHMENTS/WEB MASS ASSIGNMENT-20260405183418016.webp",
     "100 ATTACHMENTS/WEB MASS ASSIGNMENT-20260405183133519.webp",
     "100 ATTACHMENTS/WEB MASS ASSIGNMENT-20260405175256953.webp",
@@ -298,7 +299,6 @@
     "100 ATTACHMENTS/GITLAB-20260330195235794.webp",
     "100 ATTACHMENTS/GITLAB-20260330193644501.webp",
     "100 ATTACHMENTS/GITLAB-20260330193254695.webp",
-    "100 ATTACHMENTS/OSTICKET-20260330191839306.webp",
     "002 PENTESTING/899 TOOLS",
     "002 PENTESTING/LINUX PENTESTING",
     "002 PENTESTING/WINDOWS PENTESTING",
