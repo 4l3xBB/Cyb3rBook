@@ -22,6 +22,23 @@ Moreover, it is closely tied to the *DNS Server* role in *AD* as this group is c
 
 ---
 
+#### *Enumeration*
+
+##### *Listing the Groups to which the Current User belongs*
+
+```bash
+whoami /groups
+net user <USER>
+```
+
+##### *Members of DNS Admins*
+
+```bash
+net localgroup "DNS Admins"
+```
+
+---
+
 #### *Code Execution as LOCAL SYSTEM*
 
 We must bear in mind that *Windows DNS* service supports custom plugins and can call functions from them to resolve some name queries
