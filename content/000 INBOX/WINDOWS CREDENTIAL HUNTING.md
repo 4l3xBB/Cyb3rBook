@@ -426,6 +426,8 @@ Invoke-SelfSearch -Mailbox '<USER>@<DOMAIN>'
 
 ##### *Windows Autologon Credentials*
 
+###### *Workflow*
+
 The *Windows Autologon Credentials* are stored within the following registry hive in plain text
 
 ```bash
@@ -447,7 +449,7 @@ In order to enable a system *autologon*, the registry hive above must have the f
 > ***If it's mandatory to set up Autologon, it's always recommended to use [Autologon.exe](https://learn.microsoft.com/es-es/sysinternals/downloads/autologon) from SysInternals, which encrypts and stores the given password as an [[SAM & SECURITY#Security (LSA Secrets)|LSA Secret]]***
 >
 
-##### *Listing Windows Autologon Credentials*
+###### *Listing Windows Autologon Credentials*
 
 > ***CMD & PS***
 
@@ -460,6 +462,87 @@ reg query 'HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
 ```bash
 Get-ItemProperty -Path 'HKLM:Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
 ```
+
+##### *Putty*
+
+###### *Workflow*
+
+Credentials related to a certain *PUTTY* session are stored in the registry hive below
+
+```bash
+Computer\HKEY_CURRENT_USER\SOFTWARE\SimonTatham\PuTTY\Sessions\<SESSION NAME>
+```
+
+Bear in mind that the existing keys within the given registry hive are tied to the user that configured and saved the session
+
+Therefore, in order to have *READ* permissions over them, we would need to log in as the principal in question and search for it within *HKCU ( Hive Key Current User )*
+
+Another way would be to search directly on *HKEY_USERS* if we achieve to compromise the entire system first
+
+###### *Enumerating existing PUTTY Sessions*
+
+> ***CMD & PS***
+
+```bash
+reg query 'HKCU\Software\SimonTatham\PuTTY\Sessions'
+```
+
+> ***PS***
+
+```bash
+Get-ItemProperty -Path 'HKCU:Software\SimonTatham\PuTTY\Sessions'
+```
+
+###### *Listing Credentials tied to the given PUTTY session*
+
+> ***CMD & PS***
+
+```bash
+reg query 'HKCU\Software\SimonTatham\PuTTY\Sessions\<SESSION>'
+```
+
+> ***PS***
+
+```bash
+Get-ItemProperty -Path 'HKCU:Software\SimonTatham\PuTTY\Sessions\<SESSION>'
+```
+
+---
+
+#### *WiFi Credentials*
+
+> ***It only applies if the target has a Wireless Network Card***
+
+##### *Listing recently connected Wireless Networks*
+
+> ***Privileged access required ( i.e. System Compromised )***
+
+```bash
+netsh wlan show profile
+```
+
+##### *Retrieving Saved Wireless Passwords*
+
+> ***Pre-shared Key ( Key Content )***
+
+```bash
+netsh wlan show profile '<WIRELESS_NETWORK_SSID>' key=clear
+```
+
+> [!NOTE]- *Command Output*
+>
+> ```bash
+> ...<SNIP>...
+> Profile <WIRELESS_NETWORK_SSID> on interface Wi-Fi:
+> 
+> Applied: All User Profile
+> 
+> Security settings
+> -----------------
+>     Key Content            : ILFREIGHTWIFI-CORP123908!
+> ...<SNIP>...
+> ```
+>
 
 ---
 

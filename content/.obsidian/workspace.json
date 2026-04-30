@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
+                "file": "ROOT.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "WINDOWS CREDENTIAL HUNTING"
+              "title": "ROOT"
             },
             "group": "ca81ca48c6363938"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
+                "file": "ROOT.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "WINDOWS CREDENTIAL HUNTING"
+              "title": "ROOT"
             },
             "group": "ca81ca48c6363938"
           }
@@ -173,13 +173,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
+                "file": "ROOT.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de WINDOWS CREDENTIAL HUNTING"
+              "title": "Esquema de ROOT"
             }
           },
           {
@@ -263,32 +263,32 @@
   },
   "active": "8d3eac0970ee9647",
   "lastOpenFiles": [
+    "002 PENTESTING/PENTESTING.md",
+    "002 PENTESTING/899 TOOLS/TOOLS.md",
+    "002 PENTESTING/899 TOOLS/VOTING SYSTEM.md",
+    "002 PENTESTING/899 TOOLS/MREMOTENG.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
+    "002 PENTESTING/PENTESTING ROOT.md",
+    "002 PENTESTING/PLATFORMS.md",
+    "002 PENTESTING/HTB.md",
+    "002 PENTESTING/999 MACHINES/MACHINES.md",
+    "002 PENTESTING/WEB PENTESTING/WEB PENTESTING.md",
+    "002 PENTESTING/PROTOCOLS AND SERVICES/PROTOCOLS AND SERVICES.md",
+    "ROOT.md",
+    "003 SETUP/SETUP.md",
+    "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
+    "002 PENTESTING/MISCELLANOUS.md",
+    "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
     "002 PENTESTING/CREDENTIAL HUNTING.md",
     "000 INBOX/NETWORK CREDENTIAL HUNTING.md",
     "002 PENTESTING/PASSWORD ATTACKS.md",
     "002 PENTESTING/CRACKING.md",
-    "002 PENTESTING/PENTESTING ROOT.md",
     "002 PENTESTING/FILE TRANSFERS.md",
     "002 PENTESTING/OSINT.md",
     "002 PENTESTING/FILE MANIPULATION.md",
     "002 PENTESTING/TTY, PTY UPGRADE.md",
     "002 PENTESTING/NETWORK ENUMERATION.md",
-    "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS.md",
-    "002 PENTESTING/LINUX PENTESTING/LINUX PRIVESC.md",
-    "002 PENTESTING/LINUX PENTESTING/LINUX PENTESTING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC.md",
-    "000 INBOX/LINUX CREDENTIAL HUNTING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS CRACKING.md",
-    "000 INBOX/CRACKING PROTECTED FILES.md",
-    "000 INBOX/LINUX CREDENTIALS CRACKING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
-    "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
-    "002 PENTESTING/WINDOWS PENTESTING/DPAPI ABUSE.md",
-    "002 PENTESTING/WINDOWS PENTESTING/PSCREDENTIAL OBJECT.md",
-    "000 INBOX/DLL INJECTION.md",
     "100 ATTACHMENTS/WPAD SPOOFING-20260423205241872.webp",
     "100 ATTACHMENTS/WEB MASS ASSIGNMENT-20260405183418016.webp",
     "100 ATTACHMENTS/WEB MASS ASSIGNMENT-20260405183133519.webp",

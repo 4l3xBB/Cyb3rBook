@@ -13,9 +13,9 @@ cssclasses:
 
 ###### PRIMARY CATEGORY → [[ROOT]]
 
-#### Environments ⟡
+#### *Components* ⟡
 
-- ![](https://img.freepik.com/premium-photo/robot-with-purple-eyes-hood-that-says-no-one-is-wearing_937795-585.jpg)
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
 	- [[DESKTOP SETUP|DESKTOP]]
-- ![](https://img.freepik.com/premium-photo/blue-fire-3d-cartoon-character-illustration_893055-3902.jpg?w=360)
+- ![](https://i.gifer.com/embedded/download/KNT9.gif)
 	- [[SERVER SETUP|SERVER]]
