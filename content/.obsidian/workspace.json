@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WINDOWS PENTESTING/PRINTNIGHTMARE.md",
+                "file": "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "PRINTNIGHTMARE"
+              "title": "WINDOWS CREDENTIAL HUNTING"
             },
             "group": "ca81ca48c6363938"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WINDOWS PENTESTING/PRINTNIGHTMARE.md",
+                "file": "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "PRINTNIGHTMARE"
+              "title": "WINDOWS CREDENTIAL HUNTING"
             },
             "group": "ca81ca48c6363938"
           }
@@ -173,13 +173,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "002 PENTESTING/WINDOWS PENTESTING/PRINTNIGHTMARE.md",
+                "file": "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de PRINTNIGHTMARE"
+              "title": "Esquema de WINDOWS CREDENTIAL HUNTING"
             }
           },
           {
@@ -263,32 +263,32 @@
   },
   "active": "8d3eac0970ee9647",
   "lastOpenFiles": [
-    "000 INBOX/WINDOWS KERNEL ABUSE.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC.md",
-    "002 PENTESTING/WINDOWS PENTESTING/PRINTNIGHTMARE.md",
-    "002 PENTESTING/LINUX PENTESTING/LINUX KERNEL ABUSE.md",
-    "000 INBOX/WINDOWS SERVICES WEAK PERMISSIONS ABUSE.md",
-    "000 INBOX/WINDOWS OFFENSIVE CHECKLIST.md",
+    "002 PENTESTING/CREDENTIAL HUNTING.md",
+    "000 INBOX/NETWORK CREDENTIAL HUNTING.md",
+    "002 PENTESTING/PASSWORD ATTACKS.md",
+    "002 PENTESTING/CRACKING.md",
+    "002 PENTESTING/PENTESTING ROOT.md",
+    "002 PENTESTING/FILE TRANSFERS.md",
+    "002 PENTESTING/OSINT.md",
+    "002 PENTESTING/FILE MANIPULATION.md",
+    "002 PENTESTING/TTY, PTY UPGRADE.md",
+    "002 PENTESTING/NETWORK ENUMERATION.md",
+    "000 INBOX/WINDOWS CREDENTIAL HUNTING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS.md",
     "002 PENTESTING/LINUX PENTESTING/LINUX PRIVESC.md",
-    "000 INBOX/DNS ADMINS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/UAC BYPASS.md",
-    "000 INBOX/Sin título.md",
-    "002 PENTESTING/WINDOWS PENTESTING/UAC.md",
-    "002 PENTESTING/WINDOWS PENTESTING/SCHANNEL.md",
+    "002 PENTESTING/LINUX PENTESTING/LINUX PENTESTING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS SECURITY GROUPS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/SERVER OPERATORS.md",
-    "000 INBOX/BACKUP OPERATORS.md",
-    "000 INBOX/HYPER-V ADMINS.md",
-    "000 INBOX/SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE.md",
-    "000 INBOX/SELOADDRIVERPRIVILEGE.md",
-    "000 INBOX/PRINT OPERATORS.md",
-    "000 INBOX/EVENT LOG READERS.md",
-    "000 INBOX/WPAD SPOOFING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROAST.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC.md",
+    "000 INBOX/LINUX CREDENTIAL HUNTING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS CRACKING.md",
+    "000 INBOX/CRACKING PROTECTED FILES.md",
+    "000 INBOX/LINUX CREDENTIALS CRACKING.md",
     "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/MITM & COERCED AUTHS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/FORGED TICKETS.md",
+    "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
+    "002 PENTESTING/WINDOWS PENTESTING/DPAPI ABUSE.md",
+    "002 PENTESTING/WINDOWS PENTESTING/PSCREDENTIAL OBJECT.md",
+    "000 INBOX/DLL INJECTION.md",
     "100 ATTACHMENTS/WPAD SPOOFING-20260423205241872.webp",
     "100 ATTACHMENTS/WEB MASS ASSIGNMENT-20260405183418016.webp",
     "100 ATTACHMENTS/WEB MASS ASSIGNMENT-20260405183133519.webp",
