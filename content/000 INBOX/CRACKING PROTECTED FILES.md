@@ -139,7 +139,7 @@ john --wordlist=<WORDLIST> --format=bitlocker <HASH>
 
 ##### *Mounting Bitlocker-Encrypted Drives in Windows*
 
-> ***[[VHD - VHDX#Mounting Bitlocker-Encrypted VHD on Windows|Reference]]***
+> ***[[VIRTUAL HARD DISK#Mounting Bitlocker-Encrypted VHD on Windows|Reference]]***
 
 ###### *Mount the .VHD File*
 
@@ -159,7 +159,7 @@ john --wordlist=<WORDLIST> --format=bitlocker <HASH>
 
 ##### *Mounting Bitlocker-Encrypted Drives in Linux*
 
-> ***[[VHD - VHDX#Mounting Bitlocker-Encrypted VHD on Linux|Reference]]***
+> ***[[VIRTUAL HARD DISK#Mounting Bitlocker-Encrypted VHD on Linux|Reference]]***
 
 | ***UTILITY*** | ***PURPOSE*** |
 | --- | --- |

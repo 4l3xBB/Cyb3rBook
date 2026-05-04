@@ -24,6 +24,17 @@ Now let's imagine that the given software creates one or several services during
 
 ##### *Listing Installed Software/Programs*
 
+###### *System Directories*
+
+> ***i.e. "Program Files" and "Program Files (x86)"***
+
+```bash
+dir C:\Progra~1 # Program Files
+dir C:\Progra~2 # Program Files (x86)
+```
+
+###### *COM | CIM*
+
 > ***CMD & PS***
 
 ```bash
@@ -35,6 +46,19 @@ wmic product get name
 ```bash
 Get-WMIObject -Class Win32_Product | Select Name, Version
 ```
+
+###### *Windows Registry*
+
+> ***PS***
+
+> [!DANGER]- *Code Snippet*
+>
+> ```bash
+> $INSTALLED = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Select-Object DisplayName, DisplayVersion, InstallLocation
+> $INSTALLED += Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, InstallLocation
+> $INSTALLED | ?{ $_.DisplayName -ne $null } | sort-object -Property DisplayName -Unique | Format-List
+> ```
+>
 
 ---
 
