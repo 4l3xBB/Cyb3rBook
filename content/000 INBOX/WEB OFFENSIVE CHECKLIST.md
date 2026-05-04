@@ -1,6 +1,6 @@
 ---
 Primary_category: "[[CHECKLISTS]]"
-title: "LINUX OFFENSIVE CHECKLIST"
+title: "WEB OFFENSIVE CHECKLIST"
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
@@ -8,17 +8,21 @@ tags:
 cssclasses:
 ---
 
-###### PRIMARY CATEGORY → [[CHECKLISTS]]
+###### PRIMARY CATEGORY → [[CHECKLISTS]]&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;[[WEB PENTESTING]]
 
 #### *Mindmap*
+
+> ***[Web Application Pentesting Mindmap](https://github.com/eMVee-NL/MindMap/blob/main/image/Mindmap%20Web%20Application%20Pentesting.png)***
+
+![[WEB OFFENSIVE CHECKLIST-20260504211440702.webp|250]]
+
+> ***Zoom in***
 
 ---
 
 #### *Enumeration*
 
-##### *HTTP\[s\]*
-
-###### *Web Application Functionality*
+##### *Web Application Functionality*
 
 - [ ] ***Accesible Web pages functionality while having Burpsuite open***
 
@@ -36,7 +40,7 @@ cssclasses:
 
 - [ ] ***Custom HTTP Response Headers and Cookies***
 
-###### *Fuzzing*
+##### *Fuzzing*
 
 - [ ] ***[[FUZZING#Ffuf|Resources: Directories and Files]]***
 
@@ -44,7 +48,7 @@ cssclasses:
 
 - [ ] ***[[FUZZING#HTTP Parameters|Hidden Parameters]]***
 
-###### *XSS*
+##### *XSS*
 
 - [ ] ***Web Page with a Contact Form → Check for [[XSS]]***
 
@@ -52,54 +56,41 @@ cssclasses:
 
 - [ ] ***Support Web Page with a Ticket creation Feature → Check for [[XSS]]***
 
-###### *SQLi*
+##### *SQLi*
 
 - [ ] ***Login/Registration Panel → Check for [[AUTHENTICATION BYPASS SQLI|Authentication Bypass]] via [[SQLi]]***
 
 - [ ] ***Any POST or GET Parameter. Any Cookie and User-Agent value as well***
 
-###### *LFI*
+##### *LFI*
 
 - [ ] ***Any POST or GET parameter***
 
-###### *File Upload*
+##### *File Upload*
 
 - [ ] ***If the website has a login feature and we are logged in, check for [[FILE UPLOAD|File Upload]]***
 
-###### *Command Injection*
+##### *Command Injection*
 
 - [ ] ***Any POST or GET Parameter***
 
-###### *HTTP Verb Tampering*
+##### *HTTP Verb Tampering*
 
 - [ ] ***Try the same request with a different HTTP method (e.g. GET ↔ POST, POST ↔ PUT, GET ↔ HEAD )***
 
-###### *IDOR*
+##### *IDOR*
 
 - [ ] ***Look for any direct object reference in the web application to test for its system control access***
 
-###### *XXE*
+##### *XXE*
 
 - [ ] ***Search for any HTTP request which sends an XML data structure on its body***
-
-##### *FTP*
-
-###### *Non-Credentialed Enumeration*
-
-- [ ] ***Anonymous Access***
-- [ ] ***Known CVE (Searchsploit, Google...)***
-
-###### *Credentialed Enumeration*
-
-- [ ] ***If we can upload files, just try to upload them to a location accesible from the Web Server in order to get an RCE through the Web Shell***
 
 ---
 
 #### *Exploitation*
 
-##### *HTTP\[s\]*
-
-###### *SQLi*
+##### *SQLi*
 
 - [ ] ***Enumeration: Databases, Tables, Columns, Fields***
 
@@ -119,7 +110,7 @@ cssclasses:
 
 - [ ] ***If [[UNION BASED SQLI#Writing Files|WRITE]] Permissions → Web Shell Deployment on Web Root or any directory on which the system user running the DBMS has write permissions***
 
-###### *XSS*
+##### *XSS*
 
 - [ ] ***[[XSS#Web Defacement|Web Defacement]]***
 
@@ -127,7 +118,7 @@ cssclasses:
 
 - [ ] ***[[XSS#Login Form Injection|Phishing via Login Form Injection]]***
 
-###### *LFI*
+##### *LFI*
 
 - [ ] ***Try different [[LFI - BASIC BYPASSES|Bypasses]]***
 
@@ -149,7 +140,7 @@ cssclasses:
 
 - [ ] ***[[LFI TO RCE - PHP SESSION POISONING|PHP Session Poisoning]]***
 
-###### *File Upload*
+##### *File Upload*
 
 - [ ] ***If the Web Application runs X (e.g. PHP), try uploading an X script (e.g. test.php)***
 
@@ -172,7 +163,7 @@ cssclasses:
 
 ***Furthermore, we have to bear in mind that if we discover an [[LFI]] vulnerability, we can just fuzz for allowed extensions, add a code snippet (e.g. mini WebShell) within the file before uploading it and request it from a web client. We will gain RCE***
 
-###### *Command Injection*
+##### *Command Injection*
 
 - [ ] ***Try a [[COMMAND INJECTION#Exploitation|basic command injection]] to see if there is any input validation or sanitizacion in place***
 
@@ -180,13 +171,13 @@ cssclasses:
 
 - [ ] ***Try to bypass them with different [[COMMAND INJECTION#Filter Evasion - Blacklist|filter evasions]] and [[COMMAND INJECTION#Advanced Command Obfuscation|command obfuscation]]***
 
-###### *HTTP Verb Tampering*
+##### *HTTP Verb Tampering*
 
 - [ ] ***Send an OPTIONS HTTP request to know the supported HTTP methods by the web server***
 
 - [ ] ***In case of any error or unauthorized operation, simply try changing the HTTP request method to look for differences in the HTTP response***
 
-###### *IDOR*
+##### *IDOR*
 
 This attack vector results from a bad access control system or its absence and a direct object reference
 
@@ -200,7 +191,7 @@ Once we discover the *IDOR* →
 
 - [ ] ***[[IDOR#Insecure Function Calls|Insecure Function Calls]]***
 
-###### *XXE*
+##### *XXE*
 
 ***Once we have located an HTTP request that sends XML data within its body*** 
 
@@ -219,52 +210,3 @@ Once we discover the *IDOR* →
 - [ ] ***If we are dealing with a Blind XXE, see [[XXE - DATA DISCLOSURE#Blind OOB XXE|Blind OOB XXE]]***
 
 - [ ] ***Bear in mind that we can achieve [[XXE - RCE|RCE]] as well***
-
----
-
-#### *Privesc | Lateral Movement*
-
-> ***See [[LINUX PRIVESC|Linux Prives]]***
-
-##### *Global*
-
-- [ ] ***Additional NICs pointing to other subnets ( `ip a s`, `/sys/class/net`)***
-- [ ] ***Interesting System Directories ( `/<DIRECTORY>`, `/opt`, `/var` and so on  )***
-- [ ] ***Running Services that are not externally accesible ( `netstat` or `ss` ) and are running as a different user ( More privileged or Root )***
-- [ ] ***[[CREDENTIAL HUNTING#Credential Hunting - Linux|Credential Hunting]] on Configuration Files ( `/etc`, `/etc/fstab` or web directories → `/var/www/worpdress/wp-config.php` )***
-- [ ] ***[[CREDENTIAL HUNTING#Credential Hunting in Network Traffic|Credential Hunting on Network Traffic]]***
-- [ ] ***[[LINUX CRON JOB ABUSE|Cron Jobs]]: Monitor Processes with Pspy and check `/etc/cron.XXX` and `/var/spool/cron` directories***
-- [ ] ***[[LINUX PRIVESC#Running Processes|List current Processes]]***
-- [ ] ***[[LINUX SPECIAL PERMISSIONS#SETUID|SUID]]/[[LINUX SPECIAL PERMISSIONS#SETGID|SGID]] Binaries ([[POLKIT ABUSE|Pwnkit]] as well)***
-- [ ] ***[[LINUX CAPABILITIES|Capabilites]]***
-- [ ] ***Logged in Users***
-- [ ] ***[[LINUX KERNEL ABUSE|Kernel Vulnerabilities]] ( e.g. [[LINUX KERNEL ABUSE#OverlayFS|OverlayFS]], [[LINUX KERNEL ABUSE#Dirty Pipe|Dirty Pipe]] and so on )***
-- [ ] ***[[SUDO ABUSE|Sudo ]] version vulnerability***
-- [ ] ***[[LINUX PRIVESC#Installed Packages|Installed Packages]] Vulnerabilities ( See [[TERMINAL MULTIPLEXER ABUSE#GNU Screen|Screen]] and [[LOGROTATE ABUSE|Logrotate]]  )***
-- [ ] ***Readable Shadow File ( `/etc/shadow` )***
-- [ ] ***Password Hashes on `/etc/passwd`***
-- [ ] ***Unmounted FS and Additional Drives***
-- [ ] ***[[CONTAINERS ABUSE#Docker Sockets|Writable Docker Socket Files]]***
-- [ ] ***[[TERMINAL MULTIPLEXER ABUSE|TMUX]] or SCREEN sessions ( Write permissions on the given socket )***
-- [ ] ***NFS Shares with [[NFS NO_ROOT_SQUASH|NO_ROOT_SQUASH]] enabled***
-- [ ] ***Check [[SHARED OBJECT HIJACKING#Runpath Hijacking|RUNPATH Hijacking]] if there is a privileged ( SUID, Sudo, Capabilities... ) custom binary ( ELF )***
-- [ ] ***[[WILDCARD ABUSE|Wildcards abuse]] if [[WILDCARD ABUSE#TAR|TAR]] is used in a privileged way ( e.g. Sudo or Cron Job )***
-- [ ] ***[[LINUX PRIVESC#Trace System Calls|Trace System Calls]] of custom and privileged binaries***
-- [ ] ***Run Privesc Enumeration Scripts such as [LINPEAS](https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS)***
-
-##### *Per User*
-
-- [ ] ***[[LINUX SPECIAL PERMISSIONS#Sudo Permissions|Sudo Privileges]]***
-- [ ] ***[[LINUX PRIVILEGED GROUPS|Privileged Groups]] to which the user belongs to ( e.g. [[LINUX PRIVILEGED GROUPS#Docker|Docker]], [[LINUX PRIVILEGED GROUPS#LXC LXD|LXD]], [[LINUX PRIVILEGED GROUPS#Disk|Disk]] and so on)***
-- [ ] ***Look for Sensitive Files on Current [[LINUX PRIVESC#Users's Home Directory|User's home directory]] ( e.g. Shell History Files, SSH Keys and so on )***
-- [ ] ***Current User's Home Directory ( [[LINUX PRIVESC#History|History Files]], .SSH Directory )***
-- [ ] ***[[LINUX PRIVESC#FS, Drives and Shares|Mounted FS and Drives]]***
-- [ ] ***Interesting Resources ( [[LINUX PRIVESC#Hidden Resources|Hidden]], [[LINUX PRIVESC#Writable Resources|Writable]], [[LINUX PRIVESC#Owned Resources|Owned]], [[LINUX PRIVESC#Temporary Files|Temporary]], [[LINUX PRIVESC#Scripts|Scripts]]... )***
-- [ ] ***[[LINUX PRIVESC#Users's Home Directory|Access other system user directories]] within `/home` directory***
-- [ ] ***[[LINUX PRIVESC#Environment Parameters|Enviromental variables and parameters]]***
-- [ ] ***See [[PYTHON LIBRARY HIJACKING|Python Library Hijacking]] if the current user has sudo privileges on a Python Script or Cron Job runs it as a privileged user***
-- [ ] ***[[LD_PRELOAD ABUSE|LD_PRELOAD Abuse]] → Sudo Privileges on an ELF Binary***
-- [ ] ***See [[ESCAPE RSHELLS|Escaping RShells]] if we land on a restricted shell***
-- [ ] ***See [[CONTAINERS ABUSE#Docker|Docker Abuse]] if we land on a docker container***
-- [ ] ***See [[K8S ABUSE|K8S Abuse]] if we land on a K8S container***
-- [ ] ***Check [[LINUX PRIVESC#Enviroment Enumeration|Environment Enumeration]]***
