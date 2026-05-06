@@ -1,0 +1,195 @@
+---
+Primary_category: "[[CHECKLISTS]]"
+title: "COMMON SERVICES CHECKLIST"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[CHECKLISTS]]
+
+> [!IMPORTANT]- *Important*
+>
+> ***For any AD-related protocol not found here, refer to [[AD OFFENSIVE CHECKLIST|AD Offensive Checklist]]***
+>
+
+#### *FTP*
+
+> ***[[20, 21 - FTP|FTP]]***
+
+##### *Non-Credentialed Enumeration*
+
+- [ ] ***FTP Service Software Version → [[20, 21 - FTP#Banner Grabbing|Banner Grabbing]] or [[NETWORK ENUMERATION#Comprehensive Scan|NMAP Comprehensive Scan]]***
+
+- [ ] ***Anonymous Access***
+
+***If so, then check [[#FTP#Credentialed Enumeration|FTP Credential Enumeration]]***
+
+- [ ] ***Known CVEs (Searchsploit (ExploitDB), Google...) for the given FTP service version***
+
+- [ ] ***[[20, 21 - FTP#Bruteforcing|FTP Bruteforce and Password Spraying]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***Web Application + FTP Write Permissions → Try to upload a Web Shell to gain RCE***
+
+- [ ] ***Windows System + FTP Write Permissions → [[LIVING OFF THE LAND COERCION#Shortcut Files|Malicious shortcut file]] Upload + [[NTLM CAPTURE|NetNTLMv2 Hash Capture]] + [[WINDOWS CREDENTIALS CRACKING#Net-NTLMv2 Response|Cracking]]***
+
+---
+
+#### *HTTP*
+
+> ***[[80, 443 - HTTP|HTTP]]***
+
+> ***See [[WEB OFFENSIVE CHECKLIST|Web Offensive Checklist]]***
+
+---
+
+#### *DNS*
+
+> ***[[53 - DNS|DNS]]***
+
+##### *Non-Credentialed Enumeration*
+
+- [ ] ***DNS Service Software Version → [[53 - DNS#Banner Grabbing|Banner Grabbing]] or [[NETWORK ENUMERATION#Comprehensive Scan|NMAP Comprehensive Scan]]***
+
+- [ ] ***[[53 - DNS#Query for Specific DNS Records|DNS Records Enumeration]] → [[53 - DNS#ANY Query|ANY Query]]***
+
+- [ ] ***[[53 - DNS#DNS Zone Transfer|DNS Zone Transfer]]***
+
+- [ ] ***Known CVEs (Searchsploit (ExploitDB), Google...) for the given DNS service version***
+
+- [ ] ***[[53 - DNS#Subdomains Enumeration|Subdomain Enumeration]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***Windows AD → DNS Records Dump using [adidnsdump](https://github.com/dirkjanm/adidnsdump)***
+
+---
+
+#### *SMB*
+
+##### *Non-Credentialed Enumeration*
+
+> ***[[139, 445 - SMB|SMB]]***
+
+> ***See [[AD OFFENSIVE CHECKLIST|AD Offensive Checklist]]***
+
+- [ ] ***Vulnerable SMB Version due to unpatched and outdated Windows Version***
+
+> ***e.g. EternalBlue***
+
+- [ ] ***Check [[139, 445 - SMB#Null/Anonymous Authentication|SMB Null]] and [[139, 445 - SMB#Guest Authentication|Guest]] Authentication***
+
+***If so, then check [[#SMB#Credentialed Enumeration|SMB Credentialed Enumeration]]***
+
+- [ ] ***[[139, 445 - SMB#Bruteforcing & Password Spraying|SMB Bruteforce and Password Spraying]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***[[139, 445 - SMB#Shared Resources Enumeration|List any available SMB Share]]***
+
+- [ ] ***READ Permissions → Look for any sensitive data through automated enumeration [[WINDOWS CREDENTIAL HUNTING#Snaffler|Snaffler]] or manual enumeration ( [[139, 445 - SMB#Mount a Shared SMB Folder|Local Mount]] )***
+
+- [ ] ***Windows System + SMB Write Permissions → [[LIVING OFF THE LAND COERCION#Shortcut Files|Malicious shortcut file]] Upload + [[NTLM CAPTURE|NetNTLMv2 Hash Capture]] + [[WINDOWS CREDENTIALS CRACKING#Net-NTLMv2 Response|Cracking]]***
+
+---
+
+#### *RPC*
+
+> ***[[135 - RPC|RPC]]***
+
+> ***See [[AD OFFENSIVE CHECKLIST|AD Offensive Checklist]]***
+
+##### *Non-Credentialed Enumeration*
+
+- [ ] ***Check [[135 - RPC#Check Null/Anonymous Auth|RPC Null]] and Guest Authentication***
+
+***If so, then check [[#RPC#Credentialed Enumeration|RPC Credentialed Enumeration]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***[[135 - RPC#RPC Endpoints Enumeration via EMP|RPC Endpoints Enumeration]]***
+
+- [ ] ***[[135 - RPC#RID Bruteforce/Cycling|RID Brutefoce/Cycling]]***
+
+---
+
+#### *SMTP*
+
+> ***[[25, 465, 587 - SMTP|SMTP]]***
+
+- [ ] ***SMTP Service Software Version → [[25, 465, 587 - SMTP#Banner Grabbing|Banner Grabbing]] or [[NETWORK ENUMERATION#Comprehensive Scan|NMAP Comprehensive Scan]]***
+
+- [ ] ***List [[25, 465, 587 - SMTP#Listing SMTP Avaliable Commands/Extensions|SMTP Available Commands]]***
+
+- [ ] ***[[25, 465, 587 - SMTP#User Enumeration|Manual User Enumeration]] or [[25, 465, 587 - SMTP#smtp-user-enum|Automated User Enumeration]]***
+
+- [ ] ***Known CVEs (Searchsploit (ExploitDB), Google...) for the given SMTP service version***
+
+- [ ] ***[[25, 465, 587 - SMTP#Bruteforcing & Password Spraying|SMTP Bruteforce and Password Spraying]]***
+
+- [ ] ***Check [[25, 465, 587 - SMTP#Open Relay|Open Relay]]***
+
+---
+
+#### *IMAP*
+
+> ***[[143, 993 - IMAP|IMAP]]***
+
+##### *Non-Credentialed Enumeration*
+
+- [ ] ***IMAP Service Software Version → [[143, 993 - IMAP#Banner Grabbing|Banner Grabbing]] or [[NETWORK ENUMERATION#Comprehensive Scan|NMAP Comprehensive Scan]]***
+
+- [ ] ***Known CVEs (Searchsploit (ExploitDB), Google...) for the given IMAP service version***
+
+- [ ] ***[[143, 993 - IMAP#Bruteforcing & Password Spraying|IMAP Bruteforce and Password Spraying]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***Look for sensitive information ( Plain passwords, tokens... ) in any existing email message within the given INBOX***
+
+> ***See [[143, 993 - IMAP#Service Interaction|Service Interaction]]***
+
+---
+
+#### *POP3*
+
+> ***[[110, 995 - POP3|POP3]]***
+
+##### *Non-Credentialed Enumeration*
+
+- [ ] ***POP3 Service Software Version → [[110, 995 - POP3#Banner Grabbing|Banner Grabbing]] or [[NETWORK ENUMERATION#Comprehensive Scan|NMAP Comprehensive Scan]]***
+
+- [ ] ***[[110, 995 - POP3#User Enumeration|Manual User Enumeration]]***
+
+- [ ] ***Known CVEs (Searchsploit (ExploitDB), Google...) for the given POP3 service version***
+
+- [ ] ***[[110, 995 - POP3#Bruteforcing & Password Spraying|POP3 Bruteforcing and Password Spraying]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***Look for sensitive information ( Plain passwords, tokens... ) in any existing email message within the given INBOX***
+
+> ***See [[110, 995 - POP3#Service Interaction|here]]***
+
+---
+
+#### *NFS*
+
+> ***[[111, 2049 - NFS|NFS]]***
+
+- [ ] ***[[111, 2049 - NFS#List NFS Server's Exports (Shared Resources)|Check if any NFS Shared Resource is available]]***
+
+- [ ] ***If so, [[111, 2049 - NFS#Mounting an NFS Share|mount it]]***
+
+- [ ] ***[[NFS NO_ROOT_SQUASH]]***
+
+---
+
+#### *SNMP*
+
+> ***[[161, 162 - SNMP|SNMP]]***
+
