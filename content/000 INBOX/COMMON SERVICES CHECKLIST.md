@@ -47,6 +47,26 @@ cssclasses:
 
 ---
 
+#### *MYSQL*
+
+> ***[[3306 - MYSQL|MYSQL]]***
+
+##### *Outside*
+
+> ***i.e. SQL Injection***
+
+> ***See [[WEB OFFENSIVE CHECKLIST|Web Offensive Checklist]]***
+
+##### *Inside*
+
+> ***i.e. After compromising a web application and establish a remote connection via Rev. Shell ( e.g. `mysql` cli tool )***
+
+- [ ] ***[[3306 - MYSQL#MySQL Commands|Look for sensitive information within all DBs]]***
+
+> ***e.g. A table named Users or Employees with Crackable Hashes***
+
+---
+
 #### *DNS*
 
 > ***[[53 - DNS|DNS]]***
@@ -83,7 +103,7 @@ cssclasses:
 
 - [ ] ***Check [[139, 445 - SMB#Null/Anonymous Authentication|SMB Null]] and [[139, 445 - SMB#Guest Authentication|Guest]] Authentication***
 
-***If so, then check [[#SMB#Credentialed Enumeration|SMB Credentialed Enumeration]]***
+***If available, then check [[#SMB#Credentialed Enumeration|SMB Credentialed Enumeration]]***
 
 - [ ] ***[[139, 445 - SMB#Bruteforcing & Password Spraying|SMB Bruteforce and Password Spraying]]***
 
@@ -107,13 +127,87 @@ cssclasses:
 
 - [ ] ***Check [[135 - RPC#Check Null/Anonymous Auth|RPC Null]] and Guest Authentication***
 
-***If so, then check [[#RPC#Credentialed Enumeration|RPC Credentialed Enumeration]]***
+***If available, then check [[#RPC#Credentialed Enumeration|RPC Credentialed Enumeration]]***
 
 ##### *Credentialed Enumeration*
 
 - [ ] ***[[135 - RPC#RPC Endpoints Enumeration via EMP|RPC Endpoints Enumeration]]***
 
 - [ ] ***[[135 - RPC#RID Bruteforce/Cycling|RID Brutefoce/Cycling]]***
+
+---
+
+#### *LDAP*
+
+> ***[[389, 636 - LDAP|LDAP]]***
+
+> ***See [[AD OFFENSIVE CHECKLIST|AD Offensive Checklist]]***
+
+##### *Non-Credentialed Enumeration*
+
+- [ ] ***Check [[389, 636 - LDAP#Null Authentication|LDAP Null Authentication]]***
+
+***If available, then check [[#LDAP#Credentialed Enumeration|LDAP Credentialed Enumeration]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***Look for sensitive information within LDAP Objects***
+
+> ***Plain passwords, keys, principals susceptible to [[ASREPROAST|ASREPRoast]] or [[KERBEROAST|Kerberoast]] and so on***
+
+---
+
+#### *MSSQL*
+
+> ***[[1433 - MSSQL|MSSQL]]***
+
+> ***See [[AD OFFENSIVE CHECKLIST|AD Offensive Checklist]]***
+
+- [ ] ***[[1433 - MSSQL#MSSQL Commands|Look for sensitive information within MSSQL Instance]]***
+
+> ***e.g. Databases, Tables, Users, Procedures and so on***
+
+- [ ] ***[[1433 - MSSQL#Verifying our Current User and Role|Check which roles are assigned to the current DB User]]***
+
+- [ ] ***Sysadmin or ServerAdmin Role → Get [[1433 - MSSQL#MSSQL Command Execution|Command Execution]]***
+
+> ***If none of those roles are assigned, then try enabling `xp_cmdshell` anyways, just in case***
+
+- [ ] ***Command Execution → [[SHELLS AND PAYLOADS#Reverse Shell|Reverse Shell]] + [[SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE|seImpersonate Abuse]]***
+
+- [ ] ***[[1433 - MSSQL#Read Local Files|Read System Files]] → { HTTP Server → { ISS web.config | [[TOMCAT|Tomcat]] users' file } }***
+
+> ***i.e. Read Files from a MSSQL Instance*** ⤴️
+
+- [ ] ***Sysadmin or ServerAdmin Role → [[1433 - MSSQL#Enable OLE Automation Procedures|Enable Ole Automation Procedures]] → [[1433 - MSSQL#Creating a File|File Creation]] → { HTTP Server → Try upload a [[SHELLS AND PAYLOADS#Web Shell|Web Shell]] | Busy Writable Shares/Interesting Directories → Drop a [[LIVING OFF THE LAND COERCION#Shortcut Files|Shortcut File]] + { [[NTLM RELAY|NTLM Relay]] | [[NTLM CAPTURE|NTLM Capture]] } }***
+
+> ***i.e. Write Files from a MSSQL Instance*** ⤴
+
+- [ ] ***Current DB User with EXECUTE right over `xp_dirtree` → [[1433 - MSSQL#MitM and Credential Cracking|MitM and Credential Cracking]]***
+
+- [ ] ***[[1433 - MSSQL#User Impersonation|MSSQL User Impersonation]]***
+
+- [ ] ***Communication with othe DBS via [[1433 - MSSQL#Communication with Other DBs|MSSQL Linked Servers]] → [[1433 - MSSQL#Enabling command execution on Linked Servers|Command Execution on MSSQL Linked Servers]]***
+
+---
+
+#### *RDP*
+
+> ***[[3389 - RDP|RDP]]***
+
+- [ ] ***RDP Service Software Version → Known CVEs (Searchsploit (ExploitDB), Google...)***
+
+- [ ] ***[[3389 - RDP#Bruteforcing & Password Spraying|RDP Bruteforce and Password Spraying]]***
+
+---
+
+#### *WINRM*
+
+> ***[[5985, 5986 - WINRM|WINRM]]***
+
+- [ ] ***[[5985, 5986 - WINRM#Dictionary Attack & Password Spraying|WinRM Dictionary Attack and Password Spraying]]***
+
+- [ ] ***PFX Certificate ( .x509 Format and a domain principal as UPN ) → Public and Private Key Extraction → [[5985, 5986 - WINRM#MS-PSRP#Evil-WinRM|WinRM Certificate Authentication]]***
 
 ---
 
@@ -193,3 +287,64 @@ cssclasses:
 
 > ***[[161, 162 - SNMP|SNMP]]***
 
+##### *Non-Credentialed Enumeration*
+
+- [ ] ***[[161, 162 - SNMP#Get SNMP Version|SNMP Version Enumeration]]***
+
+- [ ] ***SNMPv1 and SNMPv2c → [[161, 162 - SNMP#Community String Bruteforce|Community String Bruteforce]]***
+
+If we get a hit and obtain the given *community string*, then check ***[[#SNMP#Credentialed Enumeration|SNMP Credentialed Enumeration]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***[[161, 162 - SNMP#Retrieve OIDs Values|Retrieve all OID values]] and filter by [[161, 162 - SNMP#Relevant Information Extraction|Relevant Information]]***
+
+---
+
+#### *REDIS*
+
+> ***[[6379 - REDIS|REDIS]]***
+
+> ***It does not require authentication by default***
+
+- [ ] ***[[6379 - REDIS#Keyspaces (Databases)|Look for sensitive information within existing Keyspaces]]***
+
+- [ ] ***Require Authentication set → [[6379 - REDIS#Sensitive Information|Look for Plain Credentials in REDIS Configuration]]***
+
+- [ ] ***[[6379 - REDIS#SSH|REDIS → SSH Pub Key Authentication]]***
+
+---
+
+#### *RSYNC*
+
+> ***[[873 - RSYNC|RSYNC]]***
+
+##### *Non-Credentialed Enumeration*
+
+- [ ] ***[[873 - RSYNC#Modules/Shared Folders Enumeration|List all available RSYNC Modules]]***
+
+- [ ] ***Check [[873 - RSYNC#Enumeration#Rsync|RSYNC Anonymous Authentication]] by listing information about an available module***
+
+***If available, then check [[#RSYNC#Credentialed Enumeration|RSYNC Credentialed Enumeration]]***
+
+##### *Credentialed Enumeration*
+
+- [ ] ***[[873 - RSYNC#Enumeration#Rsync|List all information related to a specific RSYNC Module]]***
+
+- [ ] ***Data Exfiltration → [[873 - RSYNC#Download All the Rsync Module Content|Download all available modules' information]]***
+
+- [ ] ***Check [[873 - RSYNC#Rsyncd.conf & Rsyncd.secrets|RSYNC sensitive files' content]]***
+
+> ***e.g. rsyncd.conf, rsyncd.secrets...***
+
+---
+
+#### *Oracle TNS*
+
+> ***[[1521 - ORACLE TNS|Oracle TNS]]***
+
+---
+
+#### *IPMI*
+
+> ***[[623 - IPMI]]***
