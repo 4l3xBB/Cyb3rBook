@@ -35,6 +35,8 @@ cssclasses:
 
 - [ ] ***Web Application + FTP Write Permissions → Try to upload a Web Shell to gain RCE***
 
+- [ ] ***SSH + FTP Write Permissions → Upload an `Authorized_keys` file on `/home/<USER>/.ssh` directory + SSH Pub Key Authentication ***
+
 - [ ] ***Windows System + FTP Write Permissions → [[LIVING OFF THE LAND COERCION#Shortcut Files|Malicious shortcut file]] Upload + [[NTLM CAPTURE|NetNTLMv2 Hash Capture]] + [[WINDOWS CREDENTIALS CRACKING#Net-NTLMv2 Response|Cracking]]***
 
 ---

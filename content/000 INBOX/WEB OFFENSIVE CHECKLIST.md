@@ -22,11 +22,23 @@ cssclasses:
 
 #### *Enumeration*
 
-##### *Web Application Functionality*
+- [ ] ***Web Technologies***
+
+> ***e.g. Server-Side Programming Language → Whatweb, Wappalyzer, Extension Fuzzing***
+
+- [ ] ***[[80, 443 - HTTP#Known Web Files|Known Web Resources]]***
+
+> ***e.g. Robots.txt, Sitemap...***
+
+- [ ] ***[[80, 443 - HTTP#Crawlers|Web Crawling]] to list accesible web pages and HTLM juicy comments***
 
 - [ ] ***Accesible Web pages functionality while having Burpsuite open***
 
+> ***i.e. While traffic passes through Burpsuite***
+
 - [ ] ***Non-hidden HTTP Parameters: Look for any type of injection***
+
+> ***We must look for any resource that accepts user input and subsequently send it to the server***
 
 ***e.g.***
 
@@ -40,13 +52,23 @@ cssclasses:
 
 - [ ] ***Custom HTTP Response Headers and Cookies***
 
-##### *Fuzzing*
+- [ ] ***Fuzz for [[FUZZING#Ffuf|Resources: Directories and Files]]***
 
-- [ ] ***[[FUZZING#Ffuf|Resources: Directories and Files]]***
+> ***Based on the Server-Side Programming Language used i.e. <URL\>/<RESOURCE\>.php***
 
-- [ ] ***[[FUZZING#Virtual Hosts|Virtual Hosts and Subdomains]]***
+> ***Juicy Extensions → `txt,xml,zip,bk,gz` and so on***
 
-- [ ] ***[[FUZZING#HTTP Parameters|Hidden Parameters]]***
+- [ ] ***Valid domain→ [[FUZZING#Virtual Hosts|Fuzz for Virtual Hosts and Subdomains]]***
+
+- [ ] ***Fuzz for [[FUZZING#HTTP Parameters|HTTP Hidden Parameters]]***
+
+- [ ] ***After finding a new VHOST, fuzz it again as a new base domain***
+
+> ***e.g. domain.tld → web1337.domain.tld → dev.web1337.domain.tld***
+
+- [ ] ***[[53 - DNS|DNS]] Server available ( i.e. 53 TCP Port open ) → [[53 - DNS#DNS Zone Transfer|DNS Zone Transfer]]***
+
+- [ ] ***Public/Registered Domain → [[OSINT]] ( e.g. [[CERTIFICATE TRANSPARENCY|CT]] )***
 
 ##### *XSS*
 
