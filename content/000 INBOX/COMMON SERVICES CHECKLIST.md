@@ -15,6 +15,11 @@ cssclasses:
 > ***For any AD-related protocol not found here, refer to [[AD OFFENSIVE CHECKLIST|AD Offensive Checklist]]***
 >
 
+> [!IMPORTANT]- *Important*
+>
+> ***When performing a brute-force attack, always use the [Rockyou.txt](https://github.com/teamstealthsec/wordlists/blob/master/rockyou.txt.gz) Wordlist as a last resort***
+>
+
 #### *FTP*
 
 > ***[[20, 21 - FTP|FTP]]***
@@ -66,6 +71,8 @@ cssclasses:
 - [ ] ***[[3306 - MYSQL#MySQL Commands|Look for sensitive information within all DBs]]***
 
 > ***e.g. A table named Users or Employees with Crackable Hashes***
+
+- [ ] ***Web Application running as a privileged user → [[3306 - MYSQL#Show the Permissions of the Current User|Check Current DB User's rights]] → [[3306 - MYSQL#Write|Write]] files to the Webapp ( e.g. a PHP Web Shell )***
 
 ---
 
