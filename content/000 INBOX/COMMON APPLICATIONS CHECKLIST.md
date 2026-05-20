@@ -1,0 +1,265 @@
+---
+Primary_category: "[[CHECKLISTS]]"
+title: "COMMON APPLICATIONS CHECKLIST"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+---
+
+###### PRIMARY CATEGORY → [[CHECKLISTS]]
+
+#### *WordPress*
+
+> ***CMS***
+
+> ***[[WORDPRESS|WordPress]]***
+
+***Enumeration →***
+
+- [ ] ***Gather [[WORDPRESS#WordPress Version|WP Version]] → Look for known CVEs and security flaws***
+
+> ***e.g. Searchsploit ( i.e. ExploitDB ), Google...***
+
+- [ ] ***List the [[WORDPRESS#Installed Plugins|Installed Plugins]]***
+
+- [ ] ***Disclose the [[WORDPRESS#Installed Plugins Version|Installed Plugins' version]] → Look for known CVEs and security flaws***
+
+- [ ] ***List the [[WORDPRESS#Themes|Installed Themes]] → Look for known CVEs and security flaws***
+
+- [ ] ***Enumerate the [[WORDPRESS#Users|existing Users]] → [[WORDPRESS#Login Bruteforce|Bruteforce]]***
+
+- [ ] ***[[WORDPRESS#Login Bruteforce|WordPress Login Bruteforce]]***
+
+- [ ] ***Supplements the manual enumeration above with an automated scan using [[WORDPRESS#WPScan|WPScan]]***
+
+***WordPress Control Panel Access →***
+
+- [ ] ***WP Control Panel Access as an Administrator User → [[WORDPRESS#Code Execution|RCE]] either by editing a disabled theme PHP script or by uploading a malicious plugin ( e.g. an existing one with a PHP script we added )***
+
+***Sensitive Information Gathering →***
+
+- [ ] ***WordPress Compromised ( e.g. RCE, [[LFI]], [[SQLi]], [[XXE]]... ) → Gather Plain DB Credentials from `wp-config.php` and look for sensitive information within the WP database ( e.g. wp_users hashes )***
+
+- [ ] ***Credential Reuse or [[PASSWORD SPRAYING|Password Spraying]] using the credentials obtained***
+
+---
+
+#### *Joomla*
+
+> ***CMS***
+
+> ***[[JOOMLA|Joomla]]***
+
+***Enumeration →***
+
+- [ ] ***Gather [[JOOMLA#Joomla Version|Joomla Version]] → Look for known CVEs and security flaws***
+
+> ***e.g. Searchsploit ( i.e. ExploitDB ), Google...***
+
+- [ ] ***Supplements the manual enumeration above with an automated scan using [[JOOMLA#Droopescan|Droopescan]] or [[JOOMLA#JoomlaScan|JoomlaScan]]***
+
+- [ ] ***[[JOOMLA#Login Bruteforce|Joomla Login Bruteforce]]***
+
+***Joomla Control Panel Access →***
+
+- [ ] ***As SuperUser → [[JOOMLA#Code Execution|RCE]]***
+
+***Sensitive Information Gathering →***
+
+- [ ] ***Joomla Compromised ( e.g. RCE, [[LFI]], [[SQLi]], [[XXE]]... ) → Gather Plain DB Credentials from `configuration.php` and look for sensitive information within the Joomla database ( Users table's hashes)***
+
+- [ ] ***Credential Reuse or [[PASSWORD SPRAYING|Password Spraying]] using the credentials obtained***
+
+---
+
+#### *Drupal*
+
+> ***CMS***
+
+> ***[[DRUPAL|Drupal]]***
+
+***Enumeration →***
+
+- [ ] ***Gather [[DRUPAL#Drupal Version|Drupal Version]] → Look for known CVEs and security flaws***
+
+> ***e.g. Searchsploit ( i.e. ExploitDB ), Google...***
+
+&emsp;&emsp;***[[DRUPAL#Drupalgeddon|Drupalgeddon]]&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;[[DRUPAL#Drupalgeddon 2|Drupalgeddon 2]]&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;[[DRUPAL#Drupalgeddon 3|Drupalgeddon 3]]***
+
+- [ ] ***Supplements the manual enumeration above with an automated scan using [[DRUPAL#Droopescan|Droopescan]]***
+
+***Drupal Control Panel Access →***
+
+- [ ] ***RCE prior to Drupal 8 → [[DRUPAL#Before Drupal 8|PHP Filter Module]]***
+
+- [ ] ***RCE from Drupal 8 → [[DRUPAL#From Drupal 8|PHP Filter Module]]***
+
+- [ ] ***RCE from Drupal 8 → [[DRUPAL#Malicious Module|Malicious Module Upload]]***
+
+***Sensitive Information Gathering →***
+
+- [ ] ***Drupal Compromised ( e.g. RCE, [[LFI]], [[SQLi]], [[XXE]]... ) → Gather Plain DB Credentials from `/sites/default/settings.php` and look for sensitive information within the Drupal database ( Users table's hashes)***
+
+- [ ] ***Credential Reuse or [[PASSWORD SPRAYING|Password Spraying]] using the credentials obtained***
+
+---
+
+#### *Tomcat*
+
+> ***Application Server***
+
+> ***[[TOMCAT|Tomcat]]***
+
+***Enumeration →***
+
+> ***Take a look at [[TOMCAT#Sensitive Files|Tomcat's Sensitive Files]]***
+
+- [ ] ***Gather Tomcat Version via [[TOMCAT#404 Error Pages|404 Error Pages]] or [[TOMCAT#Docs Directory|Docs Directory]] → Look for known CVEs and security flaws***
+
+> ***e.g. Searchsploit ( i.e. ExploitDB ), Google...***
+
+&emsp;&emsp;***[[TOMCAT#Ghostcat|Ghostcat]]&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;[[TOMCAT#Tomcat CGI|Tomcat CGI]]***
+
+- [ ] ***[[TOMCAT#Sensitive Endpoints|Sensitive Endpoints]] Access with [[TOMCAT#Default Credentials|Default Credentials]]***
+
+> ***e.g. `tomcat:tomcat`, `admin:admin`...***
+
+- [ ] ***If not, [[TOMCAT#Login Bruteforce - Tomcat Manager|Tomcat Login Bruteforce]]***
+
+***Tomcat Manager Access →***
+
+- [ ] ***[[TOMCAT#Code Execution|RCE through a WAR File Upload]]***
+
+***Sensitive Information Gathering →***
+
+- [ ] ***Tomcat Compromised ( e.g. RCE, [[LFI]], [[SQLi]], [[XXE]]... ) → Gather Plain Credentials from [[TOMCAT#Sensitive Files|Tomcat Sensitive Files]]***
+
+- [ ] ***Credential Reuse or [[PASSWORD SPRAYING|Password Spraying]] using the credentials obtained***
+
+---
+
+#### *Jenkins*
+
+> ***Software Development Tool***
+
+> ***[[JENKINS|Jenkins]]***
+
+- [ ] ***No Authentication required to access Jenkins Control Panel***
+
+> ***i.e. Anonymous Access***
+
+- [ ] ***[[JENKINS#Authentication|Jenkins Default Credentials]]***
+
+- [ ] ***Jenkins Control Panel Access → RCE via [[JENKINS#Script Console|Script Console]] using Groovy Scripts***
+
+---
+
+#### *Splunk*
+
+> ***SIEM***
+
+> ***[[SPLUNK|Splunk]]***
+
+- [ ] ***Old Splunk Installation → [[SPLUNK#Default Credentials|Default Logon Credentials]] displayed in the login panel***
+
+- [ ] ***Recent Splunk Installation → [[SPLUNK#Default Credentials|Default Credentials]]***
+
+> ***`admin:<PASSWORD>`***
+
+- [ ] ***Check for [[SPLUNK#Trial Version|Splunk Trial Version]]***
+
+- [ ] ***Splunk Control Panel Access → RCE through [[SPLUNK#Scripted Inputs|Splunk Scripted Inputs]]***
+
+---
+
+#### *PRTG*
+
+> ***Monitoring Software***
+
+> ***[[PRTG|PRTG]]***
+
+- [ ] ***[[PRTG#Default Credentials|PRTG Default Credentials]]***
+
+- [ ] ***Gather [[PRTG#PRTG Version|PRTG Version]]***
+
+- [ ] ***PRTG Control Panel Access → PRTG prior to 18.2.39 → [[PRTG#CVE-2018-9276|Authenticated Command Injection]]***
+
+---
+
+#### *Gitlab*
+
+> ***Software Config. Management***
+
+> ***[[GITLAB|Gitlab]]***
+
+***Unauthenticated →***
+
+- [ ] ***Sensitive Information or Web App Source Code Disclosure on [[GITLAB#Public Projects/Repositories|Public Repositories]] ( e.g. Plain Credentials, Web app code review... )***
+
+> ***Browse, groups, snippets, help pages and so on***
+
+- [ ] ***Gitlab Instance [[GITLAB#Repository Types|w/o Validation after User Registration]] → Sign up, then log in to Gitlab***
+
+- [ ] ***[[GITLAB#User Enumeration|Gitlab User Enumeration]]***
+
+- [ ] ***Gitlab CE prior to 13.10.2 → [[GITLAB#Unauthenticated|Unauthenticated RCE]]***
+
+***Authenticated →***
+
+- [ ] ***Sensitive Information or Web App Source Code Disclosure on [[GITLAB#Repository Types|Internal or Private Repositories]] ( e.g. Plain Credentials, Web app code review... )***
+
+> ***Browse, groups, snippets, help pages and so on***
+
+- [ ] ***Gather [[GITLAB#Gitlab Version|Gitlab Version]] → Look for known CVEs and security flaws***
+
+> ***e.g. Searchsploit ( i.e. ExploitDB ), Google...***
+
+- [ ] ***Gitlab CE prior to 13.10.2 → [[GITLAB#Authenticated|Authenticated RCE]]***
+
+---
+
+#### *OSTicket*
+
+> ***Customer Service Management***
+
+> ***[[OSTICKET|OSTicket]]***
+
+- [ ] ***Gather OSTicket Version → Look for known CVEs and security flaws***
+
+> ***e.g. Searchsploit ( i.e. ExploitDB ), Google...***
+
+- [ ] ***Try valid credentials in the [[OSTICKET#Agent Login Panel|Agent Login Panel]]***
+
+- [ ] ***[[OSTICKET#Abusing Temporary Email Accounts assigned to Tickets|Abusing Temporary Email Accounts assigned to Tickets]]***
+
+---
+
+#### *CGI*
+
+> ***Common Gateway Interface***
+
+> ***[[CGI]]***
+
+***Shellshock***
+
+> ***Bash 4.3 and lower***
+
+- [ ] ***[[CGI#Via CGI|Directory Fuzzing]] on the given Web Application → Existence of a `/cgi-bin` directory***
+
+- [ ] ***[[CGI#Shellshock ( CVE-2014-{6271,7169} )|Shellshock Abuse]]***
+
+---
+
+#### *Coldfusion*
+
+> ***[[COLDFUSION|Coldfusion]]***
+
+> ***Authentication required to gather Coldfusion Version***
+
+- [ ] ***[[COLDFUSION#Identifying Vulnerabilities|Look for known CVEs and security flaws]]***
+
+> ***e.g. Searchsploit ( i.e. ExploitDB ), Google...***
+
+&emsp;&emsp;***[[COLDFUSION#Directory Path Traversal ( CVE-2010-2861 )|CVE-2010-2861]]&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;[[COLDFUSION#Unauthenticated RCE ( CVE-2009-2265 )|CVE-2009-2265]]***

@@ -20,11 +20,21 @@ cssclasses:
 
 ---
 
-#### *Enumeration*
+#### *Enumeration - Common Web App*
+
+> ***e.g. WordPress, Tomcat, Jenkins, Joomla...***
+
+> ***Check [[WEB TECHNOLOGIES#Enumeration|this]] out***
+
+---
+
+#### *Enumeration - Custom Web App*
 
 - [ ] ***Web Technologies***
 
-> ***e.g. Server-Side Programming Language → Whatweb, Wappalyzer, Extension Fuzzing***
+> ***e.g. Server-Side Programming Language → Whatweb, Wappalyzer***
+
+- [ ] ***[[FUZZING#Allowed Extensions|Extension Fuzzing]]***
 
 - [ ] ***[[80, 443 - HTTP#Known Web Files|Known Web Resources]]***
 
@@ -45,6 +55,8 @@ cssclasses:
 ***GET/POST Parameters in a Login/Registration Form → [[SQLi]]***
 
 ***GET/POST Parameters in Contact Form | Comments | Support Tickets → [[XSS]]***
+
+***GET/POST Parameters exposed in the Source Code of each Web Application Page***
 
 ***A web page with GET Parameters such as*** `File`, `Page` ***and so on → [[LFI]] or [[RFI]]***
 
@@ -86,11 +98,17 @@ cssclasses:
 
 ##### *LFI*
 
-- [ ] ***Any POST or GET parameter***
+- [ ] ***Any POST or GET parameter ( Check [[LFI - FUZZING#Fuzzing Hidden Parameters|LFI Known Parameters]]  )***
+
+> ***e.g. `<URL>?page=<VALUE>` or `<URL>?language=<VALUE>`***
+
+- [ ] ***[[LFI - FUZZING#Fuzzing Hidden Parameters|Look for Hidden Parameters]] through [[FUZZING#HTTP Parameters|Fuzzing]] on each Web Application resource***
 
 ##### *File Upload*
 
-- [ ] ***If the website has a login feature and we are logged in, check for [[FILE UPLOAD|File Upload]]***
+- [ ] ***Look for any File Upload feature within the given web application***
+
+- [ ] ***If the website has a login feature and we are logged in, check for [[FILE UPLOAD|File Upload]] as well***
 
 ##### *Command Injection*
 
@@ -102,35 +120,80 @@ cssclasses:
 
 ##### *IDOR*
 
-- [ ] ***Look for any direct object reference in the web application to test for its system control access***
+- [ ] ***Look for any direct object reference in the web application to test for its system access control***
 
 ##### *XXE*
 
 - [ ] ***Search for any HTTP request which sends an XML data structure on its body***
 
+- [ ] ***A File Upload feature that allows [[FILE UPLOAD - LIMITED FILE UPLOADS#XXE#SVG|SVG]] images***
+
 ---
 
-#### *Exploitation*
+#### *Exploitation - Common Web App*
+
+> ***See [[COMMON APPLICATIONS CHECKLIST|Common Applications Checklist]]***
+
+---
+
+#### *Exploitation - Custom Web App*
+
+> ***When testing any input data through a certain HTTP Parameter looking for a possible injection, remember to try all available HTTP verbs ( [[HTTP VERB TAMPERING|HTTP Verb Tampering]] )***
+
+> [!TLDR]- *e.g.*
+>
+> ***Abusing [[IDOR#Insecure Function Calls|Insecure Function Calls]] through an [[IDOR]] and [[HTTP VERB TAMPERING|HTTP Verb Tampering]]***
+>
+> ***User Reset Password Feature →***
+>
+> - ***POST***
+>
+> > ***Access Denied***
+>
+> ![[WEB OFFENSIVE CHECKLIST-20260519191940319.webp|400]]
+>
+> > ***Zoom in***
+>
+> - ***GET***
+>
+> > ***"Password changed successfuly"***
+>
+> ![[WEB OFFENSIVE CHECKLIST-20260519192105511.webp|400]]
+>
+> > ***Zoom in***
+>
 
 ##### *SQLi*
+
+###### *Data Exfiltration*
 
 - [ ] ***Enumeration: Databases, Tables, Columns, Fields***
 
 - [ ] ***Check if the current DB user has Read/Write permissions: FILE Privilege and `secure_file_priv` empty or set to an interesting path***
 
-- [ ] ***If [[UNION BASED SQLI#Reading Files|READ]] permissions → Look for interesting files such as:***
+***If [[UNION BASED SQLI#Reading Files|READ]] permissions → Look for interesting files***
 
-***Web Server Configuration Files***
+###### *Read files*
 
-***Virtual Hosts Configuration Files: Web Root (DocumentRoot) Path, .HTPasswd files or another type of sensitive files***
+- [ ] ***Web Application Source Code Script ( e.g. PHP Scripts )***
 
-***Configuration files within the Web Root ( config.php, db_conn.php... )***
+> ***So we can look for any existing security flaw by analyzing the code***
 
-***Service Configuration files that are externally accesible such as [[20, 21 - FTP|FTP]], SSH, [[873 - RSYNC|RSYNC]], CIFS, SQUID, SNMP and so on***
+- [ ] ***Web Server Configuration Files ( i.e. Apache, Nginx, Tomcat... )***
 
-***Home Directory Files such as SSH Keys, Shell History Files and so on***
+- [ ] ***Virtual Hosts Configuration Files ( e.g. Web Root Path, .HTPasswd files or another type of sensitive files )***
 
-- [ ] ***If [[UNION BASED SQLI#Writing Files|WRITE]] Permissions → Web Shell Deployment on Web Root or any directory on which the system user running the DBMS has write permissions***
+- [ ] ***Configuration files within the Web Root ( e.g. config.php, db_conn.php... )***
+
+- [ ] ***Service Configuration files that are externally accesible such as [[20, 21 - FTP|FTP]], SSH, [[873 - RSYNC|RSYNC]], CIFS, SQUID, SNMP and so on***
+
+- [ ] ***Home Directory Files such as SSH Keys, Shell History Files...***
+
+***If [[UNION BASED SQLI#Writing Files|WRITE]] Permissions*** →
+
+###### *Write files*
+
+- [ ] ***Web Shell Deployment on Web Root or any directory on which the system user running the DBMS has write permissions***
 
 ##### *XSS*
 
@@ -138,21 +201,70 @@ cssclasses:
 
 - [ ] ***[[BLIND XSS#Session Hijacking|Session Hijacking]]***
 
+> ***Try with [[BLIND XSS#Theory|different payloads]]***
+
 - [ ] ***[[XSS#Login Form Injection|Phishing via Login Form Injection]]***
 
 ##### *LFI*
 
-- [ ] ***Try different [[LFI - BASIC BYPASSES|Bypasses]]***
+###### *Bypasses*
 
-***Once we are able to exploit the LFI to point to other web files***
+> ***Try different [[LFI - BASIC BYPASSES|Bypasses]]***
 
-- [ ] ***Information Leakage e.g. Configuration files***
+> [!IMPORTANT]- *Important*
+>
+> There are situations where the webapp does not return the expected output from the browser
+>
+> ![[WEB OFFENSIVE CHECKLIST-20260518183518661.webp|]]
+>
+> > ***Zoom in***
+>
+> Therefore, we could try to carry out the same actions using **`curl`**
+>
+> ```bash
+> curl --silent --location --request GET '<URL>?p=....//....//....//....//....//....//....//....//etc/passwd'
+> ```
+>
+> ![[WEB OFFENSIVE CHECKLIST-20260518183731686.webp]]
+>
+> > ***Zoom in***
+>
 
-- [ ] ***Source code of Webroot scripts e.g. Other PHP scripts***
+- [ ] ***[[LFI - BASIC BYPASSES#Non-Recursive Path Traversal Filters|Non-Recursive Path Traversal Filter]]***
 
-***RCE***
+> ***Try all of them***
 
-- [ ] ***[[LFI TO RCE - PHP WRAPPERS|PHP Wrappers]] e.g. ( `data:// | input:// | expect://` )***
+- [ ] ***[[LFI - BASIC BYPASSES#Encoding|Encoding]]***
+
+> ***Simple and Double***
+
+- [ ] ***[[LFI - BASIC BYPASSES#Approved Path|Approved Path]]***
+
+> ***To find the Approved Path → Examine requests sent by existing forms or fuzz for existing web directories under the same path until we get a match ( e.g. `<URL>?lang=./<DIR>/../../../etc/passwd` )***
+
+***Once we are able to exploit the LFI to point to other web files →***
+
+###### *Sensitive Data Exposure*
+
+> ***See [[#Read files|Reading files via SQLi]]***
+
+***We may deal with a VHOST whose config. file has a randon name, so we cannot list its content to disclose the webroot path → [[LFI - FUZZING#Server Logs Configurations|Disclose the latter through fuzzing]]***
+
+> ***It also applies to [[LFI - FUZZING#Server Logs Configurations|Log Files]]***
+
+###### *Source code Disclosure*
+
+> ***Check [[LFI - PHP FILTERS|LFI PHP Filters]] if `include()` or `require()` is used***
+
+- [ ] ***Look for any security flaw or information present in the rest of the web application scripts***
+
+> ***e.g. Check a File Upload Validation Filters to try to bypass them or the context of an SQL Query looking for an [[SQLi|SQLi]]***
+
+###### *RCE*
+
+- [ ] ***[[LFI TO RCE - PHP WRAPPERS|PHP Wrappers]]***
+
+> ***`data:// | input:// | expect://` )***
 
 - [ ] ***[[LFI TO RCE - FILE UPLOAD|File Upload]]***
 
@@ -160,13 +272,21 @@ cssclasses:
 
 - [ ] ***[[LFI TO RCE - LOG POISONING|Log Poisoning]]***
 
+> ***Non-standard location → [[LFI - FUZZING#Server Logs Configurations|Server Logs Fuzzing]]***
+
 - [ ] ***[[LFI TO RCE - PHP SESSION POISONING|PHP Session Poisoning]]***
 
 ##### *File Upload*
 
+- [ ] ***File Upload Feature allows SVG → SVG file is displayed on the Web Application →  [[FILE UPLOAD - LIMITED FILE UPLOADS#XXE#SVG|External Entity Definition within the SVG]] ( [[XXE]] ) → Source Code Disclosure of any existing script within the webapp***
+
+> ***Then, we can disclose the uploads directory and all validation filters by reviewing the Upload Feature's source code***
+
 - [ ] ***If the Web Application runs X (e.g. PHP), try uploading an X script (e.g. test.php)***
 
 ***If the given upload is not allowed, security filters may have been set up. If so →***
+
+###### *Bypasses*
 
 - [ ] ***[[FILE UPLOAD - FILTER BYPASSES#Client-Side Validation|Client-Side Validation Bypass]]***
 - [ ] ***[[FILE UPLOAD - FILTER BYPASSES#Blacklist|Blacklist Bypass]]***
@@ -179,17 +299,36 @@ cssclasses:
 
 ***If none of the previous bypasses work →***
 
+###### *Alternative Methods*
+
 - [ ] ***Fuzz for allowed extensions (e.g. SVG)***
 
 - [ ] ***Check [[FILE UPLOAD - LIMITED FILE UPLOADS|Limited File Uploads]]***
 
-***Furthermore, we have to bear in mind that if we discover an [[LFI]] vulnerability, we can just fuzz for allowed extensions, add a code snippet (e.g. mini WebShell) within the file before uploading it and request it from a web client. We will gain RCE***
+- [ ] ***LFI ↔ File Upload Chain → Fuzz for allowed Extensions → Add a Code Snippet (e.g. mini WebShell) within the file ( e.g. Image Metadata ) before uploading it***
+
+> ***Check [[LFI TO RCE - FILE UPLOAD|this]] out***
+
+
+***Once a malicious file is uploaded, we must know the path where it is stored in order to request it, and thereby gain RCE***
+
+###### *Disclosing the Uploads Directory Path*
+
+- [ ] ***Image path referenced in the source code***
+
+> ***e.g. `<img src=http://<TARGET>/uploads/<IMAGE>`***
+
+- [ ] ***[[FUZZING|Fuzzing]]***
+
+- [ ] ***Upload Feature's Source Code Disclosure through other security flaws***
+
+> ***e.g. LFI, XXE ( e.g. [[FILE UPLOAD - LIMITED FILE UPLOADS#XSS#SVG|SVG Upload with an External Entity]] ) or SQLi ( Read Files )***
 
 ##### *Command Injection*
 
 - [ ] ***Try a [[COMMAND INJECTION#Exploitation|basic command injection]] to see if there is any input validation or sanitizacion in place***
 
-***if not, reverse shell and pwned. If so, proceed as follows***
+***if not, reverse shell and pwned. If so →***
 
 - [ ] ***Try to bypass them with different [[COMMAND INJECTION#Filter Evasion - Blacklist|filter evasions]] and [[COMMAND INJECTION#Advanced Command Obfuscation|command obfuscation]]***
 
@@ -201,13 +340,19 @@ cssclasses:
 
 ##### *IDOR*
 
-This attack vector results from a bad access control system or its absence and a direct object reference
+***This attack vector results from a bad access control system or its absence and a direct object reference***
 
-- [ ] ***[[IDOR - INFORMATION DISCLOSURE#Insecure Parameters|Simple Direct Object Reference]] (e.g. <URL\>?id=1 ) → Just try changing its value to something else to test the access control system***
+***[[IDOR - INFORMATION DISCLOSURE#Insecure Parameters|Simple Direct Object Reference]] (e.g. <URL\>?id=1 )***
 
-- [ ] ***[[IDOR - INFORMATION DISCLOSURE#Bypassing Encoded References|More Secure Direct Object Reference]] (e.g. <URL\>?id=`6B29FC40-CA47-1067-B31D-00DD010662DA` or <URL\>?id=098f6bcd4621d373cade4e832627b4f6 ) → Check if the reference is being created in the frontend ( e.g. JS Function ) before being sent to the server***
+- [ ] ***Just try changing its value to something else to test the access control system***
 
-Once we discover the *IDOR* → 
+***[[IDOR - INFORMATION DISCLOSURE#Bypassing Encoded References|More Secure Direct Object Reference]] (e.g. <URL\>?id=`6B29FC40-CA47-1067-B31D-00DD010662DA` or <URL\>?id=098f6bcd4621d373cade4e832627b4f6 )***
+
+- [ ] ***Check if the reference is being created in the frontend ( e.g. JS Function ) before being sent to the server***
+
+> ***i.e. Function Disclosure***
+
+***Once we discover the IDOR →*** 
 
 - [ ] ***[[IDOR - INFORMATION DISCLOSURE#Mass Enumeration|Mass Enumeration]]***
 
@@ -217,7 +362,9 @@ Once we discover the *IDOR* →
 
 ***Once we have located an HTTP request that sends XML data within its body*** 
 
-***Data Disclosure →***
+###### *Data Disclosure*
+
+> ***See [[#Read files|Reading files via SQLi]]***
 
 - [ ] ***[[XXE - DATA DISCLOSURE#Simple XXE|Simple XXE]]***
 
@@ -230,5 +377,7 @@ Once we discover the *IDOR* →
 - [ ] ***If not, try [[XXE - DATA DISCLOSURE#Error Based XXE|Error based XXE]]***
 
 - [ ] ***If we are dealing with a Blind XXE, see [[XXE - DATA DISCLOSURE#Blind OOB XXE|Blind OOB XXE]]***
+
+###### *RCE*
 
 - [ ] ***Bear in mind that we can achieve [[XXE - RCE|RCE]] as well***
