@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
+                "file": "000 INBOX/PWM.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "WINDOWS PRIVESC CHECKLIST"
+              "title": "PWM"
             },
             "group": "3c56347aeed2bae5"
           }
@@ -35,63 +35,17 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
+                "file": "000 INBOX/PWM.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "WINDOWS PRIVESC CHECKLIST"
+              "title": "PWM"
             },
             "group": "3c56347aeed2bae5"
-          },
-          {
-            "id": "4420d9e8598732bf",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "002 PENTESTING/CHECKLISTS/WEB OFFENSIVE CHECKLIST.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "WEB OFFENSIVE CHECKLIST"
-            }
-          },
-          {
-            "id": "b560cc26d92017f7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "002 PENTESTING/CHECKLISTS/COMMON SERVICES CHECKLIST.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "COMMON SERVICES CHECKLIST"
-            }
-          },
-          {
-            "id": "8c9d1369186ddc6f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "002 PENTESTING/CHECKLISTS/COMMON APPLICATIONS CHECKLIST.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "COMMON APPLICATIONS CHECKLIST"
-            }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -219,13 +173,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "002 PENTESTING/CHECKLISTS/COMMON APPLICATIONS CHECKLIST.md",
+                "file": "000 INBOX/PWM.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de COMMON APPLICATIONS CHECKLIST"
+              "title": "Esquema de PWM"
             }
           },
           {
@@ -307,45 +261,45 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "44498cadc63d1eef",
+  "active": "8d3eac0970ee9647",
   "lastOpenFiles": [
+    "100 ATTACHMENTS/PWM-20260607155301027.webp",
+    "100 ATTACHMENTS/PWM-20260607152758817.webp",
+    "100 ATTACHMENTS/PWM-20260607152354451.webp",
+    "100 ATTACHMENTS/PWM-20260607151804732.webp",
+    "100 ATTACHMENTS/PWM-20260607151501099.webp",
+    "002 PENTESTING/WEB PENTESTING/WEB TECHNOLOGIES.md",
+    "000 INBOX/PWM.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
+    "002 PENTESTING/WINDOWS PENTESTING/ADCS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/ADCS - ESC16.md",
+    "002 PENTESTING/WINDOWS PENTESTING/ADCS - ESC15.md",
+    "002 PENTESTING/WINDOWS PENTESTING/ADCS - ESC8.md",
+    "000 INBOX/ADCS - ESC1.md",
+    "000 INBOX/PASS THE CERTIFICATE (SCHANNEL).md",
+    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/SHADOW CREDENTIALS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/PASS THE CERTIFICATE.md",
+    "002 PENTESTING/WINDOWS PENTESTING/SCHANNEL.md",
+    "002 PENTESTING/CRACKING PROTECTED FILES.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS CRACKING.md",
+    "002 PENTESTING/CRACKING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS.md",
+    "002 PENTESTING/PASSWORD ATTACKS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
+    "002 PENTESTING/CHECKLISTS/COMMON APPLICATIONS CHECKLIST.md",
     "002 PENTESTING/CHECKLISTS/COMMON SERVICES CHECKLIST.md",
     "002 PENTESTING/CHECKLISTS/WEB OFFENSIVE CHECKLIST.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
     "002 PENTESTING/CHECKLISTS",
     "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC.md",
     "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
-    "002 PENTESTING/WINDOWS PENTESTING/DPAPI ABUSE.md",
-    "002 PENTESTING/WINDOWS PENTESTING/REANIMATE-TOMBSTONES.md",
-    "002 PENTESTING/PROTOCOLS AND SERVICES/139, 445 - SMB.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS DUMPING.md",
     "100 ATTACHMENTS/DPAPI ABUSE-20260603160535887.webp",
-    "002 PENTESTING/WEB PENTESTING/SQLi.md",
-    "002 PENTESTING/WEB PENTESTING/SQLI MSSQL.md",
-    "002 PENTESTING/PROTOCOLS AND SERVICES/1433 - MSSQL.md",
-    "002 PENTESTING/WEB PENTESTING/SQLMAP.md",
-    "002 PENTESTING/WINDOWS PENTESTING/NTLM RELAY OVER HTTP.md",
-    "002 PENTESTING/WINDOWS PENTESTING/ADCS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS RELAY.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS RELAY OVER SMB.md",
-    "002 PENTESTING/WINDOWS PENTESTING/MITM & COERCED AUTHS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/LIVING OFF THE LAND COERCION.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS RELAY OVER HTTP.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS RELAY OVER DNS.md",
     "100 ATTACHMENTS/KERBEROS RELAY OVER SMB-20260528172153724.webp",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/PASSWORD SPRAYING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS POTATOES.md",
-    "002 PENTESTING/WINDOWS PENTESTING/SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE.md",
     "100 ATTACHMENTS/TOMCAT-20260520181704168.webp",
     "100 ATTACHMENTS/TOMCAT-20260520181526341.webp",
     "100 ATTACHMENTS/WEB OFFENSIVE CHECKLIST-20260519192105511.webp",
     "100 ATTACHMENTS/WEB OFFENSIVE CHECKLIST-20260519191940319.webp",
-    "100 ATTACHMENTS/IDOR-20260519183934901.webp",
-    "100 ATTACHMENTS/IDOR-20260519183829082.webp",
-    "100 ATTACHMENTS/IDOR-20260519183746197.webp",
-    "100 ATTACHMENTS/IDOR-20260519183702997.webp",
     "002 PENTESTING/899 TOOLS",
     "002 PENTESTING/LINUX PENTESTING",
     "002 PENTESTING/WINDOWS PENTESTING",
