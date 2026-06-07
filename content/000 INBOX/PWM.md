@@ -12,6 +12,8 @@ cssclasses:
 
 #### *Theory*
 
+> ***An open source password self-service application for LDAP directories.***
+
 ##### *Modes*
 
 ###### *Open Configuration*
@@ -30,7 +32,7 @@ However, authentication is still required to carry any action that involves chan
 
 ---
 
-#### *Forcing an LDAP Connection to retrieve Plain Credentials*
+#### *Forcing LDAP Connection to retrieve Plain Credentials*
 
 Once we obtain valid credentials to authenticate ourselves against the *PWM* control panel, we can look for any configured *LDAP* connection, as it usually contains *LDAP* credentials
 
