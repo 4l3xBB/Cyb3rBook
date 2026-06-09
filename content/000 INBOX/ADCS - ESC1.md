@@ -273,3 +273,7 @@ python3 passthecert.py -action 'ldap-shell' -domain '<DOMAIN>' -dc-host '<DC_FQD
 #### *Resources*
 
 ***[Certipy Wiki: ESC1](https://github.com/ly4k/Certipy/wiki/06-%E2%80%90-Privilege-Escalation#esc1-enrollee-supplied-subject-for-client-authentication)***
+
+***[BlackHills Infosec: Abusing ADCS - Part I](https://www.blackhillsinfosec.com/abusing-active-directory-certificate-services-part-one/)***
+
+***[SpecterOps](https://specterops.io/blog/2022/11/09/certificates-and-pwnage-and-patches-oh-my/)***
