@@ -20,6 +20,12 @@ cssclasses:
 
 ##### *Login Form*
 
+###### *Code*
+
+```js
+this.username === '${value}' && this.password === '${value}'
+```
+
 ###### *Request*
 
 ```bash
@@ -44,3 +50,13 @@ admin' || 'a' === 'a
 > username=admin' || 'a' === 'a&password=test
 > ```
 >
+
+---
+
+#### *Resources*
+
+***[Null Sweep: A NoSQL Injection Primer with MongoDB](https://nullsweep.com/a-nosql-injection-primer-with-mongo/)***
+
+***[PayloadAllTheThings: NoSQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/NoSQL%20Injection/README.md)***
+
+***[Portswigger: NoSQL Injection](https://portswigger.net/web-security/nosql-injection)***

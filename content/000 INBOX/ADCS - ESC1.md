@@ -50,7 +50,7 @@ certipy find -dc-ip '<DC_IP>' -username '<USER>' -password '<PASSWD>' -stdout -v
 
 ---
 
-#### *Abuse - UNIX-Like*
+#### *Abuse*
 
 ##### *Workflow*
 
@@ -80,7 +80,7 @@ With the issued certificate, we can carry out several actions →
 
 > ***e.g. Client Authentication or Smart Card Logon***
 
-##### *Abuse*
+##### *UNIX-Like*
 
 ###### *Identifying ADCS in the domain*
 
@@ -262,9 +262,7 @@ python3 passthecert.py -action 'ldap-shell' -domain '<DOMAIN>' -dc-host '<DC_FQD
 > ```
 >
 
----
-
-#### *Abuse - Windows*
+##### *Windows*
 
 > 🛠️⌛
 

@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WEB PENTESTING/FUZZING.md",
+                "file": "000 INBOX/22 - SSH.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "FUZZING"
+              "title": "22 - SSH"
             },
             "group": "9d5b9735a48b74cc"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WEB PENTESTING/FUZZING.md",
+                "file": "000 INBOX/22 - SSH.md",
                 "mode": "preview",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "FUZZING"
+              "title": "22 - SSH"
             },
             "group": "9d5b9735a48b74cc"
           }
@@ -173,13 +173,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "002 PENTESTING/WEB PENTESTING/FUZZING.md",
+                "file": "000 INBOX/22 - SSH.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de FUZZING"
+              "title": "Esquema de 22 - SSH"
             }
           },
           {
@@ -261,9 +261,18 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "5f792935d9243626",
+  "active": "a047158bdf6f931e",
   "lastOpenFiles": [
+    "000 INBOX/ADCS - ESC7.md",
+    "000 INBOX/ADCS - ESC1.md",
+    "002 PENTESTING/WINDOWS PENTESTING/ADCS.md",
+    "000 INBOX/SEENABLEDELEGATIONPRIVILEGE.md",
+    "002 PENTESTING/CHECKLISTS/COMMON SERVICES CHECKLIST.md",
+    "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
+    "002 PENTESTING/WEB PENTESTING/SQLI MSSQL.md",
+    "002 PENTESTING/CHECKLISTS/COMMON APPLICATIONS CHECKLIST.md",
     "000 INBOX/NOSQLi.md",
+    "002 PENTESTING/WEB PENTESTING/FUZZING.md",
     "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
     "002 PENTESTING/WEB PENTESTING/SQLi.md",
     "002 PENTESTING/WEB PENTESTING/WEB PENTESTING.md",
@@ -280,15 +289,6 @@
     "000 INBOX/UMBRACO CMS.md",
     "002 PENTESTING/WEB PENTESTING/JOOMLA.md",
     "002 PENTESTING/WEB PENTESTING/WORDPRESS.md",
-    "002 PENTESTING/WEB PENTESTING/DRUPAL.md",
-    "002 PENTESTING/WINDOWS PENTESTING/CHECKLISTS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
-    "002 PENTESTING/LINUX PRIVESC CHECKLIST.md",
-    "002 PENTESTING/LINUX PENTESTING/LINUX PRIVESC.md",
-    "000 INBOX/BLIND SQLI.md",
-    "000 INBOX/BOOLEAN BASED SQLI.md",
-    "002 PENTESTING/WEB PENTESTING/UNION BASED SQLI.md",
-    "002 PENTESTING/WEB PENTESTING/IN-BAND SQLI.md",
     "100 ATTACHMENTS/zsh_p10k_cmdExectime.gif",
     "100 ATTACHMENTS/PWM-20260607155301027.webp",
     "100 ATTACHMENTS/PWM-20260607152758817.webp",
