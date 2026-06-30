@@ -1,6 +1,6 @@
 ---
-Primary_category: "ADCS - ESC7"
-title: "[[ADCS]]"
+Primary_category: "[[ADCS]]"
+title: "ADCS - ESC7"
 draft: false
 banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 banner_y: 0.88286
@@ -14,23 +14,23 @@ cssclasses:
 
 This attack vector leverages excessive permissions on the *CA* object directly by abusing the combination of two specific security roles within the *CA*
 
- - ***Manage CA***
+###### *Manage CA*
 
 This permission grants an excessive control over the *CA* object. A principal assigned this role can perform the following actions →
 
-***Modify the CA Configuration***
+- ***Modify the CA Configuration***
 
 > ***e.g. Enable/Disable Templates, Set Policy Flags...***
 
-***Assign CA Roles***
+- ***Assign CA Roles***
 
 > ***Including Certificate Manager/Officer***
 
-***Start/Stop the CA Service***
+- ***Start/Stop the CA Service***
 
-***Manage CA Security***
+- ***Manage CA Security***
 
-- ***Manage Certificates***
+###### *Manage Certificates*
 
 > ***Also known as Certificate Manager/Officer***
 

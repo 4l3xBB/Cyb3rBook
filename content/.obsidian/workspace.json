@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/22 - SSH.md",
+                "file": "002 PENTESTING/WINDOWS PENTESTING/SHADOW CREDENTIALS.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "22 - SSH"
+              "title": "SHADOW CREDENTIALS"
             },
             "group": "9d5b9735a48b74cc"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/22 - SSH.md",
+                "file": "002 PENTESTING/WINDOWS PENTESTING/SHADOW CREDENTIALS.md",
                 "mode": "preview",
-                "source": false,
+                "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "22 - SSH"
+              "title": "SHADOW CREDENTIALS"
             },
             "group": "9d5b9735a48b74cc"
           }
@@ -173,13 +173,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "000 INBOX/22 - SSH.md",
+                "file": "002 PENTESTING/WINDOWS PENTESTING/SHADOW CREDENTIALS.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de 22 - SSH"
+              "title": "Esquema de SHADOW CREDENTIALS"
             }
           },
           {
@@ -261,11 +261,19 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "a047158bdf6f931e",
+  "active": "5f792935d9243626",
   "lastOpenFiles": [
+    "000 INBOX/WSUS ADMINISTRATORS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/SHADOW CREDENTIALS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
+    "000 INBOX/WSUS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/ADCS.md",
     "000 INBOX/ADCS - ESC7.md",
     "000 INBOX/ADCS - ESC1.md",
-    "002 PENTESTING/WINDOWS PENTESTING/ADCS.md",
+    "000 INBOX/22 - SSH.md",
     "000 INBOX/SEENABLEDELEGATIONPRIVILEGE.md",
     "002 PENTESTING/CHECKLISTS/COMMON SERVICES CHECKLIST.md",
     "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
@@ -280,15 +288,7 @@
     "000 INBOX/TEAMVIEWER.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS VULNERABLE SOFTWARE INSTALLED.md",
     "002 PENTESTING/PENTESTING ROOT.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
     "002 PENTESTING/FILE MANIPULATION.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS DUMPING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/LSASS.md",
-    "002 PENTESTING/PENTESTING.md",
-    "002 PENTESTING/WEB PENTESTING/WEB TECHNOLOGIES.md",
-    "000 INBOX/UMBRACO CMS.md",
-    "002 PENTESTING/WEB PENTESTING/JOOMLA.md",
-    "002 PENTESTING/WEB PENTESTING/WORDPRESS.md",
     "100 ATTACHMENTS/zsh_p10k_cmdExectime.gif",
     "100 ATTACHMENTS/PWM-20260607155301027.webp",
     "100 ATTACHMENTS/PWM-20260607152758817.webp",
