@@ -432,3 +432,9 @@ We just have to wait for the incoming connection. In the meantime, we can check 
 > [*] Check complete
 > ```
 >
+
+---
+
+#### *Resources*
+
+***[Lorenzo Meacci: WSUS Exploitation - All you need to know](https://lorenzomeacci.com/wsus-exploitation-all-you-need-to-know)***
