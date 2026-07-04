@@ -1,10 +1,9 @@
 [
-  "obsidian-style-settings",
-  "calendar",
-  "image-converter",
   "obsidian-banners",
-  "obsidian-minimal-settings",
+  "image-converter",
+  "calendar",
   "dataview",
-  "templater-obsidian",
-  "obsidian-relative-line-numbers"
+  "obsidian-minimal-settings",
+  "obsidian-style-settings",
+  "templater-obsidian"
 ]
