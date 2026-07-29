@@ -14,13 +14,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WORDLISTS.md",
+                "file": "000 INBOX/10.10.110.100.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "WORDLISTS"
+              "title": "10.10.110.100"
             },
             "group": "26a01a58d10ab7d7"
           }
@@ -37,13 +37,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "002 PENTESTING/WORDLISTS.md",
+                "file": "000 INBOX/10.10.110.100.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "WORDLISTS"
+              "title": "10.10.110.100"
             },
             "group": "26a01a58d10ab7d7"
           }
@@ -175,13 +175,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "002 PENTESTING/WORDLISTS.md",
+                "file": "000 INBOX/10.10.110.100.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de WORDLISTS"
+              "title": "Esquema de 10.10.110.100"
             }
           },
           {
@@ -256,15 +256,16 @@
       "daily-notes:Abrir la nota de hoy": false
     }
   },
-  "active": "8183845de3e2629a",
+  "active": "5f792935d9243626",
   "lastOpenFiles": [
+    "999 OTHERS/DANTE/Dante Root.md",
+    "002 PENTESTING/WORDLISTS.md",
     "002 PENTESTING/WEB PENTESTING/WORDPRESS.md",
     "002 PENTESTING/CHECKLISTS/COMMON APPLICATIONS CHECKLIST.md",
     "002 PENTESTING/CHECKLISTS/WEB OFFENSIVE CHECKLIST.md",
     "002 PENTESTING/WEB PENTESTING/WEB TECHNOLOGIES.md",
     "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
     "000 INBOX/10.10.110.100.md",
-    "999 OTHERS/DANTE/Dante Root.md",
     "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
     "999 OTHERS/DANTE",
     "002 PENTESTING/WEB PENTESTING/FUZZING.md",
@@ -285,7 +286,6 @@
     "002 PENTESTING/LINUX PENTESTING/LINUX PRIVESC.md",
     "002 PENTESTING/LINUX PENTESTING/PYTHON LIBRARY HIJACKING.md",
     "002 PENTESTING/LINUX PENTESTING/LIBRARY ABUSE.md",
-    "000 INBOX/CHROME DEVTOOLS ABUSE.md",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705203946636.webp",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705190511384.webp",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705190054157.webp",
