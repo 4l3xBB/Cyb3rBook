@@ -6,7 +6,6 @@
       {
         "id": "4a200f8328df4f17",
         "type": "tabs",
-        "dimension": 50.356052899287896,
         "children": [
           {
             "id": "5f792935d9243626",
@@ -22,17 +21,16 @@
               "icon": "lucide-file",
               "title": "10.10.110.100"
             },
-            "group": "26a01a58d10ab7d7"
+            "group": "13b45e47464bd4da"
           }
         ]
       },
       {
-        "id": "4a85a5b9056a920a",
+        "id": "4fe1103700fc2075",
         "type": "tabs",
-        "dimension": 49.643947100712104,
         "children": [
           {
-            "id": "8183845de3e2629a",
+            "id": "5c208367960d7263",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -45,7 +43,7 @@
               "icon": "lucide-file",
               "title": "10.10.110.100"
             },
-            "group": "26a01a58d10ab7d7"
+            "group": "13b45e47464bd4da"
           }
         ]
       }
@@ -68,7 +66,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Explorador de archivos"
@@ -181,7 +181,7 @@
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de 10.10.110.100"
+              "title": "Esquema"
             }
           },
           {
@@ -256,16 +256,22 @@
       "daily-notes:Abrir la nota de hoy": false
     }
   },
-  "active": "5f792935d9243626",
+  "active": "5c208367960d7263",
   "lastOpenFiles": [
     "999 OTHERS/DANTE/Dante Root.md",
+    "002 PENTESTING/WEB PENTESTING/JENKINS.md",
+    "100 ATTACHMENTS/JENKINS-20260805184534052.webp",
+    "002 PENTESTING/PROTOCOLS AND SERVICES/139, 445 - SMB.md",
+    "000 INBOX/login bruteforce.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
+    "000 INBOX/10.10.110.100.md",
+    "002 PENTESTING/LINUX PRIVESC CHECKLIST.md",
     "002 PENTESTING/WORDLISTS.md",
     "002 PENTESTING/WEB PENTESTING/WORDPRESS.md",
     "002 PENTESTING/CHECKLISTS/COMMON APPLICATIONS CHECKLIST.md",
     "002 PENTESTING/CHECKLISTS/WEB OFFENSIVE CHECKLIST.md",
     "002 PENTESTING/WEB PENTESTING/WEB TECHNOLOGIES.md",
     "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
-    "000 INBOX/10.10.110.100.md",
     "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
     "999 OTHERS/DANTE",
     "002 PENTESTING/WEB PENTESTING/FUZZING.md",
@@ -281,11 +287,6 @@
     "002 PENTESTING/SHELLS AND PAYLOADS.md",
     "002 PENTESTING/WEB PENTESTING/DESERIALIZATION.md",
     "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
-    "002 PENTESTING/WEB PENTESTING/TOMCAT.md",
-    "002 PENTESTING/LINUX PRIVESC CHECKLIST.md",
-    "002 PENTESTING/LINUX PENTESTING/LINUX PRIVESC.md",
-    "002 PENTESTING/LINUX PENTESTING/PYTHON LIBRARY HIJACKING.md",
-    "002 PENTESTING/LINUX PENTESTING/LIBRARY ABUSE.md",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705203946636.webp",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705190511384.webp",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705190054157.webp",
@@ -294,7 +295,6 @@
     "100 ATTACHMENTS/WERKZEUG-20260704175527512.webp",
     "100 ATTACHMENTS/zsh_p10k_cmdExectime.gif",
     "100 ATTACHMENTS/PWM-20260607155301027.webp",
-    "100 ATTACHMENTS/PWM-20260607152758817.webp",
     "002 PENTESTING/CHECKLISTS",
     "002 PENTESTING/899 TOOLS",
     "002 PENTESTING/LINUX PENTESTING",

@@ -1,16 +1,10 @@
 {
-  "accentColor": "#8a50f7",
-  "theme": "obsidian",
-  "translucency": true,
-  "enabledCssSnippets": [
-    "dataview",
-    "neon",
-    "graph",
-    "files_section",
-    "card-list"
-  ],
   "cssTheme": "Minimal",
-  "baseFontSize": 15,
-  "interfaceFontFamily": "",
-  "showViewHeader": true
+  "enabledCssSnippets": [
+    "card-list",
+    "dataview",
+    "files_section",
+    "graph",
+    "neon"
+  ]
 }
