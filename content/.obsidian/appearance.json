@@ -1,0 +1,10 @@
+{
+  "cssTheme": "Minimal",
+  "enabledCssSnippets": [
+    "card-list",
+    "dataview",
+    "files_section",
+    "graph",
+    "neon"
+  ]
+}

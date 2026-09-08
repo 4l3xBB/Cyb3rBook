@@ -1,0 +1,161 @@
+
+:root {
+    --accent-1: #C1FDFF;
+    --accent-2: #F3CBFF;
+    --accent-3: #00FFFF;
+    --accent-4: #FF0000;
+    --accent-5: #FF0000;
+    --accent-6: #BD93F9;
+    --accent-7: #FFBDAD; /* HEADING 4 COLOR ON MINIMAL THEME */
+
+    --accent-1-muted: #ff79c6;
+    --accent-2-muted: #8be9fd;
+    --accent-3-muted: #50fa7b;
+    --accent-4-muted: #ffb86c;
+    --accent-5-muted: #ff5555;
+    --accent-6-muted: #bd93f9;
+
+    --cards-min-width: 180px;
+    --cards-max-width: 1fr;
+    --cards-mobile-width: 120px;
+    --cards-image-height: 400px;
+    --cards-padding: 1.2em;
+    --cards-image-fit: cover;
+    --cards-background: transparent;
+    --cards-border-width: 0.15em;
+    --cards-box-shadow: 0 0 0.7em var(--accent-4);
+    --cards-aspect-ratio: 3 / 4;
+    --cards-columns: repeat(auto-fit, minmax(var(--cards-min-width), var(--cards-max-width)));
+    --border-radius: 4px;
+}
+
+/*
+div.card-list {
+    border: 1px solid red !important;
+}
+
+div.card-list div.markdown-preview-section > div:nth-child(4) {
+    border: 1px solid violet;
+}
+*/
+
+/* 
+###########################################################
+# BEGIN -> CSS STYLE RELATED TO CARD-LIST ON READING MODE #
+###########################################################
+*/
+
+.card-list div > ul:has(li img) {
+    display: grid;
+    /* grid-template-columns: var(--cards-columns); */
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-column-gap: 0.3rem;
+    grid-row-gap: 2.6rem;
+    padding: 0rem;
+    line-height: 1.3;
+    /* border: 0.2rem solid var(--accent-1); */
+    width: 100%;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+
+.card-list div > ul > li:has(img) {
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: var(--cards-box-shadow);
+    border: 2px solid var(--accent-7);
+    margin-inline-start: 0;
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 110%;
+    width: 95%;
+}
+
+.card-list div > ul:has(li img) span {
+    display: none;
+}
+
+.card-list ul li:has(img) div {
+    display: none;
+}
+
+.card-list div > ul > li > img {
+    width: 100%;
+    height: 87%;
+    object-fit: cover;
+    border-radius: 8px !important;
+    flex-shrink: 0;
+}
+
+.card-list div > ul > li:has(img) > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.card-list div > ul > li:has(img) > ul > li {
+    text-align: center;
+    margin-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    box-sizing: border-box;
+    height: auto;
+}
+
+.card-list div > ul > li:has(img) > ul > li > a {
+    text-decoration: none !important;
+    font-size: 12px;
+    font-weight: 800;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+
+}
+
+@media (max-width: 768px) {
+    .card-list div > ul:has(li img) {
+        grid-template-columns: repeat(auto-fit, minmax(var(--cards-mobile-width), 1fr));
+    }
+}
+
+@media (min-width: 400pt) {
+
+    .card-list div > ul:has(li img) {
+        --cards-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* 
+#########################################################
+# END -> CSS STYLE RELATED TO CARD-LIST ON READING MODE # 
+#########################################################
+*/
+
+/* CUSTOM CSS CLASES FRONTMATTER LIST - CARDS STYLE COLOR AND BOX SHADOW */
+
+.blue-style.card-list div > ul > li:has(img) { /* cards border and shadow */
+    border-color: var(--accent-1);
+    border-width: 0.15em;
+    box-shadow: 0 0 0.7em var(--accent-1);
+}
+
+.purple-style.card-list div > ul > li:has(img) { /* cards border and shadow */
+    border-color: var(--accent-2);
+    border-width: 0.15em;
+    box-shadow: 0 0 0.7em var(--accent-2);
+}

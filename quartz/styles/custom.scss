@@ -1,3 +1,747 @@
+
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+/* 
+###########################################################
+#                   GLOBAL VARIABLES                      #
+###########################################################
+*/
+
+:root {
+
+    background-color: #1A1721;
+
+    --accent-1: #C1FDFF;
+    --accent-2: #f3cbff;
+    --accent-3: #00FFFF;
+    --accent-4: #FF0000;
+    --accent-5: #FF0000;
+    --accent-6: #BD93F9;
+    --accent-7: #FFBDAD; /* HEADING 4 COLOR ON MINIMAL THEME */
+
+    --color-1: #C1FDFF;
+    --color-2: #F3CBFF;
+    --color-3: #C1FDFF;
+    --color-4: #FFBDAD;
+    --color-5: #FF977D;
+    --color-6: #BD93F9;
+
+    --quartz-color-1:#ffb09d;
+
+    --obsidian-font: ui-monospace, SFMono-Regular, "Cascadia Mono", "Roboto Mono", "DejaVu Sans Mono", "Liberation Mono", Menlo, Monaco, "Consolas", "Source Code Pro", monospace;
+    --obsidian-font-2: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Microsoft YaHei Light", sans-serif;
+
+    --cards-min-width: 180px;
+    --cards-max-width: 1fr;
+    --cards-mobile-width: 120px;
+    --cards-image-height: 400px;
+    --cards-padding: 1.2em;
+    --cards-image-fit: cover;
+    --cards-background: transparent;
+    --cards-border-width: 0.15em;
+    --cards-box-shadow: 0 0 0.7em var(--accent-4);
+    --cards-aspect-ratio: 3 / 4;
+    --cards-columns: repeat(auto-fit, minmax(var(--cards-min-width), var(--cards-max-width)));
+    --border-radius: 4px;
+}
+
+/* 
+###########################################################
+#               QUARTZ INTERFACE - GENERAL                #
+###########################################################
+*/
+
+p, li {
+    color: rgb(251, 251, 251);
+}
+
+.page-title a {
+    color: var(--quartz-color-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-4);
+}
+
+.page-title a:hover {
+    color: rgb(255, 61, 61) !important;
+}
+
+div.page-header h1.article-title {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+    font-family: var(--obsidian-font-2);
+}
+
+/* 
+###########################################################
+#               QUARTZ INTERFACE - POPOVER NOTES          #
+###########################################################
+*/
+
+div.popover-inner ul.tags > li {
+    border: 0.15em solid #F3CBFF !important;
+    border-radius: 2em;
+    padding: 2px;
+}
+
+div.popover-inner ul.tags > li > a {
+    color: var(--accent-1);
+}
+
+div.popover-inner ul.tags > li > a:hover {
+    color: var(--accent-1) !important;
+}
+
+div.popover-inner h1.article-title {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+/* 
+###########################################################
+#                 QUARTZ INTERFACE - TAGS                 #
+###########################################################
+*/
+
+div.page-header ul.tags > li {
+    border: 0.15em solid #F3CBFF !important;
+    border-radius: 2em;
+    padding: 2px;
+}
+
+div.page-header ul.tags > li > a {
+    color: var(--accent-1);
+}
+
+div.page-header ul.tags > li > a:hover {
+    color: var(--accent-1) !important;
+}
+
+/* 
+###########################################################
+#                 QUARTZ INTERFACE - BreadCrumb           #
+###########################################################
+*/
+
+nav.breadcrumb-container a {
+    color: var(--accent-2);
+}
+
+nav.breadcrumb-container a:hover {
+    color: var(--accent-2) !important;
+}
+
+/*
+###########################################################
+#             QUARTZ INTERFACE - Left Explorer            #
+###########################################################
+*/
+
+div.explorer button.title-button > h2 {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+div.explorer button.title-button > svg.fold {
+    color: var(--accent-2);
+}
+
+div.explorer div.folder-container svg.folder-icon {
+    color: var(--accent-1);
+}
+
+div.explorer div.explorer-content div.folder-container a.folder-title {
+    color: var(--accent-2);
+}
+
+div.explorer ul.content li a:hover {
+    color: rgb(235, 235, 236) !important;
+}
+
+div.explorer ul.content > li > div.folder-outer > ul.content > li > a:hover {
+    color: var(--color-2) !important;
+}
+
+div.explorer ul#explorer-ul > li > div.folder-outer > ul.content > li > a:hover {
+    color: var(--color-2) !important;
+}
+
+/* ICONS */
+
+div.explorer-content div.folder-container > div > a.folder-title::before {
+    display: inline-block;
+    content: "";
+    margin-right: 5px;
+    vertical-align: text-bottom;
+    height: 17px;
+    width: 16px;
+    background-color: var(--accent-1);
+    -webkit-mask: url('https://api.iconify.design/mdi/folder-open.svg');
+}
+
+div.explorer ul.content > li > a::before {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+    height: 19px;
+    width: 16px;
+    content: url('https://api.iconify.design/bi/file-text.svg?color=%23C1FDFF');
+}
+
+/*
+###########################################################
+#####  QUARTZ INTERFACE  -  TOC & BACKLINKS & GRAPH  ###### 
+###########################################################
+*/
+
+/* TOC */
+
+div.toc.desktop-only button#toc > h3 {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+div.toc.desktop-only a.in-view {
+    color: var(--accent-2) !important;
+}
+
+div.backlinks h3 {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+div#toc-content a {
+    color: var(--color-2) !important;
+    opacity: 1 !important;
+}
+
+div#toc-content a:hover {
+    //color: var(--color-1) !important;
+    color: #c462e2 !important;
+}
+
+/* BACKLINKS*/
+
+div.backlinks a {
+    color: var(--accent-2) !important;
+}
+
+div.backlinks a:hover {
+    color: #c462e2 !important;
+}
+
+div.graph h3 {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+/*
+###########################################################
+#                 QUARTZ INTERFACE - FOOTER               #
+###########################################################
+*/
+
+footer a {
+    color: var(--accent-2);
+}
+
+/* 
+###########################################################
+#                     BODY NOTE STYLES                    #
+###########################################################
+*/
+
+/* A LINKS STYLES*/
+
+article > h6:first-child a {
+    color: var(--accent-2) !important;
+    text-shadow: none;
+    font-weight: 700;
+}
+
+article.popover-hint p a {
+    color: var(--accent-2);
+}
+
+article.popover-hint p a:hover {
+    //color: #e49bfa !important;
+    color: #c462e2 !important;
+}
+
+svg.external-icon {
+    display: none;
+}
+
+/* HEADERS */
+
+article > h1 {
+    color: var(--color-1) !important;
+    text-shadow: 0 0 0.5em var(--accent-1);
+    font-size: 1.95em;
+    font-weight: 700;
+    font-family: var(--obsidian-font-2);
+}
+article > h2 {
+    color: var(--color-2) !important;
+    text-shadow: 0 0 0.5em var(--accent-2);
+    font-size: 1.75em;
+    font-weight: 700;
+    font-family: var(--obsidian-font-2);
+}
+article > h3 {
+    color: var(--color-2) !important;
+    text-shadow: 0 0 0.5em var(--accent-2);
+    font-size: 1.65em;
+    font-weight: 700;
+    font-family: var(--obsidian-font-2);
+}
+article > h4 {
+    color: var(--color-6) !important;
+    text-shadow: 0 0 0.75em var(--accent-6);
+    font-size: 1.55em;
+    font-weight: 700;
+    font-family: var(--obsidian-font-2);
+}
+article > h5 {
+    color: var(--color-5) !important;
+    text-shadow: 0 0 0.75em var(--accent-5);
+    font-size: 1.25em;
+    font-weight: 700;
+    font-family: var(--obsidian-font-2);
+}
+article > h6 {
+    color: var(--color-6) !important;
+    text-shadow: 0 0 0.75em var(--accent-6);
+    font-size: 1em;
+    font-weight: 700;
+    font-family: var(--obsidian-font-2);
+}
+
+
+/* 
+###########################################################
+#                NOTE PREVIEW - SEARCH MODE               #
+###########################################################
+*/
+
+/* ARTICLE TITLE */
+
+div.preview-container h1.article-title {
+    color: var(--accent-1) !important;
+    text-shadow: 0 0 0.75em var(--accent-1);
+}
+
+/* TAGS */
+
+div.preview-container ul.tags > li {
+    border: 0.15em solid #F3CBFF !important;
+    border-radius: 2em;
+    padding: 2px;
+}
+
+div.preview-container ul.tags > li > a {
+    color: var(--accent-1) !important;
+}
+
+div.preview-container ul.tags > li > a:hover {
+    color: var(--accent-1) !important;
+}
+
+/* HEADERS */
+
+div.preview-container > div.preview-inner > h1 {
+    color: var(--color-1) !important;
+    text-shadow: 0 0 0.5em var(--accent-1);
+    font-size: 2.25em;
+    font-weight: 700;
+}
+div.preview-container > div.preview-inner > h2 {
+    color: var(--color-2) !important;
+    text-shadow: 0 0 0.5em var(--accent-2);
+    font-size: 2em;
+    font-weight: 700;
+}
+div.review-container > div.preview-inner > h3 {
+    color: var(--color-3) !important;
+    text-shadow: 0 0 0.5em var(--accent-3);
+    font-size: 1.75em;
+    font-weight: 700;
+}
+div.preview-container > div.preview-inner > h4 {
+    color: var(--color-4) !important;
+    text-shadow: 0 0 0.75em var(--accent-4);
+    font-size: 1.50em;
+    font-weight: 700;
+}
+div.preview-container > div.preview-inner > h5 {
+    color: var(--color-5) !important;
+    text-shadow: 0 0 0.75em var(--accent-5);
+    font-size: 1.25em;
+    font-weight: 700;
+}
+div.preview-container > div.preview-inner > h6 {
+    color: var(--color-6) !important;
+    text-shadow: 0 0 0.75em var(--accent-6);
+    font-size: 1em;
+    font-weight: 700;
+}
+
+/* PRIMARY CATEGORY H6 */
+
+div.preview-container > div.preview-inner > h6 > a {
+    color: var(--accent-2) !important;
+    text-shadow: none;
+    font-weight: 600;
+}
+
+/* CARD LIST -> LINK ( LI ) */
+
+div.preview-container > div.preview-inner > ul:not(.tags) > li > ul > li > a {
+    text-decoration: none !important;
+    color: var(--accent-2) !important;
+    font-weight: 900;
+    font-size: 15px;
+}
+
+/* EXTERNAL LINKS (BACKLINKS) & INTERNAL LINKS */
+
+div.preview-container > div.preview-inner a {
+    color: var(--accent-2);
+    background: none !important;
+}
+
+/* HIGHLIGHTED MATCHES */
+
+div.results-container span.highlight {
+    background: rgb(179, 49, 49) !important;
+}
+
+div.preview-container > div.preview-inner span.highlight {
+    background: rgb(179, 49, 49) !important;
+}
+
+/* 
+###########################################################
+#                       CARD-LIST                         #
+###########################################################
+*/
+
+article.card-list ul:has(li > img) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-column-gap: 0rem;
+    grid-row-gap: 1.5rem; 
+    line-height: 1.3;
+    padding: 0rem;
+    width: 90%;
+    list-style-type: none;
+    box-sizing: border-box;
+    justify-items: center;
+    margin-top: 4%;
+} 
+
+article.card-list ul > li:has(> img) {
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: var(--cards-box-shadow);
+    border: 2px solid var(--accent-7);
+    margin-inline-start: 0;
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    height: 100%;
+    width: 88%; 
+}
+
+article.card-list ul > li:has(> img) > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+article.card-list ul > li:has(> img) > ul > li {
+    text-align: center;
+    margin-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    box-sizing: border-box;
+    height: auto; 
+}
+
+article.card-list ul > li > img {
+    width: 100%;
+    height: 87%;
+    object-fit: cover;
+    border-radius: 8px !important;
+    flex-shrink: 0;
+}
+
+article.card-list ul > li:has(> img) > ul > li > a {
+    text-decoration: none !important;
+    color: var(--accent-2) !important;
+    font-weight: 900;
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+
+    .card-list div ul:has(li > img) {
+        grid-template-columns: repeat(auto-fit, minmax(var(--cards-mobile-width), 1fr));
+    }
+
+    article.card-list ul > li:has(> img) > ul > li > a {
+        font-size: 8px;
+        height: 10px;
+    }
+}
+
+@media (min-width: 400pt) {
+
+    .card-list div ul:has(li > img) {
+        --cards-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+article.blue-style.card-list ul > li:has(> img) { /* cards border and shadow */
+    border-color: var(--accent-1);
+    border-width: 0.15em;
+    box-shadow: 0 0 0.7em var(--accent-1);
+}
+
+article.purple-style.card-list ul > li:has(> img) { /* cards border and shadow */
+    border-color: var(--accent-2);
+    border-width: 0.15em;
+    box-shadow: 0 0 0.7em var(--accent-2);
+}
+
+article.red-style.card-list ul > li:has(> img) { /* cards border and shadow */
+    border-color: var(--accent-7);
+    border-width: 0.15em;
+    box-shadow: 0 0 0.7em var(--accent-7);
+}
+/* 
+###########################################################
+#          END -> CSS STYLE RELATED TO CARD-LIST          #
+###########################################################
+*/
+
+/* 
+###########################################################
+#              BLOCK CODE AND LINE CODE SYNTAX            #
+###########################################################
+*/
+
+pre {
+    border: none;
+}
+
+pre code {
+    overflow-x: auto;
+    background-color: #202225 !important;
+    font-family: var(--obsidian-font);
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+    color: var(--accent-6) !important;
+    font-family: var(--obsidian-font);
+    background-color:#2f2e2ee3;
+    text-shadow: none;
+}
+
+ul li code,
+table code,
+p code {
+    color: var(--accent-6) !important;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: var(--obsidian-font);
+    background-color:#2f2e2ee3;
+}
+
+code span {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/*BLOCK CODE - FILE REFERENCE*/
+figure > figcaption {
+    overflow-x: auto;
+    background-color: #202225 !important;
+    font-family: var(--obsidian-font) !important;
+    border: none !important;
+    color: var(--accent-6) !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+
+/*BLOCK CODE - WORD REFERENCE*/
+blockquote code mark {
+    background-color: #731818 !important;
+}
+
+code span mark {
+    background-color: #731818 !important;
+}
+
+/* 
+###########################################################
+#   MARKDOWN ALERTS (TIP,CAUTION,INFO,HINT,IMPORTANT...)  #
+###########################################################
+*/
+
+blockquote.callout {
+    border-width: 0.13em;
+}
+
+blockquote.callout > .callout-title > div.callout-icon {
+    padding: .1rem 0;
+}
+
+blockquote.callout > .callout-title > div.fold-callout-icon {
+    padding: .15rem 0;
+}
+
+blockquote.callout > .callout-title > .callout-title-inner p {
+    margin-top: -0.175rem;
+}
+
+/* 
+###########################################################
+#######################   LINKS   #########################
+###########################################################
+*/
+
+article a {
+    color: var(--accent-2);
+    background: none !important;
+}
+
+/* 
+########################################################
+#################  QUARTZ TAGS SECTION   ###############
+########################################################
+*/
+
+div.page-listing a {
+    color: var(--accent-2);
+}
+
+/* 
+########################################################
+#################  MARKDOWN QUOTATIONS  ################
+########################################################
+*/
+
+blockquote:not([class]) {
+    border-left: 3px solid var(--accent-2);
+}
+
+/* 
+#####################################################
+################  GRAPH VIEW SECTION  ###############
+#####################################################
+*/
+
+/* GRAPH PREVIEW (LOCAL GRAPH) */
+
+div.graph-outer button.global-graph-icon > svg {
+    color: var(--accent-2) !important;
+}
+
+div#graph-container g > line.link {
+    stroke: var(--accent-2);
+}
+
+div#graph-container g > circle.node {
+    fill: var(--accent-1);
+}
+
+/* GRAPH VIEW (GLOBAL GRAPH)*/
+div#global-graph-container g > line.link {
+    stroke: var(--accent-2) !important;
+}
+
+div#global-graph-container g > circle {
+    fill: var(--accent-1) !important;
+}
+
+/* 
+#################################################
+################  MARKDOWN TABLES ###############
+#################################################
+*/
+
+/* TABLE - INNER COLUMN SEPARATOR */
+div.table-container > table > tbody > tr > td:not(:last-child) {
+    border-right: 1px solid #393639; 
+}
+
+/* TABLE - INNER LINKS */
+div.table-container > table > tbody a:hover {
+    color: #c462e2 !important;
+    //color: var(--color-1) !important;
+}
+
+/* 
+###################################################
+################  SVG ICON H{1..6}  ###############
+###################################################
+*/
+
+article.popover-hint h1 > a.internal:hover,
+article.popover-hint h2 > a.internal:hover, 
+article.popover-hint h3 > a.internal:hover, 
+article.popover-hint h4 > a.internal:hover,
+article.popover-hint h5 > a.internal:hover,
+article.popover-hint h6 > a.internal:hover {
+    color: var(--accent-1) !important;
+}
+article.popover-hint h1 > a.internal > svg:hover,
+article.popover-hint h2 > a.internal > svg:hover,
+article.popover-hint h3 > a.internal > svg:hover,
+article.popover-hint h4 > a.internal > svg:hover,
+article.popover-hint h5 > a.internal > svg:hover,
+article.popover-hint h6 > a.internal > svg:hover {
+    color: var(--accent-1);
+}
+
+/* 
+###################################################
+##############  IMAGES ZOOM IN/OUT  ###############
+###################################################
+*/
+
+article.popover-hint img:not(li > img) {
+    transition: transform 0.1s ease;
+    position: relative;
+    cursor: zoom-in;
+}
+
+article.popover-hint img:active:not(li > img){
+    transform: scale(2);
+    transition: transform 0.5s ease;
+    z-index: 10 !important;
+    cursor: zoom-out;
+}

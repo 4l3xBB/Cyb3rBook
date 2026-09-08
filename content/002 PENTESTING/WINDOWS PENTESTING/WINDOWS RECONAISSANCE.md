@@ -1,0 +1,24 @@
+---
+Primary_category: "[[WINDOWS PENTESTING]]"
+title: "WINDOWS RECONAISSANCE"
+draft: false
+banner: "https://images.unsplash.com/photo-1589763472885-46dd5b282f52?q=80&w=1748&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+banner_y: 0.88286
+tags:
+cssclasses:
+  - card-list
+  - purple-style
+---
+
+###### PRIMARY CATEGORY → [[WINDOWS PENTESTING]]
+
+#### *Components* ⟡
+
+- ![](https://78.media.tumblr.com/32b0fa98b61ea26f64e734a08eb2b524/tumblr_mrblcocV321r4mh0bo1_r1_500.gif)
+	- [[WINDOWS PASSWORD POLICY|PASSWORD POLICY]]
+- ![](https://78.media.tumblr.com/32b0fa98b61ea26f64e734a08eb2b524/tumblr_mrblcocV321r4mh0bo1_r1_500.gif)
+	- [[WINDOWS SECURITY CONTROLS|SECURITY CONTROLS]]
+- ![](https://78.media.tumblr.com/32b0fa98b61ea26f64e734a08eb2b524/tumblr_mrblcocV321r4mh0bo1_r1_500.gif)
+	- [[WINDOWS DNS | DNS]]
+- ![](https://78.media.tumblr.com/32b0fa98b61ea26f64e734a08eb2b524/tumblr_mrblcocV321r4mh0bo1_r1_500.gif)
+	- [[WINDOWS CREDENTIALED ENUMERATION|CREDENTIALED ENUMERATION]]

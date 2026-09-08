@@ -1,17 +1,11 @@
-# Quartz v5
+### WELCOME TO 4L3X'S CYB3RBOOK !
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+ℹ️ This is [4l3xBB's](https://github.com/4l3xBB) CyberSec Webpage,. Here it will store all the Info and Docs  that I'll collect and generate throughout my progress in Cybersecurity's Field, especifically on ~~Pentesting~~ and ~~Red Teaming~~ ℹ️ 
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
+#### DISCLAIMER❗
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+☣️ Please note that I'm not responsible for the use of any of the Vulnerabilites, Attack Vectors or Exploits that appear or are explained here,  the same applies to my [Github Account](https://github.com/4l3xBB) ☣️
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+All information exposed on this page is intended to be put on practice on Cybersecurity Field 🎟️ or with Academic Purposes 📕
 
-## Sponsors
-
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+![](https://securityintelligence.com/wp-content/uploads/2022/12/Cyber-Security-Ransomware-Email-Phishing-Encrypted-Technology-Digital-Information-Protected-Secured.jpeg)

@@ -1,0 +1,309 @@
+{
+  "main": {
+    "id": "3645edd4a4a2a062",
+    "type": "split",
+    "children": [
+      {
+        "id": "4a200f8328df4f17",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5f792935d9243626",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "000 INBOX/10.10.110.100.md",
+                "mode": "source",
+                "source": true,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "10.10.110.100"
+            },
+            "group": "13b45e47464bd4da"
+          }
+        ]
+      },
+      {
+        "id": "4fe1103700fc2075",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5c208367960d7263",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "000 INBOX/10.10.110.100.md",
+                "mode": "preview",
+                "source": true,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "10.10.110.100"
+            },
+            "group": "13b45e47464bd4da"
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d986470c804ec7c7",
+    "type": "split",
+    "children": [
+      {
+        "id": "4622ded6a57b68c7",
+        "type": "tabs",
+        "dimension": 43.30922242314647,
+        "children": [
+          {
+            "id": "44498cadc63d1eef",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "c4b6dc50a91a96b4",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      },
+      {
+        "id": "dbcb4fbe68dfe43e",
+        "type": "tabs",
+        "dimension": 56.69077757685353,
+        "children": [
+          {
+            "id": "0c0997432df646a9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 217.5
+  },
+  "right": {
+    "id": "7815c61af4aa0216",
+    "type": "split",
+    "children": [
+      {
+        "id": "db7108f15f145a2b",
+        "type": "tabs",
+        "dimension": 53.75284306292646,
+        "children": [
+          {
+            "id": "638fecbb96ba0d72",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "002 PENTESTING/MISCELLANOUS.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for MISCELLANOUS"
+            }
+          },
+          {
+            "id": "f88e35c66816ee11",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "002 PENTESTING/MISCELLANOUS.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from MISCELLANOUS"
+            }
+          },
+          {
+            "id": "6cb86f78892ef12e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "fa6a847ac7a63631",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "000 INBOX/10.10.110.100.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Esquema"
+            }
+          },
+          {
+            "id": "4e88f64d60682723",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas las propiedades"
+            }
+          },
+          {
+            "id": "5c88270232e7cab4",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "002 PENTESTING/WINDOWS PENTESTING/PRINTNIGHTMARE.md"
+              },
+              "icon": "lucide-info",
+              "title": "Propiedades de los archivos para PRINTNIGHTMARE"
+            }
+          },
+          {
+            "id": "cd706a37fe54b6e6",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          }
+        ],
+        "currentTab": 3
+      },
+      {
+        "id": "230e16885bd65910",
+        "type": "tabs",
+        "dimension": 46.24715693707354,
+        "children": [
+          {
+            "id": "8d3eac0970ee9647",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Vista gráfica"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 333.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "templater-obsidian:Templater": false,
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false,
+      "daily-notes:Abrir la nota de hoy": false
+    }
+  },
+  "active": "5c208367960d7263",
+  "lastOpenFiles": [
+    "999 OTHERS/DANTE/Dante Root.md",
+    "002 PENTESTING/WEB PENTESTING/JENKINS.md",
+    "100 ATTACHMENTS/JENKINS-20260805184534052.webp",
+    "002 PENTESTING/PROTOCOLS AND SERVICES/139, 445 - SMB.md",
+    "000 INBOX/login bruteforce.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
+    "000 INBOX/10.10.110.100.md",
+    "002 PENTESTING/LINUX PRIVESC CHECKLIST.md",
+    "002 PENTESTING/WORDLISTS.md",
+    "002 PENTESTING/WEB PENTESTING/WORDPRESS.md",
+    "002 PENTESTING/CHECKLISTS/COMMON APPLICATIONS CHECKLIST.md",
+    "002 PENTESTING/CHECKLISTS/WEB OFFENSIVE CHECKLIST.md",
+    "002 PENTESTING/WEB PENTESTING/WEB TECHNOLOGIES.md",
+    "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
+    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
+    "999 OTHERS/DANTE",
+    "002 PENTESTING/WEB PENTESTING/FUZZING.md",
+    "000 INBOX/WINDOWS PREDICTABLE CREDENTIALS.md",
+    "100 ATTACHMENTS/WINDOWS PREDICTABLE CREDENTIALS-20260718204211568.webp",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIAL HUNTING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS BUILT-INS & SETTINGS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/BACKUP OPERATORS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/NTDS.md",
+    "002 PENTESTING/SHELLS AND PAYLOADS.md",
+    "002 PENTESTING/WEB PENTESTING/DESERIALIZATION.md",
+    "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
+    "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705203946636.webp",
+    "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705190511384.webp",
+    "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705190054157.webp",
+    "100 ATTACHMENTS/WERKZEUG-20260704210911816.webp",
+    "100 ATTACHMENTS/WERKZEUG-20260704185031313.webp",
+    "100 ATTACHMENTS/WERKZEUG-20260704175527512.webp",
+    "100 ATTACHMENTS/zsh_p10k_cmdExectime.gif",
+    "100 ATTACHMENTS/PWM-20260607155301027.webp",
+    "002 PENTESTING/CHECKLISTS",
+    "002 PENTESTING/899 TOOLS",
+    "002 PENTESTING/LINUX PENTESTING",
+    "002 PENTESTING/WINDOWS PENTESTING",
+    "002 PENTESTING/WEB PENTESTING",
+    "TTY",
+    "002 PENTESTING/PROTOCOLS AND SERVICES",
+    "assets",
+    "002 PENTESTING/900 EXPLOITS",
+    "Untitled.canvas"
+  ]
+}
