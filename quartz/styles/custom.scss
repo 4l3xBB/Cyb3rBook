@@ -70,6 +70,26 @@ div.page-header h1.article-title {
     font-family: var(--obsidian-font-2);
 }
 
+/* Restore the compact, filled Quartz 4 search control. Quartz 5 reverses
+   the icon/text DOM order, so flex order is used to keep the label first. */
+div.search > button.search-button {
+    background-color: color-mix(in srgb, var(--lightgray) 60%, var(--light));
+    border: none;
+    border-radius: 4px;
+    height: 2rem;
+    padding: 0;
+    justify-content: space-between;
+}
+
+div.search > button.search-button > p {
+    order: -1;
+    padding: 0 1rem;
+}
+
+div.search > button.search-button > svg {
+    margin: 0 0.5rem;
+}
+
 /* 
 ###########################################################
 #               QUARTZ INTERFACE - POPOVER NOTES          #
@@ -152,6 +172,11 @@ div.explorer div.explorer-content div.folder-container a.folder-title {
     color: var(--accent-2);
 }
 
+/* Quartz 5 renders folder labels as button > span instead of anchors. */
+div.explorer div.explorer-content div.folder-container button.folder-button > span.folder-title {
+    color: var(--accent-2);
+}
+
 div.explorer ul.content li a:hover {
     color: rgb(235, 235, 236) !important;
 }
@@ -175,6 +200,23 @@ div.explorer-content div.folder-container > div > a.folder-title::before {
     width: 16px;
     background-color: var(--accent-1);
     -webkit-mask: url('https://api.iconify.design/mdi/folder-open.svg');
+}
+
+/* Keep the v4 folder glyph with Quartz 5's explorer markup. */
+div.explorer-content div.folder-container > div > button.folder-button > span.folder-title::before {
+    display: inline-block;
+    content: "";
+    margin-right: 5px;
+    vertical-align: text-bottom;
+    height: 17px;
+    width: 16px;
+    background-color: var(--accent-1);
+    -webkit-mask: url('https://api.iconify.design/mdi/folder-open.svg');
+    mask: url('https://api.iconify.design/mdi/folder-open.svg');
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
 }
 
 div.explorer ul.content > li > a::before {
@@ -203,6 +245,11 @@ div.toc.desktop-only a.in-view {
     color: var(--accent-2) !important;
 }
 
+/* Quartz 5 no longer adds desktop-only to the component itself. */
+div.toc a.in-view {
+    color: var(--accent-2) !important;
+}
+
 div.backlinks h3 {
     color: var(--accent-1) !important;
     text-shadow: 0 0 0.75em var(--accent-1);
@@ -215,6 +262,10 @@ div#toc-content a {
 
 div#toc-content a:hover {
     //color: var(--color-1) !important;
+    color: #c462e2 !important;
+}
+
+ul.toc-content a:hover {
     color: #c462e2 !important;
 }
 
@@ -251,7 +302,8 @@ footer a {
 
 /* A LINKS STYLES*/
 
-article > h6:first-child a {
+article > h6:first-child a,
+article > .markdown-preview-view > h6:first-child a {
     color: var(--accent-2) !important;
     text-shadow: none;
     font-weight: 700;
@@ -272,42 +324,48 @@ svg.external-icon {
 
 /* HEADERS */
 
-article > h1 {
+article > h1,
+article > .markdown-preview-view > h1 {
     color: var(--color-1) !important;
     text-shadow: 0 0 0.5em var(--accent-1);
     font-size: 1.95em;
     font-weight: 700;
     font-family: var(--obsidian-font-2);
 }
-article > h2 {
+article > h2,
+article > .markdown-preview-view > h2 {
     color: var(--color-2) !important;
     text-shadow: 0 0 0.5em var(--accent-2);
     font-size: 1.75em;
     font-weight: 700;
     font-family: var(--obsidian-font-2);
 }
-article > h3 {
+article > h3,
+article > .markdown-preview-view > h3 {
     color: var(--color-2) !important;
     text-shadow: 0 0 0.5em var(--accent-2);
     font-size: 1.65em;
     font-weight: 700;
     font-family: var(--obsidian-font-2);
 }
-article > h4 {
+article > h4,
+article > .markdown-preview-view > h4 {
     color: var(--color-6) !important;
     text-shadow: 0 0 0.75em var(--accent-6);
     font-size: 1.55em;
     font-weight: 700;
     font-family: var(--obsidian-font-2);
 }
-article > h5 {
+article > h5,
+article > .markdown-preview-view > h5 {
     color: var(--color-5) !important;
     text-shadow: 0 0 0.75em var(--accent-5);
     font-size: 1.25em;
     font-weight: 700;
     font-family: var(--obsidian-font-2);
 }
-article > h6 {
+article > h6,
+article > .markdown-preview-view > h6 {
     color: var(--color-6) !important;
     text-shadow: 0 0 0.75em var(--accent-6);
     font-size: 1em;
@@ -347,37 +405,43 @@ div.preview-container ul.tags > li > a:hover {
 
 /* HEADERS */
 
-div.preview-container > div.preview-inner > h1 {
+div.preview-container > div.preview-inner > h1,
+div.preview-container div.preview-inner article h1 {
     color: var(--color-1) !important;
     text-shadow: 0 0 0.5em var(--accent-1);
     font-size: 2.25em;
     font-weight: 700;
 }
-div.preview-container > div.preview-inner > h2 {
+div.preview-container > div.preview-inner > h2,
+div.preview-container div.preview-inner article h2 {
     color: var(--color-2) !important;
     text-shadow: 0 0 0.5em var(--accent-2);
     font-size: 2em;
     font-weight: 700;
 }
-div.review-container > div.preview-inner > h3 {
+div.preview-container > div.preview-inner > h3,
+div.preview-container div.preview-inner article h3 {
     color: var(--color-3) !important;
     text-shadow: 0 0 0.5em var(--accent-3);
     font-size: 1.75em;
     font-weight: 700;
 }
-div.preview-container > div.preview-inner > h4 {
+div.preview-container > div.preview-inner > h4,
+div.preview-container div.preview-inner article h4 {
     color: var(--color-4) !important;
     text-shadow: 0 0 0.75em var(--accent-4);
     font-size: 1.50em;
     font-weight: 700;
 }
-div.preview-container > div.preview-inner > h5 {
+div.preview-container > div.preview-inner > h5,
+div.preview-container div.preview-inner article h5 {
     color: var(--color-5) !important;
     text-shadow: 0 0 0.75em var(--accent-5);
     font-size: 1.25em;
     font-weight: 700;
 }
-div.preview-container > div.preview-inner > h6 {
+div.preview-container > div.preview-inner > h6,
+div.preview-container div.preview-inner article h6 {
     color: var(--color-6) !important;
     text-shadow: 0 0 0.75em var(--accent-6);
     font-size: 1em;
@@ -386,7 +450,8 @@ div.preview-container > div.preview-inner > h6 {
 
 /* PRIMARY CATEGORY H6 */
 
-div.preview-container > div.preview-inner > h6 > a {
+div.preview-container > div.preview-inner > h6 > a,
+div.preview-container div.preview-inner article h6 > a {
     color: var(--accent-2) !important;
     text-shadow: none;
     font-weight: 600;
