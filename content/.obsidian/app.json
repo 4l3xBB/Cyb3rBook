@@ -7,5 +7,6 @@
   "attachmentFolderPath": "100 ATTACHMENTS",
   "alwaysUpdateLinks": true,
   "foldIndent": true,
-  "showIndentGuide": false
+  "showIndentGuide": false,
+  "promptDelete": false
 }

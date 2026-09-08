@@ -13,37 +13,37 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/10.10.110.100.md",
+                "file": "index.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "10.10.110.100"
+              "title": "index"
             },
-            "group": "13b45e47464bd4da"
+            "group": "36dc6f35827da705"
           }
         ]
       },
       {
-        "id": "4fe1103700fc2075",
+        "id": "d3389c28ee93c333",
         "type": "tabs",
         "children": [
           {
-            "id": "5c208367960d7263",
+            "id": "f1c1b05879f0f2c4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "000 INBOX/10.10.110.100.md",
+                "file": "index.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "10.10.110.100"
+              "title": "index"
             },
-            "group": "13b45e47464bd4da"
+            "group": "36dc6f35827da705"
           }
         ]
       }
@@ -57,7 +57,7 @@
       {
         "id": "4622ded6a57b68c7",
         "type": "tabs",
-        "dimension": 43.30922242314647,
+        "dimension": 57.00518902891031,
         "children": [
           {
             "id": "44498cadc63d1eef",
@@ -89,7 +89,7 @@
       {
         "id": "dbcb4fbe68dfe43e",
         "type": "tabs",
-        "dimension": 56.69077757685353,
+        "dimension": 42.9948109710897,
         "children": [
           {
             "id": "0c0997432df646a9",
@@ -175,7 +175,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "000 INBOX/10.10.110.100.md",
+                "file": "index.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -256,37 +256,40 @@
       "daily-notes:Abrir la nota de hoy": false
     }
   },
-  "active": "5c208367960d7263",
+  "active": "f1c1b05879f0f2c4",
   "lastOpenFiles": [
-    "999 OTHERS/DANTE/Dante Root.md",
+    "ROOT.md",
+    "index.md",
+    "002 PENTESTING/WINDOWS PENTESTING/READGMSAPASSWORD.md",
+    "999 OTHERS/DANTE/10.10.110.100.md",
+    "CPTS/ROOT.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIAL HUNTING.md",
+    "002 PENTESTING/WINDOWS PENTESTING/LIVING OFF THE LAND COERCION.md",
+    "002 PENTESTING/LINUX PENTESTING/LINUX PRIVILEGED GROUPS.md",
+    "CPTS",
+    "AEN/AEN ROOT.md",
+    "002 PENTESTING/TEAMVIEWER.md",
+    "AEN",
+    "999 OTHERS/AEN",
+    "002 PENTESTING/WEB PENTESTING/PWM.md",
+    "002 PENTESTING/WEB PENTESTING/UMBRACO CMS.md",
+    "002 PENTESTING/WEB PENTESTING/WERKZEUG.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PREDICTABLE CREDENTIALS.md",
+    "002 PENTESTING/LINUX PENTESTING/CHROME DEVTOOLS ABUSE.md",
+    "002 PENTESTING/WEB PENTESTING/BOOLEAN BASED SQLI.md",
+    "002 PENTESTING/WEB PENTESTING/BLIND SQLI.md",
+    "002 PENTESTING/APPLICATION CREDENTIALS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/ADCS - ESC1.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WSUS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/ADCS - ESC7.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS POTATOES.md",
+    "002 PENTESTING/WINDOWS PENTESTING/SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
+    "002 PENTESTING/LINUX PRIVESC CHECKLIST.md",
     "002 PENTESTING/WEB PENTESTING/JENKINS.md",
     "100 ATTACHMENTS/JENKINS-20260805184534052.webp",
-    "002 PENTESTING/PROTOCOLS AND SERVICES/139, 445 - SMB.md",
-    "000 INBOX/login bruteforce.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PRIVESC CHECKLIST.md",
-    "000 INBOX/10.10.110.100.md",
-    "002 PENTESTING/LINUX PRIVESC CHECKLIST.md",
-    "002 PENTESTING/WORDLISTS.md",
-    "002 PENTESTING/WEB PENTESTING/WORDPRESS.md",
-    "002 PENTESTING/CHECKLISTS/COMMON APPLICATIONS CHECKLIST.md",
-    "002 PENTESTING/CHECKLISTS/WEB OFFENSIVE CHECKLIST.md",
-    "002 PENTESTING/WEB PENTESTING/WEB TECHNOLOGIES.md",
-    "002 PENTESTING/WINDOWS PENTESTING/AD OFFENSIVE CHECKLIST.md",
-    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
     "999 OTHERS/DANTE",
-    "002 PENTESTING/WEB PENTESTING/FUZZING.md",
-    "000 INBOX/WINDOWS PREDICTABLE CREDENTIALS.md",
     "100 ATTACHMENTS/WINDOWS PREDICTABLE CREDENTIALS-20260718204211568.webp",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIALS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS CREDENTIAL HUNTING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS BUILT-INS & SETTINGS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/BACKUP OPERATORS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/NTDS.md",
-    "002 PENTESTING/SHELLS AND PAYLOADS.md",
-    "002 PENTESTING/WEB PENTESTING/DESERIALIZATION.md",
-    "002 PENTESTING/WEB PENTESTING/WEB ATTACKS.md",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705203946636.webp",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705190511384.webp",
     "100 ATTACHMENTS/CHROME DEVTOOLS ABUSE-20260705190054157.webp",
@@ -301,9 +304,6 @@
     "002 PENTESTING/WINDOWS PENTESTING",
     "002 PENTESTING/WEB PENTESTING",
     "TTY",
-    "002 PENTESTING/PROTOCOLS AND SERVICES",
-    "assets",
-    "002 PENTESTING/900 EXPLOITS",
     "Untitled.canvas"
   ]
 }
