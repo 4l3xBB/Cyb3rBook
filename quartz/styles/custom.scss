@@ -19,6 +19,11 @@
     --accent-6: #BD93F9;
     --accent-7: #FFBDAD; /* HEADING 4 COLOR ON MINIMAL THEME */
 
+    /* Quartz 5's graph is drawn on a PixiJS canvas. These two tokens are
+       consumed below through the theme variables read by the graph runtime. */
+    --graph-node-color: #F3CBFF;
+    --graph-link-color: #BD93F9;
+
     --color-1: #C1FDFF;
     --color-2: #F3CBFF;
     --color-3: #C1FDFF;
@@ -45,6 +50,28 @@
     --border-radius: 4px;
 }
 
+/*
+ * Quartz 5 reads graph colors directly from document.documentElement before
+ * painting its canvas. Feed the graph the 0xkholod pink/purple palette at the
+ * root, then restore the normal theme palette on <body> so the rest of the UI
+ * keeps its existing colors.
+ */
+:root,
+:root[saved-theme="light"],
+:root[saved-theme="dark"] {
+    --gray: var(--graph-node-color);
+    --secondary: var(--graph-node-color);
+    --tertiary: var(--graph-node-color);
+    --lightgray: var(--graph-link-color);
+}
+
+body {
+    --lightgray: #393639;
+    --gray: #646464;
+    --secondary: #f44336;
+    --tertiary: #ea9999;
+}
+
 /* 
 ###########################################################
 #               QUARTZ INTERFACE - GENERAL                #
@@ -58,6 +85,15 @@ p, li {
 .page-title a {
     color: var(--quartz-color-1) !important;
     text-shadow: 0 0 0.75em var(--accent-4);
+}
+
+/* Keep the documentation mark crisp: it is generated separately so the
+   neon text shadow does not bleed into the emoji. */
+.page-title a::after,
+body[data-slug="index"] div.page-header h1.article-title::after {
+    content: " 📖";
+    display: inline-block;
+    text-shadow: none;
 }
 
 .page-title a:hover {
@@ -161,20 +197,32 @@ div.explorer button.title-button > h2 {
 }
 
 div.explorer button.title-button > svg.fold {
-    color: var(--accent-2);
+    color: var(--accent-2) !important;
 }
 
 div.explorer div.folder-container svg.folder-icon {
-    color: var(--accent-1);
+    color: var(--accent-1) !important;
 }
 
 div.explorer div.explorer-content div.folder-container a.folder-title {
-    color: var(--accent-2);
+    color: var(--accent-2) !important;
 }
 
-/* Quartz 5 renders folder labels as button > span instead of anchors. */
-div.explorer div.explorer-content div.folder-container button.folder-button > span.folder-title {
-    color: var(--accent-2);
+/* Quartz 5 initially renders button > span, then changes the button to an
+   anchor when folderClickBehavior is "link". Match both runtime variants. */
+div.explorer div.explorer-content div.folder-container .folder-button > span.folder-title {
+    color: var(--accent-2) !important;
+}
+
+/* Match the Quartz 4 explorer palette: neutral notes, pink active note. */
+div.explorer div.explorer-content a.nav-file-title {
+    color: var(--darkgray) !important;
+}
+
+div.explorer div.explorer-content a.nav-file-title.active,
+div.explorer div.explorer-content a.nav-file-title.is-active {
+    color: var(--color-4) !important;
+    opacity: 1;
 }
 
 div.explorer ul.content li a:hover {
@@ -203,7 +251,7 @@ div.explorer-content div.folder-container > div > a.folder-title::before {
 }
 
 /* Keep the v4 folder glyph with Quartz 5's explorer markup. */
-div.explorer-content div.folder-container > div > button.folder-button > span.folder-title::before {
+div.explorer-content div.folder-container > div > .folder-button > span.folder-title::before {
     display: inline-block;
     content: "";
     margin-right: 5px;
@@ -211,8 +259,8 @@ div.explorer-content div.folder-container > div > button.folder-button > span.fo
     height: 17px;
     width: 16px;
     background-color: var(--accent-1);
-    -webkit-mask: url('https://api.iconify.design/mdi/folder-open.svg');
-    mask: url('https://api.iconify.design/mdi/folder-open.svg');
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6l2 2h8a2 2 0 0 1 2 2H6a2 2 0 0 0-2 2v8l2.5-7H23l-2.3 7c-.3 1.2-1 2-1.7 2Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6l2 2h8a2 2 0 0 1 2 2H6a2 2 0 0 0-2 2v8l2.5-7H23l-2.3 7c-.3 1.2-1 2-1.7 2Z'/%3E%3C/svg%3E");
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
     -webkit-mask-size: contain;
@@ -692,6 +740,15 @@ blockquote.callout > .callout-title > .callout-title-inner p {
     margin-top: -0.175rem;
 }
 
+/* Quartz 5 wraps many custom callout titles in <p><em>. Propagate the
+   callout's own semantic color through every wrapper, as Quartz 4 did. */
+blockquote.callout > .callout-title,
+blockquote.callout > .callout-title > .callout-title-inner,
+blockquote.callout > .callout-title > .callout-title-inner > p,
+blockquote.callout > .callout-title > .callout-title-inner > p > em {
+    color: var(--color) !important;
+}
+
 /* 
 ###########################################################
 #######################   LINKS   #########################
@@ -735,22 +792,9 @@ div.graph-outer button.global-graph-icon > svg {
     color: var(--accent-2) !important;
 }
 
-div#graph-container g > line.link {
-    stroke: var(--accent-2);
-}
-
-div#graph-container g > circle.node {
-    fill: var(--accent-1);
-}
-
-/* GRAPH VIEW (GLOBAL GRAPH)*/
-div#global-graph-container g > line.link {
-    stroke: var(--accent-2) !important;
-}
-
-div#global-graph-container g > circle {
-    fill: var(--accent-1) !important;
-}
+/* Node and link colors are configured near :root. Quartz 5 renders both the
+   local and global graph to <canvas>, so the old Quartz 4 SVG selectors for
+   circle.node and line.link no longer target any real elements. */
 
 /* 
 #################################################

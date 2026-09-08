@@ -1,11 +1,27 @@
-### WELCOME TO 4L3X'S CYB3RBOOK !
+<div align="center">
 
-ℹ️ This is [4l3xBB's](https://github.com/4l3xBB) CyberSec Webpage,. Here it will store all the Info and Docs  that I'll collect and generate throughout my progress in Cybersecurity's Field, especifically on ~~Pentesting~~ and ~~Red Teaming~~ ℹ️ 
+# 📖 Field Manual
 
-#### DISCLAIMER❗
+**A living offensive security knowledge base by 0xkholod.**
 
-☣️ Please note that I'm not responsible for the use of any of the Vulnerabilites, Attack Vectors or Exploits that appear or are explained here,  the same applies to my [Github Account](https://github.com/4l3xBB) ☣️
+[![Open Field Manual](https://img.shields.io/badge/OPEN_FIELD_MANUAL-docs.0xkholod.com-BD93F9?style=for-the-badge&labelColor=090909)](https://docs.0xkholod.com)
+![Quartz 5](https://img.shields.io/badge/QUARTZ-v5-C1FDFF?style=for-the-badge&labelColor=090909)
+![Cloudflare](https://img.shields.io/badge/DEPLOYED_ON-CLOUDFLARE-F3CBFF?style=for-the-badge&labelColor=090909&logo=cloudflare&logoColor=F3CBFF)
 
-All information exposed on this page is intended to be put on practice on Cybersecurity Field 🎟️ or with Academic Purposes 📕
+</div>
 
-![](https://securityintelligence.com/wp-content/uploads/2022/12/Cyber-Security-Ransomware-Email-Phishing-Encrypted-Technology-Digital-Information-Protected-Secured.jpeg)
+---
+
+Field Manual turns hands-on research, lab work, and offensive security study into concise, reusable documentation. It covers pentesting methodology, red-team tradecraft, Active Directory, web security, scripting, tooling, and machine write-ups.
+
+> [!NOTE]
+> Built with **Quartz 5** and automatically deployed to **Cloudflare Workers** from the `v5` branch.
+
+> [!IMPORTANT]
+> The material is intended exclusively for education, research, and authorized security testing.
+
+<div align="center">
+
+### [Enter the Field Manual →](https://docs.0xkholod.com)
+
+</div>

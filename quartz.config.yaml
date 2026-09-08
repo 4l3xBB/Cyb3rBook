@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 # Quartz 5 configuration for the 0xkholod Field Manual.
 configuration:
-  pageTitle: "💥Cyb3rBook"
+  pageTitle: "Field Manual"
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
