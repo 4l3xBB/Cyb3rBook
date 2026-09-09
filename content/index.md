@@ -1,5 +1,5 @@
 ---
-title: Field Manual
+title: 0xkholod
 description: A living offensive security knowledge base focused on pentesting, red teaming, scripting, and practical tradecraft.
 cssclasses:
   - card-list

@@ -87,12 +87,19 @@ p, li {
     text-shadow: 0 0 0.75em var(--accent-4);
 }
 
-/* Keep the documentation mark crisp: it is generated separately so the
-   neon text shadow does not bleed into the emoji. */
-.page-title a::after,
-body[data-slug="index"] div.page-header h1.article-title::after {
-    content: " 📖";
+/* Keep each mark crisp and give it deterministic spacing. HTML collapses
+   ordinary spaces, while margin stays consistent across fonts and browsers. */
+.page-title a::after {
+    content: "📖";
     display: inline-block;
+    margin-left: 0.35em;
+    text-shadow: none;
+}
+
+body[data-slug="index"] div.page-header h1.article-title::after {
+    content: "𖦏";
+    display: inline-block;
+    margin-left: 0.35em;
     text-shadow: none;
 }
 
@@ -776,12 +783,16 @@ div.page-listing a {
  * make it subordinate to the curated card navigation above it.
  */
 div.page-listing {
-    padding-top: 1rem;
+    padding-top: 2rem;
 }
 
 div.page-listing > p {
-    color: #aaa6ae;
-    font-size: 0.9rem;
+    color: var(--accent-6);
+    font-family: var(--obsidian-font-2);
+    font-size: 0.9375rem;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: 0.01em;
     margin: 0;
 }
 
@@ -795,13 +806,19 @@ div.page-listing li.section-li {
 }
 
 div.page-listing li.section-li > .section {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     align-items: baseline;
 }
 
 /* Dates are not useful in this vault because the migration assigned the
    same date to every note. Hide them only in folder/tag indexes. */
 div.page-listing li.section-li > .section > p.meta {
+    display: none;
+}
+
+/* The folder index is a title-only navigation aid. Tags already belong to
+   each note and can make long taxonomy-heavy rows overflow horizontally. */
+div.page-listing li.section-li > .section > ul.tags {
     display: none;
 }
 
