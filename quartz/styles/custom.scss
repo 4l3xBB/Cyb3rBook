@@ -770,6 +770,52 @@ div.page-listing a {
     color: var(--accent-2);
 }
 
+/*
+ * Quartz 5 FolderPage appends a dependable, automatically generated index
+ * after any hand-authored cards. Keep it as the accessible fallback, but
+ * make it subordinate to the curated card navigation above it.
+ */
+div.page-listing {
+    padding-top: 1rem;
+}
+
+div.page-listing > p {
+    color: #aaa6ae;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+div.page-listing ul.section-ul {
+    margin: 2rem 0 0;
+    padding-left: 0;
+}
+
+div.page-listing li.section-li {
+    margin-bottom: 0.75rem;
+}
+
+div.page-listing li.section-li > .section {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+}
+
+/* Dates are not useful in this vault because the migration assigned the
+   same date to every note. Hide them only in folder/tag indexes. */
+div.page-listing li.section-li > .section > p.meta {
+    display: none;
+}
+
+div.page-listing li.section-li > .section > .desc > h3 {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+div.page-listing li.section-li > .section > .desc > h3 > a {
+    font-weight: 700;
+    text-shadow: none;
+}
+
 /* 
 ########################################################
 #################  MARKDOWN QUOTATIONS  ################
