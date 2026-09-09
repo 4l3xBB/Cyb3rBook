@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "002 PENTESTING/HTB.md",
                 "mode": "source",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "HTB"
             },
             "group": "36dc6f35827da705"
           }
@@ -35,13 +35,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "002 PENTESTING/HTB.md",
                 "mode": "preview",
                 "source": true,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "HTB"
             },
             "group": "36dc6f35827da705"
           }
@@ -175,7 +175,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "index.md",
+                "file": "002 PENTESTING/HTB.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -256,13 +256,22 @@
       "daily-notes:Abrir la nota de hoy": false
     }
   },
-  "active": "5f792935d9243626",
+  "active": "f1c1b05879f0f2c4",
   "lastOpenFiles": [
-    "ROOT.md",
-    "index.md",
-    "002 PENTESTING/PROTOCOLS AND SERVICES/PROTOCOLS AND SERVICES.md",
+    "002 PENTESTING/999 MACHINES/MACHINES.md",
+    "002 PENTESTING/999 MACHINES/EASY.md",
+    "002 PENTESTING/999 MACHINES/MEDIUM.md",
+    "002 PENTESTING/999 MACHINES/NIBBLES.md",
+    "002 PENTESTING/WINDOWS PENTESTING/KERBEROS.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS MOVEMENT.md",
+    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PENTESTING.md",
     "002 PENTESTING/PENTESTING ROOT.md",
     "002 PENTESTING/PENTESTING.md",
+    "002 PENTESTING/PLATFORMS.md",
+    "002 PENTESTING/HTB.md",
+    "index.md",
+    "ROOT.md",
+    "002 PENTESTING/PROTOCOLS AND SERVICES/PROTOCOLS AND SERVICES.md",
     "002 PENTESTING/WINDOWS PENTESTING/READGMSAPASSWORD.md",
     "999 OTHERS/DANTE/10.10.110.100.md",
     "CPTS/ROOT.md",
@@ -278,15 +287,6 @@
     "002 PENTESTING/WEB PENTESTING/UMBRACO CMS.md",
     "002 PENTESTING/WEB PENTESTING/WERKZEUG.md",
     "002 PENTESTING/WINDOWS PENTESTING/WINDOWS PREDICTABLE CREDENTIALS.md",
-    "002 PENTESTING/LINUX PENTESTING/CHROME DEVTOOLS ABUSE.md",
-    "002 PENTESTING/WEB PENTESTING/BOOLEAN BASED SQLI.md",
-    "002 PENTESTING/WEB PENTESTING/BLIND SQLI.md",
-    "002 PENTESTING/APPLICATION CREDENTIALS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/ADCS - ESC1.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WSUS.md",
-    "002 PENTESTING/WINDOWS PENTESTING/ADCS - ESC7.md",
-    "002 PENTESTING/WINDOWS PENTESTING/WINDOWS POTATOES.md",
-    "002 PENTESTING/WINDOWS PENTESTING/SEIMPERSONATEPRIVILEGE & SEASSIGNPRIMARYTOKENPRIVILEGE.md",
     "100 ATTACHMENTS/JENKINS-20260805184534052.webp",
     "999 OTHERS/DANTE",
     "100 ATTACHMENTS/WINDOWS PREDICTABLE CREDENTIALS-20260718204211568.webp",
