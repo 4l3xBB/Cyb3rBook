@@ -133,6 +133,14 @@ div.search > button.search-button > svg {
     margin: 0 0.5rem;
 }
 
+/* Quartz 5 colors search-result titles with --secondary, which is the
+   interface red in this theme. Keep the dense result list readable while
+   tying it back to the neon-pink card and navigation palette. */
+div.results-container a.result-card > h3.card-title {
+    color: var(--accent-2) !important;
+    text-shadow: none;
+}
+
 /* 
 ###########################################################
 #               QUARTZ INTERFACE - POPOVER NOTES          #
